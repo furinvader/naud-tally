@@ -1,0 +1,77 @@
+name: Repo Checks
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repo-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repo-hygiene:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Verify required files exist
+        run: |
+          required_files=(
+            README.md
+            LICENSE
+            CONTRIBUTING.md
+            docs/product.md
+            docs/agentic-workflow.md
+            docs/decisions.md
+            docs/tasks.md
+            docs/github-setup.md
+          )
+
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "Missing required file: $file"
+              exit 1
+            fi
+          done
+
+      - name: Verify markdown files are non-empty
+        run: |
+          while IFS= read -r file; do
+            if [ ! -s "$file" ]; then
+              echo "Empty markdown file: $file"
+              exit 1
+            fi
+          done < <(find . -type f -name "*.md" -not -path "./.git/*" | sort)
+
+      - name: Verify unique decision and task identifiers
+        run: |
+          decision_dupes="$(grep -oE '^## D-[0-9]+' docs/decisions.md | sort | uniq -d)"
+          task_dupes="$(grep -oE '^### T-[0-9]+' docs/tasks.md | sort | uniq -d)"
+
+          if [ -n "$decision_dupes" ]; then
+            echo "Duplicate decision IDs found:"
+            echo "$decision_dupes"
+            exit 1
+          fi
+
+          if [ -n "$task_dupes" ]; then
+            echo "Duplicate task IDs found:"
+            echo "$task_dupes"
+            exit 1
+          fi
+
+      - name: Verify README references the core docs
+        run: |
+          grep -q 'docs/product.md' README.md
+          grep -q 'docs/agentic-workflow.md' README.md
+          grep -q 'docs/decisions.md' README.md
+          grep -q 'docs/tasks.md' README.md
+          grep -q 'docs/github-setup.md' README.md
