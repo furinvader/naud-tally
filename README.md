@@ -11,7 +11,7 @@ The project is also being prepared to live well as an open-source repository wit
 
 ## Current Phase
 
-We are in the `docs-first` phase.
+We are in the `pre-scaffold` phase.
 
 What exists today:
 
@@ -20,10 +20,10 @@ What exists today:
 - decision log
 - first task backlog
 - agentic workflow notes
+- initial stack decision
 
 What is intentionally not done yet:
 
-- framework selection
 - project scaffolding
 - UI implementation
 - backend implementation

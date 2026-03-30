@@ -16,9 +16,9 @@ This file records decisions that shape the build. Each decision can be revised l
 
 ## D-003: Optimize for Tablet-First Web Delivery
 
-- Status: proposed
-- Why: a web app is likely the fastest path to a usable pilot and keeps the learning transferable
-- Consequence: we should evaluate a browser-based app with responsive tablet UI before considering native options
+- Status: accepted
+- Why: the first implementation is a single local-first screen and does not need native device APIs or a backend
+- Consequence: we will build a browser-based tablet app and only revisit native packaging if the product later proves it is necessary
 
 ## D-004: Prefer Local-First Persistence for the Pilot
 
@@ -55,3 +55,15 @@ This file records decisions that shape the build. Each decision can be revised l
 - Status: accepted
 - Why: the fastest useful first version is the guest-facing tally screen with no organizer area and no guest model yet
 - Consequence: the initial build will focus on one screen, fixed sample drinks, English UI, and local persistence
+
+## D-010: Use Angular, Angular Material, and NgRx SignalStore
+
+- Status: accepted
+- Why: this stack matches existing team familiarity, supports a scalable UI architecture, and keeps the learning focused on agent workflow rather than relearning the frontend stack
+- Consequence: the initial scaffold should use Angular with standalone APIs, Angular Material for the component foundation, and NgRx SignalStore for the first state layer
+
+## D-011: Pin Node 24.14.0 With nvm
+
+- Status: accepted
+- Why: Angular's current compatibility guide supports Node `^24.0.0`, and Node `24.14.0` is a current release in that supported major line
+- Consequence: the repo uses `.nvmrc`, and local work should start with `nvm use` before installing or running Angular tooling
