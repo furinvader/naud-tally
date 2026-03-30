@@ -9,7 +9,7 @@ This backlog is intentionally ordered around learning and shipping a usable pilo
 - Open-source license: done
 - Pilot rules: confirmed for the first implementation
 - First vertical slice: defined at the product level
-- Technical stack: not chosen
+- Technical stack: chosen
 - App scaffold: not started
 - UI implementation: not started
 
@@ -68,6 +68,19 @@ Done when:
 
 - the chosen stack and rationale are added to `docs/decisions.md`
 
+Status:
+
+- done
+
+Outcome:
+
+- use `Angular` for the application framework
+- use `Angular Material` for the component and theming foundation
+- use `NgRx SignalStore` for the first state management layer
+- keep the first build client-side and local-first
+- use `npm` as the package manager
+- pin `Node 24.14.0` via `.nvmrc`
+
 ### T-003: Define the First Vertical Slice
 
 Goal:
@@ -95,7 +108,21 @@ Status:
 
 ### T-004: Scaffold the App
 
-Not started on purpose. This begins only after the pilot rules and stack are clear.
+Goal:
+Create the initial Angular app scaffold using the chosen stack.
+
+Target outcome:
+
+- an Angular app exists in the repo
+- Angular Material is installed and configured
+- NgRx SignalStore is available for the first feature state
+- `npm start` runs the app locally
+- `npm run build` produces a production build
+- `npm test` runs the default unit-test setup
+
+Status:
+
+- ready to start
 
 ### T-005: Build the Guest Tally Screen
 
