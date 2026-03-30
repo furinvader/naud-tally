@@ -129,6 +129,7 @@ Outcome:
 - Angular 21 standalone app scaffolded in the repo
 - Angular Material installed and configured
 - `@ngrx/signals` installed for the first state layer
+- Angular app-specific files moved under `frontend/`
 - `.nvmrc` works with `nvm use`
 - `npm start`, `npm run build`, and `npm test` are now valid project commands
 

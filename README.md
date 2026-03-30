@@ -21,7 +21,7 @@ What exists today:
 - first task backlog
 - agentic workflow notes
 - initial stack decision
-- Angular app scaffold with Material and SignalStore dependencies
+- Angular app scaffold under `frontend/` with Material and SignalStore dependencies
 
 What is intentionally not done yet:
 
@@ -61,6 +61,11 @@ Useful commands:
 
 - `npm run build`
 - `npm test`
+
+Directory notes:
+
+- monolith-level config stays in the repo root
+- Angular app-specific files live under `frontend/`
 
 ## Pilot Success
 
