@@ -67,3 +67,9 @@ This file records decisions that shape the build. Each decision can be revised l
 - Status: accepted
 - Why: Angular's current compatibility guide supports Node `^24.0.0`, and Node `24.14.0` is a current release in that supported major line
 - Consequence: the repo uses `.nvmrc`, and local work should start with `nvm use` before installing or running Angular tooling
+
+## D-012: Keep the Angular App Under `frontend/`
+
+- Status: accepted
+- Why: the project is intended to grow as a monolith, so the repo root should stay focused on project-level concerns while the browser app remains self-contained
+- Consequence: Angular and Node files such as `angular.json`, `package.json`, `package-lock.json`, `tsconfig*.json`, `.angular`, and `node_modules` live under `frontend/`, while the repo root stays reserved for shared docs, GitHub config, and top-level metadata

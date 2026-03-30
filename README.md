@@ -11,7 +11,7 @@ The project is also being prepared to live well as an open-source repository wit
 
 ## Current Phase
 
-We are in the `pre-scaffold` phase.
+We are in the `scaffolded` phase.
 
 What exists today:
 
@@ -21,11 +21,12 @@ What exists today:
 - first task backlog
 - agentic workflow notes
 - initial stack decision
+- Angular app scaffold under `frontend/` with Material and SignalStore dependencies
 
 What is intentionally not done yet:
 
-- project scaffolding
-- UI implementation
+- guest tally implementation
+- organizer functionality
 - backend implementation
 
 ## Project Principles
@@ -49,6 +50,23 @@ What is intentionally not done yet:
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Local Setup
+
+1. Run `nvm use`
+2. Change into `frontend/`
+3. Run `npm install`
+4. Start the app with `npm start`
+
+Useful commands in `frontend/`:
+
+- `npm run build`
+- `npm test`
+
+Directory notes:
+
+- the repo root is reserved for project docs, GitHub config, and future shared concerns
+- the Angular app and its Node tooling live under `frontend/`
 
 ## Pilot Success
 
