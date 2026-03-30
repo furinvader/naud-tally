@@ -1,6 +1,6 @@
 # Task Backlog
 
-This backlog is intentionally ordered around learning and shipping a usable pilot. The Angular scaffold is now in place, and the next implementation step is the guest tally screen.
+This backlog is intentionally ordered around learning and shipping a usable pilot. The Angular scaffold and first guest tally screen are now in place, and the next implementation step is organizer controls.
 
 ## Current Status
 
@@ -11,7 +11,7 @@ This backlog is intentionally ordered around learning and shipping a usable pilo
 - First vertical slice: defined at the product level
 - Technical stack: chosen
 - App scaffold: done
-- UI implementation: not started beyond the scaffold placeholder
+- UI implementation: first guest tally screen is done
 
 ## Next Tasks
 
@@ -138,6 +138,18 @@ Outcome:
 Target outcome:
 
 - guests can quickly record drinks on a tablet
+
+Status:
+
+- done
+
+Outcome:
+
+- the guest-facing tally screen replaces the scaffold placeholder
+- the fixed sample drink list is shown as touch-friendly cards
+- each drink supports increment and decrement controls with visible counts
+- the total drink count stays visible while using the screen
+- tally state persists across reloads on the same device
 
 ### T-006: Add Organizer Controls
 
