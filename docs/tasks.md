@@ -7,7 +7,8 @@ This backlog is intentionally ordered around learning and shipping a usable pilo
 - Documentation foundation: done
 - Open-source repo basics: done
 - Open-source license: done
-- Product details: partially defined
+- Pilot rules: confirmed for the first implementation
+- First vertical slice: defined at the product level
 - Technical stack: not chosen
 - App scaffold: not started
 - UI implementation: not started
@@ -33,16 +34,22 @@ Status:
 Goal:
 Lock down the minimum product behavior before choosing a stack.
 
-Questions to answer:
-
-- What drinks should be included?
-- What should the organizer be able to do besides reset and export?
-- Is this for one event at a time?
-- Does the app need offline behavior beyond simple local persistence?
-
 Done when:
 
 - the open questions in `docs/product.md` are either answered or intentionally deferred
+
+Status:
+
+- done
+
+Outcome:
+
+- the first implementation is a single tally screen
+- the drink list is fixed for now using sample drinks
+- there is no guest model yet
+- the UI is English-only for now, with future i18n kept in mind
+- reload-safe local persistence is required
+- organizer functionality is deferred to a later task
 
 ### T-002: Choose the Initial Stack
 
@@ -66,17 +73,23 @@ Done when:
 Goal:
 Describe the exact first buildable screen and its acceptance criteria.
 
-Candidate slice:
+Defined slice:
 
 - a single guest-facing screen
-- fixed drink cards
+- fixed sample drink cards
 - increment and decrement controls
-- visible totals
+- visible per-drink counts
+- visible total count
 - persistence after reload
+- English UI text
 
 Done when:
 
 - the first implementation prompt can be written without ambiguity
+
+Status:
+
+- done at the product-definition level
 
 ## Later Tasks
 
@@ -96,6 +109,18 @@ Target outcome:
 
 - organizer can reset and export the tally safely
 
+### T-008: Add i18n Support
+
+Target outcome:
+
+- the UI supports multiple languages starting from the English-first structure
+
+### T-009: Introduce Guest-Based Tracking
+
+Target outcome:
+
+- the app can move beyond a single shared tally and attach counts to guests
+
 ### T-007: Test the Pilot in a Real Usage Scenario
 
 Target outcome:
@@ -107,7 +132,6 @@ Target outcome:
 These ideas are intentionally deferred until the pilot proves useful:
 
 - multiple simultaneous tablets
-- named events
 - authentication
 - reports and dashboards
 - inventory management

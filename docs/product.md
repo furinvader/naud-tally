@@ -2,9 +2,9 @@
 
 ## Working Definition
 
-This project is a tablet-first tally app for guests at an event. Guests use the app to record which drinks they take and how many.
+This project is a tablet-first tally app for guests. Guests use the app to record which drinks they take and how many.
 
-The first version is a pilot, not a full event management system.
+The first implementation is intentionally a single-screen pilot, not a full guest or organizer management system.
 
 ## Project Goals
 
@@ -22,21 +22,38 @@ We want a real project that teaches a reusable way to work with Codex:
 
 We want a usable first version that can run on a tablet in a real-world setting and solve one narrow problem well: counting drinks taken by guests.
 
-## Pilot Assumptions
+## Confirmed Pilot Rules
 
-These are the current assumptions until we replace them with confirmed decisions:
+These are the rules for the first implementation:
 
 - one tablet is used at a time
-- one event context is active at a time
-- the drink list is predefined
-- guests do not need accounts
+- the app is a single guest-facing tally screen
+- the drink list is fixed and predefined
+- guests do not need accounts or identification
 - the UI is optimized for quick tapping, not detailed data entry
-- simple local persistence is enough for the first pilot
+- the UI is English-only for now
+- the code should keep future i18n in mind
+- local persistence is required so state survives a reload
+- proper offline support beyond reload persistence is deferred to a later task
+
+## Initial Sample Drink List
+
+We will start with a fixed example list for implementation and testing:
+
+- Water
+- Sparkling Water
+- Cola
+- Cola Zero
+- Lemon Soda
+- Orange Soda
+- Apple Juice
+- Beer
+- White Wine
 
 ## Primary Users
 
 - Guests: want a fast, obvious way to record a drink
-- Organizer or host: wants accurate totals and a way to reset or export data
+- Organizer or host: future user for later screens such as reset, export, or guest management
 
 ## Core User Flow
 
@@ -44,26 +61,32 @@ These are the current assumptions until we replace them with confirmed decisions
 2. The guest sees a list of available drinks with large touch-friendly controls.
 3. The guest increments or decrements the count for the drink they took.
 4. The app immediately updates totals and saves the current state.
-5. The organizer can later review totals, reset the event, or export the tally.
+5. If the page reloads, the previous tally state is restored.
 
-## In Scope for the Pilot
+## In Scope for the First Implementation
 
 - tablet-first layout
-- predefined drink catalog
+- predefined sample drink catalog
+- single guest-facing tally screen
 - add and remove counts for each drink
-- always-visible current totals
+- always-visible per-drink counts
+- always-visible total count
 - persistence across reloads
-- simple organizer actions such as reset and export
-- basic protection against accidental data loss
+- English UI text
+- simple structure that can grow into i18n later
 
-## Out of Scope for the Pilot
+## Out of Scope for the First Implementation
 
+- organizer or admin area
+- guest identification
+- guest-based data model
 - payments
 - inventory tracking
-- user accounts or guest identity
 - multi-tablet live synchronization
 - advanced reporting
 - role-based permissions
+- proper offline support beyond reload persistence
+- multilingual UI beyond English
 - polished branding or theming beyond what is needed for usability
 
 ## UX Principles
@@ -77,12 +100,12 @@ These are the current assumptions until we replace them with confirmed decisions
 ## Functional Requirements
 
 - The app must show all available drinks on the main screen.
+- The app must use the fixed sample drink list for the first implementation.
 - Each drink must support increment and decrement actions.
 - The current count for each drink must always be visible.
 - The total number of drinks must be visible.
-- Data must persist across page reloads during the event.
-- The organizer must be able to reset counts.
-- The organizer must be able to export or copy the final tally in a simple format.
+- Data must persist across page reloads on the same device.
+- The first implementation must use English UI text.
 
 ## Non-Functional Requirements
 
@@ -90,18 +113,18 @@ These are the current assumptions until we replace them with confirmed decisions
 - Common actions should take one tap when possible.
 - The app should remain understandable in a busy social setting.
 - The first version should stay simple enough that Codex can build it in small, reviewable steps.
+- Text and labels should be easy to move into a future i18n layer.
 
 ## Risks
 
 - Guests may forget to record drinks unless the interaction is extremely fast.
 - A shared tablet may lead to accidental taps or double taps.
-- Local-only persistence may be limiting if the event later needs backups or multiple devices.
+- Reload-safe local persistence is not the same as full offline support.
+- The fixed drink list is only a testing and pilot placeholder.
 
-## Open Questions
+## Deferred Questions
 
-- What exact drinks need to be in the catalog?
-- Should the app support multiple languages?
-- Does the organizer need a hidden admin area or just a reset/export control?
-- Should totals be per drink only, or also per category?
-- Is offline support required from day one?
-- Is the event always a single session, or do we need named events?
+- What should the organizer area include first: reset, export, guest management, or something else?
+- How should guests be represented once we move beyond a single shared tally screen?
+- What level of offline support do we want beyond reload-safe local persistence?
+- When we add i18n, which languages should come first after English?

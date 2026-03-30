@@ -57,7 +57,7 @@ The pilot is successful if:
 - a guest can use the app on a tablet without explanation
 - drink choices are fast to record with large touch targets
 - counts survive a page reload or accidental refresh
-- an organizer can reset or export the tally without developer help
+- the first implementation stays focused on the guest-facing tally screen
 - the build process teaches a repeatable Codex-driven workflow
 
 ## Notes

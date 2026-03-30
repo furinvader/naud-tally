@@ -12,7 +12,7 @@ This file records decisions that shape the build. Each decision can be revised l
 
 - Status: accepted
 - Why: a small vertical slice teaches more than an oversized backlog that never ships
-- Consequence: the first version focuses on counting drinks on a shared tablet, not broader event management
+- Consequence: the first version focuses on counting drinks on a shared tablet, not broader guest or organizer management
 
 ## D-003: Optimize for Tablet-First Web Delivery
 
@@ -22,9 +22,9 @@ This file records decisions that shape the build. Each decision can be revised l
 
 ## D-004: Prefer Local-First Persistence for the Pilot
 
-- Status: proposed
-- Why: it reduces complexity and lets us validate the core interaction before adding servers or sync
-- Consequence: the first version may have limitations around backups, multi-device use, and shared real-time updates
+- Status: accepted
+- Why: reload-safe local persistence is required for the first implementation, and it keeps the first slice simple
+- Consequence: the first version will work without a backend, but it will not yet solve backups, multi-device use, or full offline behavior
 
 ## D-005: Use Codex as the Primary Builder
 
@@ -49,3 +49,9 @@ This file records decisions that shape the build. Each decision can be revised l
 - Status: accepted
 - Why: it is permissive, widely understood, and includes a clear warranty and liability disclaimer
 - Consequence: others can reuse the project broadly as long as the license notice is preserved
+
+## D-009: Start With a Single English Tally Screen
+
+- Status: accepted
+- Why: the fastest useful first version is the guest-facing tally screen with no organizer area and no guest model yet
+- Consequence: the initial build will focus on one screen, fixed sample drinks, English UI, and local persistence
