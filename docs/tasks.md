@@ -116,9 +116,9 @@ Target outcome:
 - an Angular app exists in the repo
 - Angular Material is installed and configured
 - NgRx SignalStore is available for the first feature state
-- `npm start` runs the app locally
-- `npm run build` produces a production build
-- `npm test` runs the default unit-test setup
+- `npm start` runs the app locally from `frontend/`
+- `npm run build` produces a production build from `frontend/`
+- `npm test` runs the default unit-test setup from `frontend/`
 
 Status:
 
@@ -129,9 +129,9 @@ Outcome:
 - Angular 21 standalone app scaffolded in the repo
 - Angular Material installed and configured
 - `@ngrx/signals` installed for the first state layer
-- Angular app-specific files moved under `frontend/`
+- Angular app and its Node/Angular toolchain moved under `frontend/`
 - `.nvmrc` works with `nvm use`
-- `npm start`, `npm run build`, and `npm test` are now valid project commands
+- `npm start`, `npm run build`, and `npm test` are valid inside `frontend/`
 
 ### T-005: Build the Guest Tally Screen
 

@@ -5,7 +5,7 @@
     "packageManager": "npm",
     "analytics": false
   },
-  "newProjectRoot": "frontend/projects",
+  "newProjectRoot": "projects",
   "projects": {
     "naud-tally": {
       "projectType": "application",
@@ -14,24 +14,24 @@
           "style": "scss"
         }
       },
-      "root": "frontend",
-      "sourceRoot": "frontend/src",
+      "root": "",
+      "sourceRoot": "src",
       "prefix": "nt",
       "architect": {
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "frontend/src/main.ts",
-            "tsConfig": "frontend/tsconfig.app.json",
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "frontend/public"
+                "input": "public"
               }
             ],
             "styles": [
-              "frontend/src/styles.scss"
+              "src/styles.scss"
             ]
           },
           "configurations": {

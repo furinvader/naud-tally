@@ -54,18 +54,19 @@ This project is licensed under the [MIT License](LICENSE).
 ## Local Setup
 
 1. Run `nvm use`
-2. Run `npm install`
-3. Start the app with `npm start`
+2. Change into `frontend/`
+3. Run `npm install`
+4. Start the app with `npm start`
 
-Useful commands:
+Useful commands in `frontend/`:
 
 - `npm run build`
 - `npm test`
 
 Directory notes:
 
-- monolith-level config stays in the repo root
-- Angular app-specific files live under `frontend/`
+- the repo root is reserved for project docs, GitHub config, and future shared concerns
+- the Angular app and its Node tooling live under `frontend/`
 
 ## Pilot Success
 
