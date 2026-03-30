@@ -1,6 +1,6 @@
 # Task Backlog
 
-This backlog is intentionally ordered around learning and shipping a usable pilot. Scaffolding is listed, but not started yet.
+This backlog is intentionally ordered around learning and shipping a usable pilot. The Angular scaffold is now in place, and the next implementation step is the guest tally screen.
 
 ## Current Status
 
@@ -10,8 +10,8 @@ This backlog is intentionally ordered around learning and shipping a usable pilo
 - Pilot rules: confirmed for the first implementation
 - First vertical slice: defined at the product level
 - Technical stack: chosen
-- App scaffold: not started
-- UI implementation: not started
+- App scaffold: done
+- UI implementation: not started beyond the scaffold placeholder
 
 ## Next Tasks
 
@@ -122,7 +122,15 @@ Target outcome:
 
 Status:
 
-- ready to start
+- done
+
+Outcome:
+
+- Angular 21 standalone app scaffolded in the repo
+- Angular Material installed and configured
+- `@ngrx/signals` installed for the first state layer
+- `.nvmrc` works with `nvm use`
+- `npm start`, `npm run build`, and `npm test` are now valid project commands
 
 ### T-005: Build the Guest Tally Screen
 

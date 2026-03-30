@@ -1,5 +1,37 @@
 .codex
+
+# Build output
+/dist
+/out-tsc
+/bazel-out
+
+# Temporary and cache directories
+/tmp
+/.angular/cache
+.sass-cache/
+/coverage
+
+# Dependencies
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDE and editor files
 .DS_Store
 Thumbs.db
 .idea/
 .vscode/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.history/*
+
+# Miscellaneous
+/connect.lock
+/libpeerconnection.log
+testem.log
+/typings
+__screenshots__/

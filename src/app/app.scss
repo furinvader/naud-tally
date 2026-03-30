@@ -1,0 +1,61 @@
+:host {
+  display: block;
+  min-height: 100dvh;
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.brand {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.phase-label {
+  font-size: 0.875rem;
+  opacity: 0.78;
+}
+
+.app-shell {
+  min-height: calc(100dvh - 64px);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.intro-card {
+  width: min(100%, 680px);
+}
+
+mat-card-content {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+ul {
+  margin: 0;
+  padding-inline-start: 20px;
+}
+
+li + li {
+  margin-top: 8px;
+}
+
+code {
+  font-family: 'Roboto Mono', 'SFMono-Regular', Consolas, monospace;
+}
+
+@media (max-width: 599px) {
+  .app-shell {
+    min-height: calc(100dvh - 56px);
+    padding: 16px;
+  }
+}

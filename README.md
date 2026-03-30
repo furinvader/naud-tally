@@ -11,7 +11,7 @@ The project is also being prepared to live well as an open-source repository wit
 
 ## Current Phase
 
-We are in the `pre-scaffold` phase.
+We are in the `scaffolded` phase.
 
 What exists today:
 
@@ -21,11 +21,12 @@ What exists today:
 - first task backlog
 - agentic workflow notes
 - initial stack decision
+- Angular app scaffold with Material and SignalStore dependencies
 
 What is intentionally not done yet:
 
-- project scaffolding
-- UI implementation
+- guest tally implementation
+- organizer functionality
 - backend implementation
 
 ## Project Principles
@@ -49,6 +50,17 @@ What is intentionally not done yet:
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Local Setup
+
+1. Run `nvm use`
+2. Run `npm install`
+3. Start the app with `npm start`
+
+Useful commands:
+
+- `npm run build`
+- `npm test`
 
 ## Pilot Success
 
