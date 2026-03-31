@@ -8,8 +8,9 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 
 - The Angular app entry point lives in [`src/main.ts`](src/main.ts).
 - App-level wiring stays in [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), [`src/app/app.scss`](src/app/app.scss), [`src/app/app.routes.ts`](src/app/app.routes.ts), and [`src/app/app.config.ts`](src/app/app.config.ts).
+- The current drink tally feature lives in [`src/app/features/tally/drink-tally/`](src/app/features/tally/drink-tally/).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).
-- Existing pilot code may still live directly under [`src/app/`](src/app/), but new feature work should follow the feature structure below.
+- New feature work should follow the feature structure below.
 
 ## Feature Implementation
 
