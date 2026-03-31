@@ -91,3 +91,10 @@ This file records decisions that shape the build. Each decision can be revised l
 - Status: accepted
 - Why: humans and agents both navigate repository context faster when file references are clickable instead of only written as inline code
 - Consequence: when a markdown doc mentions a repo file or directory, it should use a markdown link to that path
+
+## D-016: Organize New Frontend Work Under Feature Areas
+
+- Status: accepted
+- Why: the official [Angular Style Guide](https://angular.dev/style-guide) recommends organizing code by feature areas and grouping closely related files together, which improves discoverability for both humans and agents
+- Consequence: new frontend feature work should live under [`frontend/src/app/features/`](../frontend/src/app/features/), using the pattern `<feature-group>/<feature-name>/`, while app shell and bootstrap files stay under [`frontend/src/app/`](../frontend/src/app/) and [`frontend/src/main.ts`](../frontend/src/main.ts)
+- Consequence: frontend implementation conventions are documented in [`frontend/README.md`](../frontend/README.md) and agents should consult that guide before creating or restructuring frontend features

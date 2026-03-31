@@ -45,6 +45,7 @@ What is intentionally not done yet:
 ## Docs
 
 - [Publishing Workflow](docs/workflows/publish.md)
+- [Frontend Guide](frontend/README.md)
 - [Product](docs/product.md)
 - [Agentic Workflow](docs/agentic-workflow.md)
 - [Decisions](docs/decisions.md)

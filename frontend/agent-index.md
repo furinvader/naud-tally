@@ -6,9 +6,12 @@ Read this file before exploring files under [`frontend/`](./).
 
 - Read the current task brief from [`../docs/tasks/agent-index.md`](../docs/tasks/agent-index.md) before changing frontend behavior.
 - Re-read [`../docs/product.md`](../docs/product.md) only if the task changes product behavior or UX expectations.
+- Before creating a new feature or restructuring frontend files, read [`README.md#feature-implementation`](README.md#feature-implementation).
 
 ## File Routing
 
+- For frontend structure and feature-creation rules, read [`README.md`](README.md).
+- Put new feature work under [`src/app/features/`](src/app/features/), unless the change is specifically app shell or bootstrap wiring.
 - For the main screen and layout, read [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), and [`src/app/app.scss`](src/app/app.scss).
 - For tally state and persistence, read [`src/app/drink-tally.store.ts`](src/app/drink-tally.store.ts) and [`src/app/drink-tally.store.spec.ts`](src/app/drink-tally.store.spec.ts).
 - For app-level UI tests, read [`src/app/app.spec.ts`](src/app/app.spec.ts).
@@ -27,3 +30,4 @@ Run from [`frontend/`](./):
 - Keep the pilot local-first unless a task explicitly changes that.
 - Avoid expanding beyond the current task brief.
 - Update docs if the implementation changes product scope or decisions.
+- Update [`README.md`](README.md) if the frontend feature structure or default Angular conventions change.
