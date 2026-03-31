@@ -12,9 +12,10 @@ Read this file before exploring files under [`frontend/`](./).
 
 - For frontend structure and feature-creation rules, read [`README.md`](README.md).
 - Put new feature work under [`src/app/features/`](src/app/features/), unless the change is specifically app shell or bootstrap wiring.
-- For the main screen and layout, read [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), and [`src/app/app.scss`](src/app/app.scss).
-- For tally state and persistence, read [`src/app/drink-tally.store.ts`](src/app/drink-tally.store.ts) and [`src/app/drink-tally.store.spec.ts`](src/app/drink-tally.store.spec.ts).
-- For app-level UI tests, read [`src/app/app.spec.ts`](src/app/app.spec.ts).
+- For the current drink tally feature, read [`src/app/features/tally/drink-tally/drink-tally.ts`](src/app/features/tally/drink-tally/drink-tally.ts), [`src/app/features/tally/drink-tally/drink-tally.html`](src/app/features/tally/drink-tally/drink-tally.html), and [`src/app/features/tally/drink-tally/drink-tally.scss`](src/app/features/tally/drink-tally/drink-tally.scss).
+- For tally state and persistence, read [`src/app/features/tally/drink-tally/drink-tally.store.ts`](src/app/features/tally/drink-tally/drink-tally.store.ts) and [`src/app/features/tally/drink-tally/drink-tally.store.spec.ts`](src/app/features/tally/drink-tally/drink-tally.store.spec.ts).
+- For feature-level UI tests, read [`src/app/features/tally/drink-tally/drink-tally.spec.ts`](src/app/features/tally/drink-tally/drink-tally.spec.ts).
+- For the app shell that hosts the feature, read [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), [`src/app/app.scss`](src/app/app.scss), and [`src/app/app.spec.ts`](src/app/app.spec.ts).
 - For bootstrap and app wiring, read [`src/main.ts`](src/main.ts), [`src/app/app.config.ts`](src/app/app.config.ts), and [`src/app/app.routes.ts`](src/app/app.routes.ts).
 - For global styling, read [`src/styles.scss`](src/styles.scss).
 
