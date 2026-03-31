@@ -6,7 +6,7 @@ This is the first routing file for every agent task in this repository.
 
 - Goal 1 is the current priority: improve the repository for agentic AI development and learning.
 - The first product slice is already merged.
-- The next product implementation task is [`T-006`](docs/tasks/T-006.md), but the next planning task is [`T-010`](docs/tasks/T-010.md) to choose a design solution before more product work continues.
+- The next product implementation task is [`T-006`](docs/tasks/open/T-006.md), but the next planning task is [`T-010`](docs/tasks/open/T-010.md) to choose a design solution before more product work continues.
 
 ## Routing
 
