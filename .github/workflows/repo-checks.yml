@@ -36,6 +36,8 @@ jobs:
             docs/agent-decisions.md
             docs/tasks.md
             docs/tasks/agent-index.md
+            docs/tasks/open/agent-index.md
+            docs/tasks/done/agent-index.md
             docs/workflows/agent-index.md
             docs/workflows/publish.md
             docs/github-setup.md
@@ -64,7 +66,7 @@ jobs:
         run: |
           mapfile -t decision_files < <(find . -type f -name 'agent-decisions.md' | sort)
           decision_dupes="$(grep -hE '^## ' "${decision_files[@]}" | sort | uniq -d)"
-          task_dupes="$(grep -RhoE '^# T-[0-9]+' docs/tasks/*.md | sort | uniq -d)"
+          task_dupes="$(find docs/tasks -type f -name 'T-*.md' -exec grep -hE '^# T-[0-9]+' {} + | sort | uniq -d)"
 
           if [ -n "$decision_dupes" ]; then
             echo "Duplicate decision titles found:"
@@ -77,6 +79,29 @@ jobs:
             echo "$task_dupes"
             exit 1
           fi
+
+      - name: Verify task folder matches task status
+        run: |
+          while IFS= read -r file; do
+            folder="$(basename "$(dirname "$file")")"
+            status="$(awk '
+              /^## Status$/ { getline; getline; sub(/^- /, "", $0); print; exit }
+            ' "$file")"
+
+            if [ "$status" != "open" ] && [ "$status" != "done" ]; then
+              echo "Unsupported task status in: $file"
+              echo "Allowed statuses: open, done"
+              echo "Actual status: $status"
+              exit 1
+            fi
+
+            if [ "$folder" != "$status" ]; then
+              echo "Task file status folder mismatch: $file"
+              echo "Expected folder: $status"
+              echo "Actual folder: $folder"
+              exit 1
+            fi
+          done < <(find docs/tasks -mindepth 2 -maxdepth 2 -type f -name 'T-*.md' | sort)
 
       - name: Verify pull request title matches publish rules
         if: github.event_name == 'pull_request'
