@@ -14,6 +14,10 @@
 4. Before reading files under [`docs/workflows/`](docs/workflows/), read [`docs/workflows/agent-index.md`](docs/workflows/agent-index.md).
 5. Before reading files under [`frontend/`](frontend/), read [`frontend/agent-index.md`](frontend/agent-index.md).
 
+## Runtime Setup Rule
+
+- Before running frontend `npm` or `ng` commands, follow the runtime setup note in [`frontend/agent-index.md`](frontend/agent-index.md).
+
 ## Publish-Time Rule
 
 - Read [`docs/workflows/publish.md`](docs/workflows/publish.md) only when creating or renaming a branch, writing a commit title meant to stay in history, or opening, renaming, or updating a pull request.
