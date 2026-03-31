@@ -4,9 +4,16 @@ This guide explains how frontend work should be structured in this repository.
 
 It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to this project so humans and agents can implement features consistently.
 
+## Runtime Setup
+
+- The frontend Node version is pinned in [`.nvmrc`](.nvmrc).
+- Before running `npm` or `ng` commands in a new shell session, run `nvm use` from [`frontend/`](./).
+- Reuse the same shell session for multiple frontend commands when possible.
+
 ## Current Frontend Layout
 
 - The Angular app entry point lives in [`src/main.ts`](src/main.ts).
+- Frontend-specific Node tooling is pinned in [`.nvmrc`](.nvmrc).
 - App-level wiring stays in [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), [`src/app/app.scss`](src/app/app.scss), [`src/app/app.routes.ts`](src/app/app.routes.ts), and [`src/app/app.config.ts`](src/app/app.config.ts).
 - The current drink tally feature lives in [`src/app/features/tally/drink-tally/`](src/app/features/tally/drink-tally/).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).

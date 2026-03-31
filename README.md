@@ -58,8 +58,8 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Local Setup
 
-1. Run `nvm use`
-2. Change into [`frontend/`](frontend/)
+1. Change into [`frontend/`](frontend/)
+2. Run `nvm use`
 3. Run `npm install`
 4. Start the app with `npm start`
 

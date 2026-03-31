@@ -11,6 +11,7 @@ Read this file before exploring files under [`frontend/`](./).
 ## File Routing
 
 - For frontend structure and feature-creation rules, read [`README.md`](README.md).
+- For frontend runtime setup and local commands, read [`README.md#runtime-setup`](README.md#runtime-setup).
 - Put new feature work under [`src/app/features/`](src/app/features/), unless the change is specifically app shell or bootstrap wiring.
 - For the current drink tally feature, read [`src/app/features/tally/drink-tally/drink-tally.ts`](src/app/features/tally/drink-tally/drink-tally.ts), [`src/app/features/tally/drink-tally/drink-tally.html`](src/app/features/tally/drink-tally/drink-tally.html), and [`src/app/features/tally/drink-tally/drink-tally.scss`](src/app/features/tally/drink-tally/drink-tally.scss).
 - For tally state and persistence, read [`src/app/features/tally/drink-tally/drink-tally.store.ts`](src/app/features/tally/drink-tally/drink-tally.store.ts) and [`src/app/features/tally/drink-tally/drink-tally.store.spec.ts`](src/app/features/tally/drink-tally/drink-tally.store.spec.ts).
@@ -20,6 +21,8 @@ Read this file before exploring files under [`frontend/`](./).
 - For global styling, read [`src/styles.scss`](src/styles.scss).
 
 ## Validation
+
+Before running `npm` or `ng` commands in a new shell session, run `nvm use` from [`frontend/`](./) so Node matches [`.nvmrc`](.nvmrc). Reuse the same shell session for multiple frontend commands when possible.
 
 Run from [`frontend/`](./):
 

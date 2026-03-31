@@ -66,7 +66,7 @@ This file records decisions that shape the build. Each decision can be revised l
 
 - Status: accepted
 - Why: Angular's current compatibility guide supports Node `^24.0.0`, and Node `24.14.0` is a current release in that supported major line
-- Consequence: the repo uses [`.nvmrc`](../.nvmrc), and local work should start with `nvm use` before installing or running Angular tooling
+- Consequence: the frontend app uses [`frontend/.nvmrc`](../frontend/.nvmrc), and local frontend work should start with `nvm use` inside [`frontend/`](../frontend/) before installing or running Angular tooling
 
 ## D-012: Keep the Angular App Under [`frontend/`](../frontend/)
 
