@@ -9,24 +9,28 @@ This repository is intentionally starting with documentation before scaffolding.
 
 The project is also being prepared to live well as an open-source repository with a clean public history and visible GitHub workflow activity.
 
+The repo now uses [`AGENTS.md`](AGENTS.md) plus small [`agent-index.md`](agent-index.md) files so future agent sessions can recover context from the repository instead of relying on chat history.
+
 ## Current Phase
 
-We are in the `scaffolded` phase.
+We have shipped the first guest tally slice and are now improving the repository's agent-facing structure before continuing with the next product slice.
 
 What exists today:
 
 - project vision
 - pilot product scope
 - decision log
-- first task backlog
+- task index with per-task briefs
+- agent routing docs
 - agentic workflow notes
 - initial stack decision
-- Angular app scaffold under `frontend/` with Material and SignalStore dependencies
+- Angular app scaffold under [`frontend/`](frontend/) with Material and SignalStore dependencies
+- first guest tally screen with reload-safe local persistence
 
 What is intentionally not done yet:
 
-- guest tally implementation
 - organizer functionality
+- guest-based tracking
 - backend implementation
 
 ## Project Principles
@@ -40,10 +44,10 @@ What is intentionally not done yet:
 
 ## Docs
 
+- [Publishing Workflow](docs/workflows/publish.md)
 - [Product](docs/product.md)
 - [Agentic Workflow](docs/agentic-workflow.md)
 - [Decisions](docs/decisions.md)
-- [Tasks](docs/tasks.md)
 - [GitHub Setup](docs/github-setup.md)
 - [Contributing](CONTRIBUTING.md)
 
@@ -54,11 +58,11 @@ This project is licensed under the [MIT License](LICENSE).
 ## Local Setup
 
 1. Run `nvm use`
-2. Change into `frontend/`
+2. Change into [`frontend/`](frontend/)
 3. Run `npm install`
 4. Start the app with `npm start`
 
-Useful commands in `frontend/`:
+Useful commands in [`frontend/`](frontend/):
 
 - `npm run build`
 - `npm test`
@@ -66,7 +70,7 @@ Useful commands in `frontend/`:
 Directory notes:
 
 - the repo root is reserved for project docs, GitHub config, and future shared concerns
-- the Angular app and its Node tooling live under `frontend/`
+- the Angular app and its Node tooling live under [`frontend/`](frontend/)
 
 ## Pilot Success
 

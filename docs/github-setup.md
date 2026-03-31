@@ -45,19 +45,20 @@ Why:
 ### Actions
 
 - Keep GitHub Actions enabled.
-- Use the `Repo Checks` workflow as the minimum required status check.
+- Use the [`Repo Checks`](../.github/workflows/repo-checks.yml) workflow as the minimum required status check.
 
 Why:
 
 - creates visible workflow activity on pushes and PRs
+- enforces pull request title naming so squash commits stay consistent
 - gives the repo an observable engineering rhythm, even early
 
 ## Repository Files Added for This Goal
 
-- `CONTRIBUTING.md`
-- `.github/pull_request_template.md`
-- `.github/workflows/repo-checks.yml`
-- `.gitignore`
+- [`CONTRIBUTING.md`](../CONTRIBUTING.md)
+- [`.github/pull_request_template.md`](../.github/pull_request_template.md)
+- [`.github/workflows/repo-checks.yml`](../.github/workflows/repo-checks.yml)
+- [`.gitignore`](../.gitignore)
 
 These files support the public workflow, but they do not replace the manual GitHub settings above.
 
@@ -65,7 +66,7 @@ These files support the public workflow, but they do not replace the manual GitH
 
 The repository uses the `MIT` license.
 
-Keep the `LICENSE` file in the repo root and preserve the license notice in distributed copies.
+Keep the [`LICENSE`](../LICENSE) file in the repo root and preserve the license notice in distributed copies.
 
 ## Suggested Publishing Checklist
 
@@ -74,4 +75,4 @@ Keep the `LICENSE` file in the repo root and preserve the license notice in dist
 - protect `main`
 - require the `Repo Checks` workflow
 - enable auto-delete for merged branches
-- create the first issues from `docs/tasks.md`
+- create the first issues from [`docs/tasks/agent-index.md`](tasks/agent-index.md)

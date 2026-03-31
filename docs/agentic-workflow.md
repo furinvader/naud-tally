@@ -12,6 +12,13 @@ This document captures how we want to work with Codex so the lessons from this p
 - Review behavior, not just generated code.
 - Record decisions so future prompts stay grounded.
 
+## Repo Context Routing
+
+- [`AGENTS.md`](../AGENTS.md) is the repo-level instruction layer for agent behavior.
+- [`agent-index.md`](../agent-index.md) files are the small routing files at the repo root and key subtrees.
+- Start with the repo root index, then read the nearest relevant subtree index before opening other files there.
+- Load [`docs/workflows/publish.md`](workflows/publish.md) only when branch, commit, or pull request work is happening.
+
 ## Recommended Working Loop
 
 1. Update the docs if the product or constraints changed.
@@ -47,10 +54,11 @@ When Codex completes a task, review these points:
 
 ## Documentation Rules
 
-- `README.md` explains the project at a glance.
-- `docs/product.md` is the source of truth for product scope.
-- `docs/decisions.md` records decisions and tradeoffs.
-- `docs/tasks.md` holds the next actionable work items.
+- [`README.md`](../README.md) explains the project at a glance.
+- [`docs/product.md`](product.md) is the source of truth for product scope.
+- [`docs/decisions.md`](decisions.md) records decisions and tradeoffs.
+- [`docs/tasks/agent-index.md`](tasks/agent-index.md) routes to the current task briefs.
+- when a markdown doc mentions a repo file or directory, it should use a markdown link to that path
 
 If a prompt depends on knowledge that should matter next week, it belongs in the repo docs.
 

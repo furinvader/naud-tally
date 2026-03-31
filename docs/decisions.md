@@ -66,10 +66,28 @@ This file records decisions that shape the build. Each decision can be revised l
 
 - Status: accepted
 - Why: Angular's current compatibility guide supports Node `^24.0.0`, and Node `24.14.0` is a current release in that supported major line
-- Consequence: the repo uses `.nvmrc`, and local work should start with `nvm use` before installing or running Angular tooling
+- Consequence: the repo uses [`.nvmrc`](../.nvmrc), and local work should start with `nvm use` before installing or running Angular tooling
 
-## D-012: Keep the Angular App Under `frontend/`
+## D-012: Keep the Angular App Under [`frontend/`](../frontend/)
 
 - Status: accepted
 - Why: the project is intended to grow as a monolith, so the repo root should stay focused on project-level concerns while the browser app remains self-contained
-- Consequence: Angular and Node files such as `angular.json`, `package.json`, `package-lock.json`, `tsconfig*.json`, `.angular`, and `node_modules` live under `frontend/`, while the repo root stays reserved for shared docs, GitHub config, and top-level metadata
+- Consequence: Angular and Node files such as [`frontend/angular.json`](../frontend/angular.json), [`frontend/package.json`](../frontend/package.json), [`frontend/package-lock.json`](../frontend/package-lock.json), [`frontend/tsconfig.json`](../frontend/tsconfig.json), [`frontend/tsconfig.app.json`](../frontend/tsconfig.app.json), and [`frontend/tsconfig.spec.json`](../frontend/tsconfig.spec.json) live under [`frontend/`](../frontend/), while the repo root stays reserved for shared docs, GitHub config, and top-level metadata
+
+## D-013: Route Agents Through [`AGENTS.md`](../AGENTS.md) and [`agent-index.md`](../agent-index.md)
+
+- Status: accepted
+- Why: chat context is temporary, so the repository needs small, reliable entrypoints that let agents recover the right context quickly
+- Consequence: agents should start with [`AGENTS.md`](../AGENTS.md) and the nearest relevant [`agent-index.md`](../agent-index.md), following links instead of scanning broad docs by default
+
+## D-014: Load Publish Rules Only at Publish Time
+
+- Status: accepted
+- Why: branch, commit, and pull request naming conventions matter, but they should not add noise to implementation context before they are needed
+- Consequence: publish-time naming rules live in [`docs/workflows/publish.md`](workflows/publish.md) and should be consulted when branching, committing, or opening or updating a pull request
+
+## D-015: Link Repo File References in Markdown Docs
+
+- Status: accepted
+- Why: humans and agents both navigate repository context faster when file references are clickable instead of only written as inline code
+- Consequence: when a markdown doc mentions a repo file or directory, it should use a markdown link to that path

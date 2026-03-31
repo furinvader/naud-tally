@@ -25,14 +25,21 @@ jobs:
       - name: Verify required files exist
         run: |
           required_files=(
+            AGENTS.md
+            agent-index.md
             README.md
             LICENSE
             CONTRIBUTING.md
+            docs/agent-index.md
             docs/product.md
             docs/agentic-workflow.md
             docs/decisions.md
             docs/tasks.md
+            docs/tasks/agent-index.md
+            docs/workflows/agent-index.md
+            docs/workflows/publish.md
             docs/github-setup.md
+            frontend/agent-index.md
           )
 
           for file in "${required_files[@]}"; do
@@ -54,7 +61,7 @@ jobs:
       - name: Verify unique decision and task identifiers
         run: |
           decision_dupes="$(grep -oE '^## D-[0-9]+' docs/decisions.md | sort | uniq -d)"
-          task_dupes="$(grep -oE '^### T-[0-9]+' docs/tasks.md | sort | uniq -d)"
+          task_dupes="$(grep -RhoE '^# T-[0-9]+' docs/tasks/*.md | sort | uniq -d)"
 
           if [ -n "$decision_dupes" ]; then
             echo "Duplicate decision IDs found:"
@@ -68,10 +75,31 @@ jobs:
             exit 1
           fi
 
+      - name: Verify pull request title matches publish rules
+        if: github.event_name == 'pull_request'
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          pattern='^(feat|fix|docs|chore|refactor|test): .+$'
+
+          if [[ ! "$PR_TITLE" =~ $pattern ]]; then
+            echo "Pull request title must match '<type>: <summary>'."
+            echo "Allowed types: feat, fix, docs, chore, refactor, test."
+            echo "Current title: $PR_TITLE"
+            exit 1
+          fi
+
+          if [[ "$PR_TITLE" =~ [[:space:]]$ ]]; then
+            echo "Pull request title must not end with whitespace."
+            echo "Current title: $PR_TITLE"
+            exit 1
+          fi
+
       - name: Verify README references the core docs
         run: |
+          grep -q 'docs/workflows/publish.md' README.md
           grep -q 'docs/product.md' README.md
           grep -q 'docs/agentic-workflow.md' README.md
           grep -q 'docs/decisions.md' README.md
-          grep -q 'docs/tasks.md' README.md
           grep -q 'docs/github-setup.md' README.md
+          grep -q 'CONTRIBUTING.md' README.md
