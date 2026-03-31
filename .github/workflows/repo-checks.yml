@@ -33,7 +33,7 @@ jobs:
             docs/agent-index.md
             docs/product.md
             docs/agentic-workflow.md
-            docs/decisions.md
+            docs/agent-decisions.md
             docs/tasks.md
             docs/tasks/agent-index.md
             docs/workflows/agent-index.md
@@ -41,6 +41,7 @@ jobs:
             docs/github-setup.md
             frontend/README.md
             frontend/agent-index.md
+            frontend/agent-decisions.md
           )
 
           for file in "${required_files[@]}"; do
@@ -59,13 +60,14 @@ jobs:
             fi
           done < <(find . -type f -name "*.md" -not -path "./.git/*" | sort)
 
-      - name: Verify unique decision and task identifiers
+      - name: Verify unique decision titles and task identifiers
         run: |
-          decision_dupes="$(grep -oE '^## D-[0-9]+' docs/decisions.md | sort | uniq -d)"
+          mapfile -t decision_files < <(find . -type f -name 'agent-decisions.md' | sort)
+          decision_dupes="$(grep -hE '^## ' "${decision_files[@]}" | sort | uniq -d)"
           task_dupes="$(grep -RhoE '^# T-[0-9]+' docs/tasks/*.md | sort | uniq -d)"
 
           if [ -n "$decision_dupes" ]; then
-            echo "Duplicate decision IDs found:"
+            echo "Duplicate decision titles found:"
             echo "$decision_dupes"
             exit 1
           fi
@@ -102,6 +104,6 @@ jobs:
           grep -q 'frontend/README.md' README.md
           grep -q 'docs/product.md' README.md
           grep -q 'docs/agentic-workflow.md' README.md
-          grep -q 'docs/decisions.md' README.md
+          grep -q 'docs/agent-decisions.md' README.md
           grep -q 'docs/github-setup.md' README.md
           grep -q 'CONTRIBUTING.md' README.md

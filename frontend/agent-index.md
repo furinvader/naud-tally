@@ -6,6 +6,7 @@ Read this file before exploring files under [`frontend/`](./).
 
 - Read the current task brief from [`../docs/tasks/agent-index.md`](../docs/tasks/agent-index.md) before changing frontend behavior.
 - Re-read [`../docs/product.md`](../docs/product.md) only if the task changes product behavior or UX expectations.
+- If the task changes frontend architecture, tooling, runtime setup, or default conventions, read [`agent-decisions.md`](agent-decisions.md).
 - Before creating a new feature or restructuring frontend files, read [`README.md#feature-implementation`](README.md#feature-implementation).
 
 ## File Routing
@@ -33,5 +34,6 @@ Run from [`frontend/`](./):
 
 - Keep the pilot local-first unless a task explicitly changes that.
 - Avoid expanding beyond the current task brief.
-- Update docs if the implementation changes product scope or decisions.
+- Update [`agent-decisions.md`](agent-decisions.md) if the implementation changes frontend-local decisions.
+- Update [`../docs/agent-decisions.md`](../docs/agent-decisions.md) if the change affects a repo-wide decision.
 - Update [`README.md`](README.md) if the frontend feature structure or default Angular conventions change.

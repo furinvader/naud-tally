@@ -26,6 +26,7 @@
 ## Documentation Update Rule
 
 - If product scope changes, update [`docs/product.md`](docs/product.md) and any other affected product docs.
-- If a workflow or architecture decision changes, update [`docs/decisions.md`](docs/decisions.md).
+- If a repo-wide workflow or architecture decision changes, update [`docs/agent-decisions.md`](docs/agent-decisions.md).
+- If a local architecture, tooling, or convention decision changes, update the nearest relevant local decision file, such as [`frontend/agent-decisions.md`](frontend/agent-decisions.md).
 - If task state changes, update the relevant task file and [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md).
 - When a markdown doc mentions a repo file or directory, use a markdown link to that path.

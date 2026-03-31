@@ -48,7 +48,7 @@ What is intentionally not done yet:
 - [Frontend Guide](frontend/README.md)
 - [Product](docs/product.md)
 - [Agentic Workflow](docs/agentic-workflow.md)
-- [Decisions](docs/decisions.md)
+- [Agent Decisions](docs/agent-decisions.md)
 - [GitHub Setup](docs/github-setup.md)
 - [Contributing](CONTRIBUTING.md)
 
