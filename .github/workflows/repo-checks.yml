@@ -60,18 +60,14 @@ jobs:
             fi
           done < <(find . -type f -name "*.md" -not -path "./.git/*" | sort)
 
-      - name: Verify unique decision and task identifiers
+      - name: Verify unique decision titles and task identifiers
         run: |
-          decision_files=(docs/agent-decisions.md)
-          while IFS= read -r file; do
-            decision_files+=("$file")
-          done < <(find . -type f -name 'agent-decisions.md' | sort)
-
-          decision_dupes="$(grep -hE '^## D-[0-9]+' "${decision_files[@]}" | sort | uniq -d)"
+          mapfile -t decision_files < <(find . -type f -name 'agent-decisions.md' | sort)
+          decision_dupes="$(grep -hE '^## ' "${decision_files[@]}" | sort | uniq -d)"
           task_dupes="$(grep -RhoE '^# T-[0-9]+' docs/tasks/*.md | sort | uniq -d)"
 
           if [ -n "$decision_dupes" ]; then
-            echo "Duplicate decision IDs found:"
+            echo "Duplicate decision titles found:"
             echo "$decision_dupes"
             exit 1
           fi
