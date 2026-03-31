@@ -16,6 +16,8 @@ This project is being prepared as a public, portfolio-friendly repository. That 
 
 Use short-lived branches from `main`.
 
+For exact branch, commit, and PR naming patterns, use [`docs/workflows/publish.md`](docs/workflows/publish.md).
+
 Suggested branch name styles:
 
 - `docs/open-source-setup`
@@ -37,9 +39,13 @@ Because we want a clean public history, assume that:
 - intermediate branch commits can be messy while working
 - `main` should stay readable as a high-level story of the project
 
+See [`docs/workflows/publish.md`](docs/workflows/publish.md) for the exact publish-time naming pattern.
+
 ## Commit Guidance
 
 You do not need perfect local commits on a branch if the final PR is clean.
+
+The exact publish-time branch, commit, and PR naming rules live in [`docs/workflows/publish.md`](docs/workflows/publish.md).
 
 Useful commit title styles:
 
@@ -52,10 +58,11 @@ Useful commit title styles:
 
 If a change affects product behavior or architecture, update the relevant file:
 
-- `README.md` for project overview
-- `docs/product.md` for product scope
-- `docs/decisions.md` for important decisions
-- `docs/tasks.md` for backlog and next steps
+- [`README.md`](README.md) for project overview
+- [`docs/product.md`](docs/product.md) for product scope
+- [`docs/decisions.md`](docs/decisions.md) for important decisions
+- [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md) and the relevant task file for backlog and next steps
+- when a markdown doc mentions a repo file or directory, use a markdown link to that path
 
 ## Before Merging
 
