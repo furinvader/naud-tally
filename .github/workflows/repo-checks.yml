@@ -39,6 +39,7 @@ jobs:
             docs/workflows/agent-index.md
             docs/workflows/publish.md
             docs/github-setup.md
+            frontend/README.md
             frontend/agent-index.md
           )
 
@@ -98,6 +99,7 @@ jobs:
       - name: Verify README references the core docs
         run: |
           grep -q 'docs/workflows/publish.md' README.md
+          grep -q 'frontend/README.md' README.md
           grep -q 'docs/product.md' README.md
           grep -q 'docs/agentic-workflow.md' README.md
           grep -q 'docs/decisions.md' README.md
