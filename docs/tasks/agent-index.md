@@ -13,6 +13,7 @@ Each task file should use this order:
 - `Out of scope`
 - `Likely files`
 - `Related docs`
+- `Recommendations` or `Research notes`, if the task is evaluative
 - `Outcome`, if the task is done
 
 ## Load Rules
@@ -22,10 +23,11 @@ Each task file should use this order:
 
 ## Current Priority
 
-- [T-006 Add Organizer Controls](T-006.md)
+- [T-010 Choose a Design Solution](T-010.md)
 
 ## Open Tasks
 
+- [T-010 Choose a Design Solution](T-010.md)
 - [T-006 Add Organizer Controls](T-006.md)
 - [T-007 Test the Pilot in a Real Usage Scenario](T-007.md)
 - [T-008 Add i18n Support](T-008.md)
