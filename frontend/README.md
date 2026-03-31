@@ -64,4 +64,5 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 
 - Update this file if the frontend directory shape changes.
 - Update this file if the project adopts additional Angular conventions that should be followed by default.
-- If the change is architectural, also update [`../docs/decisions.md`](../docs/decisions.md).
+- If the change affects frontend-local architecture, tooling, or conventions, also update [`agent-decisions.md`](agent-decisions.md).
+- If the change affects a repo-wide decision, also update [`../docs/agent-decisions.md`](../docs/agent-decisions.md).

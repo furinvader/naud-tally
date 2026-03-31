@@ -56,7 +56,8 @@ When Codex completes a task, review these points:
 
 - [`README.md`](../README.md) explains the project at a glance.
 - [`docs/product.md`](product.md) is the source of truth for product scope.
-- [`docs/decisions.md`](decisions.md) records decisions and tradeoffs.
+- [`docs/agent-decisions.md`](agent-decisions.md) records repository-wide decisions and tradeoffs.
+- local [`agent-decisions.md`](../frontend/agent-decisions.md) files record area-specific decisions next to the relevant [`agent-index.md`](../frontend/agent-index.md).
 - [`docs/tasks/agent-index.md`](tasks/agent-index.md) routes to the current task briefs.
 - when a markdown doc mentions a repo file or directory, it should use a markdown link to that path
 
