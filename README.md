@@ -31,7 +31,7 @@ What exists today:
 What is intentionally not done yet:
 
 - organizer functionality
-- guest-based tracking
+- guest tabs and trust-based identification
 - backend implementation
 
 ## Project Principles
@@ -49,6 +49,7 @@ What is intentionally not done yet:
 - [Frontend Guide](frontend/README.md)
 - [Design Artifacts](docs/design/README.md)
 - [Product](docs/product.md)
+- [Guest Tab UX](docs/ux/guest-tab-ux.md)
 - [Agentic Workflow](docs/agentic-workflow.md)
 - [Agent Decisions](docs/agent-decisions.md)
 - [GitHub Setup](docs/github-setup.md)
@@ -81,9 +82,10 @@ Directory notes:
 The pilot is successful if:
 
 - a guest can use the app on a tablet without explanation
+- guest identification with room number and full name is quick and obvious
 - drink choices are fast to record with large touch targets
 - counts survive a page reload or accidental refresh
-- the first implementation stays focused on the guest-facing tally screen
+- the current pilot stays focused on the single-screen guest-tab flow
 - the build process teaches a repeatable Codex-driven workflow
 
 ## Notes

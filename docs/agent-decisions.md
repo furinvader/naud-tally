@@ -21,7 +21,7 @@ This file records repository-wide decisions that shape the build. Each decision 
 
 - Status: accepted
 - Why: a small vertical slice teaches more than an oversized backlog that never ships
-- Consequence: the first version focuses on counting drinks on a shared tablet, not broader guest or organizer management
+- Consequence: the first version focuses on counting drinks on a shared tablet before evolving into guest tabs or organizer management
 
 ## Optimize for Tablet-First Web Delivery
 
@@ -64,6 +64,20 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Status: accepted
 - Why: the fastest useful first version is the guest-facing tally screen with no organizer area and no guest model yet
 - Consequence: the initial build will focus on one screen, fixed sample drinks, English UI, and local persistence
+- Consequence: later guest-identification changes should preserve the one-screen constraint when possible
+
+## Evolve to a Single-Screen Guest-Tab Flow
+
+- Status: accepted
+- Why: the host must bill guests on departure, so anonymous totals are not accurate enough
+- Why: room number and full name are the only practical trust-based identifiers available to the app today
+- Why: the product should stay close to a real tally by keeping the overview visible and avoiding repeated input
+- Supporting UX reference: [`ux/guest-tab-ux.md`](ux/guest-tab-ux.md)
+- Consequence: guest identification becomes required before drinks can be recorded
+- Consequence: guests are represented in local app state by room number, full name, and drink counts
+- Consequence: the main screen should keep drink controls and open guest tabs visible together instead of splitting the flow across multiple screens
+- Consequence: returning guests should select an existing tab instead of retyping their identity details
+- Consequence: future shortcuts such as QR identification can be explored later, but they are out of current scope
 
 ## Route Agents Through [`AGENTS.md`](../AGENTS.md) and [`agent-index.md`](../agent-index.md)
 
