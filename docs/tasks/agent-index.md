@@ -22,8 +22,10 @@ Each task file should use this order:
 - `Out of scope`
 - `Likely files`
 - `Related docs`
-- `Recommendations` or `Research notes`, if the task is evaluative
+- `Recommendations`, if the task is evaluative
 - `Outcome`, if the task is done
+
+Supporting research belongs in [`docs/research/agent-index.md`](../research/agent-index.md). Link the relevant research brief from `Related docs` instead of adding a `Research Notes` section to the task file.
 
 ## Load Rules
 

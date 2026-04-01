@@ -13,6 +13,7 @@ This is the first routing file for every agent task in this repository.
 ## Routing
 
 - For product, decision, or documentation context, read [`docs/agent-index.md`](docs/agent-index.md).
+- For research briefs, read [`docs/research/agent-index.md`](docs/research/agent-index.md).
 - For backlog and current task briefs, read [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md).
 - For design workflows, briefs, and committed artifacts, read [`docs/design/agent-index.md`](docs/design/agent-index.md).
 - For frontend implementation work, read [`frontend/agent-index.md`](frontend/agent-index.md).

@@ -59,6 +59,7 @@ When Codex completes a task, review these points:
 - [`README.md`](../README.md) explains the project at a glance.
 - [`docs/product.md`](product.md) is the source of truth for product scope.
 - [`docs/agent-decisions.md`](agent-decisions.md) records repository-wide decisions and tradeoffs.
+- [`docs/research/agent-index.md`](research/agent-index.md) routes to reusable research briefs.
 - [`docs/design/penpot-codex-workflow.md`](design/penpot-codex-workflow.md) explains how Penpot should be used in a Codex-first workflow.
 - local [`agent-decisions.md`](../frontend/agent-decisions.md) files record area-specific decisions next to the relevant [`agent-index.md`](../frontend/agent-index.md).
 - [`docs/tasks/agent-index.md`](tasks/agent-index.md) routes to the current task briefs.

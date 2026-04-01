@@ -83,6 +83,15 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Why: humans and agents both navigate repository context faster when file references are clickable instead of only written as inline code
 - Consequence: when a markdown doc mentions a repo file or directory, it should use a markdown link to that path
 
+## Keep Research Briefs Under [`docs/research/`](research/)
+
+- Status: accepted
+- Why: research findings often support more than one task and stay more useful when they are stored as reusable docs instead of being buried inside task history
+- Consequence: research briefs live under [`docs/research/`](research/) with a small routing index at [`docs/research/agent-index.md`](research/agent-index.md)
+- Consequence: keep the research folder flat for now and use topic-based filenames so multiple tasks can link to the same brief
+- Consequence: research briefs do not need a `Status` section unless a future workflow explicitly requires one
+- Consequence: task files should link to the relevant research brief from `Related docs` instead of embedding `Research Notes` sections
+
 ## Use Penpot as the Primary Design Workspace
 
 - Status: accepted
