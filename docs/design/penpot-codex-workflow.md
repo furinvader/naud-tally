@@ -24,19 +24,19 @@
 
 ## Project-Scoped Codex Config
 
-- Codex supports project-scoped MCP configuration through `.codex/config.toml`.
+- Codex supports project-scoped MCP configuration through [`.codex/config.toml`](../../.codex/config.toml).
 - This repository now uses that standard path directly in [`.codex/config.toml`](../../.codex/config.toml).
 - The global Codex config must mark the repo as trusted before Codex loads project-scoped config.
 - [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh) is now only a convenience launcher that opens Codex in the repo root.
 
 ## First-Time Setup
 
-1. Start the Penpot MCP services with `./scripts/penpot-mcp.sh`.
+1. Start the Penpot MCP services with [`./scripts/penpot-mcp.sh`](../../scripts/penpot-mcp.sh).
 2. Open Penpot in the browser and create or open a blank file for the session.
 3. In that file, open `Plugins` and load `http://localhost:4400/manifest.json`.
 4. In the plugin UI, click `Connect to MCP server`.
 5. Keep the plugin UI open while Codex is working with Penpot.
-6. Start Codex from the repo root with `codex` or `./scripts/codex-penpot.sh`.
+6. Start Codex from the repo root with `codex` or [`./scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh).
 
 ## Per-Session Workflow
 

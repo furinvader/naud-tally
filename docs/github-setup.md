@@ -51,6 +51,7 @@ Why:
 
 - creates visible workflow activity on pushes and PRs
 - enforces pull request title naming so squash commits stay consistent
+- catches unlinked repo file and directory mentions in tracked markdown docs
 - gives the repo an observable engineering rhythm, even early
 
 ## Repository Files Added for This Goal
