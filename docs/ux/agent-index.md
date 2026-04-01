@@ -6,7 +6,7 @@ Read this file before opening other files under [`docs/ux/`](./).
 
 - This directory holds UX reference briefs that support product scope, implementation tasks, and repository decisions.
 - These files describe flows, interaction patterns, and usability intent.
-- Repository-wide decisions still belong in [`../agent-decisions.md`](../agent-decisions.md).
+- Repository-wide decisions still belong in [`../decisions.md`](../decisions.md).
 
 ## Load Rules
 

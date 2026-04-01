@@ -51,7 +51,7 @@ What is intentionally not done yet:
 - [Product](docs/product.md)
 - [Guest Tab UX](docs/ux/guest-tab-ux.md)
 - [Agentic Workflow](docs/agentic-workflow.md)
-- [Agent Decisions](docs/agent-decisions.md)
+- [Repo Decisions](docs/decisions.md)
 - [GitHub Setup](docs/github-setup.md)
 - [Contributing](CONTRIBUTING.md)
 

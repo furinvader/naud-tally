@@ -33,7 +33,7 @@ jobs:
             docs/agent-index.md
             docs/product.md
             docs/agentic-workflow.md
-            docs/agent-decisions.md
+            docs/decisions.md
             docs/tasks.md
             docs/tasks/agent-index.md
             docs/tasks/open/agent-index.md
@@ -43,7 +43,7 @@ jobs:
             docs/github-setup.md
             frontend/README.md
             frontend/agent-index.md
-            frontend/agent-decisions.md
+            frontend/decisions.md
           )
 
           for file in "${required_files[@]}"; do
@@ -60,15 +60,18 @@ jobs:
               echo "Empty markdown file: $file"
               exit 1
             fi
-          done < <(find . -type f -name "*.md" -not -path "./.git/*" | sort)
+          done < <(git ls-files | grep -E '\.md$' | sort)
 
       - name: Verify markdown repo paths use markdown links
         run: python3 scripts/check-markdown-repo-links.py
 
       - name: Verify unique decision titles and task identifiers
         run: |
-          mapfile -t decision_files < <(find . -type f -name 'agent-decisions.md' | sort)
-          decision_dupes="$(grep -hE '^## ' "${decision_files[@]}" | sort | uniq -d)"
+          mapfile -t decision_files < <(git ls-files | grep -E '(^|/)decisions\.md$' | sort)
+          decision_dupes=""
+          if [ "${#decision_files[@]}" -gt 0 ]; then
+            decision_dupes="$(grep -hE '^## ' "${decision_files[@]}" | sort | uniq -d)"
+          fi
           task_dupes="$(find docs/tasks -type f -name 'T-*.md' -exec grep -hE '^# T-[0-9]+' {} + | sort | uniq -d)"
 
           if [ -n "$decision_dupes" ]; then
@@ -132,6 +135,6 @@ jobs:
           grep -q 'frontend/README.md' README.md
           grep -q 'docs/product.md' README.md
           grep -q 'docs/agentic-workflow.md' README.md
-          grep -q 'docs/agent-decisions.md' README.md
+          grep -q 'docs/decisions.md' README.md
           grep -q 'docs/github-setup.md' README.md
           grep -q 'CONTRIBUTING.md' README.md

@@ -1,11 +1,11 @@
-# Frontend Agent Decisions
+# Frontend Decisions
 
 Read this file only when a task changes frontend architecture, tooling, runtime setup, or default implementation conventions under [`frontend/`](./).
 
 ### Scope Rule
 
 - Keep frontend-local decisions here.
-- Promote a decision to [`../docs/agent-decisions.md`](../docs/agent-decisions.md) only if it affects multiple top-level areas, the whole repository workflow, or every future agent session.
+- Promote a decision to [`../docs/decisions.md`](../docs/decisions.md) only if it affects multiple top-level areas, the whole repository workflow, or every future agent session.
 - Routine feature implementation can usually skip this file and follow [`agent-index.md`](agent-index.md) plus [`README.md`](README.md).
 
 ## Use Angular, Angular Material, and NgRx SignalStore

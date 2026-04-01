@@ -28,8 +28,8 @@
 ## Documentation Update Rule
 
 - If product scope changes, update [`docs/product.md`](docs/product.md) and any other affected product docs.
-- If a repo-wide workflow or architecture decision changes, update [`docs/agent-decisions.md`](docs/agent-decisions.md).
-- If a local architecture, tooling, or convention decision changes, update the nearest relevant local decision file, such as [`frontend/agent-decisions.md`](frontend/agent-decisions.md).
+- If a repo-wide workflow or architecture decision changes, update [`docs/decisions.md`](docs/decisions.md).
+- If a local architecture, tooling, or convention decision changes, update the nearest relevant local decision file, such as [`frontend/decisions.md`](frontend/decisions.md).
 - Research notes live under [`docs/research/`](docs/research/) in a flat, topic-based layout; link task or decision docs to the matching research brief instead of embedding research sections in task files.
 - Task files use only `open` and `done` statuses. Current-priority tasks still remain `open`.
 - If task state changes, update the relevant task file, [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md), and the relevant status-folder index under [`docs/tasks/`](docs/tasks/).
