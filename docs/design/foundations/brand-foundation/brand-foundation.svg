@@ -1,0 +1,201 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1940" viewBox="0 0 1600 1940" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Naud Tally Tablet Foundation</title>
+  <desc id="desc">A custom tablet-first design foundation for Naud Tally with a restrained palette, firmer geometry, and a tally-screen example.</desc>
+  <defs>
+    <style>
+      .display { font: 700 62px/1 "Manrope", "Inter", sans-serif; fill: #1E2630; }
+      .headline { font: 700 28px/1.18 "Manrope", "Inter", sans-serif; fill: #1E2630; }
+      .title { font: 700 24px/1.1 "Manrope", "Inter", sans-serif; fill: #1E2630; }
+      .number { font: 700 66px/0.95 "Manrope", "Inter", sans-serif; fill: #355061; }
+      .body-lg { font: 400 18px/1.45 "Inter Tight", "Inter", sans-serif; fill: #67717A; }
+      .body { font: 400 16px/1.45 "Inter Tight", "Inter", sans-serif; fill: #67717A; }
+      .label { font: 600 14px/1.2 "Inter Tight", "Inter", sans-serif; fill: #1E2630; }
+      .label-soft { font: 500 14px/1.3 "Inter Tight", "Inter", sans-serif; fill: #67717A; }
+      .small { font: 600 13px/1.2 "Inter Tight", "Inter", sans-serif; fill: #67717A; letter-spacing: 1.1px; }
+      .kicker { font: 700 12px/1.2 "Inter Tight", "Inter", sans-serif; fill: #67717A; letter-spacing: 1.6px; }
+      .chip { font: 600 14px/1.2 "Inter Tight", "Inter", sans-serif; }
+      .card { fill: #FBFAF8; stroke: #D7D0C7; stroke-width: 1; filter: url(#cardShadow); }
+      .tile { fill: #FFFFFF; stroke: #D7D0C7; stroke-width: 1; }
+      .stroke { stroke: #355061; stroke-width: 1.8; stroke-linecap: square; fill: none; }
+    </style>
+    <filter id="cardShadow" x="-10%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0A141E" flood-opacity="0.08"/>
+    </filter>
+    <filter id="softShadow" x="-10%" y="-10%" width="130%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#0A141E" flood-opacity="0.05"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1940" rx="28" fill="#F4F2EE"/>
+  <ellipse cx="1330" cy="92" rx="210" ry="110" fill="#355061" fill-opacity="0.08"/>
+  <ellipse cx="1430" cy="156" rx="120" ry="120" fill="#7E8974" fill-opacity="0.08"/>
+  <rect x="124" y="214" width="96" height="6" rx="3" fill="#355061"/>
+
+  <text class="kicker" x="124" y="118">TABLET APP FOUNDATION</text>
+  <text class="display" x="124" y="196">Naud Tally</text>
+  <text class="body-lg" x="124" y="246">A custom, tablet-first brand direction for fast shared tallying:</text>
+  <text class="body-lg" x="124" y="274">quiet contrast, firm shapes, restrained color, and strong numeric clarity.</text>
+
+  <g transform="translate(124 330)">
+    <rect width="126" height="42" rx="14" fill="#FFFFFF" stroke="#D7D0C7"/>
+    <text class="chip" x="63" y="27" text-anchor="middle" fill="#1E2630">tablet first</text>
+  </g>
+  <g transform="translate(266 330)">
+    <rect width="144" height="42" rx="14" fill="#E6EDF1" stroke="#D7D0C7"/>
+    <text class="chip" x="72" y="27" text-anchor="middle" fill="#355061">quiet contrast</text>
+  </g>
+  <g transform="translate(426 330)">
+    <rect width="184" height="42" rx="14" fill="#E8E3DC" stroke="#D7D0C7"/>
+    <text class="chip" x="92" y="27" text-anchor="middle" fill="#1E2630">low-round geometry</text>
+  </g>
+  <g transform="translate(626 330)">
+    <rect width="180" height="42" rx="14" fill="#E7ECE5" stroke="#D7D0C7"/>
+    <text class="chip" x="90" y="27" text-anchor="middle" fill="#7E8974">shared counter flow</text>
+  </g>
+
+  <rect class="card" x="72" y="420" width="1456" height="308" rx="20"/>
+  <text class="small" x="124" y="466">COLOR PALETTE</text>
+  <text class="headline" x="124" y="518">Muted slate, warm paper, restrained support tones</text>
+  <text class="body" x="124" y="558">Most of the interface should live in ink, warm neutral surfaces, and one strong action color.</text>
+  <text class="body" x="124" y="584">Accent and signal exist, but they stay secondary to the actual counting task.</text>
+
+  <g transform="translate(124 610)">
+    <rect class="tile" width="420" height="104" rx="16"/>
+    <rect x="18" y="18" width="86" height="68" rx="14" fill="#355061"/>
+    <text class="title" x="126" y="42">Action</text>
+    <text class="label" x="126" y="66" fill="#355061">#355061</text>
+    <text class="label-soft" x="126" y="90">Primary buttons, active emphasis</text>
+  </g>
+  <g transform="translate(568 610)">
+    <rect class="tile" width="420" height="104" rx="16"/>
+    <rect x="18" y="18" width="86" height="68" rx="14" fill="#1E2630"/>
+    <text class="title" x="126" y="42">Ink</text>
+    <text class="label" x="126" y="66" fill="#355061">#1E2630</text>
+    <text class="label-soft" x="126" y="90">Headlines, counts, primary text</text>
+  </g>
+  <g transform="translate(1012 610)">
+    <rect class="tile" width="420" height="104" rx="16"/>
+    <rect x="18" y="18" width="86" height="68" rx="14" fill="#F4F2EE" stroke="#D7D0C7"/>
+    <text class="title" x="126" y="42">Canvas</text>
+    <text class="label" x="126" y="66" fill="#355061">#F4F2EE</text>
+    <text class="label-soft" x="126" y="90">App background, layout field</text>
+  </g>
+
+  <g transform="translate(124 684)">
+    <rect width="144" height="30" rx="10" fill="#FFFFFF" stroke="#D7D0C7"/>
+    <text class="label-soft" x="72" y="20" text-anchor="middle">Accent  #7E8974</text>
+  </g>
+  <g transform="translate(284 684)">
+    <rect width="144" height="30" rx="10" fill="#FFFFFF" stroke="#D7D0C7"/>
+    <text class="label-soft" x="72" y="20" text-anchor="middle">Signal  #A4653A</text>
+  </g>
+  <g transform="translate(444 684)">
+    <rect width="140" height="30" rx="10" fill="#FFFFFF" stroke="#D7D0C7"/>
+    <text class="label-soft" x="70" y="20" text-anchor="middle">Line  #D7D0C7</text>
+  </g>
+
+  <rect class="card" x="72" y="772" width="696" height="414" rx="20"/>
+  <text class="small" x="124" y="818">TYPE</text>
+  <text class="headline" x="124" y="870">Manrope for structure, Inter Tight for UI work</text>
+  <text class="body" x="124" y="912">The product must read clearly from a short distance. Headlines feel modern,</text>
+  <text class="body" x="124" y="938">but the UI face stays neutral and efficient enough for touch controls.</text>
+  <text class="small" x="124" y="988">DISPLAY / 62</text>
+  <text class="display" x="124" y="1048">Drink tally.</text>
+  <text class="small" x="124" y="1098">SECTION / 28</text>
+  <text class="headline" x="124" y="1138">Fast shared counting</text>
+  <text class="small" x="124" y="1182">BODY / 16</text>
+  <text class="body" x="124" y="1218">Use concise copy, stable spacing, and strong</text>
+  <text class="body" x="124" y="1244">count visibility across all future screens.</text>
+
+  <rect class="card" x="800" y="772" width="728" height="414" rx="20"/>
+  <text class="small" x="852" y="818">UI RULES</text>
+  <text class="headline" x="852" y="870">Sharper cards, clear strokes, simple iconography</text>
+  <text class="body" x="852" y="912">Avoid pill-heavy UI. Keep cards between 16 and 20 radius, buttons around 14 radius,</text>
+  <text class="body" x="852" y="938">and use quiet line icons with squared ends.</text>
+  <text class="small" x="852" y="988">CORNER TOKENS</text>
+  <rect x="852" y="1004" width="96" height="64" rx="12" fill="#FFFFFF" stroke="#D7D0C7"/>
+  <rect x="968" y="1004" width="96" height="64" rx="16" fill="#E6EDF1" stroke="#D7D0C7"/>
+  <rect x="1084" y="1004" width="96" height="64" rx="20" fill="#E7ECE5" stroke="#D7D0C7"/>
+  <text class="label-soft" x="852" y="1094">12 for utility, 16 for cards, 20 for major panels</text>
+  <text class="small" x="852" y="1140">ICON DIRECTION</text>
+
+  <g transform="translate(852 1158)">
+    <rect class="tile" width="56" height="56" rx="14"/>
+    <path class="stroke" d="M14 18H42"/>
+    <path class="stroke" d="M14 28H42"/>
+    <path class="stroke" d="M14 38H42"/>
+  </g>
+  <g transform="translate(932 1158)">
+    <rect class="tile" width="56" height="56" rx="14"/>
+    <path class="stroke" d="M18 16H30V30C30 38.284 23.284 45 15 45C6.716 45 0 38.284 0 30V21C0 18.239 2.239 16 5 16H18Z" transform="translate(13 3)"/>
+    <path class="stroke" d="M0 0H10C13.314 0 16 2.686 16 6C16 9.314 13.314 12 10 12H0" transform="translate(34 23)"/>
+  </g>
+  <g transform="translate(1012 1158)">
+    <rect class="tile" width="56" height="56" rx="14"/>
+    <path class="stroke" d="M28 14V42"/>
+    <path class="stroke" d="M14 28H42"/>
+  </g>
+  <text class="label-soft" x="1094" y="1192">Use quiet 1.75-2px outline icons</text>
+  <text class="label-soft" x="1094" y="1216">with squared ends and minimal metaphors.</text>
+
+  <rect class="card" x="72" y="1230" width="1456" height="624" rx="20"/>
+  <text class="small" x="124" y="1276">PRIMARY SCREEN EXAMPLE</text>
+  <text class="headline" x="124" y="1328">Brand the tally screen itself, not a fake marketing site</text>
+  <text class="body" x="124" y="1368">This example translates the existing tally layout into the new foundation:</text>
+  <text class="body" x="124" y="1394">restrained toolbar, firmer panels, clearer cards, and counts that stay dominant.</text>
+
+  <rect x="124" y="1430" width="1352" height="74" rx="18" fill="#FCFBF9" stroke="#D7D0C7"/>
+  <text class="label" x="156" y="1456" letter-spacing="1.8px">NAUD TALLY</text>
+  <text class="label-soft" x="156" y="1478">shared tablet</text>
+  <text class="label-soft" x="1418" y="1456" text-anchor="end">Total</text>
+  <text class="headline" x="1418" y="1486" text-anchor="end">12</text>
+
+  <g filter="url(#softShadow)">
+    <rect x="124" y="1528" width="900" height="170" rx="20" fill="#FBFAF8" stroke="#D7D0C7"/>
+  </g>
+  <rect x="124" y="1528" width="12" height="170" rx="6" fill="#355061"/>
+  <text class="small" x="164" y="1560">TODAY</text>
+  <text class="headline" x="164" y="1602" font-size="34">Tap what you took.</text>
+  <text class="body" x="164" y="1644">Fast counting, low friction, easy reading at a shared table.</text>
+
+  <rect x="1048" y="1528" width="428" height="170" rx="20" fill="#E6EDF1" stroke="#D7D0C7"/>
+  <text class="label-soft" x="1080" y="1560">Total drinks</text>
+  <text class="number" x="1080" y="1634">12</text>
+  <text class="label-soft" x="1080" y="1680">Clear, high-contrast numeric focus</text>
+
+  <g transform="translate(124 1730)">
+    <rect width="400" height="138" rx="18" fill="#FBFAF8" stroke="#D7D0C7" filter="url(#softShadow)"/>
+    <text class="title" x="24" y="40">Water</text>
+    <text class="label-soft" x="24" y="68">quick tap control</text>
+    <rect x="24" y="88" width="90" height="34" rx="12" fill="#E6EDF1" stroke="#D7D0C7"/>
+    <text class="title" x="69" y="112" text-anchor="middle" fill="#355061">4</text>
+    <rect x="242" y="82" width="56" height="44" rx="14" fill="#FFFFFF" stroke="#B8B0A6"/>
+    <text class="headline" x="270" y="111" text-anchor="middle">-</text>
+    <rect x="312" y="82" width="64" height="44" rx="14" fill="#355061"/>
+    <text class="headline" x="344" y="111" text-anchor="middle" fill="#FFFFFF">+</text>
+  </g>
+  <g transform="translate(560 1730)">
+    <rect width="400" height="138" rx="18" fill="#FBFAF8" stroke="#D7D0C7" filter="url(#softShadow)"/>
+    <text class="title" x="24" y="40">Cola</text>
+    <text class="label-soft" x="24" y="68">quick tap control</text>
+    <rect x="24" y="88" width="90" height="34" rx="12" fill="#E6EDF1" stroke="#D7D0C7"/>
+    <text class="title" x="69" y="112" text-anchor="middle" fill="#355061">3</text>
+    <rect x="242" y="82" width="56" height="44" rx="14" fill="#FFFFFF" stroke="#B8B0A6"/>
+    <text class="headline" x="270" y="111" text-anchor="middle">-</text>
+    <rect x="312" y="82" width="64" height="44" rx="14" fill="#355061"/>
+    <text class="headline" x="344" y="111" text-anchor="middle" fill="#FFFFFF">+</text>
+  </g>
+  <g transform="translate(996 1730)">
+    <rect width="400" height="138" rx="18" fill="#FBFAF8" stroke="#D7D0C7" filter="url(#softShadow)"/>
+    <text class="title" x="24" y="40">Beer</text>
+    <text class="label-soft" x="24" y="68">quick tap control</text>
+    <rect x="24" y="88" width="90" height="34" rx="12" fill="#E6EDF1" stroke="#D7D0C7"/>
+    <text class="title" x="69" y="112" text-anchor="middle" fill="#355061">5</text>
+    <rect x="242" y="82" width="56" height="44" rx="14" fill="#FFFFFF" stroke="#B8B0A6"/>
+    <text class="headline" x="270" y="111" text-anchor="middle">-</text>
+    <rect x="312" y="82" width="64" height="44" rx="14" fill="#355061"/>
+    <text class="headline" x="344" y="111" text-anchor="middle" fill="#FFFFFF">+</text>
+  </g>
+
+  <text class="label-soft" x="124" y="1906">Base rules: 16-20 radius panels, 14 radius buttons, 8/12/16/24 spacing, restrained accent use, numbers always read first.</text>
+</svg>

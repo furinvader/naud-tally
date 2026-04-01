@@ -96,3 +96,11 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Consequence: do not commit PNG design previews to the repo; SVG is sufficient for public display and avoids binary churn in Git
 - Consequence: keep Penpot share links optional for interactive review or prototype testing instead of treating them as required repo metadata
 - Consequence: if direct Penpot access is not practical for a given task, continue from the committed repo artifact and brief before switching tools by default
+
+## Keep a Reusable Design Foundation Board
+
+- Status: accepted
+- Why: future screen work will move faster and stay more consistent if colors, typography, icon direction, and component tone already exist as a shared baseline instead of being re-invented task by task
+- Consequence: keep the reusable foundation brief and SVG in [`docs/design/foundations/brand-foundation/`](design/foundations/brand-foundation/)
+- Consequence: start new Penpot screen work from the calmer custom tablet-first direction recorded in [`docs/design/foundations/brand-foundation/README.md`](design/foundations/brand-foundation/README.md)
+- Consequence: update the foundation artifact and brief when a future design task changes the system itself, not just one screen

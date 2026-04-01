@@ -18,6 +18,7 @@
 - Start the Penpot MCP services with [`../../scripts/penpot-mcp.sh`](../../scripts/penpot-mcp.sh).
 - Open Codex from the repo root and let the project-scoped config in [`.codex/config.toml`](../../.codex/config.toml) wire in Penpot automatically.
 - Optional convenience entry point: [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh).
+- Keep the reusable visual system baseline in [`foundations/brand-foundation/README.md`](foundations/brand-foundation/README.md).
 - Keep the current design brief in a repo-native markdown file such as [`smoke-tests/drink-tally/README.md`](smoke-tests/drink-tally/README.md).
 - Keep committed design artifacts in the matching folder under [`./`](./), with SVG as the only committed export format.
 
@@ -42,7 +43,7 @@
 1. Open the Penpot file you want Codex to use.
 2. Reconnect the Penpot MCP plugin if needed.
 3. Start Codex in the repo so it loads [`.codex/config.toml`](../../.codex/config.toml).
-4. Point Codex at the repo-native handoff brief for that file.
+4. Point Codex at the reusable foundation brief plus the repo-native handoff brief for the specific screen or artifact you want to change.
 5. After a meaningful design change, export a committed SVG artifact into the matching folder under [`./`](./) and save the artifact path plus any implementation notes back into the brief.
 6. Add a Penpot share link only when interactive review, comments, or prototype playback adds value beyond the committed repo artifact.
 
@@ -70,12 +71,13 @@ Each Penpot-driven task should have a markdown brief that includes:
 - open questions or follow-ups
 
 [`smoke-tests/drink-tally/README.md`](smoke-tests/drink-tally/README.md) is the first example of that format.
+[`foundations/brand-foundation/README.md`](foundations/brand-foundation/README.md) is the reusable visual-system reference for future screen work.
 
 ## Recommended Codex Prompt
 
 Use a prompt shaped like this once the Penpot file and plugin are live:
 
-> Use Penpot to update the active design file using [`docs/design/smoke-tests/drink-tally/README.md`](./smoke-tests/drink-tally/README.md) as the source of truth. Create the described smoke-test layout, then summarize what you created and any gaps between the brief and Penpot.
+> Use Penpot to update the active design file using [`docs/design/foundations/brand-foundation/README.md`](./foundations/brand-foundation/README.md) as the reusable visual-system baseline and the task-specific brief as the screen-level source of truth. Create or update the described design, then summarize what you created and any gaps between the briefs and Penpot.
 
 ## Current Limits
 
@@ -83,6 +85,7 @@ Use a prompt shaped like this once the Penpot file and plugin are live:
 - Closing the Penpot plugin UI breaks the MCP connection.
 - Chromium-based browsers may block local-network access to `localhost`; if that happens, approve the prompt or use `Firefox`.
 - SVG exports are the preferred repo artifact, but they are still generated from a live Penpot session, so the browser-side plugin connection remains part of the workflow.
+- Large Penpot frames can exceed the current MCP export timeout, so keep the Penpot file as the editable source of truth and refresh the repo snapshot from the same layout when the direct export path is temporarily unreliable.
 - Reimporting an exported design artifact can lose Penpot-specific details, so keep the markdown brief and Penpot file for richer editing context when needed.
 
 ## References
