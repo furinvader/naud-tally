@@ -82,3 +82,15 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Status: accepted
 - Why: humans and agents both navigate repository context faster when file references are clickable instead of only written as inline code
 - Consequence: when a markdown doc mentions a repo file or directory, it should use a markdown link to that path
+
+## Use Penpot as the Primary Design Workspace
+
+- Status: accepted
+- Why: the project needs a browser-accessible design tool that non-editors can review easily, that agents can translate into implementation with minimal handoff loss, and that a small open-source project can adopt without committing to paid seats too early
+- Consequence: use Penpot as the default place for screen flows, clickable prototypes, and design review links
+- Consequence: keep Figma as the fallback option when Penpot blocks progress or when prompt-driven generation becomes more valuable than openness and inspectability
+- Consequence: keep Storybook as a later complementary layer for implementation-adjacent component documentation, not as the primary screen-design workspace
+- Consequence: pair each Penpot task with a short repo-native markdown brief and a committed design artifact under [`../design/`](../design/) so humans and AI agents can inspect the target flow without relying on a live Penpot tab
+- Consequence: prefer SVG as the committed design artifact because it is browser-viewable and readable by Codex, and keep a PNG preview alongside it when quick visual review helps
+- Consequence: keep Penpot share links optional for interactive review or prototype testing instead of treating them as required repo metadata
+- Consequence: if direct Penpot access is not practical for a given task, continue from the committed repo artifact and brief before switching tools by default

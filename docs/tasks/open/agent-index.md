@@ -15,7 +15,6 @@ Read this file before opening task files under [`docs/tasks/open/`](./).
 ## Tasks
 
 - [T-006 Add Organizer Controls](T-006.md)
-- [T-010 Choose a Design Solution](T-010.md)
 - [T-007 Test the Pilot in a Real Usage Scenario](T-007.md)
 - [T-008 Add i18n Support](T-008.md)
 - [T-009 Introduce Guest-Based Tracking](T-009.md)
