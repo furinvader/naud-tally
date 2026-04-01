@@ -10,6 +10,7 @@ Read this file before opening other files under [`docs/design/`](./).
 ## Load Rules
 
 - Start with [`README.md`](README.md) for the current layout.
+- Read [`foundations/agent-index.md`](foundations/agent-index.md) before opening files under [`foundations/`](foundations/).
 - Read [`penpot-codex-workflow.md`](penpot-codex-workflow.md) for the operational workflow.
 - Read [`smoke-tests/agent-index.md`](smoke-tests/agent-index.md) before opening files under [`smoke-tests/`](smoke-tests/).
 - Treat committed SVG files as the only repo-tracked design artifact format.

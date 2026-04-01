@@ -1,8 +1,7 @@
 # Penpot Example: Drink Tally Smoke Test
 
-## Penpot File
+## Artifact
 
-- File name: `Naud Tally - MCP Example`
 - Repo artifact directory: [`./`](./)
 - Repo SVG export: [`guest-tally.svg`](guest-tally.svg)
 - Optional Penpot share link: `not required for the repo workflow`
@@ -19,9 +18,9 @@
 
 ## Screen
 
-- Create one tablet-sized frame named `Guest Tally`.
+- Create one tablet-sized frame.
 - Use a portrait tablet layout around `1024 x 1366`.
-- Keep everything on a single page named `Drink Tally`.
+- Keep everything on a single page.
 
 ## Content
 
@@ -65,7 +64,7 @@
 
 ## Follow-Up
 
-- 2026-04-01: Codex created the example `Drink Tally` page and `Guest Tally` frame through the Penpot MCP connection and recorded the SVG export in [`./`](./).
+- 2026-04-01: Codex created the example smoke-test layout through the Penpot MCP connection and recorded the SVG export in [`./`](./).
 - Refresh the committed SVG in [`./`](./) after meaningful Penpot changes.
 - Add an optional Penpot share link only when public review or prototype playback needs more than the committed repo artifact.
 - If the first Penpot pass exposes missing brief details, update this file instead of relying on chat memory.
