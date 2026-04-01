@@ -5,6 +5,7 @@ Read this file before opening other files under [`docs/`](./).
 ## Read Only What You Need
 
 - For product scope and user-facing requirements, read [`product.md`](product.md).
+- For UX flow briefs, read [`ux/agent-index.md`](ux/agent-index.md).
 - For repository-wide workflow or architecture decisions, read [`agent-decisions.md`](agent-decisions.md).
 - For research briefs, read [`research/agent-index.md`](research/agent-index.md).
 - For design workflows, smoke tests, and committed artifacts, read [`design/agent-index.md`](design/agent-index.md).
