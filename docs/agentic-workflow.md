@@ -28,6 +28,8 @@ This document captures how we want to work with Codex so the lessons from this p
 5. Run checks or tests where possible.
 6. Capture decisions, follow-ups, and lessons learned.
 
+For Penpot-driven UI work, treat [`penpot-codex-workflow.md`](penpot-codex-workflow.md) as the operational guide for how the browser file, MCP connection, and repo-native brief fit together.
+
 ## Good Task Shape
 
 A strong Codex task usually includes:
@@ -57,6 +59,7 @@ When Codex completes a task, review these points:
 - [`README.md`](../README.md) explains the project at a glance.
 - [`docs/product.md`](product.md) is the source of truth for product scope.
 - [`docs/agent-decisions.md`](agent-decisions.md) records repository-wide decisions and tradeoffs.
+- [`docs/penpot-codex-workflow.md`](penpot-codex-workflow.md) explains how Penpot should be used in a Codex-first workflow.
 - local [`agent-decisions.md`](../frontend/agent-decisions.md) files record area-specific decisions next to the relevant [`agent-index.md`](../frontend/agent-index.md).
 - [`docs/tasks/agent-index.md`](tasks/agent-index.md) routes to the current task briefs.
 - when a markdown doc mentions a repo file or directory, it should use a markdown link to that path

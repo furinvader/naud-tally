@@ -38,12 +38,11 @@ Each task file should use this order:
 
 ## Current Priority
 
-- [T-010 Choose a Design Solution](open/T-010.md)
+- [T-006 Add Organizer Controls](open/T-006.md)
 
 ## Open Tasks
 
 - [T-006 Add Organizer Controls](open/T-006.md)
-- [T-010 Choose a Design Solution](open/T-010.md)
 - [T-007 Test the Pilot in a Real Usage Scenario](open/T-007.md)
 - [T-008 Add i18n Support](open/T-008.md)
 - [T-009 Introduce Guest-Based Tracking](open/T-009.md)
@@ -56,3 +55,5 @@ Each task file should use this order:
 - [T-003 Define the First Vertical Slice](done/T-003.md)
 - [T-004 Scaffold the App](done/T-004.md)
 - [T-005 Build the Guest Tally Screen](done/T-005.md)
+- [T-010 Choose a Design Solution](done/T-010.md)
+- [T-011 Document the Penpot Handoff Workflow](done/T-011.md)

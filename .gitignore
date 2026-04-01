@@ -1,4 +1,6 @@
-.codex
+.codex/*
+!.codex/
+!.codex/config.toml
 
 # Build output
 dist/
