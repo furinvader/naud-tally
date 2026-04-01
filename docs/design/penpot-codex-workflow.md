@@ -18,7 +18,7 @@
 - Start the Penpot MCP services with [`../../scripts/penpot-mcp.sh`](../../scripts/penpot-mcp.sh).
 - Open Codex from the repo root and let the project-scoped config in [`.codex/config.toml`](../../.codex/config.toml) wire in Penpot automatically.
 - Optional convenience entry point: [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh).
-- Keep the reusable visual system baseline in [`foundations/brand-foundation/README.md`](foundations/brand-foundation/README.md).
+- Keep the reusable visual system baseline in [`foundations/tablet-foundation/README.md`](foundations/tablet-foundation/README.md).
 - Keep the current design brief in a repo-native markdown file such as [`smoke-tests/drink-tally/README.md`](smoke-tests/drink-tally/README.md).
 - Keep committed design artifacts in the matching folder under [`./`](./), with SVG as the only committed export format.
 
@@ -32,7 +32,7 @@
 ## First-Time Setup
 
 1. Start the Penpot MCP services with `./scripts/penpot-mcp.sh`.
-2. Open Penpot in the browser and create a blank file named `Naud Tally - MCP Example`.
+2. Open Penpot in the browser and create or open a blank file for the session.
 3. In that file, open `Plugins` and load `http://localhost:4400/manifest.json`.
 4. In the plugin UI, click `Connect to MCP server`.
 5. Keep the plugin UI open while Codex is working with Penpot.
@@ -58,7 +58,6 @@
 
 Each Penpot-driven task should have a markdown brief that includes:
 
-- Penpot file name
 - repo artifact directory
 - repo SVG export path
 - optional Penpot share link
@@ -71,13 +70,13 @@ Each Penpot-driven task should have a markdown brief that includes:
 - open questions or follow-ups
 
 [`smoke-tests/drink-tally/README.md`](smoke-tests/drink-tally/README.md) is the first example of that format.
-[`foundations/brand-foundation/README.md`](foundations/brand-foundation/README.md) is the reusable visual-system reference for future screen work.
+[`foundations/tablet-foundation/README.md`](foundations/tablet-foundation/README.md) is the reusable visual-system reference for future screen work.
 
 ## Recommended Codex Prompt
 
 Use a prompt shaped like this once the Penpot file and plugin are live:
 
-> Use Penpot to update the active design file using [`docs/design/foundations/brand-foundation/README.md`](./foundations/brand-foundation/README.md) as the reusable visual-system baseline and the task-specific brief as the screen-level source of truth. Create or update the described design, then summarize what you created and any gaps between the briefs and Penpot.
+> Use Penpot to update the active design file using [`docs/design/foundations/tablet-foundation/README.md`](./foundations/tablet-foundation/README.md) as the reusable visual-system baseline and the task-specific brief as the screen-level source of truth. Create or update the described design, then summarize what you created and any gaps between the briefs and Penpot.
 
 ## Current Limits
 

@@ -10,9 +10,9 @@ Read this file before opening other files under [`docs/design/foundations/`](./)
 ## Load Rules
 
 - Open only the foundation folder you need.
-- Start with the foundation folder's [`README.md`](brand-foundation/README.md).
+- Start with the foundation folder's [`README.md`](tablet-foundation/README.md).
 - Keep committed foundation artifacts SVG-only.
 
 ## Foundations
 
-- [Tablet Foundation](brand-foundation/README.md)
+- [Tablet Foundation](tablet-foundation/README.md)

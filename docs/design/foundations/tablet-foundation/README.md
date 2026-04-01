@@ -1,12 +1,9 @@
 # Tablet Foundation
 
-## Penpot File
+## Artifact
 
-- File name: `Naud Tally - MCP Example`
-- Page name: `Drink Tally`
-- Board name: `Naud Tally Tablet Foundation`
 - Repo artifact directory: [`./`](./)
-- Repo SVG export: [`brand-foundation.svg`](brand-foundation.svg)
+- Repo SVG export: [`tablet-foundation.svg`](tablet-foundation.svg)
 - Optional Penpot share link: `not required for the repo workflow`
 - Status: `revised on 2026-04-01 to replace the initial Material-influenced pass with a custom tablet-first direction`
 

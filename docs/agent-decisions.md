@@ -101,6 +101,6 @@ This file records repository-wide decisions that shape the build. Each decision 
 
 - Status: accepted
 - Why: future screen work will move faster and stay more consistent if colors, typography, icon direction, and component tone already exist as a shared baseline instead of being re-invented task by task
-- Consequence: keep the reusable foundation brief and SVG in [`docs/design/foundations/brand-foundation/`](design/foundations/brand-foundation/)
-- Consequence: start new Penpot screen work from the calmer custom tablet-first direction recorded in [`docs/design/foundations/brand-foundation/README.md`](design/foundations/brand-foundation/README.md)
+- Consequence: keep the reusable foundation brief and SVG in [`docs/design/foundations/tablet-foundation/`](design/foundations/tablet-foundation/)
+- Consequence: start new Penpot screen work from the calmer custom tablet-first direction recorded in [`docs/design/foundations/tablet-foundation/README.md`](design/foundations/tablet-foundation/README.md)
 - Consequence: update the foundation artifact and brief when a future design task changes the system itself, not just one screen
