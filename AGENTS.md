@@ -10,9 +10,10 @@
 
 1. Start every task with [`agent-index.md`](agent-index.md).
 2. Before reading files under [`docs/`](docs/), read [`docs/agent-index.md`](docs/agent-index.md).
-3. Before reading files under [`docs/tasks/`](docs/tasks/), read [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md), then the relevant status-folder index, then open only the relevant task file.
-4. Before reading files under [`docs/workflows/`](docs/workflows/), read [`docs/workflows/agent-index.md`](docs/workflows/agent-index.md).
-5. Before reading files under [`frontend/`](frontend/), read [`frontend/agent-index.md`](frontend/agent-index.md).
+3. Before reading files under [`docs/design/`](docs/design/), read [`docs/design/agent-index.md`](docs/design/agent-index.md).
+4. Before reading files under [`docs/tasks/`](docs/tasks/), read [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md), then the relevant status-folder index, then open only the relevant task file.
+5. Before reading files under [`docs/workflows/`](docs/workflows/), read [`docs/workflows/agent-index.md`](docs/workflows/agent-index.md).
+6. Before reading files under [`frontend/`](frontend/), read [`frontend/agent-index.md`](frontend/agent-index.md).
 
 ## Runtime Setup Rule
 

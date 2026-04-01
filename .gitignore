@@ -37,3 +37,7 @@ Thumbs.db
 testem.log
 /typings
 __screenshots__/
+
+# Design artifacts
+/docs/design/*.png
+/docs/design/**/*.png

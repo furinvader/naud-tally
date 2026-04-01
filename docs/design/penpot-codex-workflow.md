@@ -15,18 +15,18 @@
 
 ## Repo Entry Points
 
-- Start the Penpot MCP services with [`scripts/penpot-mcp.sh`](../scripts/penpot-mcp.sh).
-- Open Codex from the repo root and let the project-scoped config in [`.codex/config.toml`](../.codex/config.toml) wire in Penpot automatically.
-- Optional convenience entry point: [`scripts/codex-penpot.sh`](../scripts/codex-penpot.sh).
-- Keep the current design brief in a repo-native markdown file such as [`docs/penpot-example-drink-tally.md`](penpot-example-drink-tally.md).
-- Keep browser-viewable design exports in [`../design/`](../design/), with SVG preferred and PNG preview files alongside when helpful.
+- Start the Penpot MCP services with [`../../scripts/penpot-mcp.sh`](../../scripts/penpot-mcp.sh).
+- Open Codex from the repo root and let the project-scoped config in [`.codex/config.toml`](../../.codex/config.toml) wire in Penpot automatically.
+- Optional convenience entry point: [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh).
+- Keep the current design brief in a repo-native markdown file such as [`smoke-tests/drink-tally/README.md`](smoke-tests/drink-tally/README.md).
+- Keep committed design artifacts in the matching folder under [`./`](./), with SVG as the only committed export format.
 
 ## Project-Scoped Codex Config
 
 - Codex supports project-scoped MCP configuration through `.codex/config.toml`.
-- This repository now uses that standard path directly in [`.codex/config.toml`](../.codex/config.toml).
+- This repository now uses that standard path directly in [`.codex/config.toml`](../../.codex/config.toml).
 - The global Codex config must mark the repo as trusted before Codex loads project-scoped config.
-- [`scripts/codex-penpot.sh`](../scripts/codex-penpot.sh) is now only a convenience launcher that opens Codex in the repo root.
+- [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh) is now only a convenience launcher that opens Codex in the repo root.
 
 ## First-Time Setup
 
@@ -41,17 +41,17 @@
 
 1. Open the Penpot file you want Codex to use.
 2. Reconnect the Penpot MCP plugin if needed.
-3. Start Codex in the repo so it loads [`.codex/config.toml`](../.codex/config.toml).
+3. Start Codex in the repo so it loads [`.codex/config.toml`](../../.codex/config.toml).
 4. Point Codex at the repo-native handoff brief for that file.
-5. After a meaningful design change, export a committed design artifact to [`../design/`](../design/) and save the artifact path plus any implementation notes back into the brief.
+5. After a meaningful design change, export a committed SVG artifact into the matching folder under [`./`](./) and save the artifact path plus any implementation notes back into the brief.
 6. Add a Penpot share link only when interactive review, comments, or prototype playback adds value beyond the committed repo artifact.
 
 ## Committed Artifact Pattern
 
-- Prefer SVG as the repo-tracked design artifact because it is readable by Codex and opens directly in a browser.
-- Keep a PNG export next to the SVG when you want a quick preview in GitHub or markdown docs.
-- Keep the markdown brief as the place for intent, open questions, and implementation notes.
-- Treat the committed artifact as the default handoff for the repo and the optional Penpot share link as a convenience layer for live review.
+- Commit SVG artifacts only.
+- Do not commit PNG design previews; SVG is sufficient for public display and keeps the design history text-diffable in Git.
+- Keep the markdown brief in the same folder as the SVG artifact when the files describe the same design target.
+- Treat the committed SVG artifact as the default handoff for the repo and the optional Penpot share link as a convenience layer for live review.
 
 ## Repo-Native Handoff Pattern
 
@@ -59,8 +59,7 @@ Each Penpot-driven task should have a markdown brief that includes:
 
 - Penpot file name
 - repo artifact directory
-- preferred repo SVG export path
-- repo PNG preview path, if present
+- repo SVG export path
 - optional Penpot share link
 - current status
 - design goal
@@ -70,13 +69,13 @@ Each Penpot-driven task should have a markdown brief that includes:
 - implementation notes for Codex
 - open questions or follow-ups
 
-[`docs/penpot-example-drink-tally.md`](penpot-example-drink-tally.md) is the first example of that format.
+[`smoke-tests/drink-tally/README.md`](smoke-tests/drink-tally/README.md) is the first example of that format.
 
 ## Recommended Codex Prompt
 
 Use a prompt shaped like this once the Penpot file and plugin are live:
 
-> Use Penpot to update the active design file using [`docs/penpot-example-drink-tally.md`](./penpot-example-drink-tally.md) as the source of truth. Create the described smoke-test layout, then summarize what you created and any gaps between the brief and Penpot.
+> Use Penpot to update the active design file using [`docs/design/smoke-tests/drink-tally/README.md`](./smoke-tests/drink-tally/README.md) as the source of truth. Create the described smoke-test layout, then summarize what you created and any gaps between the brief and Penpot.
 
 ## Current Limits
 
