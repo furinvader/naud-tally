@@ -23,7 +23,7 @@ What exists today:
 - task index with per-task briefs
 - agent routing docs
 - agentic workflow notes
-- repo-tracked design artifacts under [`design/`](design/)
+- repo-tracked design workflow docs and SVG artifacts under [`docs/design/`](docs/design/)
 - initial stack decision
 - Angular app scaffold under [`frontend/`](frontend/) with Material and SignalStore dependencies
 - first guest tally screen with reload-safe local persistence
@@ -47,7 +47,7 @@ What is intentionally not done yet:
 
 - [Publishing Workflow](docs/workflows/publish.md)
 - [Frontend Guide](frontend/README.md)
-- [Design Artifacts](design/README.md)
+- [Design Artifacts](docs/design/README.md)
 - [Product](docs/product.md)
 - [Agentic Workflow](docs/agentic-workflow.md)
 - [Agent Decisions](docs/agent-decisions.md)
@@ -73,7 +73,7 @@ Useful commands in [`frontend/`](frontend/):
 Directory notes:
 
 - the repo root is reserved for project docs, GitHub config, and future shared concerns
-- repo-tracked design previews and portable exports live under [`design/`](design/)
+- repo-tracked design briefs and SVG artifacts live under [`docs/design/`](docs/design/)
 - the Angular app and its Node tooling live under [`frontend/`](frontend/)
 
 ## Pilot Success

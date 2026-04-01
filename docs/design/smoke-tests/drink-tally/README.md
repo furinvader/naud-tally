@@ -3,11 +3,10 @@
 ## Penpot File
 
 - File name: `Naud Tally - MCP Example`
-- Repo artifact directory: [`../design/`](../design/)
-- Repo SVG export: [`../design/drink-tally-smoke-test.svg`](../design/drink-tally-smoke-test.svg)
-- Browser preview: [`../design/drink-tally-smoke-test.png`](../design/drink-tally-smoke-test.png)
+- Repo artifact directory: [`./`](./)
+- Repo SVG export: [`guest-tally.svg`](guest-tally.svg)
 - Optional Penpot share link: `not required for the repo workflow`
-- Status: `first MCP-driven creation pass completed on 2026-04-01; repo SVG and PNG exports are recorded and repo-native artifacts are the default handoff`
+- Status: `first MCP-driven creation pass completed on 2026-04-01; the repo SVG export is recorded and repo-native SVG artifacts are the default handoff`
 
 ## Goal
 
@@ -16,7 +15,7 @@
 ## Scope of This Example
 
 - This is an integration smoke test, not the final product design.
-- It should stay close to the product direction in [`docs/product.md`](product.md), but it can use a reduced drink list so the first Penpot pass stays small and easy to verify.
+- It should stay close to the product direction in [`docs/product.md`](../../../product.md), but it can use a reduced drink list so the first Penpot pass stays small and easy to verify.
 
 ## Screen
 
@@ -62,11 +61,11 @@
 
 ## Suggested Codex Prompt
 
-> Use Penpot to create the smoke-test design described in [`docs/penpot-example-drink-tally.md`](./penpot-example-drink-tally.md). Work in the active Penpot file, create the page and frame if they do not exist, and keep the result simple and easy to inspect.
+> Use Penpot to create the smoke-test design described in [`docs/design/smoke-tests/drink-tally/README.md`](./README.md). Work in the active Penpot file, create the page and frame if they do not exist, and keep the result simple and easy to inspect.
 
 ## Follow-Up
 
-- 2026-04-01: Codex created the example `Drink Tally` page and `Guest Tally` frame through the Penpot MCP connection and recorded both SVG and PNG exports in [`../design/`](../design/).
-- Refresh the committed SVG and PNG in [`../design/`](../design/) after meaningful Penpot changes.
+- 2026-04-01: Codex created the example `Drink Tally` page and `Guest Tally` frame through the Penpot MCP connection and recorded the SVG export in [`./`](./).
+- Refresh the committed SVG in [`./`](./) after meaningful Penpot changes.
 - Add an optional Penpot share link only when public review or prototype playback needs more than the committed repo artifact.
 - If the first Penpot pass exposes missing brief details, update this file instead of relying on chat memory.
