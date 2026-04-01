@@ -82,6 +82,7 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Status: accepted
 - Why: humans and agents both navigate repository context faster when file references are clickable instead of only written as inline code
 - Consequence: when a markdown doc mentions a repo file or directory, it should use a markdown link to that path
+- Consequence: the [`Repo Checks`](../.github/workflows/repo-checks.yml) workflow should fail when tracked markdown files mention repo files or directories without using markdown links
 
 ## Keep Research Briefs Under [`docs/research/`](research/)
 

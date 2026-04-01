@@ -62,6 +62,9 @@ jobs:
             fi
           done < <(find . -type f -name "*.md" -not -path "./.git/*" | sort)
 
+      - name: Verify markdown repo paths use markdown links
+        run: python3 scripts/check-markdown-repo-links.py
+
       - name: Verify unique decision titles and task identifiers
         run: |
           mapfile -t decision_files < <(find . -type f -name 'agent-decisions.md' | sort)
