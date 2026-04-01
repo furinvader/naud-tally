@@ -2,7 +2,7 @@
 
 This brief describes the intended user experience for the guest-tab flow.
 
-It supports the repository decision recorded in [`../agent-decisions.md`](../agent-decisions.md) and the product scope in [`../product.md`](../product.md), but it is intentionally focused on the interaction model rather than the decision itself.
+It supports the repository decision recorded in [`../decisions.md`](../decisions.md) and the product scope in [`../product.md`](../product.md), but it is intentionally focused on the interaction model rather than the decision itself.
 
 ## Context
 

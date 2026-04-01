@@ -6,10 +6,10 @@ Read this file before opening other files under [`docs/`](./).
 
 - For product scope and user-facing requirements, read [`product.md`](product.md).
 - For UX flow briefs, read [`ux/agent-index.md`](ux/agent-index.md).
-- For repository-wide workflow or architecture decisions, read [`agent-decisions.md`](agent-decisions.md).
+- For repository-wide workflow or architecture decisions, read [`decisions.md`](decisions.md).
 - For research briefs, read [`research/agent-index.md`](research/agent-index.md).
 - For design workflows, smoke tests, and committed artifacts, read [`design/agent-index.md`](design/agent-index.md).
-- For frontend-specific decisions, read [`../frontend/agent-index.md`](../frontend/agent-index.md) and only open [`../frontend/agent-decisions.md`](../frontend/agent-decisions.md) if the task changes frontend conventions, tooling, or structure.
+- For frontend-specific decisions, read [`../frontend/agent-index.md`](../frontend/agent-index.md) and only open [`../frontend/decisions.md`](../frontend/decisions.md) if the task changes frontend conventions, tooling, or structure.
 - For how we collaborate with Codex, read [`agentic-workflow.md`](agentic-workflow.md).
 - For planning or executing a specific task, read [`tasks/agent-index.md`](tasks/agent-index.md).
 - For branch, commit, and pull request conventions, read [`workflows/agent-index.md`](workflows/agent-index.md).

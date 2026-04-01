@@ -60,8 +60,8 @@ If a change affects product behavior or architecture, update the relevant file:
 
 - [`README.md`](README.md) for project overview
 - [`docs/product.md`](docs/product.md) for product scope
-- [`docs/agent-decisions.md`](docs/agent-decisions.md) for repo-wide decisions
-- [`frontend/agent-decisions.md`](frontend/agent-decisions.md) for frontend-local architecture, tooling, and convention decisions
+- [`docs/decisions.md`](docs/decisions.md) for repo-wide decisions
+- [`frontend/decisions.md`](frontend/decisions.md) for frontend-local architecture, tooling, and convention decisions
 - [`frontend/README.md`](frontend/README.md) for frontend structure and feature implementation conventions
 - [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md) and the relevant task file for backlog and next steps
 - when a markdown doc mentions a repo file or directory, use a markdown link to that path

@@ -1,15 +1,23 @@
-# Repo Agent Decisions
+# Repo Decisions
 
 This file records repository-wide decisions that shape the build. Each decision can be revised later, but changes should be explicit.
 
 ### Local Decision Files
 
-- Frontend-local decisions live in [`../frontend/agent-decisions.md`](../frontend/agent-decisions.md).
+- Frontend-local decisions live in [`../frontend/decisions.md`](../frontend/decisions.md).
 
 ### Keep This File Small
 
 - Keep a decision here only if it affects multiple top-level areas, the whole repository workflow, or every future agent session.
-- Keep area-specific decisions in local decision files such as [`../frontend/agent-decisions.md`](../frontend/agent-decisions.md).
+- Keep area-specific decisions in local decision files such as [`../frontend/decisions.md`](../frontend/decisions.md).
+
+## Name Scoped Decision Files [`decisions.md`](decisions.md)
+
+- Status: accepted
+- Why: these files hold general project decisions, not agent-only instructions, and the shorter name is easier to scan beside local [`agent-index.md`](../agent-index.md) routing docs
+- Consequence: repository-wide decisions live in [`docs/decisions.md`](decisions.md)
+- Consequence: area-specific decisions should live in the nearest scoped [`decisions.md`](../frontend/decisions.md) when a separate file is useful
+- Consequence: keep decision content separate from routing indexes unless the decision set grows enough to justify a dedicated catalog
 
 ## Start With Docs Before Scaffolding
 
