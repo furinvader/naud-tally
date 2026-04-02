@@ -23,3 +23,4 @@ Read this file before opening task files under [`docs/tasks/done/`](./).
 - [T-010 Choose a Design Solution](T-010.md)
 - [T-011 Document the Penpot Handoff Workflow](T-011.md)
 - [T-012 Create a Reusable Design Foundation Board](T-012.md)
+- [T-013 Apply the Design Foundations to the Angular Theme](T-013.md)

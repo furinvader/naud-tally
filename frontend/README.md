@@ -60,6 +60,14 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Prefer `class` and `style` bindings over `ngClass` and `ngStyle`.
 - Name event handlers for what they do, not for the triggering event.
 
+### Styling and Theme Rules
+
+- Keep the shared theme in [`src/styles.scss`](src/styles.scss) and any imported global theme partials.
+- Use app-owned `--nt-*` tokens as the only repo-authored CSS variable contract.
+- If a component needs local custom properties, prefix them `--nt-<component>-*`.
+- Prefer Angular Material theme and component overrides before adding one-off component colors, radii, shadows, or typography values.
+- Do not read Angular Material `--mat-*` variables directly in repo-authored app or component styles.
+
 ## When To Update This Guide
 
 - Update this file if the frontend directory shape changes.

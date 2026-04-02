@@ -1,0 +1,203 @@
+@use '@angular/material' as mat;
+
+@use './nt-theme-tokens' as nt;
+
+@mixin install() {
+  @include nt.font-faces();
+
+  html {
+    height: 100%;
+    color-scheme: light;
+
+    @include mat.theme(
+      (
+        color: (
+          theme-type: light,
+          primary: mat.$azure-palette,
+          tertiary: mat.$green-palette,
+        ),
+        typography: (
+          plain-family: nt.$font-family-ui,
+          brand-family: nt.$font-family-brand,
+          regular-weight: nt.$font-weight-regular,
+          medium-weight: nt.$font-weight-medium,
+          bold-weight: nt.$font-weight-bold,
+        ),
+        density: 0,
+      )
+    );
+
+    @include nt.css-vars();
+
+    @include mat.theme-overrides(
+      (
+        background: var(--nt-color-canvas),
+        on-background: var(--nt-color-ink),
+        surface: var(--nt-color-surface),
+        on-surface: var(--nt-color-ink),
+        surface-bright: var(--nt-color-surface-raised),
+        surface-dim: var(--nt-color-canvas),
+        surface-container-lowest: var(--nt-color-surface-raised),
+        surface-container-low: var(--nt-color-surface),
+        surface-container: var(--nt-color-surface-soft),
+        surface-container-high: var(--nt-color-surface-soft),
+        surface-container-highest: var(--nt-color-surface-soft),
+        on-surface-variant: var(--nt-color-muted),
+        outline: var(--nt-color-line-strong),
+        outline-variant: var(--nt-color-line),
+        primary: var(--nt-color-action),
+        on-primary: var(--nt-color-on-action),
+        primary-container: var(--nt-color-action-soft),
+        on-primary-container: var(--nt-color-action),
+        secondary: var(--nt-color-muted),
+        on-secondary: var(--nt-color-surface),
+        secondary-container: var(--nt-color-surface-soft),
+        on-secondary-container: var(--nt-color-ink),
+        tertiary: var(--nt-color-accent),
+        on-tertiary: var(--nt-color-on-accent),
+        tertiary-container: var(--nt-color-accent-soft),
+        on-tertiary-container: var(--nt-color-accent),
+        error: var(--nt-color-signal),
+        on-error: var(--nt-color-on-signal),
+        error-container: var(--nt-color-signal-soft),
+        on-error-container: var(--nt-color-signal),
+        surface-tint: var(--nt-color-action),
+        corner-extra-small: var(--nt-space-2xs),
+        corner-small: var(--nt-radius-utility),
+        corner-medium: var(--nt-radius-button),
+        corner-large: var(--nt-radius-card),
+        corner-extra-large: var(--nt-radius-panel),
+        body-large-font: var(--nt-font-family-ui),
+        body-large-size: 1.125rem,
+        body-large-line-height: 1.45,
+        body-large-weight: var(--nt-font-weight-regular),
+        body-large-tracking: 0,
+        body-medium-font: var(--nt-font-family-ui),
+        body-medium-size: var(--nt-type-body-size),
+        body-medium-line-height: var(--nt-type-body-line-height),
+        body-medium-weight: var(--nt-type-body-weight),
+        body-medium-tracking: 0,
+        body-small-font: var(--nt-font-family-ui),
+        body-small-size: var(--nt-type-label-size),
+        body-small-line-height: var(--nt-type-label-line-height),
+        body-small-weight: var(--nt-font-weight-regular),
+        body-small-tracking: 0,
+        label-large-font: var(--nt-font-family-ui),
+        label-large-size: var(--nt-type-label-size),
+        label-large-line-height: var(--nt-type-label-line-height),
+        label-large-weight: var(--nt-type-label-weight),
+        label-large-tracking: var(--nt-tracking-label),
+        label-medium-font: var(--nt-font-family-ui),
+        label-medium-size: var(--nt-type-label-size),
+        label-medium-line-height: var(--nt-type-label-line-height),
+        label-medium-weight: var(--nt-type-label-weight),
+        label-medium-tracking: 0,
+        label-small-font: var(--nt-font-family-ui),
+        label-small-size: var(--nt-type-kicker-size),
+        label-small-line-height: var(--nt-type-kicker-line-height),
+        label-small-weight: var(--nt-type-kicker-weight),
+        label-small-tracking: var(--nt-tracking-kicker),
+        title-large-font: var(--nt-font-family-brand),
+        title-large-size: var(--nt-type-title-size),
+        title-large-line-height: var(--nt-type-title-line-height),
+        title-large-weight: var(--nt-type-title-weight),
+        title-large-tracking: 0,
+        title-medium-font: var(--nt-font-family-ui),
+        title-medium-size: var(--nt-type-label-size),
+        title-medium-line-height: var(--nt-type-label-line-height),
+        title-medium-weight: var(--nt-font-weight-medium),
+        title-medium-tracking: 0,
+        title-small-font: var(--nt-font-family-ui),
+        title-small-size: var(--nt-type-label-size),
+        title-small-line-height: var(--nt-type-label-line-height),
+        title-small-weight: var(--nt-font-weight-medium),
+        title-small-tracking: 0,
+      )
+    );
+
+    @include mat.button-overrides(
+      (
+        filled-container-color: var(--nt-color-action),
+        filled-label-text-color: var(--nt-color-on-action),
+        filled-state-layer-color: var(--nt-color-on-action),
+        filled-ripple-color: color-mix(
+          in srgb,
+          var(--nt-color-on-action) 16%,
+          transparent
+        ),
+        filled-container-shape: var(--nt-radius-button),
+        filled-container-height: 44px,
+        filled-horizontal-padding: 20px,
+        filled-label-text-font: var(--nt-font-family-ui),
+        filled-label-text-size: var(--nt-type-label-size),
+        filled-label-text-weight: var(--nt-type-label-weight),
+        filled-label-text-tracking: var(--nt-tracking-label),
+        outlined-label-text-color: var(--nt-color-action),
+        outlined-state-layer-color: var(--nt-color-action),
+        outlined-ripple-color: color-mix(
+          in srgb,
+          var(--nt-color-action) 16%,
+          transparent
+        ),
+        outlined-outline-color: var(--nt-color-line-strong),
+        outlined-container-shape: var(--nt-radius-button),
+        outlined-container-height: 44px,
+        outlined-horizontal-padding: 20px,
+        outlined-label-text-font: var(--nt-font-family-ui),
+        outlined-label-text-size: var(--nt-type-label-size),
+        outlined-label-text-weight: var(--nt-type-label-weight),
+        outlined-label-text-tracking: var(--nt-tracking-label),
+        text-container-shape: var(--nt-radius-button),
+        text-label-text-font: var(--nt-font-family-ui),
+        text-label-text-size: var(--nt-type-label-size),
+        text-label-text-weight: var(--nt-type-label-weight),
+        text-label-text-tracking: var(--nt-tracking-label),
+      )
+    );
+
+    @include mat.card-overrides(
+      (
+        outlined-container-color: var(--nt-color-surface-card),
+        outlined-container-elevation: var(--nt-shadow-card),
+        outlined-container-shape: var(--nt-radius-card),
+        outlined-outline-color: var(--nt-color-line),
+        title-text-font: var(--nt-font-family-brand),
+        title-text-size: var(--nt-type-title-size),
+        title-text-line-height: var(--nt-type-title-line-height),
+        title-text-weight: var(--nt-type-title-weight),
+        subtitle-text-color: var(--nt-color-muted),
+        subtitle-text-font: var(--nt-font-family-ui),
+        subtitle-text-size: var(--nt-type-label-size),
+        subtitle-text-line-height: var(--nt-type-label-line-height),
+        subtitle-text-weight: var(--nt-font-weight-medium),
+      )
+    );
+
+    @include mat.toolbar-overrides(
+      (
+        container-background-color: var(--nt-color-toolbar),
+        container-text-color: var(--nt-color-ink),
+        title-text-font: var(--nt-font-family-brand),
+        title-text-size: var(--nt-type-title-size),
+        title-text-line-height: var(--nt-type-title-line-height),
+        title-text-weight: var(--nt-type-title-weight),
+        standard-height: 72px,
+        mobile-height: 64px,
+      )
+    );
+  }
+
+  body {
+    min-height: 100%;
+    margin: 0;
+    background-color: var(--nt-color-canvas);
+    color: var(--nt-color-ink);
+    font: var(--nt-type-body);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+}

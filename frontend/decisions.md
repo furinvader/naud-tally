@@ -32,3 +32,12 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Why: the official [Angular Style Guide](https://angular.dev/style-guide) recommends organizing code by feature areas and grouping closely related files together, which improves discoverability for both humans and agents
 - Consequence: new frontend feature work should live under [`src/app/features/`](src/app/features/), using the pattern `<feature-group>/<feature-name>/`, while app shell and bootstrap files stay under [`src/app/`](src/app/) and [`src/main.ts`](src/main.ts)
 - Consequence: frontend implementation conventions are documented in [`README.md`](README.md) and agents should consult that guide before creating or restructuring frontend features
+
+## Use App-Owned `--nt-*` CSS Variables as the Theme Contract
+
+- Status: accepted
+- Why: Angular Material provides the component theming engine, but the project still needs a stable theme contract that we own instead of coupling repo-authored styles to Angular Material variable names
+- Consequence: app-wide theme tokens use the `--nt-*` prefix
+- Consequence: component-local custom properties use the `--nt-<component>-*` pattern
+- Consequence: repo-authored styles should prefer shared theme tokens and Angular Material overrides over one-off local visual values
+- Consequence: repo-authored app and component styles should not read Angular Material `--mat-*` variables directly

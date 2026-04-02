@@ -77,6 +77,7 @@ We will start with a fixed example list for implementation and testing:
 - tablet-first layout
 - predefined sample drink catalog
 - single-screen guest-tab flow
+- foundation-aligned baseline theming for the main tally UI
 - create and select guest tabs using room number and full name
 - add and remove counts for each drink within the active guest context
 - always-visible drink overview
@@ -100,7 +101,7 @@ We will start with a fixed example list for implementation and testing:
 - role-based permissions
 - proper offline support beyond reload persistence
 - multilingual UI beyond English
-- polished branding or theming beyond what is needed for usability
+- larger branding work beyond the shared design foundation and usability-driven theming
 
 ## UX Principles
 
