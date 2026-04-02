@@ -60,3 +60,4 @@ Supporting research belongs in [`docs/research/agent-index.md`](../research/agen
 - [T-010 Choose a Design Solution](done/T-010.md)
 - [T-011 Document the Penpot Handoff Workflow](done/T-011.md)
 - [T-012 Create a Reusable Design Foundation Board](done/T-012.md)
+- [T-013 Apply the Design Foundations to the Angular Theme](done/T-013.md)

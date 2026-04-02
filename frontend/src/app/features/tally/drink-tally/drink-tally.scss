@@ -1,29 +1,23 @@
 :host {
-  --shell-max-width: 1180px;
-  --panel-border: color-mix(in srgb, var(--mat-sys-outline-variant) 70%, transparent);
-  --panel-surface: color-mix(
-    in srgb,
-    var(--mat-sys-surface-container-low) 86%,
-    white 14%
-  );
-  --panel-shadow: 0 24px 80px rgba(22, 36, 64, 0.12);
+  --nt-drink-tally-shell-max-width: 1180px;
+
   display: block;
   min-height: 100dvh;
   background:
     radial-gradient(
-      circle at top left,
-      color-mix(in srgb, var(--mat-sys-primary) 16%, transparent),
-      transparent 42%
+      circle at top right,
+      color-mix(in srgb, var(--nt-color-action) 10%, transparent),
+      transparent 34%
     ),
     radial-gradient(
-      circle at top right,
-      color-mix(in srgb, var(--mat-sys-tertiary) 14%, transparent),
-      transparent 38%
+      circle at top left,
+      color-mix(in srgb, var(--nt-color-accent) 12%, transparent),
+      transparent 36%
     ),
     linear-gradient(
       180deg,
-      color-mix(in srgb, var(--mat-sys-surface-container-low) 90%, white 10%),
-      var(--mat-sys-surface)
+      var(--nt-color-canvas),
+      color-mix(in srgb, var(--nt-color-canvas) 88%, var(--nt-color-surface))
     );
 }
 
@@ -31,17 +25,17 @@
   position: sticky;
   top: 0;
   z-index: 10;
-  min-height: 72px;
-  padding-inline: clamp(16px, 3vw, 32px);
+  padding-inline: clamp(var(--nt-space-sm), 3vw, var(--nt-space-lg));
   backdrop-filter: blur(18px);
-  background: color-mix(in srgb, var(--mat-sys-surface) 82%, white 18%);
-  border-bottom: 1px solid var(--panel-border);
+  border-bottom: 1px solid var(--nt-border-subtle);
 }
 
 .brand {
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  margin: 0;
+  font: var(--nt-type-kicker);
+  letter-spacing: var(--nt-tracking-kicker);
   text-transform: uppercase;
+  color: var(--nt-color-ink);
 }
 
 .spacer {
@@ -58,10 +52,10 @@
 .toolbar-total-label,
 .eyebrow,
 .count-pill-label {
-  font-size: 0.875rem;
-  letter-spacing: 0.08em;
+  font: var(--nt-type-label);
+  letter-spacing: var(--nt-tracking-label);
   text-transform: uppercase;
-  color: var(--mat-sys-on-surface-variant);
+  color: var(--nt-color-muted);
 }
 
 .toolbar-total {
@@ -70,26 +64,27 @@
 }
 
 .toolbar-total-value {
-  font-size: 1.85rem;
-  line-height: 1;
+  font: var(--nt-type-numeric);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  color: var(--nt-color-action);
 }
 
 .app-shell {
-  width: min(100%, var(--shell-max-width));
+  width: min(100%, var(--nt-drink-tally-shell-max-width));
   margin: 0 auto;
-  padding: clamp(24px, 4vw, 40px);
+  padding: clamp(var(--nt-space-md), 4vw, var(--nt-space-xl));
   display: grid;
-  gap: 24px;
+  gap: var(--nt-space-md);
 }
 
 .hero-panel {
   display: grid;
-  gap: 18px;
-  padding: clamp(24px, 3vw, 36px);
-  border: 1px solid var(--panel-border);
-  border-radius: 32px;
-  background: var(--panel-surface);
-  box-shadow: var(--panel-shadow);
+  gap: var(--nt-space-sm);
+  padding: clamp(var(--nt-space-md), 3vw, var(--nt-space-lg));
+  border: 1px solid var(--nt-border-subtle);
+  border-radius: var(--nt-radius-panel);
+  background: var(--nt-color-surface-panel);
+  box-shadow: var(--nt-shadow-panel);
 }
 
 .eyebrow {
@@ -98,7 +93,7 @@
 
 .hero-row {
   display: grid;
-  gap: 24px;
+  gap: var(--nt-space-md);
   align-items: stretch;
   grid-template-columns: minmax(0, 2.2fr) minmax(240px, 1fr);
 }
@@ -106,118 +101,95 @@
 .hero-copy {
   display: grid;
   align-content: center;
-  gap: 16px;
-}
-
-.hero-copy h1,
-mat-card-title,
-.count-pill-value,
-.hero-total-value,
-.toolbar-total-value {
-  margin: 0;
-  font-weight: 700;
+  gap: var(--nt-space-sm);
 }
 
 .hero-copy h1 {
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  line-height: 0.95;
+  margin: 0;
   max-width: 11ch;
+  font: var(--nt-type-display);
+  font-size: clamp(2.625rem, 5vw, var(--nt-type-display-size));
+  letter-spacing: -0.03em;
 }
 
 .hero-copy p {
   margin: 0;
   max-width: 42ch;
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: var(--mat-sys-on-surface-variant);
+  font: var(--nt-type-body);
+  color: var(--nt-color-muted);
 }
 
 .hero-total-card {
   display: grid;
   align-content: center;
-  gap: 8px;
-  padding: 24px;
-  border-radius: 28px;
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--mat-sys-primary-container) 90%, white 10%),
-      color-mix(in srgb, var(--mat-sys-tertiary-container) 82%, white 18%)
-    );
-  border: 1px solid color-mix(in srgb, var(--mat-sys-primary) 22%, transparent);
+  gap: var(--nt-space-2xs);
+  padding: var(--nt-space-md);
+  border: 1px solid var(--nt-border-subtle);
+  border-radius: var(--nt-radius-panel);
+  background: linear-gradient(135deg, var(--nt-color-action-soft), var(--nt-color-accent-soft));
 }
 
 .hero-total-label,
 .hero-total-caption {
-  color: color-mix(in srgb, var(--mat-sys-on-surface) 72%, transparent);
+  font: var(--nt-type-label);
+  color: var(--nt-color-muted);
 }
 
 .hero-total-value {
-  font-size: clamp(3rem, 8vw, 5rem);
-  line-height: 0.9;
+  font: var(--nt-type-numeric);
+  font-size: clamp(3.5rem, 8vw, var(--nt-type-numeric-size));
+  color: var(--nt-color-action);
 }
 
 .drink-grid {
   display: grid;
-  gap: 20px;
+  gap: var(--nt-space-sm);
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  padding-bottom: 24px;
+  padding-bottom: var(--nt-space-md);
 }
 
 .drink-card {
   overflow: hidden;
-  border-radius: 28px;
-  background: color-mix(in srgb, var(--mat-sys-surface-container) 84%, white 16%);
-  box-shadow: 0 18px 56px rgba(22, 36, 64, 0.08);
 }
 
 mat-card-header {
-  padding: 24px 24px 16px;
-}
-
-mat-card-title {
-  font-size: 1.35rem;
+  padding: var(--nt-space-md) var(--nt-space-md) var(--nt-space-sm);
 }
 
 mat-card-content {
-  padding: 0 24px 20px;
+  padding: 0 var(--nt-space-md) var(--nt-space-sm);
 }
 
 .count-pill {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 16px;
-  padding: 18px 20px;
-  border-radius: 24px;
-  background: color-mix(in srgb, var(--mat-sys-primary-container) 28%, white 72%);
+  gap: var(--nt-space-sm);
+  padding: var(--nt-space-sm) var(--nt-space-md);
+  border: 1px solid var(--nt-border-subtle);
+  border-radius: var(--nt-radius-utility);
+  background: var(--nt-color-surface-count);
 }
 
 .count-pill-value {
-  font-size: 2.5rem;
-  line-height: 1;
+  font: var(--nt-type-title);
+  font-size: 2.25rem;
+  color: var(--nt-color-action);
 }
 
 .drink-actions {
   display: grid;
-  gap: 14px;
+  gap: var(--nt-space-xs);
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  padding: 0 24px 24px;
+  padding: 0 var(--nt-space-md) var(--nt-space-md);
 }
 
 .count-button {
   min-height: 72px;
-  border-radius: 22px;
+  font-family: var(--nt-font-family-brand);
   font-size: 2rem;
-  font-weight: 600;
-}
-
-.count-button--secondary:not(:disabled) {
-  border-color: color-mix(in srgb, var(--mat-sys-outline) 82%, transparent);
-}
-
-.count-button--primary {
-  box-shadow: 0 14px 28px color-mix(in srgb, var(--mat-sys-primary) 20%, transparent);
+  font-weight: var(--nt-type-title-weight);
+  letter-spacing: 0;
 }
 
 @media (max-width: 840px) {
@@ -232,13 +204,12 @@ mat-card-content {
 
 @media (max-width: 599px) {
   .app-shell {
-    padding: 16px;
+    padding: var(--nt-space-sm);
   }
 
   .app-toolbar {
-    min-height: 64px;
     align-items: start;
-    padding-block: 12px;
+    padding-block: var(--nt-space-xs);
   }
 
   .brand {
