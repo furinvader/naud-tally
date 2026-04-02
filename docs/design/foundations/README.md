@@ -1,11 +1,11 @@
-# Tablet Foundation
+# Design Foundation
 
 ## Artifact
 
 - Repo artifact directory: [`./`](./)
-- Repo SVG export: [`tablet-foundation.svg`](tablet-foundation.svg)
+- Repo SVG export: [`design-foundation.svg`](design-foundation.svg)
 - Optional Penpot share link: `not required for the repo workflow`
-- Status: `revised on 2026-04-01 to replace the initial Material-influenced pass with a custom tablet-first direction`
+- Status: `reframed on 2026-04-02 as the default mobile-first design foundation for Naud Tally`
 
 ## Goal
 
@@ -14,16 +14,17 @@
 ## Basis
 
 - Do not anchor the foundation to a named design system by default.
-- Base the branding on the actual `Naud Tally` tablet experience instead of a website or marketing page.
+- Base the branding on the actual `Naud Tally` app experience instead of a website or marketing page.
+- Treat `mobile first` as the default layout constraint, then scale the same hierarchy up for the shared-tablet pilot.
 - Keep the look modern, calm, and restrained: lower chroma, firmer geometry, and less-rounded controls.
 
 ## Foundation Sections
 
-- A restrained tablet-first palette
+- A restrained mobile-first palette
 - Typography roles for headline, section, body, label, and numeric emphasis
 - Shape and interaction rules for panels, cards, and buttons
 - Icon direction with simple squared line icons
-- A branded example of the primary tally screen
+- A branded example of the primary tally screen that scales from narrow layouts to the shared-device view
 
 ## Core Tokens
 
@@ -44,6 +45,7 @@
 
 - Display typeface: `Manrope`
 - UI typeface: `Inter Tight`
+- Treat these values as role anchors; larger tablet surfaces can scale `Display` and `Numeric emphasis` up without changing the type pairing.
 - `Display`: `Manrope 62 / 62`
 - `Section`: `Manrope 28 / 33`
 - `Body`: `Inter Tight 16 / 23`
@@ -57,6 +59,7 @@
 - Prefer visible 1px borders over very soft glassmorphism.
 - Keep shadows light and functional rather than decorative.
 - Use compact chips and utility badges instead of oversized pills.
+- Start layout work from a narrow one-column flow before expanding into multi-panel tablet compositions.
 
 ## Implementation Guidance
 
@@ -65,9 +68,12 @@
 - Make numbers, counts, and totals visually dominant over decorative text.
 - Prefer simple outline icons with squared ends and quiet geometry over playful or highly rounded icon families.
 - Use the primary tally layout as the branding reference point for future screens instead of inventing unrelated presentation patterns.
+- Preserve the same interaction order from mobile to tablet: identify context, scan totals, act on one item, confirm the updated count.
+- Let tablet layouts add simultaneous visibility, not a separate visual language.
 
 ## Follow-Up
 
 - Refresh the committed SVG in [`./`](./) after meaningful foundation changes.
 - Use this brief plus a task-specific screen brief as the starting context for future design work.
+- Use [`../screen-brief-template.md`](../screen-brief-template.md) when a new task-specific brief needs to be created.
 - If the system itself changes, update this brief and the SVG together instead of encoding the change only in chat memory.
