@@ -64,7 +64,9 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 
 - Keep the shared theme in [`src/styles.scss`](src/styles.scss) and any imported global theme partials.
 - Use app-owned `--nt-*` tokens as the only repo-authored CSS variable contract.
-- If a component needs local custom properties, prefix them `--nt-<component>-*`.
+- Shared theme tokens stay global and may be consumed directly in component styles.
+- If a component needs a parent-facing override hook, prefix it `--nt-<component>-*` and use it inline at the declaration site with fallback to a shared theme token and a component-owned literal default.
+- Do not redefine parent-facing component custom properties on `:host`, because that blocks inherited overrides from parent components.
 - Prefer Angular Material theme and component overrides before adding one-off component colors, radii, shadows, or typography values.
 - Do not read Angular Material `--mat-*` variables directly in repo-authored app or component styles.
 
