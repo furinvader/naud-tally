@@ -5,14 +5,13 @@ Read this file before opening other files under [`docs/design/foundations/`](./)
 ## Purpose
 
 - This directory holds reusable design-system references that should guide future Penpot and frontend design work.
-- Each foundation artifact should live in its own folder with a markdown brief and any committed SVG artifacts.
+- Keep the active shared foundation files directly in this folder unless multiple distinct foundations appear later.
 
 ## Load Rules
 
-- Open only the foundation folder you need.
-- Start with the foundation folder's [`README.md`](tablet-foundation/README.md).
+- Start with [`README.md`](README.md).
 - Keep committed foundation artifacts SVG-only.
 
 ## Foundations
 
-- [Tablet Foundation](tablet-foundation/README.md)
+- [Design Foundation](README.md)

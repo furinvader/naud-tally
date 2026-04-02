@@ -18,8 +18,8 @@
 - Start the Penpot MCP services with [`../../scripts/penpot-mcp.sh`](../../scripts/penpot-mcp.sh).
 - Open Codex from the repo root and let the project-scoped config in [`.codex/config.toml`](../../.codex/config.toml) wire in Penpot automatically.
 - Optional convenience entry point: [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh).
-- Keep the reusable visual system baseline in [`foundations/tablet-foundation/README.md`](foundations/tablet-foundation/README.md).
-- Keep the current design brief in a repo-native markdown file such as [`smoke-tests/drink-tally/README.md`](smoke-tests/drink-tally/README.md).
+- Keep the reusable visual system baseline in [`foundations/README.md`](foundations/README.md).
+- Draft new task-specific briefs from [`screen-brief-template.md`](screen-brief-template.md) and store them beside the matching SVG artifact.
 - Keep committed design artifacts in the matching folder under [`./`](./), with SVG as the only committed export format.
 
 ## Project-Scoped Codex Config
@@ -66,17 +66,23 @@ Each Penpot-driven task should have a markdown brief that includes:
 - screen list
 - layout and spacing notes
 - key states or variants
+- content and copy notes
 - implementation notes for Codex
 - open questions or follow-ups
 
-[`smoke-tests/drink-tally/README.md`](smoke-tests/drink-tally/README.md) is the first example of that format.
-[`foundations/tablet-foundation/README.md`](foundations/tablet-foundation/README.md) is the reusable visual-system reference for future screen work.
+[`screen-brief-template.md`](screen-brief-template.md) is the default starting point for task-specific briefs.
+[`foundations/README.md`](foundations/README.md) is the reusable visual-system reference for future screen work.
 
 ## Recommended Codex Prompt
 
 Use a prompt shaped like this once the Penpot file and plugin are live:
 
-> Use Penpot to update the active design file using [`docs/design/foundations/tablet-foundation/README.md`](./foundations/tablet-foundation/README.md) as the reusable visual-system baseline and the task-specific brief as the screen-level source of truth. Create or update the described design, then summarize what you created and any gaps between the briefs and Penpot.
+> Use Penpot to update the active design file using [`docs/design/foundations/README.md`](./foundations/README.md) as the reusable mobile-first visual-system baseline and the task-specific brief as the screen-level source of truth. Create or update the described design, then summarize what you created and any gaps between the briefs and Penpot.
+
+## Layout Default
+
+- Treat the foundation as mobile-first even though the current pilot is often used on a shared tablet.
+- Define hierarchy, spacing, and tap targets for the narrow layout first, then let tablet layouts add simultaneous visibility instead of inventing a separate visual language.
 
 ## Current Limits
 
