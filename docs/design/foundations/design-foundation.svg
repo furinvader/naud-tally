@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1940" viewBox="0 0 1600 1940" fill="none" role="img" aria-labelledby="title desc">
-  <title id="title">Naud Tally Tablet Design Foundation</title>
-  <desc id="desc">A custom tablet-first design foundation for Naud Tally with a restrained palette, firmer geometry, and a tally-screen example.</desc>
+  <title id="title">Naud Tally Design Foundation</title>
+  <desc id="desc">A custom mobile-first design foundation for Naud Tally with a restrained palette, firmer geometry, and a tally-screen example.</desc>
   <defs>
     <style>
       .display { font: 700 62px/1 "Manrope", "Inter", sans-serif; fill: #1E2630; }
@@ -31,14 +31,14 @@
   <ellipse cx="1430" cy="156" rx="120" ry="120" fill="#7E8974" fill-opacity="0.08"/>
   <rect x="124" y="214" width="96" height="6" rx="3" fill="#355061"/>
 
-  <text class="kicker" x="124" y="118">TABLET APP FOUNDATION</text>
+  <text class="kicker" x="124" y="118">APP DESIGN FOUNDATION</text>
   <text class="display" x="124" y="196">Naud Tally</text>
-  <text class="body-lg" x="124" y="246">A custom, tablet-first brand direction for fast shared tallying:</text>
+  <text class="body-lg" x="124" y="246">A custom, mobile-first brand direction for fast shared tallying:</text>
   <text class="body-lg" x="124" y="274">quiet contrast, firm shapes, restrained color, and strong numeric clarity.</text>
 
   <g transform="translate(124 330)">
     <rect width="126" height="42" rx="14" fill="#FFFFFF" stroke="#D7D0C7"/>
-    <text class="chip" x="63" y="27" text-anchor="middle" fill="#1E2630">tablet first</text>
+    <text class="chip" x="63" y="27" text-anchor="middle" fill="#1E2630">mobile first</text>
   </g>
   <g transform="translate(266 330)">
     <rect width="144" height="42" rx="14" fill="#E6EDF1" stroke="#D7D0C7"/>
