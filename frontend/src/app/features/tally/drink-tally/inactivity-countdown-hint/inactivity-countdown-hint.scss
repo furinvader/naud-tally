@@ -8,10 +8,32 @@
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   gap: var(--nt-space-sm);
+  width: 100%;
   padding: var(--nt-space-sm) var(--nt-space-md);
+  border: 1px solid color-mix(in srgb, var(--nt-color-action) 12%, transparent);
   border-radius: var(--nt-radius-utility);
   background: color-mix(in srgb, var(--nt-color-action-soft) 55%, transparent);
+  color: inherit;
+  cursor: pointer;
   overflow: hidden;
+  text-align: left;
+  appearance: none;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+  font: inherit;
+}
+
+.inactivity-hint:hover,
+.inactivity-hint:focus-visible {
+  border-color: color-mix(in srgb, var(--nt-color-action) 26%, transparent);
+  background: color-mix(in srgb, var(--nt-color-action-soft) 72%, transparent);
+}
+
+.inactivity-hint:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nt-color-action) 18%, transparent);
 }
 
 .inactivity-hint__fill {
@@ -28,9 +50,30 @@
   z-index: 1;
 }
 
+.inactivity-hint__copy {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.inactivity-hint__message {
+  min-width: 0;
+}
+
+.inactivity-hint__action-label {
+  font: var(--nt-type-label);
+  letter-spacing: var(--nt-tracking-label);
+  text-transform: uppercase;
+  color: var(--nt-color-action);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .inactivity-hint__ring {
   width: 2.5rem;
   height: 2.5rem;
+  flex: 0 0 auto;
   transform: rotate(-90deg);
 }
 
@@ -54,6 +97,6 @@
 
 @media (max-width: 720px) {
   .inactivity-hint {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 }

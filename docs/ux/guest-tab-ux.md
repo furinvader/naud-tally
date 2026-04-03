@@ -56,6 +56,7 @@ This identification model is trust-based. The app should support it clearly, but
 - On tablet and desktop widths, the guest-list area and the personal tally surface should each fill the remaining vertical viewport space.
 - If either side grows too long, it should scroll internally instead of forcing page scroll for the full screen.
 - The personal tally surface should expand as a non-modal drawer or panel within the same screen.
+- When a guest tab is open, the personal tally surface should keep the selected-guest header and close hint visible while the drink controls scroll beneath them.
 - The personal tally surface should include a prominent close action.
 
 ## Sample Toolbar Prices
@@ -78,7 +79,7 @@ This identification model is trust-based. The app should support it clearly, but
 - The personal tally surface must make the selected guest unmistakable.
 - Creating a guest tab should feel lightweight, not like account registration.
 - After each drink change, the app should give immediate feedback and make recovery easy, such as through `Undo`.
-- The personal tally surface should close after 90 seconds of inactivity or explicit close so the next person does not accidentally use the previous tab.
+- The personal tally surface should close after 180 seconds of inactivity or explicit close so the next person does not accidentally use the previous tab.
 - The inactivity hint should preview that timeout with an obvious visual countdown, such as a filling background and a shrinking ring.
 - If the active guest list grows large, later archive, grouping, or recency rules may become necessary to avoid stale noise.
 

@@ -3,7 +3,7 @@
     <mat-card appearance="outlined" class="drink-card">
       <div class="drink-card__header">
         <div class="drink-card__headline">
-          <h3 class="drink-card__title">{{ drink.name }}</h3>
+          <h3 class="drink-card__title" [attr.title]="drink.name">{{ drink.name }}</h3>
           <div class="drink-card__count" [attr.aria-label]="countLabel() + ' ' + drink.count">
             <strong class="drink-card__count-value">{{ drink.count }}</strong>
           </div>
