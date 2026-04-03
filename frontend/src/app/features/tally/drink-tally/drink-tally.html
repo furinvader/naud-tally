@@ -4,70 +4,207 @@
     <span class="toolbar-hint">{{ copy.toolbarHint }}</span>
   </div>
 
-  <span class="spacer"></span>
-
-  <div class="toolbar-total" aria-live="polite">
-    <span class="toolbar-total-label">{{ copy.totalLabel }}</span>
-    <strong class="toolbar-total-value">{{ tallyStore.totalCount() }}</strong>
-  </div>
+  <nt-drink-price-reference [drinks]="tallyStore.toolbarDrinkReferences()" />
 </mat-toolbar>
 
 <main class="app-shell">
-  <section class="hero-panel" aria-label="Tally overview">
-    <p class="eyebrow">{{ copy.eyebrow }}</p>
+  <section class="screen-body">
+    <div class="public-column">
+      <mat-card appearance="outlined" class="entry-card">
+        @if (tallyStore.addGuestFlow().step === 'closed') {
+          <div class="entry-card__summary">
+            <div class="entry-card__copy">
+              <p class="entry-card__eyebrow">{{ copy.addYourself }}</p>
+              <h2>{{ copy.addYourself }}</h2>
+              <p>{{ copy.addYourselfHint }}</p>
+            </div>
 
-    <div class="hero-row">
-      <div class="hero-copy">
-        <h1>{{ copy.headline }}</h1>
-        <p>{{ copy.instructions }}</p>
-      </div>
-
-      <div class="hero-total-card">
-        <span class="hero-total-label">{{ copy.totalLabel }}</span>
-        <strong class="hero-total-value">{{ tallyStore.totalCount() }}</strong>
-        <span class="hero-total-caption">{{ copy.totalCaption }}</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="drink-grid" aria-label="Drink tally cards">
-    @for (drink of tallyStore.drinkTallies(); track drink.id) {
-      <mat-card appearance="outlined" class="drink-card">
-        <mat-card-header>
-          <mat-card-title>{{ drink.name }}</mat-card-title>
-          <mat-card-subtitle>{{ copy.drinkSubtitle }}</mat-card-subtitle>
-        </mat-card-header>
-
-        <mat-card-content>
-          <div class="count-pill">
-            <span class="count-pill-label">{{ copy.countLabel }}</span>
-            <span class="count-pill-value">{{ drink.count }}</span>
+            <button
+              mat-flat-button
+              type="button"
+              class="entry-card__action"
+              data-testid="add-yourself-button"
+              (click)="tallyStore.startAddGuestFlow()"
+            >
+              {{ copy.addYourself }}
+            </button>
           </div>
-        </mat-card-content>
+        } @else if (tallyStore.addGuestFlow().step === 'roomNumber') {
+          <form class="entry-flow" (submit)="onRoomNumberSubmit($event)">
+            <div class="entry-flow__copy">
+              <p class="entry-card__eyebrow">{{ copy.roomStepLabel }}</p>
+              <h2>{{ copy.roomStepTitle }}</h2>
+            </div>
 
-        <div class="drink-actions">
-          <button
-            mat-stroked-button
-            type="button"
-            class="count-button count-button--secondary"
-            [disabled]="drink.count === 0"
-            [attr.aria-label]="'Remove one ' + drink.name"
-            (click)="tallyStore.decrementDrink(drink.id)"
-          >
-            -
-          </button>
+            <mat-form-field appearance="outline">
+              <mat-label>{{ copy.roomNumberLabel }}</mat-label>
+              <input
+                matInput
+                type="text"
+                [value]="tallyStore.addGuestFlow().roomNumber"
+                data-testid="room-number-input"
+                (input)="onRoomNumberInput($event)"
+              />
+            </mat-form-field>
 
-          <button
-            mat-flat-button
-            type="button"
-            class="count-button count-button--primary"
-            [attr.aria-label]="'Add one ' + drink.name"
-            (click)="tallyStore.incrementDrink(drink.id)"
-          >
-            +
-          </button>
-        </div>
+            <div class="entry-flow__actions">
+              <button
+                mat-stroked-button
+                type="button"
+                (click)="tallyStore.cancelAddGuestFlow()"
+              >
+                {{ copy.cancelAction }}
+              </button>
+
+              <button
+                mat-flat-button
+                type="submit"
+                data-testid="room-number-continue"
+                [disabled]="!tallyStore.addGuestFlow().roomNumber.trim()"
+              >
+                {{ copy.roomNumberAction }}
+              </button>
+            </div>
+          </form>
+        } @else {
+          <form class="entry-flow" (submit)="onGuestIdentitySubmit($event)">
+            <div class="entry-flow__copy">
+              <p class="entry-card__eyebrow">{{ copy.nameStepLabel }}</p>
+              <h2>{{ copy.nameStepTitle }}</h2>
+              <p>{{ copy.roomLabel }} {{ tallyStore.addGuestFlow().roomNumber }}</p>
+            </div>
+
+            <mat-form-field appearance="outline">
+              <mat-label>{{ copy.fullNameLabel }}</mat-label>
+              <input
+                matInput
+                type="text"
+                [value]="tallyStore.addGuestFlow().fullName"
+                data-testid="full-name-input"
+                (input)="onFullNameInput($event)"
+              />
+            </mat-form-field>
+
+            <div class="entry-flow__actions">
+              <button
+                mat-stroked-button
+                type="button"
+                (click)="tallyStore.returnToRoomNumberStep()"
+              >
+                {{ copy.backAction }}
+              </button>
+
+              <button
+                mat-flat-button
+                type="submit"
+                data-testid="create-tab-button"
+                [disabled]="!tallyStore.addGuestFlow().fullName.trim()"
+              >
+                {{ copy.fullNameAction }}
+              </button>
+            </div>
+          </form>
+        }
       </mat-card>
-    }
+
+      <section class="guest-list-section" aria-labelledby="active-guest-tabs-heading">
+        <div class="section-heading">
+          <div>
+            <p class="section-heading__eyebrow">{{ copy.activeGuestsLabel }}</p>
+            <h2 id="active-guest-tabs-heading">{{ copy.guestListTitle }}</h2>
+            <p>{{ copy.guestListHint }}</p>
+          </div>
+        </div>
+
+        @if (tallyStore.activeGuests().length) {
+          <div class="guest-grid">
+            @for (guest of tallyStore.activeGuests(); track guest.id) {
+              <nt-guest-tab-card
+                [roomNumber]="guest.roomNumber"
+                [fullName]="guest.fullName"
+                [totalCount]="guest.totalCount"
+                [drinkSummary]="guest.drinkSummary"
+                [selected]="tallyStore.selectedGuest()?.id === guest.id"
+                [roomLabel]="copy.roomLabel"
+                [emptySummaryLabel]="copy.guestSummaryFallback"
+                (selectTab)="tallyStore.selectGuestTab(guest.id)"
+              />
+            }
+          </div>
+        } @else {
+          <mat-card appearance="outlined" class="empty-state-card">
+            <h3>{{ copy.emptyGuestListTitle }}</h3>
+            <p>{{ copy.emptyGuestListBody }}</p>
+          </mat-card>
+        }
+      </section>
+    </div>
+
+    <aside
+      class="personal-panel"
+      [class.personal-panel--open]="tallyStore.selectedGuest() !== null"
+      aria-live="polite"
+    >
+      @if (tallyStore.selectedGuest(); as selectedGuest) {
+        <section class="personal-panel__content" data-testid="selected-guest-panel">
+          <div class="personal-panel__header">
+            <div>
+              <p class="eyebrow">{{ copy.personalPanelEyebrow }}</p>
+              <h2>{{ selectedGuest.fullName }}</h2>
+              <p>{{ copy.roomLabel }} {{ selectedGuest.roomNumber }}</p>
+            </div>
+
+            <button
+              mat-stroked-button
+              type="button"
+              data-testid="close-personal-tab"
+              (click)="tallyStore.closeSelectedGuestTab()"
+            >
+              {{ copy.closeTabAction }}
+            </button>
+          </div>
+
+          <p class="personal-panel__hint">{{ copy.inactivityHint }}</p>
+
+          <nt-tally-stat-card
+            [label]="copy.totalLabel"
+            [value]="selectedGuest.totalCount"
+            [caption]="copy.totalCaption"
+            emphasis="accent"
+          />
+
+          <nt-drink-counter-grid
+            [drinks]="selectedGuest.drinkTallies"
+            [subtitle]="copy.drinkSubtitle"
+            [countLabel]="copy.countLabel"
+            (incrementDrink)="tallyStore.incrementDrink($event)"
+            (decrementDrink)="tallyStore.decrementDrink($event)"
+          />
+        </section>
+      } @else {
+        <section class="personal-panel__placeholder" data-testid="empty-personal-panel">
+          <div class="personal-panel__stats">
+            <nt-tally-stat-card
+              [label]="copy.totalLabel"
+              [value]="tallyStore.publicTotalCount()"
+              [caption]="copy.totalCaption"
+              emphasis="accent"
+            />
+
+            <nt-tally-stat-card
+              [label]="copy.activeGuestsLabel"
+              [value]="tallyStore.activeGuestCount()"
+              [caption]="copy.activeGuestsCaption"
+            />
+          </div>
+
+          <div class="personal-panel__placeholder-copy">
+            <p class="eyebrow">{{ copy.personalPanelEyebrow }}</p>
+            <h2>{{ copy.personalPanelPlaceholderTitle }}</h2>
+            <p>{{ copy.personalPanelPlaceholderBody }}</p>
+          </div>
+        </section>
+      }
+    </aside>
   </section>
 </main>

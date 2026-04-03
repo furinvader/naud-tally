@@ -8,11 +8,10 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 
 ## Current Priority
 
-- [T-009 Introduce Guest Tabs and Trust-Based Identification](tasks/open/T-009.md)
+- No current-priority task is marked right now.
 
 ## Open Tasks
 
-- [T-009 Introduce Guest Tabs and Trust-Based Identification](tasks/open/T-009.md)
 - [T-006 Add Organizer Controls](tasks/open/T-006.md)
 - [T-007 Test the Pilot in a Real Usage Scenario](tasks/open/T-007.md)
 - [T-008 Add i18n Support](tasks/open/T-008.md)
@@ -25,6 +24,7 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 - [T-003 Define the First Vertical Slice](tasks/done/T-003.md)
 - [T-004 Scaffold the App](tasks/done/T-004.md)
 - [T-005 Build the Guest Tally Screen](tasks/done/T-005.md)
+- [T-009 Introduce Guest Tabs and Trust-Based Identification](tasks/done/T-009.md)
 - [T-010 Choose a Design Solution](tasks/done/T-010.md)
 - [T-011 Document the Penpot Handoff Workflow](tasks/done/T-011.md)
 - [T-012 Create a Reusable Design Foundation Board](tasks/done/T-012.md)

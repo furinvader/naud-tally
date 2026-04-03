@@ -8,7 +8,8 @@ This is the first routing file for every agent task in this repository.
 - The first product slice is already merged.
 - The design-solution decision is recorded in [`T-010`](docs/tasks/done/T-010.md).
 - The Penpot artifact workflow is now documented in [`docs/design/penpot-codex-workflow.md`](docs/design/penpot-codex-workflow.md) and demonstrated in [`docs/design/`](docs/design/).
-- The next product implementation task is [`T-009`](docs/tasks/open/T-009.md).
+- The public guest-tab slice is now recorded in [`T-009`](docs/tasks/done/T-009.md).
+- No next product implementation task is marked as current priority yet.
 
 ## Routing
 

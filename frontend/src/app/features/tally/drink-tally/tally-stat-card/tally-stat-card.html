@@ -1,0 +1,11 @@
+<section
+  class="tally-stat-card"
+  [class.tally-stat-card--accent]="emphasis() === 'accent'"
+>
+  <span class="tally-stat-card__label">{{ label() }}</span>
+  <strong class="tally-stat-card__value">{{ value() }}</strong>
+
+  @if (caption()) {
+    <span class="tally-stat-card__caption">{{ caption() }}</span>
+  }
+</section>

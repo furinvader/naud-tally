@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.toolbar-reference-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+  gap: var(--nt-space-xs);
+}
+
+.drink-reference-pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--nt-space-xs);
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--nt-border-subtle);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--nt-color-surface-panel) 90%, white);
+  white-space: nowrap;
+}
+
+.drink-reference-name {
+  font: var(--nt-type-label);
+  color: var(--nt-color-muted);
+}
+
+@media (max-width: 599px) {
+  .toolbar-reference-list {
+    justify-content: start;
+  }
+}

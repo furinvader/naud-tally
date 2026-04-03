@@ -41,7 +41,7 @@ These are the rules for the current pilot direction:
 - there are no accounts or integrated hotel systems
 - returning guests should be able to reuse an existing tab instead of re-entering their details
 - selecting or creating a guest tab should expand a non-modal personal tally surface on the same screen
-- the personal tally surface should offer a prominent close action and also close after inactivity
+- the personal tally surface should offer a prominent close action and close after 90 seconds of inactivity
 - the UI is optimized for quick tapping and minimal navigation
 - the UI is English-only for now
 - the code should keep future i18n in mind
@@ -50,17 +50,17 @@ These are the rules for the current pilot direction:
 
 ## Initial Sample Drink Catalog
 
-We will start with a fixed example catalog for implementation and testing. The public tally view should show these drinks and their display prices in a top reference bar. Exact sample price values can be set later; this doc only fixes that prices are visible as reference information in the pilot UI.
+The public tally view should show these fixed sample drinks and reference prices in a top reference bar.
 
-- Water
-- Sparkling Water
-- Cola
-- Cola Zero
-- Lemon Soda
-- Orange Soda
-- Apple Juice
-- Beer
-- White Wine
+- Water `€2.00`
+- Sparkling Water `€2.50`
+- Cola `€3.00`
+- Cola Zero `€3.00`
+- Lemon Soda `€3.00`
+- Orange Soda `€3.00`
+- Apple Juice `€3.50`
+- Beer `€4.50`
+- White Wine `€5.00`
 
 ## Primary Users
 
@@ -76,7 +76,7 @@ We will start with a fixed example catalog for implementation and testing. The p
 5. The app expands a non-modal personal tally surface for the selected guest and shows that guest's current tab clearly with a prominent close action.
 6. The guest increments or decrements the drinks they took.
 7. The app immediately updates the selected guest counts, keeps broader tally information available on the main screen, and saves the current state.
-8. The guest closes the personal tally surface, or the app closes it after inactivity so the next person does not accidentally continue the previous tab.
+8. The guest closes the personal tally surface, or the app closes it after 90 seconds of inactivity so the next person does not accidentally continue the previous tab.
 9. If the page reloads, the previous tally state is restored and existing guest tabs remain available from the public tally view.
 
 ## In Scope for the Current Pilot
@@ -138,6 +138,7 @@ We will start with a fixed example catalog for implementation and testing. The p
 - The current counts for the selected guest's drinks must always be visible while that guest's tally surface is open.
 - Prices must be displayed as reference information only; the current pilot does not require running monetary subtotals or checkout logic.
 - The total number of drinks across all guests and a per-guest summary must remain available from the main screen without separate navigation.
+- The personal tally surface must close after 90 seconds of inactivity unless the guest closes it first.
 - Data must persist across page reloads on the same device.
 - The current pilot must use English UI text.
 
@@ -156,15 +157,13 @@ We will start with a fixed example catalog for implementation and testing. The p
 - A shared tablet may carry the previous guest context into the next interaction if the personal tally surface is not cleared clearly enough.
 - Publicly showing room numbers and guest names increases privacy exposure on the shared tablet.
 - Trust-based identification can still produce wrong-room or wrong-name entries.
-- An aggressive inactivity timeout could close a guest's tally surface while they are still using it.
+- The 90-second inactivity timeout could still close a guest's tally surface while they are still using it.
 - Reload-safe local persistence is not the same as full offline support.
 - The fixed drink list and prices are only pilot placeholders.
 
 ## Deferred Questions
 
-- What exact inactivity timeout should close the personal tally surface, and should explicit close still be required in some cases?
 - Should guest tabs age out of the active guest list after inactivity, explicit close, or a later archive rule?
-- What exact sample prices should the pilot show in the top bar?
 - What should the organizer area include first: reset, export, pricing, or room summary?
 - When should QR or another shortcut identification method be added, if at all?
 - How should the app handle edge cases such as guests with similar names in the same room?

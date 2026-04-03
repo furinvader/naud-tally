@@ -1,0 +1,25 @@
+<button
+  type="button"
+  class="guest-card"
+  [class.guest-card--selected]="selected()"
+  [attr.aria-label]="'Open tab for room ' + roomNumber() + ', ' + fullName()"
+  (click)="selectTab.emit()"
+>
+  <div class="guest-card__header">
+    <div>
+      <span class="guest-card__room">{{ roomLabel() }} {{ roomNumber() }}</span>
+      <h3>{{ fullName() }}</h3>
+    </div>
+    <strong class="guest-card__total">{{ totalCount() }}</strong>
+  </div>
+
+  @if (drinkSummary().length) {
+    <div class="guest-card__summary">
+      @for (drink of drinkSummary(); track drink.id) {
+        <span class="guest-card__chip">{{ drink.name }} {{ drink.count }}</span>
+      }
+    </div>
+  } @else {
+    <p class="guest-card__empty">{{ emptySummaryLabel() }}</p>
+  }
+</button>

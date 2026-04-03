@@ -1,0 +1,8 @@
+<div class="toolbar-reference-list" aria-label="Drink price reference">
+  @for (drink of drinks(); track drink.id) {
+    <span class="drink-reference-pill">
+      <span class="drink-reference-name">{{ drink.name }}</span>
+      <strong>{{ drink.displayPrice }}</strong>
+    </span>
+  }
+</div>
