@@ -1,0 +1,59 @@
+:host {
+  display: block;
+}
+
+.inactivity-hint {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--nt-space-sm);
+  padding: var(--nt-space-sm) var(--nt-space-md);
+  border-radius: var(--nt-radius-utility);
+  background: color-mix(in srgb, var(--nt-color-action-soft) 55%, transparent);
+  overflow: hidden;
+}
+
+.inactivity-hint__fill {
+  position: absolute;
+  inset: 0;
+  width: var(--nt-timeout-progress, 0%);
+  background: color-mix(in srgb, var(--nt-color-action) 18%, transparent);
+  transition: width 120ms linear;
+}
+
+.inactivity-hint__copy,
+.inactivity-hint__ring {
+  position: relative;
+  z-index: 1;
+}
+
+.inactivity-hint__ring {
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: rotate(-90deg);
+}
+
+.inactivity-hint__ring-track,
+.inactivity-hint__ring-progress {
+  fill: none;
+  stroke-width: 3.5;
+}
+
+.inactivity-hint__ring-track {
+  stroke: color-mix(in srgb, var(--nt-color-action) 16%, transparent);
+}
+
+.inactivity-hint__ring-progress {
+  stroke: var(--nt-color-action);
+  stroke-dasharray: 100;
+  stroke-dashoffset: var(--nt-timeout-ring-offset, 0);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 120ms linear;
+}
+
+@media (max-width: 720px) {
+  .inactivity-hint {
+    grid-template-columns: 1fr;
+  }
+}

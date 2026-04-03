@@ -51,8 +51,10 @@ This identification model is trust-based. The app should support it clearly, but
 
 - Use a single-screen shared-tablet layout with distinct public and personal layers.
 - A top bar should show the fixed drink catalog and display prices as informational reference.
-- The active guest list should be the primary interactive zone of the public screen.
+- The active guest list should be the primary interactive zone of the public screen and should use full-width guest tabs for fast scanning.
 - The `Add yourself` control should stay visible alongside the active guest list.
+- On tablet and desktop widths, the guest-list area and the personal tally surface should each fill the remaining vertical viewport space.
+- If either side grows too long, it should scroll internally instead of forcing page scroll for the full screen.
 - The personal tally surface should expand as a non-modal drawer or panel within the same screen.
 - The personal tally surface should include a prominent close action.
 
@@ -77,6 +79,7 @@ This identification model is trust-based. The app should support it clearly, but
 - Creating a guest tab should feel lightweight, not like account registration.
 - After each drink change, the app should give immediate feedback and make recovery easy, such as through `Undo`.
 - The personal tally surface should close after 90 seconds of inactivity or explicit close so the next person does not accidentally use the previous tab.
+- The inactivity hint should preview that timeout with an obvious visual countdown, such as a filling background and a shrinking ring.
 - If the active guest list grows large, later archive, grouping, or recency rules may become necessary to avoid stale noise.
 
 ## Flow Patterns Considered
@@ -108,5 +111,6 @@ This identification model is trust-based. The app should support it clearly, but
 ## Follow-Up
 
 - Treat this file and [`../product.md`](../product.md) as the UX reference for [`../tasks/done/T-009.md`](../tasks/done/T-009.md).
+- Treat this file as the UX reference for [`../tasks/open/T-014.md`](../tasks/open/T-014.md) while the public guest-screen refinements are in progress.
 - A future host or admin surface can be revisited later as a separate slice from this public tally view.
 - QR identification can be revisited later as an optional shortcut, but it is explicitly out of scope for the current slice.

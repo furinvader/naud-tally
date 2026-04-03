@@ -15,6 +15,7 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 - [T-006 Add Organizer Controls](tasks/open/T-006.md)
 - [T-007 Test the Pilot in a Real Usage Scenario](tasks/open/T-007.md)
 - [T-008 Add i18n Support](tasks/open/T-008.md)
+- [T-014 Refine the Public Guest Screen Layout](tasks/open/T-014.md)
 
 ## Done Tasks
 

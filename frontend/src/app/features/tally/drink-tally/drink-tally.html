@@ -116,27 +116,29 @@
           </div>
         </div>
 
-        @if (tallyStore.activeGuests().length) {
-          <div class="guest-grid">
-            @for (guest of tallyStore.activeGuests(); track guest.id) {
-              <nt-guest-tab-card
-                [roomNumber]="guest.roomNumber"
-                [fullName]="guest.fullName"
-                [totalCount]="guest.totalCount"
-                [drinkSummary]="guest.drinkSummary"
-                [selected]="tallyStore.selectedGuest()?.id === guest.id"
-                [roomLabel]="copy.roomLabel"
-                [emptySummaryLabel]="copy.guestSummaryFallback"
-                (selectTab)="tallyStore.selectGuestTab(guest.id)"
-              />
-            }
-          </div>
-        } @else {
-          <mat-card appearance="outlined" class="empty-state-card">
-            <h3>{{ copy.emptyGuestListTitle }}</h3>
-            <p>{{ copy.emptyGuestListBody }}</p>
-          </mat-card>
-        }
+        <div class="guest-list__scroll">
+          @if (tallyStore.activeGuests().length) {
+            <div class="guest-grid">
+              @for (guest of tallyStore.activeGuests(); track guest.id) {
+                <nt-guest-tab-card
+                  [roomNumber]="guest.roomNumber"
+                  [fullName]="guest.fullName"
+                  [totalCount]="guest.totalCount"
+                  [drinkSummary]="guest.drinkSummary"
+                  [selected]="tallyStore.selectedGuest()?.id === guest.id"
+                  [roomLabel]="copy.roomLabel"
+                  [emptySummaryLabel]="copy.guestSummaryFallback"
+                  (selectTab)="tallyStore.selectGuestTab(guest.id)"
+                />
+              }
+            </div>
+          } @else {
+            <mat-card appearance="outlined" class="empty-state-card">
+              <h3>{{ copy.emptyGuestListTitle }}</h3>
+              <p>{{ copy.emptyGuestListBody }}</p>
+            </mat-card>
+          }
+        </div>
       </section>
     </div>
 
@@ -164,7 +166,11 @@
             </button>
           </div>
 
-          <p class="personal-panel__hint">{{ copy.inactivityHint }}</p>
+          <nt-inactivity-countdown-hint
+            [message]="copy.inactivityHint"
+            [progressPercent]="timeoutProgressPercent()"
+            [ringOffset]="timeoutRingOffset()"
+          />
 
           <nt-tally-stat-card
             [label]="copy.totalLabel"
@@ -183,26 +189,23 @@
         </section>
       } @else {
         <section class="personal-panel__placeholder" data-testid="empty-personal-panel">
-          <div class="personal-panel__stats">
-            <nt-tally-stat-card
-              [label]="copy.totalLabel"
-              [value]="tallyStore.publicTotalCount()"
-              [caption]="copy.totalCaption"
-              emphasis="accent"
-            />
-
-            <nt-tally-stat-card
-              [label]="copy.activeGuestsLabel"
-              [value]="tallyStore.activeGuestCount()"
-              [caption]="copy.activeGuestsCaption"
-            />
-          </div>
-
-          <div class="personal-panel__placeholder-copy">
+          <div
+            class="personal-panel__placeholder-copy"
+            data-testid="empty-personal-panel-copy"
+          >
             <p class="eyebrow">{{ copy.personalPanelEyebrow }}</p>
             <h2>{{ copy.personalPanelPlaceholderTitle }}</h2>
             <p>{{ copy.personalPanelPlaceholderBody }}</p>
           </div>
+
+          <nt-personal-panel-summary
+            [primaryLabel]="copy.totalLabel"
+            [primaryValue]="tallyStore.publicTotalCount()"
+            [primaryCaption]="copy.totalCaption"
+            [secondaryLabel]="copy.activeGuestsLabel"
+            [secondaryValue]="tallyStore.activeGuestCount()"
+            [secondaryCaption]="copy.activeGuestsCaption"
+          />
         </section>
       }
     </aside>
