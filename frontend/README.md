@@ -42,6 +42,15 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Use the same base name across related files in one feature.
 - Prefer descriptive names over vague names like `helpers`, `utils`, or `common`.
 
+### CSS Class Naming
+
+- Prefer semantic, component-scoped class names that describe the UI concept, not raw presentation or tag names.
+- When a class names a clear part of that concept, prefer a BEM-inspired element form: `<block>__<element>`.
+- When a class names a state or variant, prefer a modifier form: `<block>--<modifier>`.
+- Do not force strict BEM when it hurts readability. If an inner area reads more clearly as its own concept, give it its own block name instead of forcing it under the parent block.
+- Small local helper names are fine when Angular component scoping keeps them clear and they improve readability.
+- Prefer this pattern when it makes templates and stylesheets easier for humans and agents to scan together.
+
 ### Structure Rules
 
 - Group closely related files together in the same directory.
