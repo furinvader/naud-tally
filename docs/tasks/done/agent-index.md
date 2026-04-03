@@ -20,6 +20,7 @@ Read this file before opening task files under [`docs/tasks/done/`](./).
 - [T-003 Define the First Vertical Slice](T-003.md)
 - [T-004 Scaffold the App](T-004.md)
 - [T-005 Build the Guest Tally Screen](T-005.md)
+- [T-009 Introduce Guest Tabs and Trust-Based Identification](T-009.md)
 - [T-010 Choose a Design Solution](T-010.md)
 - [T-011 Document the Penpot Handoff Workflow](T-011.md)
 - [T-012 Create a Reusable Design Foundation Board](T-012.md)

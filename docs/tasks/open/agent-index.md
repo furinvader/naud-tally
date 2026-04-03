@@ -14,7 +14,6 @@ Read this file before opening task files under [`docs/tasks/open/`](./).
 
 ## Tasks
 
-- [T-009 Introduce Guest Tabs and Trust-Based Identification](T-009.md)
 - [T-006 Add Organizer Controls](T-006.md)
 - [T-007 Test the Pilot in a Real Usage Scenario](T-007.md)
 - [T-008 Add i18n Support](T-008.md)

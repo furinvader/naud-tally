@@ -1,0 +1,31 @@
+:host {
+  display: block;
+}
+
+.tally-stat-card {
+  display: grid;
+  align-content: center;
+  gap: var(--nt-space-2xs);
+  min-height: 100%;
+  padding: var(--nt-space-md);
+  border: 1px solid var(--nt-border-subtle);
+  border-radius: var(--nt-radius-panel);
+  background: var(--nt-color-surface-panel);
+  box-shadow: var(--nt-shadow-panel);
+}
+
+.tally-stat-card--accent {
+  background: linear-gradient(135deg, var(--nt-color-action-soft), var(--nt-color-accent-soft));
+}
+
+.tally-stat-card__label,
+.tally-stat-card__caption {
+  font: var(--nt-type-label);
+  color: var(--nt-color-muted);
+}
+
+.tally-stat-card__value {
+  font: var(--nt-type-numeric);
+  font-size: clamp(2.6rem, 6vw, var(--nt-type-numeric-size));
+  color: var(--nt-color-action);
+}
