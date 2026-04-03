@@ -15,4 +15,4 @@ Read this file before opening other files under [`docs/ux/`](./).
 
 ## UX Briefs
 
-- [Guest Tab UX](guest-tab-ux.md)
+- [Public Tally View and Guest Tab UX](guest-tab-ux.md)

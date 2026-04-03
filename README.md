@@ -49,7 +49,7 @@ What is intentionally not done yet:
 - [Frontend Guide](frontend/README.md)
 - [Design Artifacts](docs/design/README.md)
 - [Product](docs/product.md)
-- [Guest Tab UX](docs/ux/guest-tab-ux.md)
+- [Public Tally View and Guest Tab UX](docs/ux/guest-tab-ux.md)
 - [Agentic Workflow](docs/agentic-workflow.md)
 - [Repo Decisions](docs/decisions.md)
 - [GitHub Setup](docs/github-setup.md)
