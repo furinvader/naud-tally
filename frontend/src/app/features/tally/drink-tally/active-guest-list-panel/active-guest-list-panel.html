@@ -1,0 +1,51 @@
+<section class="guest-list-section" aria-labelledby="active-guest-tabs-heading">
+  <div class="section-heading">
+    <p class="section-heading__eyebrow">{{ copy().activeGuestsLabel }}</p>
+
+    <div class="section-heading__main">
+      <h2 id="active-guest-tabs-heading">{{ copy().guestListTitle }}</h2>
+      @if (!entryOpen()) {
+        <button
+          mat-flat-button
+          type="button"
+          class="section-heading__action"
+          data-testid="add-yourself-button"
+          (click)="startAddGuest.emit()"
+        >
+          {{ copy().addYourself }}
+        </button>
+      }
+    </div>
+
+    <p class="section-heading__hint">{{ copy().guestListHint }}</p>
+  </div>
+
+  <div
+    class="guest-list__scroll"
+    [class.guest-list__scroll--scrolled]="guestListScrolled()"
+    data-testid="active-guest-list-scroll"
+    (scroll)="onGuestListScroll($event)"
+  >
+    @if (guests().length) {
+      <div class="guest-grid">
+        @for (guest of guests(); track guest.id) {
+          <nt-guest-tab-card
+            [roomNumber]="guest.roomNumber"
+            [fullName]="guest.fullName"
+            [totalCount]="guest.totalCount"
+            [drinkSummary]="guest.drinkSummary"
+            [selected]="selectedGuestId() === guest.id"
+            [roomLabel]="copy().roomLabel"
+            [emptySummaryLabel]="copy().guestSummaryFallback"
+            (selectTab)="selectGuest.emit(guest.id)"
+          />
+        }
+      </div>
+    } @else {
+      <mat-card appearance="outlined" class="empty-state-card">
+        <h3>{{ copy().emptyGuestListTitle }}</h3>
+        <p>{{ copy().emptyGuestListBody }}</p>
+      </mat-card>
+    }
+  </div>
+</section>

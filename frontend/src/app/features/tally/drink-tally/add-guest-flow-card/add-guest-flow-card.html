@@ -1,0 +1,70 @@
+<mat-card appearance="outlined" class="entry-card">
+  @if (flow().step === 'roomNumber') {
+    <form class="entry-flow" (submit)="onRoomNumberSubmit($event)">
+      <div class="entry-flow__copy">
+        <p class="entry-card__eyebrow">{{ copy().roomStepLabel }}</p>
+        <h2>{{ copy().roomStepTitle }}</h2>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ copy().roomNumberLabel }}</mat-label>
+        <input
+          matInput
+          type="text"
+          [value]="flow().roomNumber"
+          data-testid="room-number-input"
+          (input)="onRoomNumberInput($event)"
+        />
+      </mat-form-field>
+
+      <div class="entry-flow__actions">
+        <button mat-stroked-button type="button" (click)="cancel.emit()">
+          {{ copy().cancelAction }}
+        </button>
+
+        <button
+          mat-flat-button
+          type="submit"
+          data-testid="room-number-continue"
+          [disabled]="!flow().roomNumber.trim()"
+        >
+          {{ copy().roomNumberAction }}
+        </button>
+      </div>
+    </form>
+  } @else {
+    <form class="entry-flow" (submit)="onGuestIdentitySubmit($event)">
+      <div class="entry-flow__copy">
+        <p class="entry-card__eyebrow">{{ copy().nameStepLabel }}</p>
+        <h2>{{ copy().nameStepTitle }}</h2>
+        <p>{{ copy().roomLabel }} {{ flow().roomNumber }}</p>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{ copy().fullNameLabel }}</mat-label>
+        <input
+          matInput
+          type="text"
+          [value]="flow().fullName"
+          data-testid="full-name-input"
+          (input)="onFullNameInput($event)"
+        />
+      </mat-form-field>
+
+      <div class="entry-flow__actions">
+        <button mat-stroked-button type="button" (click)="back.emit()">
+          {{ copy().backAction }}
+        </button>
+
+        <button
+          mat-flat-button
+          type="submit"
+          data-testid="create-tab-button"
+          [disabled]="!flow().fullName.trim()"
+        >
+          {{ copy().fullNameAction }}
+        </button>
+      </div>
+    </form>
+  }
+</mat-card>

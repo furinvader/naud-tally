@@ -1,0 +1,64 @@
+<aside
+  class="personal-panel"
+  [class.personal-panel--open]="selectedGuest() !== null"
+  aria-live="polite"
+>
+  @if (selectedGuest(); as guest) {
+    <section class="personal-panel__content" data-testid="selected-guest-panel">
+      <div class="personal-panel__top">
+        <div class="personal-panel__header" data-testid="selected-guest-panel-header">
+          <div class="personal-panel__identity">
+            <p class="eyebrow">{{ copy().selectedGuestPanel.personalPanelEyebrow }}</p>
+            <h2>{{ guest.fullName }}</h2>
+            <p>{{ copy().selectedGuestPanel.roomLabel }} {{ guest.roomNumber }}</p>
+          </div>
+
+          <div class="personal-panel__total" data-testid="selected-guest-total">
+            <span class="eyebrow">{{ copy().selectedGuestPanel.totalLabel }}</span>
+            <strong class="personal-panel__total-value">{{ guest.totalCount }}</strong>
+          </div>
+        </div>
+
+        <nt-inactivity-countdown-hint
+          [message]="copy().selectedGuestPanel.inactivityHint"
+          [actionLabel]="copy().selectedGuestPanel.closeNowAction"
+          [progressPercent]="timeoutProgressPercent()"
+          [ringOffset]="timeoutRingOffset()"
+          (close)="close.emit()"
+        />
+      </div>
+
+      <div
+        class="personal-panel__scroll"
+        [class.personal-panel__scroll--scrolled]="selectedGuestPanelScrolled()"
+        data-testid="selected-guest-panel-scroll"
+        (scroll)="onSelectedGuestPanelScroll($event)"
+      >
+        <nt-drink-counter-grid
+          [drinks]="guest.drinkTallies"
+          [subtitle]="copy().selectedGuestPanel.drinkSubtitle"
+          [countLabel]="copy().selectedGuestPanel.countLabel"
+          (incrementDrink)="incrementDrink.emit($event)"
+          (decrementDrink)="decrementDrink.emit($event)"
+        />
+      </div>
+    </section>
+  } @else {
+    <section class="personal-panel__placeholder" data-testid="empty-personal-panel">
+      <div class="personal-panel__placeholder-copy" data-testid="empty-personal-panel-copy">
+        <p class="eyebrow">{{ copy().placeholder.personalPanelEyebrow }}</p>
+        <h2>{{ copy().placeholder.personalPanelPlaceholderTitle }}</h2>
+        <p>{{ copy().placeholder.personalPanelPlaceholderBody }}</p>
+      </div>
+
+      <nt-personal-panel-summary
+        [primaryLabel]="copy().placeholder.totalLabel"
+        [primaryValue]="publicTotalCount()"
+        [primaryCaption]="copy().placeholder.totalCaption"
+        [secondaryLabel]="copy().placeholder.activeGuestsLabel"
+        [secondaryValue]="activeGuestCount()"
+        [secondaryCaption]="copy().placeholder.activeGuestsCaption"
+      />
+    </section>
+  }
+</aside>
