@@ -1,0 +1,43 @@
+:host {
+  display: block;
+}
+
+.personal-panel-summary {
+  display: grid;
+  gap: var(--nt-space-md);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: var(--nt-space-md);
+  border: 1px solid var(--nt-border-subtle);
+  border-radius: var(--nt-radius-panel);
+  background: color-mix(in srgb, var(--nt-color-surface-panel) 86%, white);
+}
+
+.personal-panel-summary__item {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.personal-panel-summary__topline {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--nt-space-sm);
+}
+
+.personal-panel-summary__label,
+.personal-panel-summary__caption {
+  font: var(--nt-type-label);
+  color: var(--nt-color-muted);
+}
+
+.personal-panel-summary__value {
+  font: var(--nt-type-numeric);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  color: var(--nt-color-action);
+}
+
+@media (max-width: 720px) {
+  .personal-panel-summary {
+    grid-template-columns: 1fr;
+  }
+}

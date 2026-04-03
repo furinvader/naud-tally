@@ -5,60 +5,70 @@
 .drink-grid {
   display: grid;
   gap: var(--nt-space-sm);
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 }
 
 .drink-card {
-  overflow: hidden;
+  display: grid;
+  gap: var(--nt-space-sm);
+  padding: var(--nt-space-md);
 }
 
-mat-card-header {
-  padding: var(--nt-space-md) var(--nt-space-md) var(--nt-space-sm);
+.drink-card__header {
+  display: grid;
+  gap: 0.35rem;
 }
 
-mat-card-content {
-  padding: 0 var(--nt-space-md) var(--nt-space-sm);
+.drink-card__headline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--nt-space-sm);
+  align-items: center;
+}
+
+.drink-card__title,
+.drink-card__meta {
+  margin: 0;
+}
+
+.drink-card__title {
+  font: var(--nt-type-title);
+  color: var(--nt-color-ink);
+}
+
+.drink-card__count {
+  display: flex;
+  align-items: baseline;
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.drink-card__meta {
+  font: var(--nt-type-label);
+  letter-spacing: var(--nt-tracking-label);
+  color: var(--nt-color-muted);
+}
+
+.drink-card__count-value {
+  font: var(--nt-type-title);
+  font-size: 1.7rem;
+  color: var(--nt-color-action);
 }
 
 .drink-card__price {
   margin-left: var(--nt-space-xs);
 }
 
-.count-pill {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--nt-space-sm);
-  padding: var(--nt-space-sm) var(--nt-space-md);
-  border: 1px solid var(--nt-border-subtle);
-  border-radius: var(--nt-radius-utility);
-  background: var(--nt-color-surface-count);
-}
-
-.count-pill-label {
-  font: var(--nt-type-label);
-  letter-spacing: var(--nt-tracking-label);
-  text-transform: uppercase;
-  color: var(--nt-color-muted);
-}
-
-.count-pill-value {
-  font: var(--nt-type-title);
-  font-size: 2.25rem;
-  color: var(--nt-color-action);
-}
-
 .drink-actions {
   display: grid;
   gap: var(--nt-space-xs);
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  padding: 0 var(--nt-space-md) var(--nt-space-md);
 }
 
 .count-button {
-  min-height: 72px;
+  min-height: 60px;
   font-family: var(--nt-font-family-brand);
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: var(--nt-type-title-weight);
   letter-spacing: 0;
 }
@@ -69,6 +79,6 @@ mat-card-content {
   }
 
   .count-button {
-    min-height: 64px;
+    min-height: 56px;
   }
 }

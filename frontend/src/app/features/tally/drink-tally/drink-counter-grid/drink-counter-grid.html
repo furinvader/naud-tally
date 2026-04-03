@@ -1,23 +1,22 @@
 <section class="drink-grid" aria-label="Drink tally controls">
   @for (drink of drinks(); track drink.id) {
     <mat-card appearance="outlined" class="drink-card">
-      <mat-card-header>
-        <mat-card-title>{{ drink.name }}</mat-card-title>
-        <mat-card-subtitle>
+      <div class="drink-card__header">
+        <div class="drink-card__headline">
+          <h3 class="drink-card__title">{{ drink.name }}</h3>
+          <div class="drink-card__count" [attr.aria-label]="countLabel() + ' ' + drink.count">
+            <strong class="drink-card__count-value">{{ drink.count }}</strong>
+          </div>
+        </div>
+
+        <p class="drink-card__meta">
           {{ subtitle() }}
 
           @if (drink.displayPrice) {
             <span class="drink-card__price">{{ drink.displayPrice }}</span>
           }
-        </mat-card-subtitle>
-      </mat-card-header>
-
-      <mat-card-content>
-        <div class="count-pill">
-          <span class="count-pill-label">{{ countLabel() }}</span>
-          <span class="count-pill-value">{{ drink.count }}</span>
-        </div>
-      </mat-card-content>
+        </p>
+      </div>
 
       <div class="drink-actions">
         <button

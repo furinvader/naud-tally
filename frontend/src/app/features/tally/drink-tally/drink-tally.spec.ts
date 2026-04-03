@@ -50,6 +50,44 @@ describe('DrinkTally', () => {
     );
   });
 
+  it('should place the placeholder copy before the merged summary block', async () => {
+    const fixture = TestBed.createComponent(DrinkTally);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const placeholder = compiled.querySelector(
+      '[data-testid="empty-personal-panel"]',
+    ) as HTMLElement | null;
+    const placeholderCopy = compiled.querySelector(
+      '[data-testid="empty-personal-panel-copy"]',
+    ) as HTMLElement | null;
+    const placeholderSummary = compiled.querySelector(
+      '[data-testid="empty-personal-panel-summary"]',
+    ) as HTMLElement | null;
+
+    expect(placeholder?.firstElementChild).toBe(placeholderCopy);
+    expect(placeholderCopy?.nextElementSibling).toBe(placeholderSummary);
+  });
+
+  it('should render a merged placeholder summary instead of separate stat cards', async () => {
+    const fixture = TestBed.createComponent(DrinkTally);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const placeholder = compiled.querySelector(
+      '[data-testid="empty-personal-panel"]',
+    ) as HTMLElement | null;
+    const placeholderSummary = compiled.querySelector(
+      '[data-testid="empty-personal-panel-summary"]',
+    ) as HTMLElement | null;
+
+    expect(placeholder?.querySelectorAll('nt-tally-stat-card')).toHaveLength(0);
+    expect(placeholderSummary?.textContent).toContain('Total drinks');
+    expect(placeholderSummary?.textContent).toContain('Active guests');
+  });
+
   it('should show toolbar price chips for the fixed drink catalog', async () => {
     const fixture = TestBed.createComponent(DrinkTally);
     fixture.detectChanges();
@@ -84,6 +122,49 @@ describe('DrinkTally', () => {
     );
     expect(compiled.textContent).toContain('This personal tab closes after 90 seconds of inactivity.');
     expect(compiled.querySelector('[data-testid="empty-personal-panel"]')).toBeNull();
+  });
+
+  it('should render and reset the inactivity countdown hint after interaction', async () => {
+    vi.useFakeTimers();
+    seedGuestTabs();
+
+    const fixture = TestBed.createComponent(DrinkTally);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const guestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
+    ) as HTMLButtonElement | null;
+
+    guestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const getHint = (): HTMLElement | null =>
+      compiled.querySelector(
+        '[data-testid="inactivity-hint"] .inactivity-hint',
+      ) as HTMLElement | null;
+
+    expect(compiled.querySelector('[data-testid="inactivity-progress-fill"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="inactivity-progress-ring"]')).not.toBeNull();
+    expect(getHint()?.style.getPropertyValue('--nt-timeout-progress')).toBe('0.00%');
+
+    await vi.advanceTimersByTimeAsync(10_000);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(getHint()?.style.getPropertyValue('--nt-timeout-progress')).not.toBe('0.00%');
+
+    const incrementButton = compiled.querySelector(
+      'button[aria-label="Add one Water"]',
+    ) as HTMLButtonElement | null;
+
+    incrementButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(getHint()?.style.getPropertyValue('--nt-timeout-progress')).toBe('0.00%');
   });
 
   it('should create and select a guest from the inline Add yourself flow', async () => {
