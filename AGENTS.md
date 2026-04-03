@@ -32,5 +32,5 @@
 - If a local architecture, tooling, or convention decision changes, update the nearest relevant local decision file, such as [`frontend/decisions.md`](frontend/decisions.md).
 - Research notes live under [`docs/research/`](docs/research/) in a flat, topic-based layout; link task or decision docs to the matching research brief instead of embedding research sections in task files.
 - Task files use only `open` and `done` statuses. Current-priority tasks still remain `open`.
-- If task state changes, update the relevant task file, [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md), and the relevant status-folder index under [`docs/tasks/`](docs/tasks/).
+- If task state changes, update [`docs/tasks.md`](docs/tasks.md), the relevant task file, and the relevant status-folder index under [`docs/tasks/`](docs/tasks/).
 - When a markdown doc mentions a repo file or directory, use a markdown link to that path.

@@ -10,7 +10,7 @@ Read this file before opening task files under [`docs/tasks/open/`](./).
 ## Load Rules
 
 - Open only the task that matches the current goal.
-- If a task is completed, move it to the matching status folder and update [`../agent-index.md`](../agent-index.md).
+- If a task is completed, move it to the matching status folder and update [`../../tasks.md`](../../tasks.md) plus the affected status-folder indexes.
 
 ## Tasks
 

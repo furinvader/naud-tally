@@ -62,7 +62,7 @@ When Codex completes a task, review these points:
 - [`docs/research/agent-index.md`](research/agent-index.md) routes to reusable research briefs.
 - [`docs/design/penpot-codex-workflow.md`](design/penpot-codex-workflow.md) explains how Penpot should be used in a Codex-first workflow.
 - local [`decisions.md`](../frontend/decisions.md) files record area-specific decisions next to the relevant [`agent-index.md`](../frontend/agent-index.md).
-- [`docs/tasks/agent-index.md`](tasks/agent-index.md) routes to the current task briefs.
+- [`docs/tasks.md`](tasks.md) tracks current task status and links to the current task briefs.
 - when a markdown doc mentions a repo file or directory, it should use a markdown link to that path
 
 If a prompt depends on knowledge that should matter next week, it belongs in the repo docs.

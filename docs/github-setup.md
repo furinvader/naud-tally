@@ -76,4 +76,4 @@ Keep the [`LICENSE`](../LICENSE) file in the repo root and preserve the license 
 - protect `main`
 - require the `Repo Checks` workflow
 - enable auto-delete for merged branches
-- create the first issues from [`docs/tasks/agent-index.md`](tasks/agent-index.md)
+- create the first issues from [`docs/tasks.md`](tasks.md)
