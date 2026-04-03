@@ -1,0 +1,145 @@
+:host {
+  display: block;
+  min-height: 0;
+  height: 100%;
+}
+
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h2,
+h3 {
+  color: var(--nt-color-ink);
+}
+
+h2 {
+  font: var(--nt-type-title);
+}
+
+h3 {
+  font: var(--nt-type-title);
+}
+
+p {
+  font: var(--nt-type-body);
+  color: var(--nt-color-muted);
+}
+
+.section-heading__eyebrow {
+  font: var(--nt-type-label);
+  letter-spacing: var(--nt-tracking-label);
+  text-transform: uppercase;
+  color: var(--nt-color-muted);
+}
+
+.guest-list-section {
+  display: grid;
+  gap: var(--nt-space-sm);
+  min-height: 0;
+  height: 100%;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.section-heading {
+  display: grid;
+  gap: var(--nt-space-2xs);
+  padding-inline: var(--nt-public-column-content-padding, clamp(var(--nt-space-md), 3vw, var(--nt-space-lg)));
+}
+
+.section-heading__main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--nt-space-sm);
+  min-width: 0;
+}
+
+.section-heading__main h2 {
+  min-width: 0;
+}
+
+.section-heading__hint {
+  max-width: 32rem;
+}
+
+.section-heading__action {
+  min-height: 56px;
+}
+
+.guest-list__scroll {
+  position: relative;
+  min-height: 0;
+  overflow: auto;
+  padding-inline: var(--nt-guest-list-shadow-bleed, var(--nt-space-xs));
+  padding-block-end: var(--nt-guest-list-shadow-bleed, var(--nt-space-xs));
+  isolation: isolate;
+}
+
+.guest-list__scroll::before {
+  content: '';
+  position: sticky;
+  top: 0;
+  display: block;
+  height: 1.1rem;
+  margin-bottom: -1.1rem;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--nt-color-ink) 18%, transparent),
+    transparent
+  );
+  transition: opacity 140ms ease;
+}
+
+.guest-list__scroll--scrolled::before {
+  opacity: 1;
+}
+
+.guest-grid {
+  display: grid;
+  gap: var(--nt-space-sm);
+  align-content: start;
+  grid-template-columns: 1fr;
+  padding-block-start: var(--nt-guest-list-shadow-bleed, var(--nt-space-xs));
+}
+
+.empty-state-card {
+  display: grid;
+  gap: var(--nt-space-xs);
+  padding: var(--nt-space-lg);
+}
+
+@media (max-width: 959px) {
+  :host {
+    height: auto;
+  }
+
+  .guest-list-section {
+    height: auto;
+    grid-template-rows: auto;
+  }
+
+  .guest-list__scroll {
+    overflow: visible;
+    padding: 0;
+  }
+
+  .guest-grid {
+    padding-block-start: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .section-heading__main {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading__action {
+    width: 100%;
+  }
+}

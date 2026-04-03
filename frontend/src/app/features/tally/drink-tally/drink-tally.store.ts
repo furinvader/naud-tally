@@ -45,24 +45,32 @@ type DrinkTallyState = {
   interactionVersion: number;
 };
 
-type DrinkSummaryItem = {
+export type AddGuestFlowViewModel = {
+  step: AddGuestStep;
+  roomNumber: string;
+  fullName: string;
+};
+
+export type DrinkSummaryItem = {
   id: DrinkId;
   name: string;
   count: number;
 };
 
-type GuestCardViewModel = GuestTab & {
+export type GuestCardViewModel = GuestTab & {
   totalCount: number;
   drinkSummary: DrinkSummaryItem[];
 };
 
-type SelectedGuestViewModel = GuestCardViewModel & {
-  drinkTallies: Array<{
-    id: DrinkId;
-    name: string;
-    count: number;
-    displayPrice: string;
-  }>;
+export type SelectedGuestDrinkTally = {
+  id: DrinkId;
+  name: string;
+  count: number;
+  displayPrice: string;
+};
+
+export type SelectedGuestViewModel = GuestCardViewModel & {
+  drinkTallies: SelectedGuestDrinkTally[];
 };
 
 const initialState: DrinkTallyState = {
@@ -122,7 +130,7 @@ export const DrinkTallyStore = signalStore(
         })),
       };
     }),
-    addGuestFlow: computed(() => ({
+    addGuestFlow: computed<AddGuestFlowViewModel>(() => ({
       step: store.addGuestStep(),
       roomNumber: store.draftRoomNumber(),
       fullName: store.draftFullName(),
