@@ -6,11 +6,11 @@
   display: grid;
   gap: var(--nt-space-sm);
   width: 100%;
-  padding: var(--nt-space-md);
+  padding: var(--nt-public-column-content-padding, var(--nt-space-md));
   border: 1px solid var(--nt-border-subtle);
   border-radius: var(--nt-radius-panel);
   background: var(--nt-color-surface-panel);
-  box-shadow: var(--nt-shadow-panel);
+  box-shadow: none;
   text-align: left;
   cursor: pointer;
   transition:
@@ -20,7 +20,11 @@
 }
 
 .guest-card:hover,
-.guest-card:focus-visible,
+.guest-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--nt-color-action) 35%, var(--nt-border-subtle));
+}
+
 .guest-card--selected {
   transform: translateY(-2px);
   border-color: color-mix(in srgb, var(--nt-color-action) 35%, var(--nt-border-subtle));
