@@ -1,10 +1,13 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   computed,
   DestroyRef,
+  ElementRef,
   effect,
   inject,
+  Injector,
   signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +17,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { DrinkCounterGrid } from './drink-counter-grid/drink-counter-grid';
-import { DrinkPriceReference } from './drink-price-reference/drink-price-reference';
 import { GuestTabCard } from './guest-tab-card/guest-tab-card';
 import { InactivityCountdownHint } from './inactivity-countdown-hint/inactivity-countdown-hint';
 import { PersonalPanelSummary } from './personal-panel-summary/personal-panel-summary';
@@ -25,13 +27,11 @@ import {
 
 const DRINK_TALLY_COPY = {
   title: 'Naud Tally',
-  toolbarHint: 'Price reference',
   totalLabel: 'Total drinks',
   totalCaption: 'Across all active guest tabs',
   activeGuestsLabel: 'Active guests',
   activeGuestsCaption: 'Open tabs on this tablet',
   addYourself: 'Add yourself',
-  addYourselfHint: 'Create or reopen your guest tab without leaving this screen.',
   roomStepLabel: 'Step 1 of 2',
   roomStepTitle: 'Enter your room number',
   roomNumberLabel: 'Room number',
@@ -62,7 +62,6 @@ const DRINK_TALLY_COPY = {
   selector: 'nt-drink-tally',
   imports: [
     DrinkCounterGrid,
-    DrinkPriceReference,
     GuestTabCard,
     InactivityCountdownHint,
     MatButtonModule,
@@ -79,6 +78,7 @@ const DRINK_TALLY_COPY = {
 export class DrinkTally {
   protected readonly copy = DRINK_TALLY_COPY;
   protected readonly tallyStore = inject(DrinkTallyStore);
+  protected readonly guestListScrolled = signal(false);
   protected readonly selectedGuestPanelScrolled = signal(false);
   protected readonly timeoutProgressPercent = computed(
     () => `${(this.timeoutProgress() * 100).toFixed(2)}%`,
@@ -88,6 +88,8 @@ export class DrinkTally {
   );
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly hostElement = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly injector = inject(Injector);
   private readonly selectedGuestId = computed(
     () => this.tallyStore.selectedGuest()?.id ?? null,
   );
@@ -99,7 +101,9 @@ export class DrinkTally {
   constructor() {
     effect(() => {
       this.selectedGuestId();
-      this.selectedGuestPanelScrolled.set(false);
+      afterNextRender(() => {
+        this.syncScrollShadowState();
+      }, { injector: this.injector });
     });
 
     effect(() => {
@@ -150,6 +154,24 @@ export class DrinkTally {
   protected onSelectedGuestPanelScroll(event: Event): void {
     const scrollContainer = event.target as HTMLElement | null;
     this.selectedGuestPanelScrolled.set((scrollContainer?.scrollTop ?? 0) > 0);
+  }
+
+  protected onGuestListScroll(event: Event): void {
+    const scrollContainer = event.target as HTMLElement | null;
+    this.guestListScrolled.set((scrollContainer?.scrollTop ?? 0) > 0);
+  }
+
+  private syncScrollShadowState(): void {
+    const host = this.hostElement.nativeElement;
+    const guestListScroll = host.querySelector<HTMLElement>(
+      '[data-testid="active-guest-list-scroll"]',
+    );
+    const selectedGuestPanelScroll = host.querySelector<HTMLElement>(
+      '[data-testid="selected-guest-panel-scroll"]',
+    );
+
+    this.guestListScrolled.set((guestListScroll?.scrollTop ?? 0) > 0);
+    this.selectedGuestPanelScrolled.set((selectedGuestPanelScroll?.scrollTop ?? 0) > 0);
   }
 
   private scheduleInactivityTimer(): void {

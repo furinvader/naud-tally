@@ -41,6 +41,8 @@ describe('DrinkTally', () => {
     );
     expect(compiled.textContent).toContain('Add yourself');
     expect(compiled.textContent).toContain('No guest tabs yet');
+    expect(compiled.querySelector('[data-testid="add-yourself-button"]')).not.toBeNull();
+    expect(compiled.querySelector('.entry-card')).toBeNull();
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="empty-personal-panel"]')?.textContent).toContain(
       'Total drinks',
@@ -88,17 +90,39 @@ describe('DrinkTally', () => {
     expect(placeholderSummary?.textContent).toContain('Active guests');
   });
 
-  it('should show toolbar price chips for the fixed drink catalog', async () => {
+  it('should not render the toolbar price reference on the public screen', async () => {
     const fixture = TestBed.createComponent(DrinkTally);
     fixture.detectChanges();
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
 
-    expect(compiled.textContent).toContain('Water');
-    expect(compiled.textContent).toContain('€2.00');
-    expect(compiled.textContent).toContain('White Wine');
-    expect(compiled.textContent).toContain('€5.00');
+    expect(compiled.querySelector('nt-drink-price-reference')).toBeNull();
+    expect(compiled.textContent).not.toContain('Price reference');
+    expect(compiled.textContent).not.toContain('€2.00');
+  });
+
+  it('should place the Add yourself action inside the active guest tabs header', async () => {
+    const fixture = TestBed.createComponent(DrinkTally);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const sectionHeading = compiled.querySelector('.section-heading') as HTMLElement | null;
+    const addYourselfButton = compiled.querySelector(
+      '[data-testid="add-yourself-button"]',
+    ) as HTMLButtonElement | null;
+
+    expect(sectionHeading).not.toBeNull();
+    expect(addYourselfButton).not.toBeNull();
+    expect(sectionHeading?.contains(addYourselfButton)).toBe(true);
+
+    addYourselfButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('.entry-card')).not.toBeNull();
+    expect(compiled.querySelector('.section-heading [data-testid="add-yourself-button"]')).toBeNull();
   });
 
   it('should open the personal tally panel when selecting an active guest', async () => {
@@ -228,6 +252,98 @@ describe('DrinkTally', () => {
     expect(scrollContainer?.classList.contains('personal-panel__scroll--scrolled')).toBe(false);
   });
 
+  it('should show a top shadow on the active guest list only after scrolling', async () => {
+    seedGuestTabs();
+
+    const fixture = TestBed.createComponent(DrinkTally);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const scrollContainer = compiled.querySelector(
+      '[data-testid="active-guest-list-scroll"]',
+    ) as HTMLDivElement | null;
+
+    expect(scrollContainer?.classList.contains('guest-list__scroll--scrolled')).toBe(false);
+
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 32;
+      scrollContainer.dispatchEvent(new Event('scroll'));
+    }
+
+    fixture.detectChanges();
+
+    expect(scrollContainer?.classList.contains('guest-list__scroll--scrolled')).toBe(true);
+
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+      scrollContainer.dispatchEvent(new Event('scroll'));
+    }
+
+    fixture.detectChanges();
+
+    expect(scrollContainer?.classList.contains('guest-list__scroll--scrolled')).toBe(false);
+  });
+
+  it('should preserve both scroll shadows when selecting another guest', async () => {
+    seedMultipleGuestTabs();
+
+    const fixture = TestBed.createComponent(DrinkTally);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const firstGuestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
+    ) as HTMLButtonElement | null;
+
+    firstGuestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const guestListScroll = compiled.querySelector(
+      '[data-testid="active-guest-list-scroll"]',
+    ) as HTMLDivElement | null;
+    const selectedPanelScroll = compiled.querySelector(
+      '[data-testid="selected-guest-panel-scroll"]',
+    ) as HTMLDivElement | null;
+
+    if (guestListScroll) {
+      guestListScroll.scrollTop = 32;
+      guestListScroll.dispatchEvent(new Event('scroll'));
+    }
+
+    if (selectedPanelScroll) {
+      selectedPanelScroll.scrollTop = 32;
+      selectedPanelScroll.dispatchEvent(new Event('scroll'));
+    }
+
+    fixture.detectChanges();
+
+    expect(guestListScroll?.classList.contains('guest-list__scroll--scrolled')).toBe(true);
+    expect(selectedPanelScroll?.classList.contains('personal-panel__scroll--scrolled')).toBe(true);
+
+    const secondGuestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 204, Grace Hopper"]',
+    ) as HTMLButtonElement | null;
+
+    secondGuestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const nextGuestListScroll = compiled.querySelector(
+      '[data-testid="active-guest-list-scroll"]',
+    ) as HTMLDivElement | null;
+    const nextSelectedPanelScroll = compiled.querySelector(
+      '[data-testid="selected-guest-panel-scroll"]',
+    ) as HTMLDivElement | null;
+
+    expect(nextGuestListScroll?.classList.contains('guest-list__scroll--scrolled')).toBe(true);
+    expect(nextSelectedPanelScroll?.classList.contains('personal-panel__scroll--scrolled')).toBe(
+      true,
+    );
+  });
+
   it('should create and select a guest from the inline Add yourself flow', async () => {
     const fixture = TestBed.createComponent(DrinkTally);
     fixture.detectChanges();
@@ -337,6 +453,30 @@ function seedGuestTabs(): void {
         counts: buildCounts({ sparklingWater: 1, water: 2, beer: 1 }),
         createdAt: '2026-04-01T08:00:00.000Z',
         updatedAt: '2026-04-02T10:00:00.000Z',
+      },
+    ]),
+  );
+}
+
+function seedMultipleGuestTabs(): void {
+  localStorage.setItem(
+    DRINK_TALLY_STORAGE_KEY,
+    JSON.stringify([
+      {
+        id: 'guest-1',
+        roomNumber: '101',
+        fullName: 'Ada Lovelace',
+        counts: buildCounts({ sparklingWater: 1, water: 2, beer: 1 }),
+        createdAt: '2026-04-01T08:00:00.000Z',
+        updatedAt: '2026-04-02T10:00:00.000Z',
+      },
+      {
+        id: 'guest-2',
+        roomNumber: '204',
+        fullName: 'Grace Hopper',
+        counts: buildCounts({ water: 1, whiteWine: 2 }),
+        createdAt: '2026-04-02T08:00:00.000Z',
+        updatedAt: '2026-04-03T10:00:00.000Z',
       },
     ]),
   );
