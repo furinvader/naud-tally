@@ -12,6 +12,8 @@
   display: grid;
   gap: var(--nt-space-sm);
   padding: var(--nt-space-md);
+  box-shadow: none;
+  container-type: inline-size;
 }
 
 .drink-card__header {
@@ -24,6 +26,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--nt-space-sm);
   align-items: center;
+  min-width: 0;
 }
 
 .drink-card__title,
@@ -32,7 +35,14 @@
 }
 
 .drink-card__title {
-  font: var(--nt-type-title);
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--nt-font-family-brand);
+  font-size: clamp(0.95rem, 10cqi, var(--nt-type-title-size));
+  font-weight: var(--nt-type-title-weight);
+  line-height: var(--nt-type-title-line-height);
   color: var(--nt-color-ink);
 }
 

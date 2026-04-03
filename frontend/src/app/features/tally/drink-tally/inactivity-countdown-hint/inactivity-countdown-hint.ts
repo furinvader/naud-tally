@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'nt-inactivity-countdown-hint',
@@ -11,6 +11,8 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 })
 export class InactivityCountdownHint {
   readonly message = input.required<string>();
+  readonly actionLabel = input('Tap to close now');
   readonly progressPercent = input('0%');
   readonly ringOffset = input('0');
+  readonly close = output<void>();
 }

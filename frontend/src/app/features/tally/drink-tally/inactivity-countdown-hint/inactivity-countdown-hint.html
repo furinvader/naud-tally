@@ -1,14 +1,20 @@
-<div
+<button
+  type="button"
   class="inactivity-hint"
+  data-testid="close-personal-tab"
   [style.--nt-timeout-progress]="progressPercent()"
   [style.--nt-timeout-ring-offset]="ringOffset()"
+  (click)="close.emit()"
 >
   <span
     class="inactivity-hint__fill"
     aria-hidden="true"
     data-testid="inactivity-progress-fill"
   ></span>
-  <span class="inactivity-hint__copy">{{ message() }}</span>
+  <span class="inactivity-hint__copy">
+    <span class="inactivity-hint__message">{{ message() }}</span>
+    <span class="inactivity-hint__action-label">{{ actionLabel() }}</span>
+  </span>
   <svg
     class="inactivity-hint__ring"
     viewBox="0 0 40 40"
@@ -18,4 +24,4 @@
     <circle class="inactivity-hint__ring-track" cx="20" cy="20" r="16" pathLength="100" />
     <circle class="inactivity-hint__ring-progress" cx="20" cy="20" r="16" pathLength="100" />
   </svg>
-</div>
+</button>

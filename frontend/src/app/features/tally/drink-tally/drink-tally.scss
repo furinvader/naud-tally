@@ -126,15 +126,6 @@ p {
   gap: var(--nt-space-sm);
 }
 
-.personal-panel__content,
-.personal-panel__placeholder {
-  align-content: start;
-  height: 100%;
-  min-height: 0;
-  overflow: auto;
-  padding-inline-end: var(--nt-space-2xs);
-}
-
 .entry-card__summary {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
@@ -196,11 +187,62 @@ mat-form-field {
   border-color: color-mix(in srgb, var(--nt-color-action) 30%, var(--nt-border-subtle));
 }
 
+.personal-panel__content {
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  min-height: 0;
+}
+
 .personal-panel__header {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
-  justify-content: space-between;
   gap: var(--nt-space-sm);
+}
+
+.personal-panel__total {
+  display: grid;
+  text-align: right;
+}
+
+.personal-panel__total-value {
+  font: var(--nt-type-numeric);
+  font-size: clamp(2.6rem, 5vw, 4.125rem);
+  color: var(--nt-color-action);
+}
+
+.personal-panel__scroll {
+  position: relative;
+  min-height: 0;
+  overflow: auto;
+  padding-inline-end: var(--nt-space-2xs);
+  isolation: isolate;
+}
+
+.personal-panel__scroll::before {
+  content: '';
+  position: sticky;
+  top: 0;
+  display: block;
+  height: 1.1rem;
+  margin-bottom: -1.1rem;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--nt-color-ink) 18%, transparent),
+    transparent
+  );
+  transition: opacity 140ms ease;
+}
+
+.personal-panel__scroll--scrolled::before {
+  opacity: 1;
+}
+
+.personal-panel__placeholder {
+  align-content: start;
 }
 
 @media (max-width: 959px) {
@@ -215,9 +257,7 @@ mat-form-field {
   .screen-body,
   .public-column,
   .guest-list-section,
-  .personal-panel,
-  .personal-panel__content,
-  .personal-panel__placeholder {
+  .personal-panel {
     height: auto;
   }
 
@@ -231,18 +271,15 @@ mat-form-field {
   }
 
   .guest-list__scroll,
-  .personal-panel__content,
-  .personal-panel__placeholder {
+  .personal-panel__scroll {
     overflow: visible;
     padding-inline-end: 0;
   }
 }
 
 @media (max-width: 720px) {
-  .entry-card__summary,
-  .personal-panel__header {
+  .entry-card__summary {
     grid-template-columns: 1fr;
-    display: grid;
   }
 
   .entry-card__action {

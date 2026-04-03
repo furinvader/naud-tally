@@ -22,7 +22,6 @@ import {
   DrinkTallyStore,
   GUEST_TAB_INACTIVITY_TIMEOUT_MS,
 } from './drink-tally.store';
-import { TallyStatCard } from './tally-stat-card/tally-stat-card';
 
 const DRINK_TALLY_COPY = {
   title: 'Naud Tally',
@@ -52,8 +51,8 @@ const DRINK_TALLY_COPY = {
   personalPanelPlaceholderBody:
     'Returning guests can tap their tab from the public list. New guests can use Add yourself first.',
   roomLabel: 'Room',
-  closeTabAction: 'Close tab',
-  inactivityHint: 'This personal tab closes after 90 seconds of inactivity.',
+  closeNowAction: 'Tap to close now',
+  inactivityHint: 'This personal tab closes after 180 seconds of inactivity.',
   guestSummaryFallback: 'No drinks recorded yet.',
   drinkSubtitle: 'Quick tally',
   countLabel: 'Recorded',
@@ -72,7 +71,6 @@ const DRINK_TALLY_COPY = {
     MatInputModule,
     MatToolbarModule,
     PersonalPanelSummary,
-    TallyStatCard,
   ],
   templateUrl: './drink-tally.html',
   styleUrl: './drink-tally.scss',
@@ -81,6 +79,7 @@ const DRINK_TALLY_COPY = {
 export class DrinkTally {
   protected readonly copy = DRINK_TALLY_COPY;
   protected readonly tallyStore = inject(DrinkTallyStore);
+  protected readonly selectedGuestPanelScrolled = signal(false);
   protected readonly timeoutProgressPercent = computed(
     () => `${(this.timeoutProgress() * 100).toFixed(2)}%`,
   );
@@ -89,12 +88,20 @@ export class DrinkTally {
   );
 
   private readonly destroyRef = inject(DestroyRef);
+  private readonly selectedGuestId = computed(
+    () => this.tallyStore.selectedGuest()?.id ?? null,
+  );
   private readonly timeoutProgress = signal(0);
   private inactivityTimerId: ReturnType<typeof setTimeout> | null = null;
   private timeoutProgressTimerId: ReturnType<typeof setInterval> | null = null;
   private timeoutProgressStartedAtMs: number | null = null;
 
   constructor() {
+    effect(() => {
+      this.selectedGuestId();
+      this.selectedGuestPanelScrolled.set(false);
+    });
+
     effect(() => {
       const selectedGuest = this.tallyStore.selectedGuest();
       const addGuestFlow = this.tallyStore.addGuestFlow();
@@ -138,6 +145,11 @@ export class DrinkTally {
   protected onGuestIdentitySubmit(event: Event): void {
     event.preventDefault();
     this.tallyStore.submitGuestIdentity();
+  }
+
+  protected onSelectedGuestPanelScroll(event: Event): void {
+    const scrollContainer = event.target as HTMLElement | null;
+    this.selectedGuestPanelScrolled.set((scrollContainer?.scrollTop ?? 0) > 0);
   }
 
   private scheduleInactivityTimer(): void {

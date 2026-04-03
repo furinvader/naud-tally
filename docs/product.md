@@ -41,7 +41,7 @@ These are the rules for the current pilot direction:
 - there are no accounts or integrated hotel systems
 - returning guests should be able to reuse an existing tab instead of re-entering their details
 - selecting or creating a guest tab should expand a non-modal personal tally surface on the same screen
-- the personal tally surface should offer a prominent close action and close after 90 seconds of inactivity
+- the personal tally surface should offer a prominent close action and close after 180 seconds of inactivity
 - the UI is optimized for quick tapping and minimal navigation
 - the UI is English-only for now
 - the code should keep future i18n in mind
@@ -76,7 +76,7 @@ The public tally view should show these fixed sample drinks and reference prices
 5. The app expands a non-modal personal tally surface for the selected guest and shows that guest's current tab clearly with a prominent close action.
 6. The guest increments or decrements the drinks they took.
 7. The app immediately updates the selected guest counts, keeps broader tally information available on the main screen, and saves the current state.
-8. The guest closes the personal tally surface, or the app closes it after 90 seconds of inactivity so the next person does not accidentally continue the previous tab.
+8. The guest closes the personal tally surface, or the app closes it after 180 seconds of inactivity so the next person does not accidentally continue the previous tab.
 9. If the page reloads, the previous tally state is restored and existing guest tabs remain available from the public tally view.
 
 ## In Scope for the Current Pilot
@@ -138,7 +138,7 @@ The public tally view should show these fixed sample drinks and reference prices
 - The current counts for the selected guest's drinks must always be visible while that guest's tally surface is open.
 - Prices must be displayed as reference information only; the current pilot does not require running monetary subtotals or checkout logic.
 - The total number of drinks across all guests and a per-guest summary must remain available from the main screen without separate navigation.
-- The personal tally surface must close after 90 seconds of inactivity unless the guest closes it first.
+- The personal tally surface must close after 180 seconds of inactivity unless the guest closes it first.
 - Data must persist across page reloads on the same device.
 - The current pilot must use English UI text.
 
@@ -157,7 +157,7 @@ The public tally view should show these fixed sample drinks and reference prices
 - A shared tablet may carry the previous guest context into the next interaction if the personal tally surface is not cleared clearly enough.
 - Publicly showing room numbers and guest names increases privacy exposure on the shared tablet.
 - Trust-based identification can still produce wrong-room or wrong-name entries.
-- The 90-second inactivity timeout could still close a guest's tally surface while they are still using it.
+- The 180-second inactivity timeout could still close a guest's tally surface while they are still using it.
 - Reload-safe local persistence is not the same as full offline support.
 - The fixed drink list and prices are only pilot placeholders.
 

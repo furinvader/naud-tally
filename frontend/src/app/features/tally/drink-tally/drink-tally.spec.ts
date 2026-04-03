@@ -117,10 +117,30 @@ describe('DrinkTally', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')?.textContent).toContain(
-      'Ada Lovelace',
+    const selectedPanel = compiled.querySelector(
+      '[data-testid="selected-guest-panel"]',
+    ) as HTMLElement | null;
+    const panelHeader = compiled.querySelector(
+      '[data-testid="selected-guest-panel-header"]',
+    ) as HTMLElement | null;
+    const panelTotal = compiled.querySelector(
+      '[data-testid="selected-guest-total"]',
+    ) as HTMLElement | null;
+    const panelScroll = compiled.querySelector(
+      '[data-testid="selected-guest-panel-scroll"]',
+    ) as HTMLElement | null;
+
+    expect(selectedPanel?.textContent).toContain('Ada Lovelace');
+    expect(panelHeader?.textContent).toContain('Ada Lovelace');
+    expect(panelTotal?.textContent).toContain('Total drinks');
+    expect(panelTotal?.textContent).toContain('4');
+    expect(selectedPanel?.querySelector('nt-tally-stat-card')).toBeNull();
+    expect(selectedPanel?.firstElementChild).toBe(panelHeader?.parentElement);
+    expect(panelHeader?.parentElement?.nextElementSibling).toBe(panelScroll);
+    expect(compiled.textContent).toContain(
+      'This personal tab closes after 180 seconds of inactivity.',
     );
-    expect(compiled.textContent).toContain('This personal tab closes after 90 seconds of inactivity.');
+    expect(compiled.textContent).toContain('Tap to close now');
     expect(compiled.querySelector('[data-testid="empty-personal-panel"]')).toBeNull();
   });
 
@@ -165,6 +185,47 @@ describe('DrinkTally', () => {
     await fixture.whenStable();
 
     expect(getHint()?.style.getPropertyValue('--nt-timeout-progress')).toBe('0.00%');
+  });
+
+  it('should show a top shadow on the selected guest panel only after scrolling', async () => {
+    seedGuestTabs();
+
+    const fixture = TestBed.createComponent(DrinkTally);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const guestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
+    ) as HTMLButtonElement | null;
+
+    guestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const scrollContainer = compiled.querySelector(
+      '[data-testid="selected-guest-panel-scroll"]',
+    ) as HTMLDivElement | null;
+
+    expect(scrollContainer?.classList.contains('personal-panel__scroll--scrolled')).toBe(false);
+
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 32;
+      scrollContainer.dispatchEvent(new Event('scroll'));
+    }
+
+    fixture.detectChanges();
+
+    expect(scrollContainer?.classList.contains('personal-panel__scroll--scrolled')).toBe(true);
+
+    if (scrollContainer) {
+      scrollContainer.scrollTop = 0;
+      scrollContainer.dispatchEvent(new Event('scroll'));
+    }
+
+    fixture.detectChanges();
+
+    expect(scrollContainer?.classList.contains('personal-panel__scroll--scrolled')).toBe(false);
   });
 
   it('should create and select a guest from the inline Add yourself flow', async () => {
@@ -231,6 +292,7 @@ describe('DrinkTally', () => {
     const closeButton = compiled.querySelector(
       '[data-testid="close-personal-tab"]',
     ) as HTMLButtonElement | null;
+    expect(closeButton?.textContent).toContain('Tap to close now');
     closeButton?.click();
     fixture.detectChanges();
 
@@ -272,7 +334,7 @@ function seedGuestTabs(): void {
         id: 'guest-1',
         roomNumber: '101',
         fullName: 'Ada Lovelace',
-        counts: buildCounts({ water: 2, beer: 1 }),
+        counts: buildCounts({ sparklingWater: 1, water: 2, beer: 1 }),
         createdAt: '2026-04-01T08:00:00.000Z',
         updatedAt: '2026-04-02T10:00:00.000Z',
       },

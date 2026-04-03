@@ -9,7 +9,7 @@ import {
 } from '@ngrx/signals';
 
 export const DRINK_TALLY_STORAGE_KEY = 'naud-tally.guest-tabs';
-export const GUEST_TAB_INACTIVITY_TIMEOUT_MS = 90_000;
+export const GUEST_TAB_INACTIVITY_TIMEOUT_MS = 180_000;
 
 export const DRINK_CATALOG = [
   { id: 'water', name: 'Water', priceCents: 200 },

@@ -149,43 +149,43 @@
     >
       @if (tallyStore.selectedGuest(); as selectedGuest) {
         <section class="personal-panel__content" data-testid="selected-guest-panel">
-          <div class="personal-panel__header">
-            <div>
-              <p class="eyebrow">{{ copy.personalPanelEyebrow }}</p>
-              <h2>{{ selectedGuest.fullName }}</h2>
-              <p>{{ copy.roomLabel }} {{ selectedGuest.roomNumber }}</p>
+          <div class="personal-panel__top entry-flow">
+            <div class="personal-panel__header" data-testid="selected-guest-panel-header">
+              <div class="personal-panel__identity entry-flow__copy">
+                <p class="eyebrow">{{ copy.personalPanelEyebrow }}</p>
+                <h2>{{ selectedGuest.fullName }}</h2>
+                <p>{{ copy.roomLabel }} {{ selectedGuest.roomNumber }}</p>
+              </div>
+
+              <div class="personal-panel__total" data-testid="selected-guest-total">
+                <span class="eyebrow">{{ copy.totalLabel }}</span>
+                <strong class="personal-panel__total-value">{{ selectedGuest.totalCount }}</strong>
+              </div>
             </div>
 
-            <button
-              mat-stroked-button
-              type="button"
-              data-testid="close-personal-tab"
-              (click)="tallyStore.closeSelectedGuestTab()"
-            >
-              {{ copy.closeTabAction }}
-            </button>
+            <nt-inactivity-countdown-hint
+              [message]="copy.inactivityHint"
+              [actionLabel]="copy.closeNowAction"
+              [progressPercent]="timeoutProgressPercent()"
+              [ringOffset]="timeoutRingOffset()"
+              (close)="tallyStore.closeSelectedGuestTab()"
+            />
           </div>
 
-          <nt-inactivity-countdown-hint
-            [message]="copy.inactivityHint"
-            [progressPercent]="timeoutProgressPercent()"
-            [ringOffset]="timeoutRingOffset()"
-          />
-
-          <nt-tally-stat-card
-            [label]="copy.totalLabel"
-            [value]="selectedGuest.totalCount"
-            [caption]="copy.totalCaption"
-            emphasis="accent"
-          />
-
-          <nt-drink-counter-grid
-            [drinks]="selectedGuest.drinkTallies"
-            [subtitle]="copy.drinkSubtitle"
-            [countLabel]="copy.countLabel"
-            (incrementDrink)="tallyStore.incrementDrink($event)"
-            (decrementDrink)="tallyStore.decrementDrink($event)"
-          />
+          <div
+            class="personal-panel__scroll"
+            [class.personal-panel__scroll--scrolled]="selectedGuestPanelScrolled()"
+            data-testid="selected-guest-panel-scroll"
+            (scroll)="onSelectedGuestPanelScroll($event)"
+          >
+            <nt-drink-counter-grid
+              [drinks]="selectedGuest.drinkTallies"
+              [subtitle]="copy.drinkSubtitle"
+              [countLabel]="copy.countLabel"
+              (incrementDrink)="tallyStore.incrementDrink($event)"
+              (decrementDrink)="tallyStore.decrementDrink($event)"
+            />
+          </div>
         </section>
       } @else {
         <section class="personal-panel__placeholder" data-testid="empty-personal-panel">
