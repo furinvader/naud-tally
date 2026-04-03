@@ -10,7 +10,7 @@ Read this file before opening task files under [`docs/tasks/done/`](./).
 ## Load Rules
 
 - Prefer current tasks over done tasks unless historical context is needed.
-- If a completed task must be reopened, move it to the matching active status folder and update [`../agent-index.md`](../agent-index.md).
+- If a completed task must be reopened, move it to the matching active status folder and update [`../../tasks.md`](../../tasks.md) plus the affected status-folder indexes.
 
 ## Tasks
 

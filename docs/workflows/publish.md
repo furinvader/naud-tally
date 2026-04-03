@@ -87,7 +87,7 @@ Each pull request should:
 
 ## Minimal Publish Checklist
 
-1. Confirm the relevant task file from [`docs/tasks/agent-index.md`](../tasks/agent-index.md) still matches the change.
+1. Confirm the relevant task from [`docs/tasks.md`](../tasks.md) still matches the change.
 2. Use a branch name that fits the change type and scope.
 3. Make sure the PR title reads well as a squash commit.
 4. Before merge, make sure docs and task status reflect the final outcome.
