@@ -1,0 +1,30 @@
+@mixin install() {
+  .nt-scroll-shadow {
+    position: relative;
+    min-height: 0;
+    overflow: auto;
+    isolation: isolate;
+  }
+
+  .nt-scroll-shadow::before {
+    content: '';
+    position: sticky;
+    top: 0;
+    display: block;
+    height: 1.1rem;
+    margin-bottom: -1.1rem;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--nt-color-ink) 18%, transparent),
+      transparent
+    );
+    transition: opacity 140ms ease;
+  }
+
+  .nt-scroll-shadow--scrolled::before {
+    opacity: 1;
+  }
+}

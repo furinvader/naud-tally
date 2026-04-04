@@ -79,33 +79,7 @@ p {
 }
 
 .personal-panel__scroll {
-  position: relative;
-  min-height: 0;
-  overflow: auto;
   padding-inline-end: var(--nt-space-2xs);
-  isolation: isolate;
-}
-
-.personal-panel__scroll::before {
-  content: '';
-  position: sticky;
-  top: 0;
-  display: block;
-  height: 1.1rem;
-  margin-bottom: -1.1rem;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--nt-color-ink) 18%, transparent),
-    transparent
-  );
-  transition: opacity 140ms ease;
-}
-
-.personal-panel__scroll--scrolled::before {
-  opacity: 1;
 }
 
 .personal-panel__placeholder {

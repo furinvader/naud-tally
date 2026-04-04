@@ -231,7 +231,7 @@ describe('DrinkTally', () => {
       '[data-testid="selected-guest-panel-scroll"]',
     ) as HTMLDivElement | null;
 
-    expect(scrollContainer?.classList.contains('personal-panel__scroll--scrolled')).toBe(false);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(false);
 
     if (scrollContainer) {
       scrollContainer.scrollTop = 32;
@@ -240,7 +240,7 @@ describe('DrinkTally', () => {
 
     fixture.detectChanges();
 
-    expect(scrollContainer?.classList.contains('personal-panel__scroll--scrolled')).toBe(true);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(true);
 
     if (scrollContainer) {
       scrollContainer.scrollTop = 0;
@@ -249,7 +249,7 @@ describe('DrinkTally', () => {
 
     fixture.detectChanges();
 
-    expect(scrollContainer?.classList.contains('personal-panel__scroll--scrolled')).toBe(false);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(false);
   });
 
   it('should show a top shadow on the active guest list only after scrolling', async () => {
@@ -264,7 +264,7 @@ describe('DrinkTally', () => {
       '[data-testid="active-guest-list-scroll"]',
     ) as HTMLDivElement | null;
 
-    expect(scrollContainer?.classList.contains('guest-list__scroll--scrolled')).toBe(false);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(false);
 
     if (scrollContainer) {
       scrollContainer.scrollTop = 32;
@@ -273,7 +273,7 @@ describe('DrinkTally', () => {
 
     fixture.detectChanges();
 
-    expect(scrollContainer?.classList.contains('guest-list__scroll--scrolled')).toBe(true);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(true);
 
     if (scrollContainer) {
       scrollContainer.scrollTop = 0;
@@ -282,7 +282,7 @@ describe('DrinkTally', () => {
 
     fixture.detectChanges();
 
-    expect(scrollContainer?.classList.contains('guest-list__scroll--scrolled')).toBe(false);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(false);
   });
 
   it('should preserve both scroll shadows when selecting another guest', async () => {
@@ -320,8 +320,8 @@ describe('DrinkTally', () => {
 
     fixture.detectChanges();
 
-    expect(guestListScroll?.classList.contains('guest-list__scroll--scrolled')).toBe(true);
-    expect(selectedPanelScroll?.classList.contains('personal-panel__scroll--scrolled')).toBe(true);
+    expect(guestListScroll?.classList.contains('nt-scroll-shadow--scrolled')).toBe(true);
+    expect(selectedPanelScroll?.classList.contains('nt-scroll-shadow--scrolled')).toBe(true);
 
     const secondGuestButton = compiled.querySelector(
       'button[aria-label="Open tab for room 204, Grace Hopper"]',
@@ -338,8 +338,8 @@ describe('DrinkTally', () => {
       '[data-testid="selected-guest-panel-scroll"]',
     ) as HTMLDivElement | null;
 
-    expect(nextGuestListScroll?.classList.contains('guest-list__scroll--scrolled')).toBe(true);
-    expect(nextSelectedPanelScroll?.classList.contains('personal-panel__scroll--scrolled')).toBe(
+    expect(nextGuestListScroll?.classList.contains('nt-scroll-shadow--scrolled')).toBe(true);
+    expect(nextSelectedPanelScroll?.classList.contains('nt-scroll-shadow--scrolled')).toBe(
       true,
     );
   });
