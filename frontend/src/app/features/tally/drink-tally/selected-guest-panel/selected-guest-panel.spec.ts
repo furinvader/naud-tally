@@ -95,7 +95,7 @@ describe('SelectedGuestPanel', () => {
       '[data-testid="selected-guest-panel-scroll"]',
     ) as HTMLDivElement | null;
 
-    expect(scrollContainer?.classList.contains('personal-panel__scroll--scrolled')).toBe(false);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(false);
 
     if (scrollContainer) {
       scrollContainer.scrollTop = 24;
@@ -104,7 +104,7 @@ describe('SelectedGuestPanel', () => {
 
     fixture.detectChanges();
 
-    expect(scrollContainer?.classList.contains('personal-panel__scroll--scrolled')).toBe(true);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(true);
   });
 });
 

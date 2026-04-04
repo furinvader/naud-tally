@@ -30,9 +30,8 @@
 
       <div
         class="personal-panel__scroll"
-        [class.personal-panel__scroll--scrolled]="selectedGuestPanelScrolled()"
+        ntScrollShadow
         data-testid="selected-guest-panel-scroll"
-        (scroll)="onSelectedGuestPanelScroll($event)"
       >
         <nt-drink-counter-grid
           [drinks]="guest.drinkTallies"

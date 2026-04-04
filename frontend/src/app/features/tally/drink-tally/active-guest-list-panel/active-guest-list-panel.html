@@ -22,9 +22,8 @@
 
   <div
     class="guest-list__scroll"
-    [class.guest-list__scroll--scrolled]="guestListScrolled()"
+    ntScrollShadow
     data-testid="active-guest-list-scroll"
-    (scroll)="onGuestListScroll($event)"
   >
     @if (guests().length) {
       <div class="guest-grid">

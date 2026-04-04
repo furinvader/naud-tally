@@ -103,7 +103,7 @@ describe('ActiveGuestListPanel', () => {
       '[data-testid="active-guest-list-scroll"]',
     ) as HTMLDivElement | null;
 
-    expect(scrollContainer?.classList.contains('guest-list__scroll--scrolled')).toBe(false);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(false);
 
     if (scrollContainer) {
       scrollContainer.scrollTop = 24;
@@ -112,7 +112,7 @@ describe('ActiveGuestListPanel', () => {
 
     fixture.detectChanges();
 
-    expect(scrollContainer?.classList.contains('guest-list__scroll--scrolled')).toBe(true);
+    expect(scrollContainer?.classList.contains('nt-scroll-shadow--scrolled')).toBe(true);
   });
 });
 

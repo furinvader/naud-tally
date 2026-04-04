@@ -70,34 +70,8 @@ p {
 }
 
 .guest-list__scroll {
-  position: relative;
-  min-height: 0;
-  overflow: auto;
   padding-inline: var(--nt-guest-list-shadow-bleed, var(--nt-space-xs));
   padding-block-end: var(--nt-guest-list-shadow-bleed, var(--nt-space-xs));
-  isolation: isolate;
-}
-
-.guest-list__scroll::before {
-  content: '';
-  position: sticky;
-  top: 0;
-  display: block;
-  height: 1.1rem;
-  margin-bottom: -1.1rem;
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--nt-color-ink) 18%, transparent),
-    transparent
-  );
-  transition: opacity 140ms ease;
-}
-
-.guest-list__scroll--scrolled::before {
-  opacity: 1;
 }
 
 .guest-grid {
