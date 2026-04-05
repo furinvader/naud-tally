@@ -3,7 +3,7 @@
 `Naud Tally` is a new pilot project with two goals:
 
 1. Learn agentic AI development by building with Codex end-to-end.
-2. Ship a functional, tablet-first tally app that lets guests record which drinks they take and how many.
+2. Ship a functional, host-operated tablet app that lets the host quickly record guest orders, manage products and prices, bill tabs on departure, and recover safely after reloads, reinstall, or connection loss.
 
 This repository is intentionally starting with documentation before scaffolding. The docs are the first layer of the product and the first layer of the agent workflow.
 
@@ -13,7 +13,7 @@ The repo now uses [`AGENTS.md`](AGENTS.md) plus small [`agent-index.md`](agent-i
 
 ## Current Phase
 
-We have shipped the first guest tally slice and are now improving the repository's agent-facing structure before continuing with the next product slice.
+We have already shipped a guest-facing tally slice plus a separate host-tools route. The project is now re-scoped around a host-operated pilot, and the next product work is to make the host workflow the primary tablet experience.
 
 What exists today:
 
@@ -26,19 +26,22 @@ What exists today:
 - repo-tracked design workflow docs and SVG artifacts under [`docs/design/`](docs/design/)
 - initial stack decision
 - Angular app scaffold under [`frontend/`](frontend/) with Material and SignalStore dependencies
-- first guest tally screen with reload-safe local persistence
+- public guest-tab tally slice with local persistence
+- separate host route for product management and guest billing
+- local billed-history and live drink catalog management
 
 What is intentionally not done yet:
 
-- organizer functionality
-- guest tabs and trust-based identification
-- backend implementation
+- the host-first main screen as the default route
+- PWA installability and offline shell behavior
+- remote backup and recovery for reinstall or replacement-device scenarios
+- a chosen remote sync backend and reconnect-sync implementation
 
 ## Project Principles
 
 - Build in small vertical slices.
 - Prefer boring, reliable product decisions for the pilot.
-- Keep the pilot local-first unless a clear need appears.
+- Keep the pilot local-first while still planning for remote recovery.
 - Make every important decision explicit in docs.
 - Use Codex as the primary implementation partner.
 - Optimize for transferable learning, not one-off hacks.
@@ -49,7 +52,9 @@ What is intentionally not done yet:
 - [Frontend Guide](frontend/README.md)
 - [Design Artifacts](docs/design/README.md)
 - [Product](docs/product.md)
-- [Public Tally View and Guest Tab UX](docs/ux/guest-tab-ux.md)
+- [Host Main Workflow UX](docs/ux/host-workflow-ux.md)
+- [Deferred Public Tally and Guest Self-Service UX](docs/ux/guest-tab-ux.md)
+- [Remote Persistence Options](docs/research/remote-persistence-options.md)
 - [Agentic Workflow](docs/agentic-workflow.md)
 - [Repo Decisions](docs/decisions.md)
 - [GitHub Setup](docs/github-setup.md)
@@ -81,11 +86,12 @@ Directory notes:
 
 The pilot is successful if:
 
-- a guest can use the app on a tablet without explanation
-- guest identification with room number and full name is quick and obvious
-- drink choices are fast to record with large touch targets
-- counts survive a page reload or accidental refresh
-- the current pilot stays focused on the single-screen guest-tab flow
+- a host can use the app on a tablet as their main working surface without extra navigation
+- room number, full name, and order entry are quick enough for on-the-fly service
+- products and prices can be managed without leaving the host workflow
+- billing on departure is clear and reliable
+- local state survives reloads and remains usable while offline
+- a replacement device can recover state from the chosen remote source after reconnect
 - the build process teaches a repeatable Codex-driven workflow
 
 ## Notes

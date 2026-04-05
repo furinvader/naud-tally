@@ -29,19 +29,38 @@ This file records repository-wide decisions that shape the build. Each decision 
 
 - Status: accepted
 - Why: a small vertical slice teaches more than an oversized backlog that never ships
-- Consequence: the first version focuses on counting drinks on a shared tablet before evolving into guest tabs or organizer management
+- Consequence: the current pilot focuses on a host-operated room-name-order-billing workflow on a shared tablet
+- Consequence: public guest self-service remains deferred until the host workflow is solid
 
 ## Optimize for Tablet-First Web Delivery
 
 - Status: accepted
-- Why: the first implementation is a single local-first screen and does not need native device APIs or a backend
+- Why: the pilot should run well on a shared or dedicated host tablet without requiring native packaging first
 - Consequence: we will build a browser-based tablet app and only revisit native packaging if the product later proves it is necessary
 
 ## Prefer Local-First Persistence for the Pilot
 
 - Status: accepted
-- Why: reload-safe local persistence is required for the first implementation, and it keeps the first slice simple
-- Consequence: the first version will work without a backend, but it will not yet solve backups, multi-device use, or full offline behavior
+- Why: immediate local saves keep the host working during service and remain the simplest trustworthy first persistence layer
+- Consequence: the app should still write locally first, even after remote recovery is added
+- Consequence: local-only persistence is no longer enough for the target pilot because it does not solve reinstall or replacement-device recovery
+
+## Ship the Pilot as a PWA With Offline Behavior
+
+- Status: accepted
+- Why: the host needs the app to stay usable when connectivity drops and to feel installable on a tablet
+- Consequence: the frontend should evolve into a Progressive Web App with offline shell behavior
+- Consequence: offline behavior should preserve core host workflows instead of degrading into a blank or unusable state
+- Consequence: PWA work does not replace remote recovery or sync; it complements it
+
+## Require Remote Recovery Beyond Same-Device Persistence
+
+- Status: accepted
+- Why: the tablet may break, be stolen, or be reinstalled, so same-device local storage is not enough
+- Supporting research: [`research/remote-persistence-options.md`](research/remote-persistence-options.md)
+- Consequence: the product now requires a simple remote recovery path in addition to local-first persistence
+- Consequence: the exact backend remains open until a short evaluation task resolves the setup, conflict, and recovery tradeoffs
+- Consequence: Google Sheets can still be considered for backup or export, but it is not assumed to be the primary sync engine
 
 ## Use Codex as the Primary Builder
 
@@ -67,29 +86,25 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Why: it is permissive, widely understood, and includes a clear warranty and liability disclaimer
 - Consequence: others can reuse the project broadly as long as the license notice is preserved
 
-## Start With a Single English Tally Screen
+## Keep the Pilot on One English Host-Operated Main Screen
 
 - Status: accepted
-- Why: the fastest useful first version is the guest-facing tally screen with no organizer area and no guest model yet
-- Consequence: the initial build will focus on one screen, fixed sample drinks, English UI, and local persistence
-- Consequence: later guest-identification changes should preserve the one-screen constraint when possible
+- Why: the pilot should stay easy to learn and efficient to use on a tablet during real service
+- Consequence: the target product should center on one main host screen, English UI, and minimal navigation
+- Consequence: supporting tools such as billing history or catalog editing should stay adjacent to that main working surface when possible
 
-## Evolve to a Single-Screen Public Tally View With Guest Tabs
+## Shift the Pilot to a Host-Operated Main Screen
 
 - Status: accepted
-- Why: the host must bill guests on departure, so anonymous totals are not accurate enough
-- Why: room number and full name are the only practical trust-based identifiers available to the app today
-- Why: the public shared-tablet surface should prioritize repeat guests and a clear self-entry path without breaking the one-screen model
-- Supporting UX reference: [`ux/guest-tab-ux.md`](ux/guest-tab-ux.md)
-- Consequence: guest identification becomes required before drinks can be recorded
-- Consequence: guests are represented in local app state by room number, full name, and drink counts
-- Consequence: the main screen should stay on one route and avoid interruptive modal flows, but it can expand in place to open a guest's personal tally surface
-- Consequence: the default public tally view should show a prominent active guest list, a clear `Add yourself` action, and a top reference bar with drinks and display prices
-- Consequence: active guests are guests with existing open tabs in the current tally
-- Consequence: returning guests should select an existing tab from the active guest list instead of retyping their identity details
-- Consequence: new guests should follow the `room number -> full name` path when creating a tab
-- Consequence: prices are reference-only in this slice and do not yet require subtotals or checkout logic
-- Consequence: future shortcuts such as QR identification and future host or admin surfaces can be explored later, but they are out of current scope
+- Why: the host, not the guest, is now the primary user we need to optimize for
+- Why: host-side order entry, product management, and billing match the real operating model better than public self-service on a shared tablet
+- Supporting UX reference: [`ux/host-workflow-ux.md`](ux/host-workflow-ux.md)
+- Deferred future UX: [`ux/guest-tab-ux.md`](ux/guest-tab-ux.md)
+- Consequence: the main accessible product surface should become a host-operated route and working screen
+- Consequence: room number and full name remain the practical trust-based guest identifiers in the pilot
+- Consequence: the host workflow should support quick guest lookup or creation, order entry, and billing from one primary screen
+- Consequence: live product management and billed history remain in scope because they directly support the host workflow
+- Consequence: the public guest tally flow is now future consideration only and should not stay part of the active pilot surface
 
 ## Route Agents Through [`AGENTS.md`](../AGENTS.md) and [`agent-index.md`](../agent-index.md)
 

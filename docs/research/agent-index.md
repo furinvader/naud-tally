@@ -21,3 +21,4 @@ Read this file before opening other files under [`docs/research/`](./).
 ## Research Briefs
 
 - [Design Solution Evaluation](design-solution-evaluation.md)
+- [Remote Persistence Options](remote-persistence-options.md)
