@@ -129,11 +129,19 @@ describe('DrinkTally', () => {
     const panelScroll = compiled.querySelector(
       '[data-testid="selected-guest-panel-scroll"]',
     ) as HTMLElement | null;
+    const activeDrinkSection = compiled.querySelector(
+      '[data-testid="selected-guest-active-drinks-section"]',
+    ) as HTMLElement | null;
+    const availableDrinkSection = compiled.querySelector(
+      '[data-testid="selected-guest-available-drinks-section"]',
+    ) as HTMLElement | null;
 
     expect(selectedPanel?.textContent).toContain('Ada Lovelace');
     expect(panelHeader?.textContent).toContain('Ada Lovelace');
     expect(panelTotal?.textContent).toContain('Total drinks');
     expect(panelTotal?.textContent).toContain('4');
+    expect(activeDrinkSection?.textContent).toContain('Your drinks');
+    expect(availableDrinkSection?.textContent).toContain('Add a drink');
     expect(selectedPanel?.querySelector('nt-tally-stat-card')).toBeNull();
     expect(selectedPanel?.firstElementChild).toBe(panelHeader?.parentElement);
     expect(panelHeader?.parentElement?.nextElementSibling).toBe(panelScroll);
@@ -389,7 +397,66 @@ describe('DrinkTally', () => {
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')?.textContent).toContain(
       'Grace Hopper',
     );
+    expect(compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]')).toBeNull();
+    expect(
+      compiled.querySelector('[data-testid="selected-guest-available-drinks-section"]')
+        ?.textContent,
+    ).toContain('Add a drink');
     expect(localStorage.getItem(DRINK_TALLY_STORAGE_KEY)).toContain('"roomNumber":"204"');
+  });
+
+  it('should move a newly added drink from the add-drink section into Your drinks', async () => {
+    const fixture = TestBed.createComponent(DrinkTally);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const addYourselfButton = compiled.querySelector(
+      '[data-testid="add-yourself-button"]',
+    ) as HTMLButtonElement | null;
+
+    addYourselfButton?.click();
+    fixture.detectChanges();
+
+    const roomNumberInput = compiled.querySelector(
+      '[data-testid="room-number-input"]',
+    ) as HTMLInputElement | null;
+    roomNumberInput!.value = '305';
+    roomNumberInput?.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    const continueButton = compiled.querySelector(
+      '[data-testid="room-number-continue"]',
+    ) as HTMLButtonElement | null;
+    continueButton?.click();
+    fixture.detectChanges();
+
+    const fullNameInput = compiled.querySelector(
+      '[data-testid="full-name-input"]',
+    ) as HTMLInputElement | null;
+    fullNameInput!.value = 'Katherine Johnson';
+    fullNameInput?.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    const createTabButton = compiled.querySelector(
+      '[data-testid="create-tab-button"]',
+    ) as HTMLButtonElement | null;
+    createTabButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]')).toBeNull();
+
+    const addDrinkButton = compiled.querySelector(
+      'button[aria-label="Add one Water"]',
+    ) as HTMLButtonElement | null;
+
+    addDrinkButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]')).not.toBeNull();
+    expect(compiled.querySelector('button[aria-label="Remove one Water"]')).not.toBeNull();
   });
 
   it('should clear the selected guest after the inactivity timeout', async () => {

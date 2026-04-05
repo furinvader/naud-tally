@@ -1,0 +1,19 @@
+<section class="available-drink-grid" aria-label="Available drinks">
+  @for (drink of drinks(); track drink.id) {
+    <button
+      mat-stroked-button
+      type="button"
+      class="available-drink-button"
+      [attr.aria-label]="'Add one ' + drink.name"
+      (click)="addDrink.emit(drink.id)"
+    >
+      <span class="available-drink-button__content">
+        <span class="available-drink-button__name">{{ drink.name }}</span>
+        <span class="available-drink-button__meta">
+          <span class="available-drink-button__price">{{ drink.displayPrice }}</span>
+          <span class="available-drink-button__action">{{ actionLabel() }}</span>
+        </span>
+      </span>
+    </button>
+  }
+</section>

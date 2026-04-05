@@ -4,14 +4,20 @@
   height: 100%;
 }
 
+h3,
 h2,
 p {
   margin: 0;
 }
 
+h3,
 h2 {
   font: var(--nt-type-title);
   color: var(--nt-color-ink);
+}
+
+h3 {
+  font-size: 1.1rem;
 }
 
 p {
@@ -43,7 +49,10 @@ p {
 
 .personal-panel__top,
 .personal-panel__content,
-.personal-panel__placeholder {
+.personal-panel__placeholder,
+.personal-panel__sections,
+.personal-panel__section,
+.personal-panel__section-header {
   display: grid;
   gap: var(--nt-space-sm);
 }
@@ -80,6 +89,15 @@ p {
 
 .personal-panel__scroll {
   padding-inline-end: var(--nt-space-2xs);
+}
+
+.personal-panel__sections {
+  padding-block-end: var(--nt-space-xs);
+}
+
+.personal-panel__section + .personal-panel__section {
+  padding-top: var(--nt-space-sm);
+  border-top: 1px solid color-mix(in srgb, var(--nt-border-subtle) 80%, transparent);
 }
 
 .personal-panel__placeholder {

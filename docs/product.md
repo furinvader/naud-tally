@@ -2,7 +2,7 @@
 
 ## Working Definition
 
-This project is a tablet-first tally app for guests and hosts. The main pilot screen is a public tally view on a shared tablet: active guests with existing tabs are listed prominently, a fixed drink catalog with reference prices stays visible in a top bar, and new guests can start from a clear `Add yourself` entry point. Guests identify themselves with their room number and full name, then record which drinks they take and how many inside their personal guest tab so the host can bill them on departure.
+This project is a tablet-first tally app for guests and hosts. The main pilot screen is a public tally view on a shared tablet: active guests with existing tabs are listed prominently, a fixed drink catalog with reference prices stays visible in a top bar, and new guests can start from a clear `Add yourself` entry point. Guests identify themselves with their room number and full name, then record which drinks they take and how many inside their personal guest tab so the host can bill them on departure. Inside that personal tally surface, already-recorded drinks stay visible in a focused `Your drinks` list while zero-count drinks remain available through a separate `Add a drink` list.
 
 The current pilot direction stays intentionally narrow: a single-screen public tally flow with guest tabs and local persistence, not a full guest-management, billing, or hotel-integration system.
 
@@ -41,6 +41,7 @@ These are the rules for the current pilot direction:
 - there are no accounts or integrated hotel systems
 - returning guests should be able to reuse an existing tab instead of re-entering their details
 - selecting or creating a guest tab should expand a non-modal personal tally surface on the same screen
+- the personal tally surface should show already-recorded drinks separately from zero-count drinks
 - tapping the currently selected guest again should close their personal tally surface
 - the personal tally surface should close after 90 seconds of inactivity
 - the UI is optimized for quick tapping and minimal navigation
@@ -75,7 +76,7 @@ The public tally view should show these fixed sample drinks and reference prices
 3. A returning guest selects their existing guest tab from the active list, or a new guest starts from `Add yourself`.
 4. A new guest follows the `room number -> full name` path once to create a tab.
 5. The app expands a non-modal personal tally surface for the selected guest and shows that guest's current tab clearly.
-6. The guest increments or decrements the drinks they took.
+6. The guest uses `Add a drink` to record a first drink, then increments or decrements drinks from `Your drinks`.
 7. The app immediately updates the selected guest counts, keeps broader tally information available on the main screen, and saves the current state.
 8. The guest taps the currently selected guest again to close the personal tally surface, or the app closes it after 90 seconds of inactivity so the next person does not accidentally continue the previous tab.
 9. If the page reloads, the previous tally state is restored and existing guest tabs remain available from the public tally view.
@@ -90,6 +91,7 @@ The public tally view should show these fixed sample drinks and reference prices
 - clear `Add yourself` entry path for new guests
 - room-number then full-name capture when creating a guest tab
 - non-modal expandable personal tally surface for a selected guest
+- split selected-guest drink entry with `Your drinks` and `Add a drink` sections
 - add and remove counts for each drink within the selected guest context
 - visible guest-specific counts and current tab context
 - overall tally information that remains accessible from the main screen
@@ -121,6 +123,7 @@ The public tally view should show these fixed sample drinks and reference prices
 - The public screen should prioritize active guests and a clear starting point for new guests.
 - Keep drink names and reference prices visible without making the drink bar the primary interaction zone.
 - Keep guest context unmistakable whenever a personal tally surface is open.
+- Keep the selected-guest drink controls calm by surfacing only already-recorded drinks in the main tally list.
 - Let repeat guests continue without re-entering identity details.
 - Clear feedback after each tap.
 - No hidden state changes.
@@ -135,8 +138,9 @@ The public tally view should show these fixed sample drinks and reference prices
 - A new guest tab must require room number followed by full name.
 - A returning guest must be able to select an existing tab without re-entering those details.
 - Selecting or creating a guest tab must expand a non-modal personal tally surface on the same screen without changing routes or opening an interruptive dialog.
-- Drink actions must support increment and decrement within a selected guest context.
-- The current counts for the selected guest's drinks must always be visible while that guest's tally surface is open.
+- Drink actions must support one-tap add, increment, and decrement within a selected guest context.
+- Zero-count drinks must be available through a separate `Add a drink` list in the personal tally surface.
+- The current counts for the selected guest's recorded drinks must always be visible while that guest's tally surface is open.
 - Prices must be displayed as reference information only; the current pilot does not require running monetary subtotals or checkout logic.
 - The total number of drinks across all guests and a per-guest summary must remain available from the main screen without separate navigation.
 - The personal tally surface must close when the selected guest is tapped again and after 90 seconds of inactivity.

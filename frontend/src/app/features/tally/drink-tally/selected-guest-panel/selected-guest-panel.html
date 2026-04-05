@@ -25,13 +25,44 @@
         ntScrollShadow
         data-testid="selected-guest-panel-scroll"
       >
-        <nt-drink-counter-grid
-          [drinks]="guest.drinkTallies"
-          [subtitle]="copy().selectedGuestPanel.drinkSubtitle"
-          [countLabel]="copy().selectedGuestPanel.countLabel"
-          (incrementDrink)="incrementDrink.emit($event)"
-          (decrementDrink)="decrementDrink.emit($event)"
-        />
+        <div class="personal-panel__sections">
+          @if (guest.activeDrinkTallies.length) {
+            <section
+              class="personal-panel__section"
+              data-testid="selected-guest-active-drinks-section"
+            >
+              <div class="personal-panel__section-header">
+                <h3>{{ copy().selectedGuestPanel.activeDrinksTitle }}</h3>
+              </div>
+
+              <nt-drink-counter-grid
+                [drinks]="guest.activeDrinkTallies"
+                [subtitle]="copy().selectedGuestPanel.drinkSubtitle"
+                [countLabel]="copy().selectedGuestPanel.countLabel"
+                (incrementDrink)="incrementDrink.emit($event)"
+                (decrementDrink)="decrementDrink.emit($event)"
+              />
+            </section>
+          }
+
+          @if (guest.availableDrinks.length) {
+            <section
+              class="personal-panel__section"
+              data-testid="selected-guest-available-drinks-section"
+            >
+              <div class="personal-panel__section-header">
+                <h3>{{ copy().selectedGuestPanel.availableDrinksTitle }}</h3>
+                <p>{{ copy().selectedGuestPanel.availableDrinksHint }}</p>
+              </div>
+
+              <nt-available-drink-grid
+                [drinks]="guest.availableDrinks"
+                [actionLabel]="copy().selectedGuestPanel.availableDrinksAction"
+                (addDrink)="incrementDrink.emit($event)"
+              />
+            </section>
+          }
+        </div>
       </div>
     </section>
   } @else {

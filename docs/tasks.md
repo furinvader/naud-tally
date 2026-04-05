@@ -30,3 +30,4 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 - [T-011 Document the Penpot Handoff Workflow](tasks/done/T-011.md)
 - [T-012 Create a Reusable Design Foundation Board](tasks/done/T-012.md)
 - [T-013 Apply the Design Foundations to the Angular Theme](tasks/done/T-013.md)
+- [T-015 Simplify Selected-Guest Drink Entry](tasks/done/T-015.md)
