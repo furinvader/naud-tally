@@ -73,6 +73,11 @@ export type SelectedGuestViewModel = GuestCardViewModel & {
   drinkTallies: SelectedGuestDrinkTally[];
 };
 
+const roomNumberCollator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
+
 const initialState: DrinkTallyState = {
   guestTabs: [],
   selectedGuestId: null,
@@ -97,13 +102,11 @@ export const DrinkTallyStore = signalStore(
     ),
     activeGuestCount: computed(() => store.guestTabs().length),
     activeGuests: computed<GuestCardViewModel[]>(() =>
-      [...store.guestTabs()]
-        .sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))
-        .map((guest) => ({
-          ...guest,
-          totalCount: countDrinks(guest.counts),
-          drinkSummary: createDrinkSummary(guest.counts),
-        })),
+      store.guestTabs().map((guest) => ({
+        ...guest,
+        totalCount: countDrinks(guest.counts),
+        drinkSummary: createDrinkSummary(guest.counts),
+      })),
     ),
     selectedGuest: computed<SelectedGuestViewModel | null>(() => {
       const selectedGuestId = store.selectedGuestId();
@@ -173,15 +176,17 @@ export const DrinkTallyStore = signalStore(
         return;
       }
 
+      const sortedGuestTabs = sortGuestTabs(nextGuestTabs);
+
       patchState(store, {
-        guestTabs: nextGuestTabs,
+        guestTabs: sortedGuestTabs,
         selectedGuestId: null,
         addGuestStep: 'closed',
         draftRoomNumber: '',
         draftFullName: '',
         interactionVersion: store.interactionVersion() + 1,
       });
-      persistGuestTabs(nextGuestTabs);
+      persistGuestTabs(sortedGuestTabs);
     }
 
     function selectGuestTabById(guestId: string): void {
@@ -361,7 +366,7 @@ export const DrinkTallyStore = signalStore(
   }),
   withHooks({
     onInit(store): void {
-      const restoredGuestTabs = readPersistedGuestTabs();
+      const restoredGuestTabs = sortGuestTabs(readPersistedGuestTabs());
 
       if (!restoredGuestTabs.length) {
         return;
@@ -383,6 +388,24 @@ function createDrinkSummary(counts: DrinkCounts): DrinkSummaryItem[] {
 
 function countDrinks(counts: DrinkCounts): number {
   return Object.values(counts).reduce((total, count) => total + count, 0);
+}
+
+function sortGuestTabs(guestTabs: GuestTab[]): GuestTab[] {
+  return [...guestTabs].sort((left, right) => {
+    const totalDifference = countDrinks(right.counts) - countDrinks(left.counts);
+
+    if (totalDifference !== 0) {
+      return totalDifference;
+    }
+
+    const roomDifference = roomNumberCollator.compare(left.roomNumber, right.roomNumber);
+
+    if (roomDifference !== 0) {
+      return roomDifference;
+    }
+
+    return left.fullName.localeCompare(right.fullName);
+  });
 }
 
 function createEmptyCounts(): DrinkCounts {

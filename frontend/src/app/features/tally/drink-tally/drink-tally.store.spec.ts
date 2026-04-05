@@ -103,40 +103,61 @@ describe('DrinkTallyStore', () => {
     expect(store.publicTotalCount()).toBe(3);
   });
 
-  it('should keep guest ordering stable on selection and only reorder on close', () => {
+  it('should keep guest ordering stable while tallying and sort finalized tabs by drinks then room number', () => {
     localStorage.setItem(
       DRINK_TALLY_STORAGE_KEY,
       JSON.stringify([
         {
           id: 'guest-1',
-          roomNumber: '101',
+          roomNumber: '210',
           fullName: 'Ada Lovelace',
           counts: buildCounts({ water: 1 }),
           createdAt: '2026-04-01T08:00:00.000Z',
-          updatedAt: '2026-04-01T09:00:00.000Z',
+          updatedAt: '2026-04-01T10:00:00.000Z',
         },
         {
           id: 'guest-2',
-          roomNumber: '102',
+          roomNumber: '101',
           fullName: 'Grace Hopper',
           counts: buildCounts({ beer: 1 }),
           createdAt: '2026-04-01T08:30:00.000Z',
-          updatedAt: '2026-04-01T10:00:00.000Z',
+          updatedAt: '2026-04-01T09:00:00.000Z',
+        },
+        {
+          id: 'guest-3',
+          roomNumber: '305',
+          fullName: 'Katherine Johnson',
+          counts: buildCounts({ water: 2, beer: 1 }),
+          createdAt: '2026-04-01T08:45:00.000Z',
+          updatedAt: '2026-04-01T08:50:00.000Z',
         },
       ]),
     );
 
     const store = TestBed.inject(DrinkTallyStore);
 
-    expect(store.activeGuests().map((guest) => guest.id)).toEqual(['guest-2', 'guest-1']);
+    expect(store.activeGuests().map((guest) => guest.id)).toEqual([
+      'guest-3',
+      'guest-2',
+      'guest-1',
+    ]);
 
     store.selectGuestTab('guest-1');
+    store.incrementDrink('beer');
 
-    expect(store.activeGuests().map((guest) => guest.id)).toEqual(['guest-2', 'guest-1']);
+    expect(store.activeGuests().map((guest) => guest.id)).toEqual([
+      'guest-3',
+      'guest-2',
+      'guest-1',
+    ]);
 
     store.closeSelectedGuestTab();
 
-    expect(store.activeGuests().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
+    expect(store.activeGuests().map((guest) => guest.id)).toEqual([
+      'guest-3',
+      'guest-1',
+      'guest-2',
+    ]);
   });
 
   it('should restore persisted guests and counts without restoring a selection', () => {

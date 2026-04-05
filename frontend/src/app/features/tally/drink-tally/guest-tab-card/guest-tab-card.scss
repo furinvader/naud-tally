@@ -40,6 +40,11 @@
   gap: var(--nt-space-sm);
 }
 
+.guest-card__identity {
+  display: grid;
+  gap: var(--nt-space-2xs);
+}
+
 .guest-card__room {
   font: var(--nt-type-label);
   letter-spacing: var(--nt-tracking-label);

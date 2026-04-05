@@ -75,8 +75,11 @@ describe('ActiveGuestListPanel', () => {
     const guestButton = compiled.querySelector(
       'button[aria-label="Open tab for room 101, Ada Lovelace"]',
     ) as HTMLButtonElement | null;
+    const guestIdentity = compiled.querySelector('.guest-card__identity') as HTMLDivElement | null;
 
     expect(guestButton?.classList.contains('guest-card--selected')).toBe(true);
+    expect(guestIdentity?.firstElementChild?.textContent).toContain('Ada Lovelace');
+    expect(guestIdentity?.lastElementChild?.textContent).toContain('Room 101');
 
     guestButton?.click();
 

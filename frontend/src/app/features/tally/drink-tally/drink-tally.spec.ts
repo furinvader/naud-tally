@@ -44,15 +44,11 @@ describe('DrinkTally', () => {
     expect(compiled.querySelector('[data-testid="add-yourself-button"]')).not.toBeNull();
     expect(compiled.querySelector('.entry-card')).toBeNull();
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
-    expect(compiled.querySelector('[data-testid="empty-personal-panel"]')?.textContent).toContain(
-      'Total drinks',
-    );
-    expect(compiled.querySelector('[data-testid="empty-personal-panel"]')?.textContent).toContain(
-      'Active guests',
-    );
+    expect(compiled.querySelector('[data-testid="empty-personal-panel"]')).not.toBeNull();
+    expect(compiled.querySelector('nt-personal-panel-summary')).toBeNull();
   });
 
-  it('should place the placeholder copy before the merged summary block', async () => {
+  it('should render only the placeholder copy when no guest is selected', async () => {
     const fixture = TestBed.createComponent(DrinkTally);
     fixture.detectChanges();
     await fixture.whenStable();
@@ -64,30 +60,10 @@ describe('DrinkTally', () => {
     const placeholderCopy = compiled.querySelector(
       '[data-testid="empty-personal-panel-copy"]',
     ) as HTMLElement | null;
-    const placeholderSummary = compiled.querySelector(
-      '[data-testid="empty-personal-panel-summary"]',
-    ) as HTMLElement | null;
 
     expect(placeholder?.firstElementChild).toBe(placeholderCopy);
-    expect(placeholderCopy?.nextElementSibling).toBe(placeholderSummary);
-  });
-
-  it('should render a merged placeholder summary instead of separate stat cards', async () => {
-    const fixture = TestBed.createComponent(DrinkTally);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    const compiled = fixture.nativeElement as HTMLElement;
-    const placeholder = compiled.querySelector(
-      '[data-testid="empty-personal-panel"]',
-    ) as HTMLElement | null;
-    const placeholderSummary = compiled.querySelector(
-      '[data-testid="empty-personal-panel-summary"]',
-    ) as HTMLElement | null;
-
-    expect(placeholder?.querySelectorAll('nt-tally-stat-card')).toHaveLength(0);
-    expect(placeholderSummary?.textContent).toContain('Total drinks');
-    expect(placeholderSummary?.textContent).toContain('Active guests');
+    expect(placeholder?.children).toHaveLength(1);
+    expect(placeholder?.querySelector('nt-personal-panel-summary')).toBeNull();
   });
 
   it('should not render the toolbar price reference on the public screen', async () => {
@@ -161,14 +137,12 @@ describe('DrinkTally', () => {
     expect(selectedPanel?.querySelector('nt-tally-stat-card')).toBeNull();
     expect(selectedPanel?.firstElementChild).toBe(panelHeader?.parentElement);
     expect(panelHeader?.parentElement?.nextElementSibling).toBe(panelScroll);
-    expect(compiled.textContent).toContain(
-      'This personal tab closes after 180 seconds of inactivity.',
-    );
-    expect(compiled.textContent).toContain('Tap to close now');
+    expect(compiled.querySelector('[data-testid="inactivity-hint"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="close-personal-tab"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="empty-personal-panel"]')).toBeNull();
   });
 
-  it('should render and reset the inactivity countdown hint after interaction', async () => {
+  it('should reset the inactivity timeout after interaction even without showing the hint', async () => {
     vi.useFakeTimers();
     seedGuestTabs();
 
@@ -185,20 +159,7 @@ describe('DrinkTally', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const getHint = (): HTMLElement | null =>
-      compiled.querySelector(
-        '[data-testid="inactivity-hint"] .inactivity-hint',
-      ) as HTMLElement | null;
-
-    expect(compiled.querySelector('[data-testid="inactivity-progress-fill"]')).not.toBeNull();
-    expect(compiled.querySelector('[data-testid="inactivity-progress-ring"]')).not.toBeNull();
-    expect(getHint()?.style.getPropertyValue('--nt-timeout-progress')).toBe('0.00%');
-
     await vi.advanceTimersByTimeAsync(10_000);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    expect(getHint()?.style.getPropertyValue('--nt-timeout-progress')).not.toBe('0.00%');
 
     const incrementButton = compiled.querySelector(
       'button[aria-label="Add one Water"]',
@@ -208,7 +169,22 @@ describe('DrinkTally', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(getHint()?.style.getPropertyValue('--nt-timeout-progress')).toBe('0.00%');
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).not.toBeNull();
+
+    await vi.advanceTimersByTimeAsync(GUEST_TAB_INACTIVITY_TIMEOUT_MS - 1);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).not.toBeNull();
+
+    await vi.advanceTimersByTimeAsync(1);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
   });
 
   it('should show a top shadow on the selected guest panel only after scrolling', async () => {
@@ -388,32 +364,6 @@ describe('DrinkTally', () => {
       'Grace Hopper',
     );
     expect(localStorage.getItem(DRINK_TALLY_STORAGE_KEY)).toContain('"roomNumber":"204"');
-  });
-
-  it('should close the personal tally panel with the explicit close action', async () => {
-    seedGuestTabs();
-
-    const fixture = TestBed.createComponent(DrinkTally);
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    const compiled = fixture.nativeElement as HTMLElement;
-    const guestButton = compiled.querySelector(
-      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
-    ) as HTMLButtonElement | null;
-
-    guestButton?.click();
-    fixture.detectChanges();
-
-    const closeButton = compiled.querySelector(
-      '[data-testid="close-personal-tab"]',
-    ) as HTMLButtonElement | null;
-    expect(closeButton?.textContent).toContain('Tap to close now');
-    closeButton?.click();
-    fixture.detectChanges();
-
-    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
-    expect(compiled.textContent).toContain('Choose a guest to start tallying.');
   });
 
   it('should clear the selected guest after the inactivity timeout', async () => {
