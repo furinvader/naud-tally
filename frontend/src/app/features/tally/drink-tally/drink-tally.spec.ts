@@ -1,6 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
+import { routes } from '../../../app.routes';
 import { DrinkTally } from './drink-tally';
 import {
   DRINK_CATALOG,
@@ -15,6 +17,7 @@ describe('DrinkTally', () => {
 
     await TestBed.configureTestingModule({
       imports: [DrinkTally],
+      providers: [provideRouter(routes)],
     }).compileComponents();
   });
 
@@ -98,7 +101,9 @@ describe('DrinkTally', () => {
     await fixture.whenStable();
 
     expect(compiled.querySelector('.entry-card')).not.toBeNull();
-    expect(compiled.querySelector('.section-heading [data-testid="add-yourself-button"]')).toBeNull();
+    expect(
+      compiled.querySelector('.section-heading [data-testid="add-yourself-button"]'),
+    ).toBeNull();
   });
 
   it('should open the personal tally panel when selecting an active guest', async () => {
@@ -349,9 +354,7 @@ describe('DrinkTally', () => {
     ) as HTMLDivElement | null;
 
     expect(nextGuestListScroll?.classList.contains('nt-scroll-shadow--scrolled')).toBe(true);
-    expect(nextSelectedPanelScroll?.classList.contains('nt-scroll-shadow--scrolled')).toBe(
-      true,
-    );
+    expect(nextSelectedPanelScroll?.classList.contains('nt-scroll-shadow--scrolled')).toBe(true);
   });
 
   it('should create and select a guest from the inline Add yourself flow', async () => {
@@ -397,7 +400,9 @@ describe('DrinkTally', () => {
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')?.textContent).toContain(
       'Grace Hopper',
     );
-    expect(compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]')).toBeNull();
+    expect(
+      compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]'),
+    ).toBeNull();
     expect(
       compiled.querySelector('[data-testid="selected-guest-available-drinks-section"]')
         ?.textContent,
@@ -445,7 +450,9 @@ describe('DrinkTally', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]')).toBeNull();
+    expect(
+      compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]'),
+    ).toBeNull();
 
     const addDrinkButton = compiled.querySelector(
       'button[aria-label="Add one Water"]',
@@ -455,7 +462,9 @@ describe('DrinkTally', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]')).not.toBeNull();
+    expect(
+      compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]'),
+    ).not.toBeNull();
     expect(compiled.querySelector('button[aria-label="Remove one Water"]')).not.toBeNull();
   });
 
@@ -526,11 +535,8 @@ function seedMultipleGuestTabs(): void {
 }
 
 function buildCounts(overrides: Partial<DrinkCounts>): DrinkCounts {
-  return DRINK_CATALOG.reduce(
-    (counts, drink) => {
-      counts[drink.id] = overrides[drink.id] ?? 0;
-      return counts;
-    },
-    {} as DrinkCounts,
-  );
+  return DRINK_CATALOG.reduce((counts, drink) => {
+    counts[drink.id] = overrides[drink.id] ?? 0;
+    return counts;
+  }, {} as DrinkCounts);
 }

@@ -39,6 +39,7 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Why: Angular Material provides the component theming engine, but the project still needs a stable theme contract that we own instead of coupling repo-authored styles to Angular Material variable names
 - Consequence: app-wide theme tokens use the `--nt-*` prefix
 - Consequence: shared theme tokens remain global and may be consumed directly inside component styles
+- Consequence: [`src/styles/`](src/styles/) is reserved for globally applied styles, theme partials, and shared tokens, while feature-owned styling stays next to the owning component or feature
 - Consequence: component-local override hooks use the `--nt-<component>-*` pattern
 - Consequence: parent-facing component custom properties should be consumed inline with fallback to shared theme tokens and local literals, instead of being redefined on `:host`
 - Consequence: repo-authored styles should prefer shared theme tokens and Angular Material overrides over one-off local visual values

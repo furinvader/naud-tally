@@ -135,20 +135,14 @@ function createGuestCardViewModel(overrides: {
     createdAt: '2026-04-01T08:00:00.000Z',
     updatedAt: '2026-04-02T10:00:00.000Z',
     totalCount: overrides.totalCount,
+    totalPriceCents: overrides.totalCount * 200,
+    displayTotalPrice: `€${(overrides.totalCount * 2).toFixed(2)}`,
     drinkSummary: [{ id: 'water', name: 'Water', count: overrides.totalCount }],
   };
 }
 
 function buildCounts(overrides: Partial<DrinkCounts>): DrinkCounts {
-  return {
-    water: overrides.water ?? 0,
-    sparklingWater: overrides.sparklingWater ?? 0,
-    cola: overrides.cola ?? 0,
-    colaZero: overrides.colaZero ?? 0,
-    lemonSoda: overrides.lemonSoda ?? 0,
-    orangeSoda: overrides.orangeSoda ?? 0,
-    appleJuice: overrides.appleJuice ?? 0,
-    beer: overrides.beer ?? 0,
-    whiteWine: overrides.whiteWine ?? 0,
-  };
+  return Object.fromEntries(
+    Object.entries(overrides).map(([drinkId, count]) => [drinkId, count ?? 0]),
+  ) as DrinkCounts;
 }

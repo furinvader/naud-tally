@@ -1,0 +1,288 @@
+<mat-toolbar class="host-toolbar">
+  <div class="brand-block">
+    <span class="brand">{{ copy.title }}</span>
+    <span class="route-label">{{ copy.eyebrow }}</span>
+  </div>
+
+  <a mat-stroked-button routerLink="/">{{ copy.backAction }}</a>
+</mat-toolbar>
+
+<main class="host-shell">
+  <section class="host-hero">
+    <div class="hero-copy">
+      <p class="eyebrow">{{ copy.eyebrow }}</p>
+      <h1>{{ copy.heading }}</h1>
+      <p class="hero-body">{{ copy.body }}</p>
+    </div>
+
+    <div class="hero-stats">
+      <article class="hero-stat" data-testid="host-summary-active-drinks">
+        <span class="hero-stat__label">{{ copy.activeDrinkCountLabel }}</span>
+        <strong>{{ tallyStore.hostSummary().activeDrinkCount }}</strong>
+      </article>
+
+      <article class="hero-stat" data-testid="host-summary-open-guests">
+        <span class="hero-stat__label">{{ copy.openGuestCountLabel }}</span>
+        <strong>{{ tallyStore.hostSummary().openGuestCount }}</strong>
+      </article>
+
+      <article class="hero-stat" data-testid="host-summary-pending-balance">
+        <span class="hero-stat__label">{{ copy.pendingLabel }}</span>
+        <strong>{{ tallyStore.hostSummary().displayPendingTotal }}</strong>
+      </article>
+
+      <article class="hero-stat" data-testid="host-summary-billed-total">
+        <span class="hero-stat__label">{{ copy.billedLabel }}</span>
+        <strong>{{ tallyStore.hostSummary().displayBilledTotal }}</strong>
+      </article>
+    </div>
+  </section>
+
+  @if (flashMessage(); as flash) {
+    <p
+      class="flash-message"
+      [class.flash-message--success]="flash.tone === 'success'"
+      [class.flash-message--error]="flash.tone === 'error'"
+      data-testid="host-flash-message"
+    >
+      {{ flash.text }}
+    </p>
+  }
+
+  <section class="host-grid">
+    <mat-card class="panel drinks-panel">
+      <div class="panel-header">
+        <div>
+          <p class="panel-eyebrow">{{ copy.drinksTitle }}</p>
+          <h2>{{ copy.addDrinkTitle }}</h2>
+          <p>{{ copy.drinksBody }}</p>
+        </div>
+      </div>
+
+      <form class="drink-form" (submit)="submitAddDrink($event)">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ copy.nameLabel }}</mat-label>
+          <input
+            matInput
+            data-testid="host-drink-name-input"
+            [value]="draftDrinkName()"
+            (input)="updateDraftDrinkName($any($event.target).value)"
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>{{ copy.priceLabel }}</mat-label>
+          <input
+            matInput
+            data-testid="host-drink-price-input"
+            inputmode="decimal"
+            placeholder="4.50"
+            [value]="draftDrinkPrice()"
+            (input)="updateDraftDrinkPrice($any($event.target).value)"
+          />
+        </mat-form-field>
+
+        <button
+          mat-flat-button
+          class="submit-button"
+          color="primary"
+          data-testid="host-add-drink-button"
+          [disabled]="!canSubmitDrink()"
+          type="submit"
+        >
+          {{ copy.addAction }}
+        </button>
+      </form>
+
+      <div class="catalog-groups">
+        <section class="catalog-group">
+          <div class="catalog-group__header">
+            <h3>{{ copy.activeDrinksTitle }}</h3>
+            <span>{{ tallyStore.hostSummary().activeDrinkCount }}</span>
+          </div>
+
+          <div class="catalog-list" data-testid="host-active-drink-list">
+            @for (drink of activeDrinks(); track drink.id) {
+              <article class="catalog-item">
+                <div class="catalog-item__copy">
+                  <div class="catalog-item__title-row">
+                    <h4>{{ drink.name }}</h4>
+                    <strong>{{ drink.displayPrice }}</strong>
+                  </div>
+
+                  <p class="catalog-item__hint">
+                    @if (drink.openGuestCount > 0) {
+                      {{ copy.inUseHintPrefix }}
+                      {{ drink.openGuestCount }}
+                      {{ copy.inUseHintSuffix }}
+                    } @else {
+                      {{ copy.canRemoveHint }}
+                    }
+                  </p>
+                </div>
+
+                <button
+                  mat-stroked-button
+                  data-testid="host-remove-drink-button"
+                  [disabled]="!drink.canRemove"
+                  type="button"
+                  (click)="removeDrink(drink)"
+                >
+                  {{ copy.removeAction }}
+                </button>
+              </article>
+            }
+          </div>
+        </section>
+
+        @if (removedDrinks().length) {
+          <section class="catalog-group">
+            <div class="catalog-group__header">
+              <div>
+                <h3>{{ copy.removedDrinksTitle }}</h3>
+                <p>{{ copy.removedDrinksBody }}</p>
+              </div>
+              <span>{{ tallyStore.hostSummary().removedDrinkCount }}</span>
+            </div>
+
+            <div class="catalog-list" data-testid="host-removed-drink-list">
+              @for (drink of removedDrinks(); track drink.id) {
+                <article class="catalog-item catalog-item--muted">
+                  <div class="catalog-item__copy">
+                    <div class="catalog-item__title-row">
+                      <h4>{{ drink.name }}</h4>
+                      <strong>{{ drink.displayPrice }}</strong>
+                    </div>
+                  </div>
+
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    data-testid="host-restore-drink-button"
+                    type="button"
+                    (click)="restoreDrink(drink)"
+                  >
+                    {{ copy.restoreAction }}
+                  </button>
+                </article>
+              }
+            </div>
+          </section>
+        }
+      </div>
+    </mat-card>
+
+    <mat-card class="panel billing-panel">
+      <div class="panel-header">
+        <div>
+          <p class="panel-eyebrow">{{ copy.billingTitle }}</p>
+          <h2>{{ copy.billingTitle }}</h2>
+          <p>{{ copy.billingBody }}</p>
+        </div>
+      </div>
+
+      @if (tallyStore.openGuestBills().length) {
+        <div class="guest-bill-list" data-testid="host-open-guest-list">
+          @for (guest of tallyStore.openGuestBills(); track guest.id) {
+            <article class="guest-bill-card">
+              <div class="guest-bill-card__header">
+                <div>
+                  <h3>{{ guest.fullName }}</h3>
+                  <p>{{ copy.roomLabel }} {{ guest.roomNumber }}</p>
+                </div>
+
+                <div class="guest-bill-card__total">
+                  <span>{{ copy.totalLabel }}</span>
+                  <strong>{{ guest.displayTotalPrice }}</strong>
+                </div>
+              </div>
+
+              <div class="line-item-list">
+                @if (guest.lineItems.length) {
+                  @for (lineItem of guest.lineItems; track lineItem.id) {
+                    <div class="line-item">
+                      <div>
+                        <strong>{{ lineItem.count }} × {{ lineItem.name }}</strong>
+                        <span>{{ lineItem.displayUnitPrice }} each</span>
+                      </div>
+                      <strong>{{ lineItem.displayTotalPrice }}</strong>
+                    </div>
+                  }
+                } @else {
+                  <p class="empty-copy">No drinks recorded yet.</p>
+                }
+              </div>
+
+              <button
+                mat-flat-button
+                color="primary"
+                data-testid="host-bill-guest-button"
+                type="button"
+                (click)="billGuest(guest)"
+              >
+                {{ copy.billingAction }}
+              </button>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="empty-state" data-testid="host-open-guest-empty">
+          <h3>{{ copy.billingEmptyTitle }}</h3>
+          <p>{{ copy.billingEmptyBody }}</p>
+        </div>
+      }
+    </mat-card>
+  </section>
+
+  <mat-card class="panel history-panel">
+    <div class="panel-header">
+      <div>
+        <p class="panel-eyebrow">{{ copy.historyTitle }}</p>
+        <h2>{{ copy.historyTitle }}</h2>
+        <p>{{ copy.historyBody }}</p>
+      </div>
+    </div>
+
+    @if (tallyStore.billedGuestBills().length) {
+      <div class="history-list" data-testid="host-billed-guest-list">
+        @for (guest of tallyStore.billedGuestBills(); track guest.id) {
+          <article class="history-card">
+            <div class="history-card__header">
+              <div>
+                <h3>{{ guest.fullName }}</h3>
+                <p>{{ copy.roomLabel }} {{ guest.roomNumber }}</p>
+              </div>
+
+              <div class="history-card__meta">
+                <span>{{ copy.billedAtLabel }}</span>
+                <strong>{{ guest.displayBilledAt }}</strong>
+              </div>
+            </div>
+
+            <div class="line-item-list">
+              @for (lineItem of guest.lineItems; track lineItem.id) {
+                <div class="line-item">
+                  <div>
+                    <strong>{{ lineItem.count }} × {{ lineItem.name }}</strong>
+                    <span>{{ lineItem.displayUnitPrice }} each</span>
+                  </div>
+                  <strong>{{ lineItem.displayTotalPrice }}</strong>
+                </div>
+              }
+            </div>
+
+            <div class="history-card__footer">
+              <span>{{ copy.totalLabel }}</span>
+              <strong>{{ guest.displayTotalPrice }}</strong>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="empty-state" data-testid="host-billed-guest-empty">
+        <h3>{{ copy.historyEmptyTitle }}</h3>
+        <p>{{ copy.historyEmptyBody }}</p>
+      </div>
+    }
+  </mat-card>
+</main>

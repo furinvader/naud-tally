@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
-import { DrinkTally } from './features/tally/drink-tally/drink-tally';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'nt-root',
-  imports: [DrinkTally],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
