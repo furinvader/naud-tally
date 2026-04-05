@@ -2,11 +2,13 @@
 
 ## Working Definition
 
-This project is a tablet-first tally app for guests and hosts. The main pilot screen is a public tally view on a shared tablet: active guests with existing tabs are listed prominently, the live drink catalog stays available from the shared device, and new guests can start from a clear `Add yourself` entry point. Guests identify themselves with their room number and full name, then record which drinks they take and how many inside their personal guest tab. A separate host route gives the organizer a focused admin screen to adjust the live drink catalog and bill guest tabs when guests depart. Inside the public personal tally surface, already-recorded drinks stay visible in a focused `Your drinks` list while zero-count drinks remain available through a separate `Add a drink` list.
+This project is a tablet-first tally app operated by the host. The current pilot should give the host a primary working screen where they can identify a guest by room number and full name, record orders with an intuitive tap-first flow, manage products and prices, and bill the guest on departure.
 
-The current pilot direction stays intentionally narrow: a guest-facing shared-tablet tally flow with a lightweight host route and local persistence, not a full guest-management, payment, or hotel-integration system.
+The product should stay simple enough for a small team to build and operate, but it now needs stronger data safety than same-device reload persistence. The app should keep working with offline-first local state on the tablet, then recover and sync safely after reconnect, reinstall, or replacement-device setup through a simple remote backup or sync solution.
 
-The supporting UX reference for this flow lives in [`ux/guest-tab-ux.md`](ux/guest-tab-ux.md).
+The current implementation already has host-side catalog management, billing, billed history, and local persistence, but the default route and older core docs still reflect the earlier guest-first public-tablet slice.
+
+The supporting UX reference for the current pilot lives in [`ux/host-workflow-ux.md`](ux/host-workflow-ux.md). The older public self-service concept is kept only as deferred future work in [`ux/guest-tab-ux.md`](ux/guest-tab-ux.md). Remote persistence tradeoffs are summarized in [`research/remote-persistence-options.md`](research/remote-persistence-options.md).
 
 ## Project Goals
 
@@ -20,163 +22,145 @@ We want a real project that teaches a reusable way to work with Codex:
 - review behavior and diffs
 - record decisions and lessons
 
-### Goal 2: Ship a Functional Pilot
+### Goal 2: Ship a Functional Host-Operated Pilot
 
-We want a usable first version that can run on a tablet in a real-world setting and solve one narrow problem well: counting drinks taken by guests.
+We want a functional, host-operated tablet app that lets the host quickly record guest orders, manage products and prices, bill tabs on departure, and recover safely after reloads, reinstall, or connection loss.
 
 ## Confirmed Pilot Rules
 
 These are the rules for the current pilot direction:
 
-- one tablet is used at a time
-- the guest-facing tally flow stays on one screen
-- the drink catalog starts from a predefined sample list and can be managed locally by the host
-- the app provides a separate host route for drink management and guest billing
-- guests must identify themselves before drinks are assigned
+- one host-operated tablet is used at a time during the pilot
+- the app remains a tablet-first web app
+- the host is the primary app user in the current pilot
+- the host's main workflow is `room number -> full name -> orders -> billing`
+- guest identification remains trust-based and is entered directly by the host
 - guest identification uses room number and full name
-- guest identification is trust-based and stored only in the app
-- active guests are any guests with an existing open tab in the current tally
-- active guests should be shown prominently on the public screen
-- new guests should start from a clear `Add yourself` entry path
-- there are no accounts or integrated hotel systems
-- returning guests should be able to reuse an existing tab instead of re-entering their details
-- selecting or creating a guest tab should expand a non-modal personal tally surface on the same screen
-- the personal tally surface should show already-recorded drinks separately from zero-count drinks
-- tapping the currently selected guest again should close their personal tally surface
-- the personal tally surface should close after 90 seconds of inactivity
-- the UI is optimized for quick tapping and minimal navigation
+- the app must support creating and updating the live product catalog with prices
+- the app must support billing a guest tab and keeping recent billed history
+- the current implementation already persists drink catalog, open tabs, and billed history locally across reloads
+- the product requirement now expands persistence to offline-first local app state plus remote recovery or sync
+- the app should continue working when internet access is unavailable
+- the app should sync or back up changes after connectivity returns
+- setup for the remote recovery solution should stay simple for the host
+- reinstall or replacement-device recovery is required for the target product direction
+- simultaneous multi-tablet live collaboration is not required for the current pilot
+- the current pilot surface is host-operated only
+- the public tally screen remains deferred future work and should not be accessible in the active pilot
 - the UI is English-only for now
 - the code should keep future i18n in mind
-- local persistence is required so state survives a reload
-- the host can bill a guest tab locally and remove it from the active guest list
-- proper offline support beyond reload persistence is deferred to a later task
 
 ## Initial Sample Drink Catalog
 
-The app should start from these sample drinks and reference prices. The host can later add or remove drinks from the live catalog on the host route.
+The app should still start from these sample drinks and reference prices until the host changes the live catalog:
 
-- Water `€2.00`
-- Sparkling Water `€2.50`
-- Cola `€3.00`
-- Cola Zero `€3.00`
-- Lemon Soda `€3.00`
-- Orange Soda `€3.00`
-- Apple Juice `€3.50`
-- Beer `€4.50`
-- White Wine `€5.00`
+- Water `EUR 2.00`
+- Sparkling Water `EUR 2.50`
+- Cola `EUR 3.00`
+- Cola Zero `EUR 3.00`
+- Lemon Soda `EUR 3.00`
+- Orange Soda `EUR 3.00`
+- Apple Juice `EUR 3.50`
+- Beer `EUR 4.50`
+- White Wine `EUR 5.00`
 
 ## Primary Users
 
-- Guests: want to find themselves quickly from the public screen or add themselves once, then record drinks without repeated typing
-- Organizer or host: wants a dedicated route where drinks can be managed and guest tabs can be billed cleanly on departure
+- Host or organizer: wants one main tablet screen for quick room-and-name lookup, rapid order entry, product management, and billing on departure
+- Guest or customer: is represented in the tally data and billed by the host, but does not use the app directly in the current pilot
 
 ## Core User Flow
 
-1. A guest opens the app on the tablet.
-2. The guest sees the public tally view with a prominent list of active guests and an `Add yourself` entry point.
-3. A returning guest selects their existing guest tab from the active list, or a new guest starts from `Add yourself`.
-4. A new guest follows the `room number -> full name` path once to create a tab.
-5. The app expands a non-modal personal tally surface for the selected guest and shows that guest's current tab clearly.
-6. The guest uses `Add a drink` to record a first drink, then increments or decrements drinks from `Your drinks`.
-7. The app immediately updates the selected guest counts, keeps broader tally information available on the main screen, and saves the current state.
-8. The guest taps the currently selected guest again to close the personal tally surface, or the app closes it after 90 seconds of inactivity so the next person does not accidentally continue the previous tab.
-9. The host can open the separate host route to add or remove drinks from the live catalog, review open tabs with totals, and bill guests on departure.
-10. If the page reloads, the previous tally state is restored and existing guest tabs, billed history, and drink catalog changes remain available on the same device.
+1. The host opens the app on the tablet.
+2. The host lands on the main host working screen.
+3. The host finds an existing tab or creates a new one by entering room number and full name.
+4. The host records one or more orders immediately from the same working surface.
+5. The app keeps the selected guest context obvious while the host continues taking orders.
+6. The host can add products, remove inactive products, or adjust prices from host-managed controls without leaving the overall workflow.
+7. The app saves changes locally immediately so the host can continue working offline.
+8. When connectivity is available, the app syncs or backs up local changes to the chosen remote recovery store.
+9. On departure, the host reviews the open tab, bills it, and moves it into billed history.
+10. If the tablet reloads, loses connection, or must be replaced, the host can recover the data from local storage first and from the remote source when needed.
 
 ## In Scope for the Current Pilot
 
-- tablet-first public tally layout
-- predefined sample drink catalog that can be adjusted locally by the host
-- single-screen public tally flow with guest tabs
-- separate host/admin route for organizer tasks
-- foundation-aligned baseline theming for the main tally UI
-- prominent active guest list for existing guest tabs
-- clear `Add yourself` entry path for new guests
-- room-number then full-name capture when creating a guest tab
-- non-modal expandable personal tally surface for a selected guest
-- split selected-guest drink entry with `Your drinks` and `Add a drink` sections
-- add and remove counts for each drink within the selected guest context
-- visible guest-specific counts and current tab context
-- overall tally information that remains accessible from the main screen
-- local drink-catalog add and remove controls for the host
-- host-side guest billing with per-guest totals
-- recent billed-tab history on the host route
-- shared-tablet handoff behavior with tap-again close and inactivity timeout
-- persistence across reloads
+- tablet-first host-operated main screen
+- room-number then full-name guest lookup or creation
+- rapid product selection and quantity changes for a selected guest
+- visible open-tab context for the currently selected guest
+- host-managed drink or product catalog
+- local price management
+- host-side billing with per-guest totals
+- recent billed-tab history
+- offline-first local app state
+- eventual PWA installability and offline shell behavior
+- remote recovery and sync requirements for reconnect, reinstall, and replacement-device scenarios
 - English UI text
 - simple structure that can grow into i18n later
 
 ## Out of Scope for the Current Pilot
 
-- authentication
+- public guest self-service access
 - payment processing
-- checkout flows inside the public guest route
+- hotel or billing system integrations
 - inventory tracking
-- hotel or billing system integration
-- QR identification or other shortcut identification methods
-- multi-tablet live synchronization
-- advanced reporting
 - role-based permissions
-- proper offline support beyond reload persistence
+- simultaneous multi-tablet live collaboration
+- advanced reporting
 - multilingual UI beyond English
 - larger branding work beyond the shared design foundation and usability-driven theming
 
 ## UX Principles
 
 - Large touch targets suitable for a tablet.
-- Minimal text and minimal navigation.
-- The public screen should prioritize active guests and a clear starting point for new guests.
-- Keep drink names and reference prices visible without making the drink bar the primary interaction zone.
-- Keep guest context unmistakable whenever a personal tally surface is open.
-- Keep the selected-guest drink controls calm by surfacing only already-recorded drinks in the main tally list.
-- Let repeat guests continue without re-entering identity details.
-- Clear feedback after each tap.
-- No hidden state changes.
-- Recovery should be simple if someone taps the wrong thing.
+- Minimal navigation during service.
+- Room number, full name, and the current order context should stay easy to verify at a glance.
+- Common order-entry actions should take as few taps as possible.
+- Product management and billing should feel adjacent to the host workflow, not like a separate admin tool.
+- Offline behavior should fail gently and keep the host moving.
+- Sync status should be understandable without becoming noisy.
+- Recovery should be simple if the host taps the wrong thing or loses connection.
 
 ## Functional Requirements
 
-- The app must show a prominent list of active guests on the main screen.
-- The app must offer a clear `Add yourself` action on the main screen.
-- The app must start from the sample drink list for the current pilot and let the host adjust that list locally from the host route.
-- A new guest tab must require room number followed by full name.
-- A returning guest must be able to select an existing tab without re-entering those details.
-- Selecting or creating a guest tab must expand a non-modal personal tally surface on the same screen without changing routes or opening an interruptive dialog.
-- Drink actions must support one-tap add, increment, and decrement within a selected guest context.
-- Zero-count drinks must be available through a separate `Add a drink` list in the personal tally surface.
-- The current counts for the selected guest's recorded drinks must always be visible while that guest's tally surface is open.
-- The app must provide a separate host route where the organizer can add drinks, remove unused drinks from the live guest catalog, and bill guests.
-- The host route must calculate per-guest totals for billing while keeping the public guest route focused on drink tallying.
-- The total number of drinks across all guests and a per-guest summary must remain available from the main screen without separate navigation.
-- The personal tally surface must close when the selected guest is tapped again and after 90 seconds of inactivity.
-- Data must persist across page reloads on the same device.
+- The app must provide a primary host screen for the `room number -> full name -> orders -> billing` workflow.
+- The app must let the host create a new guest tab with room number followed by full name.
+- The app must let the host reopen an existing guest tab without re-entering the full record manually.
+- The app must support fast add, increment, and decrement order actions for the selected guest.
+- The app must let the host manage the live product catalog and prices.
+- The app must calculate per-guest totals for billing.
+- The app must move billed tabs out of the open working set while preserving recent billed history.
+- The app must persist current state locally so reloads on the same device do not lose work.
+- The app must work while offline and sync or back up local changes after connectivity returns.
+- The app must support recovery after reinstall or setup on a replacement device through the chosen remote solution.
+- The app must keep the public tally flow out of the active pilot surface.
 - The current pilot must use English UI text.
 
 ## Non-Functional Requirements
 
 - The app should be usable on a tablet without onboarding.
-- Common actions should take one tap when possible after a guest has selected their tab.
-- The app should remain understandable in a busy social setting with a shared tablet handoff.
+- Common host actions should stay efficient in a busy service environment.
 - The first version should stay simple enough that Codex can build it in small, reviewable steps.
+- Remote recovery setup should be simple enough for a non-technical host to complete.
 - Text and labels should be easy to move into a future i18n layer.
 
 ## Risks
 
-- First-time guests may miss the `Add yourself` entry point unless it is extremely obvious.
-- A long active guest list may grow stale or crowded without a later archive or close-tab concept.
-- A shared tablet may carry the previous guest context into the next interaction if the personal tally surface is not cleared clearly enough.
-- Publicly showing room numbers and guest names increases privacy exposure on the shared tablet.
-- A separate host route without authentication is still accessible from the same device and can be opened accidentally.
-- Trust-based identification can still produce wrong-room or wrong-name entries.
-- The 90-second inactivity timeout could still close a guest's tally surface while they are still using it.
-- Reload-safe local persistence is not the same as full offline support.
-- The starting drink list and prices are only pilot placeholders.
+- The current codebase still centers the default route and primary copy around a guest-facing public tablet flow.
+- A host-operated main screen can become cluttered if product management, order entry, and billing are not grouped carefully.
+- Trust-based room and name entry can still produce mistaken identity or duplicate tabs.
+- Offline-first local state plus later sync introduces conflict and recovery rules that the current store does not yet define.
+- Reinstall recovery raises expectations that local-only storage cannot satisfy today.
+- A remote solution that is too technical to set up will reduce real-world reliability even if it is technically strong.
+- A PWA alone will not solve backup or replacement-device recovery.
+- Guest-identifying data now has a longer persistence horizon, which increases privacy and retention concerns.
 
 ## Deferred Questions
 
-- Should guest tabs age out of the active guest list after inactivity, explicit close, or a later archive rule?
-- What should the next host tools include first after billing: reset, export, pricing edits, or room summary?
-- When should QR or another shortcut identification method be added, if at all?
-- How should the app handle edge cases such as guests with similar names in the same room?
-- What level of offline support do we want beyond reload-safe local persistence?
+- Which remote persistence approach should we choose for the pilot: Google Sheets as backup or export, Firestore-style app sync, or a custom backend?
+- What is the simplest acceptable host setup for the remote recovery flow?
+- Should the host main screen favor search-first, open-tab list-first, or room-list-first entry?
+- How should product and billing controls be surfaced without slowing down order entry?
+- What conflict rule should apply if local changes and remote state differ during reconnect or restore?
+- What reset, export, or manual backup tools should exist alongside remote sync?
 - When we add i18n, which languages should come first after English?

@@ -15,4 +15,5 @@ Read this file before opening other files under [`docs/ux/`](./).
 
 ## UX Briefs
 
-- [Public Tally View and Guest Tab UX](guest-tab-ux.md)
+- [Host Main Workflow UX](host-workflow-ux.md)
+- [Deferred Public Tally and Guest Self-Service UX](guest-tab-ux.md)

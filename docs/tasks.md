@@ -8,14 +8,19 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 
 ## Current Priority
 
-- No current-priority task is marked right now.
+- [T-018 Design the Host Main Working Screen](tasks/open/T-018.md)
 
 ## Open Tasks
 
-- [T-006 Add Organizer Controls](tasks/open/T-006.md)
-- [T-007 Test the Pilot in a Real Usage Scenario](tasks/open/T-007.md)
+- [T-018 Design the Host Main Working Screen](tasks/open/T-018.md)
+- [T-019 Make the Host Screen the Default Route](tasks/open/T-019.md)
+- [T-014 Refine the Host Main Screen Layout](tasks/open/T-014.md)
+- [T-020 Add PWA Installability and Offline Shell Support](tasks/open/T-020.md)
+- [T-021 Choose the Remote Backup and Sync Approach](tasks/open/T-021.md)
+- [T-022 Implement Remote Sync and Recovery](tasks/open/T-022.md)
+- [T-006 Add Host Data-Safety Tools](tasks/open/T-006.md)
+- [T-007 Validate the Host Workflow in a Real Usage Scenario](tasks/open/T-007.md)
 - [T-008 Add i18n Support](tasks/open/T-008.md)
-- [T-014 Refine the Public Guest Screen Layout](tasks/open/T-014.md)
 
 ## Done Tasks
 
@@ -32,3 +37,4 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 - [T-013 Apply the Design Foundations to the Angular Theme](tasks/done/T-013.md)
 - [T-015 Simplify Selected-Guest Drink Entry](tasks/done/T-015.md)
 - [T-016 Add a Host Admin Route](tasks/done/T-016.md)
+- [T-017 Re-scope Docs for the Host-Operated Pilot](tasks/done/T-017.md)

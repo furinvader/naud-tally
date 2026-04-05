@@ -27,3 +27,4 @@ Read this file before opening task files under [`docs/tasks/done/`](./).
 - [T-013 Apply the Design Foundations to the Angular Theme](T-013.md)
 - [T-015 Simplify Selected-Guest Drink Entry](T-015.md)
 - [T-016 Add a Host Admin Route](T-016.md)
+- [T-017 Re-scope Docs for the Host-Operated Pilot](T-017.md)

@@ -14,7 +14,12 @@ Read this file before opening task files under [`docs/tasks/open/`](./).
 
 ## Tasks
 
-- [T-006 Add Organizer Controls](T-006.md)
-- [T-007 Test the Pilot in a Real Usage Scenario](T-007.md)
+- [T-018 Design the Host Main Working Screen](T-018.md)
+- [T-019 Make the Host Screen the Default Route](T-019.md)
+- [T-014 Refine the Host Main Screen Layout](T-014.md)
+- [T-020 Add PWA Installability and Offline Shell Support](T-020.md)
+- [T-021 Choose the Remote Backup and Sync Approach](T-021.md)
+- [T-022 Implement Remote Sync and Recovery](T-022.md)
+- [T-006 Add Host Data-Safety Tools](T-006.md)
+- [T-007 Validate the Host Workflow in a Real Usage Scenario](T-007.md)
 - [T-008 Add i18n Support](T-008.md)
-- [T-014 Refine the Public Guest Screen Layout](T-014.md)

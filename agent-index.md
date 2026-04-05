@@ -4,12 +4,13 @@ This is the first routing file for every agent task in this repository.
 
 ## Current Focus
 
-- Goal 1 is the current priority: improve the repository for agentic AI development and learning.
-- The first product slice is already merged.
+- Goal 1 still matters, but the product is now scoped around a host-operated tablet pilot.
+- The earlier guest self-service slice is historical context, not the current target surface.
+- The host-tools route is already recorded in [`T-016`](docs/tasks/done/T-016.md).
+- The documentation re-scope for the host-operated pilot is recorded in [`T-017`](docs/tasks/done/T-017.md).
+- The next product priority is [`T-018`](docs/tasks/open/T-018.md): define the host main working screen.
 - The design-solution decision is recorded in [`T-010`](docs/tasks/done/T-010.md).
-- The Penpot artifact workflow is now documented in [`docs/design/penpot-codex-workflow.md`](docs/design/penpot-codex-workflow.md) and demonstrated in [`docs/design/`](docs/design/).
-- The public guest-tab slice is now recorded in [`T-009`](docs/tasks/done/T-009.md).
-- No next product implementation task is marked as current priority yet.
+- The Penpot artifact workflow is documented in [`docs/design/penpot-codex-workflow.md`](docs/design/penpot-codex-workflow.md) and demonstrated in [`docs/design/`](docs/design/).
 
 ## Routing
 
