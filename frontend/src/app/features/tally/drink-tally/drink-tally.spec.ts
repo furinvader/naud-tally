@@ -142,6 +142,32 @@ describe('DrinkTally', () => {
     expect(compiled.querySelector('[data-testid="empty-personal-panel"]')).toBeNull();
   });
 
+  it('should deselect the active guest when the same guest card is clicked again', async () => {
+    seedGuestTabs();
+
+    const fixture = TestBed.createComponent(DrinkTally);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const guestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
+    ) as HTMLButtonElement | null;
+
+    guestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).not.toBeNull();
+
+    guestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="empty-personal-panel"]')).not.toBeNull();
+  });
+
   it('should reset the inactivity timeout after interaction even without showing the hint', async () => {
     vi.useFakeTimers();
     seedGuestTabs();

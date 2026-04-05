@@ -86,7 +86,7 @@ export const DRINK_TALLY_COPY = {
     roomLabel: 'Room',
     totalLabel: 'Total drinks',
     closeNowAction: 'Tap to close now',
-    inactivityHint: 'This personal tab closes after 180 seconds of inactivity.',
+    inactivityHint: 'This personal tab closes after 90 seconds of inactivity.',
     drinkSubtitle: 'Quick tally',
     countLabel: 'Recorded',
   },
