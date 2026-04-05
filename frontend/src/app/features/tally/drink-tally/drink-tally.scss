@@ -30,6 +30,8 @@
   z-index: 10;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: var(--nt-space-sm);
   padding-inline: clamp(var(--nt-space-sm), 3vw, var(--nt-space-lg));
   padding-block: var(--nt-space-sm);
   backdrop-filter: blur(18px);
@@ -46,6 +48,10 @@
   letter-spacing: var(--nt-tracking-kicker);
   text-transform: uppercase;
   color: var(--nt-color-ink);
+}
+
+.toolbar-action {
+  flex-shrink: 0;
 }
 
 .app-shell {
@@ -105,7 +111,7 @@
   }
 
   .app-toolbar {
-    grid-template-columns: 1fr;
     align-items: start;
+    flex-direction: column;
   }
 }

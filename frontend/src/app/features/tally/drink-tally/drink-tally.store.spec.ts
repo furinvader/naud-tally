@@ -1,7 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import {
+  BILLED_GUEST_TABS_STORAGE_KEY,
   DRINK_CATALOG,
+  DRINK_CATALOG_STORAGE_KEY,
   DRINK_TALLY_STORAGE_KEY,
   DrinkCounts,
   DrinkTallyStore,
@@ -165,20 +167,14 @@ describe('DrinkTallyStore', () => {
 
     const store = TestBed.inject(DrinkTallyStore);
 
-    expect(store.activeGuests().map((guest) => guest.id)).toEqual([
-      'guest-2',
-      'guest-1',
-    ]);
+    expect(store.activeGuests().map((guest) => guest.id)).toEqual(['guest-2', 'guest-1']);
 
     store.selectGuestTab('guest-1');
     store.incrementDrink('beer');
     store.selectGuestTab('guest-1');
 
     expect(store.selectedGuest()).toBeNull();
-    expect(store.activeGuests().map((guest) => guest.id)).toEqual([
-      'guest-1',
-      'guest-2',
-    ]);
+    expect(store.activeGuests().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
     expect(store.activeGuests().find((guest) => guest.id === 'guest-1')?.totalCount).toBe(2);
   });
 
@@ -303,6 +299,52 @@ describe('DrinkTallyStore', () => {
     expect(store.addGuestFlow().step).toBe('closed');
     expect(store.publicTotalCount()).toBe(3);
   });
+
+  it('should add a drink to the live catalog and make it available on open tabs', () => {
+    const store = TestBed.inject(DrinkTallyStore);
+
+    createGuest(store, '101', 'Ada Lovelace');
+
+    expect(store.addDrink('Iced Tea', 420)).toEqual({
+      ok: true,
+      action: 'added',
+      drinkId: expect.any(String),
+    });
+    expect(store.selectedGuest()?.availableDrinks.map((drink) => drink.name)).toContain('Iced Tea');
+    expect(localStorage.getItem(DRINK_CATALOG_STORAGE_KEY)).toContain('"name":"Iced Tea"');
+  });
+
+  it('should remove only unused drinks from the guest catalog', () => {
+    const store = TestBed.inject(DrinkTallyStore);
+
+    createGuest(store, '101', 'Ada Lovelace');
+    store.incrementDrink('beer');
+
+    expect(store.removeDrink('beer')).toBe(false);
+    expect(store.removeDrink('sparklingWater')).toBe(true);
+    expect(store.toolbarDrinkReferences().map((drink) => drink.name)).not.toContain(
+      'Sparkling Water',
+    );
+  });
+
+  it('should bill a guest tab and move it into billed history', () => {
+    const store = TestBed.inject(DrinkTallyStore);
+
+    createGuest(store, '101', 'Ada Lovelace');
+    store.incrementDrink('beer');
+    store.incrementDrink('water');
+
+    const guestId = store.selectedGuest()?.id;
+
+    expect(store.billGuestTab(guestId!)).toBe(true);
+    expect(store.activeGuestCount()).toBe(0);
+    expect(store.billedGuestBills()).toHaveLength(1);
+    expect(store.billedGuestBills()[0]?.fullName).toBe('Ada Lovelace');
+    expect(store.billedGuestBills()[0]?.displayTotalPrice).toBe('€6.50');
+    expect(localStorage.getItem(BILLED_GUEST_TABS_STORAGE_KEY)).toContain(
+      '"fullName":"Ada Lovelace"',
+    );
+  });
 });
 
 function createGuest(
@@ -324,11 +366,8 @@ function createGuest(
 }
 
 function buildCounts(overrides: Partial<DrinkCounts>): DrinkCounts {
-  return DRINK_CATALOG.reduce(
-    (counts, drink) => {
-      counts[drink.id] = overrides[drink.id] ?? 0;
-      return counts;
-    },
-    {} as DrinkCounts,
-  );
+  return DRINK_CATALOG.reduce((counts, drink) => {
+    counts[drink.id] = overrides[drink.id] ?? 0;
+    return counts;
+  }, {} as DrinkCounts);
 }

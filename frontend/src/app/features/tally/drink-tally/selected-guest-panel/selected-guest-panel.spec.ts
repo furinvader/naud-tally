@@ -80,10 +80,16 @@ describe('SelectedGuestPanel', () => {
   it('should render only the add-drink section when no drinks are recorded yet', async () => {
     const fixture = TestBed.createComponent(SelectedGuestPanel);
 
-    fixture.componentRef.setInput('selectedGuest', createSelectedGuestViewModel([], [
-      { id: 'appleJuice', name: 'Apple Juice', displayPrice: '€3.50' },
-      { id: 'water', name: 'Water', displayPrice: '€2.00' },
-    ]));
+    fixture.componentRef.setInput(
+      'selectedGuest',
+      createSelectedGuestViewModel(
+        [],
+        [
+          { id: 'appleJuice', name: 'Apple Juice', displayPrice: '€3.50' },
+          { id: 'water', name: 'Water', displayPrice: '€2.00' },
+        ],
+      ),
+    );
     fixture.componentRef.setInput('copy', {
       selectedGuestPanel: DRINK_TALLY_COPY.selectedGuestPanel,
       placeholder: DRINK_TALLY_COPY.placeholder,
@@ -93,7 +99,9 @@ describe('SelectedGuestPanel', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
 
-    expect(compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]')).toBeNull();
+    expect(
+      compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]'),
+    ).toBeNull();
     expect(
       compiled.querySelector('[data-testid="selected-guest-available-drinks-section"]')
         ?.textContent,
@@ -140,11 +148,16 @@ function createSelectedGuestViewModel(
   ],
 ): SelectedGuestViewModel {
   const counts = buildCounts(
-    Object.fromEntries(activeDrinkTallies.map((drink) => [drink.id, drink.count])) as Partial<
-      DrinkCounts
-    >,
+    Object.fromEntries(
+      activeDrinkTallies.map((drink) => [drink.id, drink.count]),
+    ) as Partial<DrinkCounts>,
   );
   const totalCount = activeDrinkTallies.reduce((total, drink) => total + drink.count, 0);
+  const totalPriceCents = activeDrinkTallies.reduce(
+    (total, drink) =>
+      total + drink.count * Number.parseInt(drink.displayPrice.replace(/[^\d]/g, ''), 10),
+    0,
+  );
 
   return {
     id: 'guest-1',
@@ -154,6 +167,8 @@ function createSelectedGuestViewModel(
     createdAt: '2026-04-01T08:00:00.000Z',
     updatedAt: '2026-04-02T10:00:00.000Z',
     totalCount,
+    totalPriceCents,
+    displayTotalPrice: `€${(totalPriceCents / 100).toFixed(2)}`,
     drinkSummary: activeDrinkTallies.map((drink) => ({
       id: drink.id,
       name: drink.name,
@@ -165,15 +180,7 @@ function createSelectedGuestViewModel(
 }
 
 function buildCounts(overrides: Partial<DrinkCounts>): DrinkCounts {
-  return {
-    water: overrides.water ?? 0,
-    sparklingWater: overrides.sparklingWater ?? 0,
-    cola: overrides.cola ?? 0,
-    colaZero: overrides.colaZero ?? 0,
-    lemonSoda: overrides.lemonSoda ?? 0,
-    orangeSoda: overrides.orangeSoda ?? 0,
-    appleJuice: overrides.appleJuice ?? 0,
-    beer: overrides.beer ?? 0,
-    whiteWine: overrides.whiteWine ?? 0,
-  };
+  return Object.fromEntries(
+    Object.entries(overrides).map(([drinkId, count]) => [drinkId, count ?? 0]),
+  ) as DrinkCounts;
 }

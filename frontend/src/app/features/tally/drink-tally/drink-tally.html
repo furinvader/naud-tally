@@ -2,6 +2,15 @@
   <div class="brand-block">
     <span class="brand">{{ copy.title }}</span>
   </div>
+
+  <a
+    mat-stroked-button
+    class="toolbar-action"
+    data-testid="host-route-link"
+    [routerLink]="hostRoute"
+  >
+    Host tools
+  </a>
 </mat-toolbar>
 
 <main class="app-shell">

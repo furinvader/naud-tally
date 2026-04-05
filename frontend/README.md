@@ -72,6 +72,8 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 ### Styling and Theme Rules
 
 - Keep the shared theme in [`src/styles.scss`](src/styles.scss) and any imported global theme partials.
+- Keep feature-specific styles in the feature or component stylesheet that owns them.
+- Treat [`src/styles/`](src/styles/) as global-only: theme files, tokens, and styles that intentionally apply across the app.
 - Use app-owned `--nt-*` tokens as the only repo-authored CSS variable contract.
 - Shared theme tokens stay global and may be consumed directly in component styles.
 - If a component needs a parent-facing override hook, prefix it `--nt-<component>-*` and use it inline at the declaration site with fallback to a shared theme token and a component-owned literal default.
