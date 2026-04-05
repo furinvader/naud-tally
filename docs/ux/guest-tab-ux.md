@@ -45,6 +45,7 @@ This identification model is trust-based. The app should support it clearly, but
 - Let a new guest create a tab by following the `room number -> full name` path once.
 - Let a returning guest select an existing tab instead of retyping those details.
 - Selecting or creating a guest should expand the personal tally surface in place.
+- Selecting the already active guest again should close the personal tally surface.
 - The personal tally surface should show the selected guest clearly while drinks are being recorded.
 
 ## Recommended Layout
@@ -58,7 +59,7 @@ This identification model is trust-based. The app should support it clearly, but
 - If either side grows too long, it should scroll internally instead of forcing page scroll for the full screen.
 - The personal tally surface should expand as a non-modal drawer or panel within the same screen.
 - When a guest tab is open, the personal tally surface should keep the selected-guest header visible while the drink controls scroll beneath it.
-- For now, the personal tally surface should rely on the inactivity timeout without showing a visible close hint or prominent close action.
+- For now, the personal tally surface should rely on tapping the selected guest again or the inactivity timeout instead of showing a visible close hint or prominent close action.
 
 ## Sample Toolbar Prices
 
@@ -81,7 +82,8 @@ This identification model is trust-based. The app should support it clearly, but
 - The personal tally surface must make the selected guest unmistakable.
 - Creating a guest tab should feel lightweight, not like account registration.
 - After each drink change, the app should give immediate feedback and make recovery easy, such as through `Undo`.
-- The personal tally surface should close after 180 seconds of inactivity so the next person does not accidentally use the previous tab.
+- Tapping the currently selected guest in the active list should close that guest's personal tally surface.
+- The personal tally surface should close after 90 seconds of inactivity so the next person does not accidentally use the previous tab.
 - If the active guest list grows large, later archive, grouping, or recency rules may become necessary to avoid stale noise.
 
 ## Flow Patterns Considered

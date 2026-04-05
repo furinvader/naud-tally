@@ -103,6 +103,48 @@ describe('DrinkTallyStore', () => {
     expect(store.publicTotalCount()).toBe(3);
   });
 
+  it('should deselect the active guest when it is selected again', () => {
+    localStorage.setItem(
+      DRINK_TALLY_STORAGE_KEY,
+      JSON.stringify([
+        {
+          id: 'guest-1',
+          roomNumber: '210',
+          fullName: 'Ada Lovelace',
+          counts: buildCounts({ water: 1 }),
+          createdAt: '2026-04-01T08:00:00.000Z',
+          updatedAt: '2026-04-01T10:00:00.000Z',
+        },
+        {
+          id: 'guest-2',
+          roomNumber: '101',
+          fullName: 'Grace Hopper',
+          counts: buildCounts({ beer: 1 }),
+          createdAt: '2026-04-01T08:30:00.000Z',
+          updatedAt: '2026-04-01T09:00:00.000Z',
+        },
+      ]),
+    );
+
+    const store = TestBed.inject(DrinkTallyStore);
+
+    expect(store.activeGuests().map((guest) => guest.id)).toEqual([
+      'guest-2',
+      'guest-1',
+    ]);
+
+    store.selectGuestTab('guest-1');
+    store.incrementDrink('beer');
+    store.selectGuestTab('guest-1');
+
+    expect(store.selectedGuest()).toBeNull();
+    expect(store.activeGuests().map((guest) => guest.id)).toEqual([
+      'guest-1',
+      'guest-2',
+    ]);
+    expect(store.activeGuests().find((guest) => guest.id === 'guest-1')?.totalCount).toBe(2);
+  });
+
   it('should keep guest ordering stable while tallying and sort finalized tabs by drinks then room number', () => {
     localStorage.setItem(
       DRINK_TALLY_STORAGE_KEY,

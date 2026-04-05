@@ -41,7 +41,8 @@ These are the rules for the current pilot direction:
 - there are no accounts or integrated hotel systems
 - returning guests should be able to reuse an existing tab instead of re-entering their details
 - selecting or creating a guest tab should expand a non-modal personal tally surface on the same screen
-- the personal tally surface should offer a prominent close action and close after 180 seconds of inactivity
+- tapping the currently selected guest again should close their personal tally surface
+- the personal tally surface should close after 90 seconds of inactivity
 - the UI is optimized for quick tapping and minimal navigation
 - the UI is English-only for now
 - the code should keep future i18n in mind
@@ -73,10 +74,10 @@ The public tally view should show these fixed sample drinks and reference prices
 2. The guest sees the public tally view with a top bar of drinks and reference prices, a prominent list of active guests, and an `Add yourself` entry point.
 3. A returning guest selects their existing guest tab from the active list, or a new guest starts from `Add yourself`.
 4. A new guest follows the `room number -> full name` path once to create a tab.
-5. The app expands a non-modal personal tally surface for the selected guest and shows that guest's current tab clearly with a prominent close action.
+5. The app expands a non-modal personal tally surface for the selected guest and shows that guest's current tab clearly.
 6. The guest increments or decrements the drinks they took.
 7. The app immediately updates the selected guest counts, keeps broader tally information available on the main screen, and saves the current state.
-8. The guest closes the personal tally surface, or the app closes it after 180 seconds of inactivity so the next person does not accidentally continue the previous tab.
+8. The guest taps the currently selected guest again to close the personal tally surface, or the app closes it after 90 seconds of inactivity so the next person does not accidentally continue the previous tab.
 9. If the page reloads, the previous tally state is restored and existing guest tabs remain available from the public tally view.
 
 ## In Scope for the Current Pilot
@@ -92,7 +93,7 @@ The public tally view should show these fixed sample drinks and reference prices
 - add and remove counts for each drink within the selected guest context
 - visible guest-specific counts and current tab context
 - overall tally information that remains accessible from the main screen
-- shared-tablet handoff behavior with explicit close and inactivity timeout
+- shared-tablet handoff behavior with tap-again close and inactivity timeout
 - persistence across reloads
 - English UI text
 - simple structure that can grow into i18n later
@@ -138,7 +139,7 @@ The public tally view should show these fixed sample drinks and reference prices
 - The current counts for the selected guest's drinks must always be visible while that guest's tally surface is open.
 - Prices must be displayed as reference information only; the current pilot does not require running monetary subtotals or checkout logic.
 - The total number of drinks across all guests and a per-guest summary must remain available from the main screen without separate navigation.
-- The personal tally surface must close after 180 seconds of inactivity unless the guest closes it first.
+- The personal tally surface must close when the selected guest is tapped again and after 90 seconds of inactivity.
 - Data must persist across page reloads on the same device.
 - The current pilot must use English UI text.
 
@@ -157,7 +158,7 @@ The public tally view should show these fixed sample drinks and reference prices
 - A shared tablet may carry the previous guest context into the next interaction if the personal tally surface is not cleared clearly enough.
 - Publicly showing room numbers and guest names increases privacy exposure on the shared tablet.
 - Trust-based identification can still produce wrong-room or wrong-name entries.
-- The 180-second inactivity timeout could still close a guest's tally surface while they are still using it.
+- The 90-second inactivity timeout could still close a guest's tally surface while they are still using it.
 - Reload-safe local persistence is not the same as full offline support.
 - The fixed drink list and prices are only pilot placeholders.
 
