@@ -47,6 +47,7 @@ This identification model is trust-based. The app should support it clearly, but
 - Selecting or creating a guest should expand the personal tally surface in place.
 - Selecting the already active guest again should close the personal tally surface.
 - The personal tally surface should show the selected guest clearly while drinks are being recorded.
+- Inside the personal tally surface, show already-recorded drinks in `Your drinks` and keep zero-count drinks in a separate `Add a drink` list.
 
 ## Recommended Layout
 
@@ -59,6 +60,8 @@ This identification model is trust-based. The app should support it clearly, but
 - If either side grows too long, it should scroll internally instead of forcing page scroll for the full screen.
 - The personal tally surface should expand as a non-modal drawer or panel within the same screen.
 - When a guest tab is open, the personal tally surface should keep the selected-guest header visible while the drink controls scroll beneath it.
+- The `Your drinks` section should stay focused on drinks with count above zero, sorted by count descending when the panel opens and stable while the active set stays the same.
+- The `Add a drink` section should list zero-count drinks alphabetically so guests can scan for a first tap quickly.
 - For now, the personal tally surface should rely on tapping the selected guest again or the inactivity timeout instead of showing a visible close hint or prominent close action.
 
 ## Sample Toolbar Prices
@@ -81,6 +84,8 @@ This identification model is trust-based. The app should support it clearly, but
 - Full name should confirm identity within the selected room.
 - The personal tally surface must make the selected guest unmistakable.
 - Creating a guest tab should feel lightweight, not like account registration.
+- Tapping a drink in `Add a drink` should immediately record count `1` and move it into `Your drinks`.
+- When a drink returns to count `0`, it should leave `Your drinks` and return to `Add a drink`.
 - After each drink change, the app should give immediate feedback and make recovery easy, such as through `Undo`.
 - Tapping the currently selected guest in the active list should close that guest's personal tally surface.
 - The personal tally surface should close after 90 seconds of inactivity so the next person does not accidentally use the previous tab.
@@ -115,6 +120,7 @@ This identification model is trust-based. The app should support it clearly, but
 ## Follow-Up
 
 - Treat this file and [`../product.md`](../product.md) as the UX reference for [`../tasks/done/T-009.md`](../tasks/done/T-009.md).
+- Treat this file and [`../product.md`](../product.md) as the UX reference for [`../tasks/done/T-015.md`](../tasks/done/T-015.md).
 - Treat this file as the UX reference for [`../tasks/open/T-014.md`](../tasks/open/T-014.md) while the public guest-screen refinements are in progress.
 - A future host or admin surface can be revisited later as a separate slice from this public tally view.
 - QR identification can be revisited later as an optional shortcut, but it is explicitly out of scope for the current slice.

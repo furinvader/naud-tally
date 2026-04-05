@@ -27,8 +27,10 @@ export type SelectedGuestPanelCopy = {
   personalPanelEyebrow: string;
   roomLabel: string;
   totalLabel: string;
-  closeNowAction: string;
-  inactivityHint: string;
+  activeDrinksTitle: string;
+  availableDrinksTitle: string;
+  availableDrinksHint: string;
+  availableDrinksAction: string;
   drinkSubtitle: string;
   countLabel: string;
 };
@@ -85,8 +87,10 @@ export const DRINK_TALLY_COPY = {
     personalPanelEyebrow: 'Selected guest',
     roomLabel: 'Room',
     totalLabel: 'Total drinks',
-    closeNowAction: 'Tap to close now',
-    inactivityHint: 'This personal tab closes after 90 seconds of inactivity.',
+    activeDrinksTitle: 'Your drinks',
+    availableDrinksTitle: 'Add a drink',
+    availableDrinksHint: 'Tap once to record the first one.',
+    availableDrinksAction: 'Add',
     drinkSubtitle: 'Quick tally',
     countLabel: 'Recorded',
   },

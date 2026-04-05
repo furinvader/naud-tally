@@ -32,14 +32,9 @@
 
     <nt-selected-guest-panel
       [selectedGuest]="tallyStore.selectedGuest()"
-      [publicTotalCount]="tallyStore.publicTotalCount()"
-      [activeGuestCount]="tallyStore.activeGuestCount()"
-      [timeoutProgressPercent]="timeoutProgressPercent()"
-      [timeoutRingOffset]="timeoutRingOffset()"
       [copy]="selectedGuestPanelCopy"
       (incrementDrink)="tallyStore.incrementDrink($event)"
       (decrementDrink)="tallyStore.decrementDrink($event)"
-      (close)="tallyStore.closeSelectedGuestTab()"
     />
   </section>
 </main>

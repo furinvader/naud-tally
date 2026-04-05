@@ -2,7 +2,12 @@ import { TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
 import { DRINK_TALLY_COPY } from '../drink-tally.copy';
-import { DrinkCounts, SelectedGuestViewModel } from '../drink-tally.store';
+import {
+  AvailableDrinkReference,
+  DrinkCounts,
+  SelectedGuestDrinkTally,
+  SelectedGuestViewModel,
+} from '../drink-tally.store';
 import { SelectedGuestPanel } from './selected-guest-panel';
 
 describe('SelectedGuestPanel', () => {
@@ -16,8 +21,6 @@ describe('SelectedGuestPanel', () => {
     const fixture = TestBed.createComponent(SelectedGuestPanel);
 
     fixture.componentRef.setInput('selectedGuest', null);
-    fixture.componentRef.setInput('publicTotalCount', 7);
-    fixture.componentRef.setInput('activeGuestCount', 2);
     fixture.componentRef.setInput('copy', {
       selectedGuestPanel: DRINK_TALLY_COPY.selectedGuestPanel,
       placeholder: DRINK_TALLY_COPY.placeholder,
@@ -41,10 +44,6 @@ describe('SelectedGuestPanel', () => {
     fixture.componentInstance.incrementDrink.subscribe(incrementDrink);
     fixture.componentInstance.decrementDrink.subscribe(decrementDrink);
     fixture.componentRef.setInput('selectedGuest', createSelectedGuestViewModel());
-    fixture.componentRef.setInput('publicTotalCount', 4);
-    fixture.componentRef.setInput('activeGuestCount', 1);
-    fixture.componentRef.setInput('timeoutProgressPercent', '12.50%');
-    fixture.componentRef.setInput('timeoutRingOffset', '12.50');
     fixture.componentRef.setInput('copy', {
       selectedGuestPanel: DRINK_TALLY_COPY.selectedGuestPanel,
       placeholder: DRINK_TALLY_COPY.placeholder,
@@ -53,30 +52,58 @@ describe('SelectedGuestPanel', () => {
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    const incrementButton = compiled.querySelector(
-      'button[aria-label="Add one Water"]',
+    const addDrinkButton = compiled.querySelector(
+      'button[aria-label="Add one Cola"]',
     ) as HTMLButtonElement | null;
     const decrementButton = compiled.querySelector(
       'button[aria-label="Remove one Water"]',
     ) as HTMLButtonElement | null;
 
     expect(compiled.textContent).toContain('Ada Lovelace');
+    expect(
+      compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]')?.textContent,
+    ).toContain('Your drinks');
+    expect(
+      compiled.querySelector('[data-testid="selected-guest-available-drinks-section"]')
+        ?.textContent,
+    ).toContain('Add a drink');
     expect(compiled.querySelector('[data-testid="inactivity-hint"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="close-personal-tab"]')).toBeNull();
 
-    incrementButton?.click();
+    addDrinkButton?.click();
     decrementButton?.click();
 
-    expect(incrementDrink).toHaveBeenCalledWith('water');
+    expect(incrementDrink).toHaveBeenCalledWith('cola');
     expect(decrementDrink).toHaveBeenCalledWith('water');
+  });
+
+  it('should render only the add-drink section when no drinks are recorded yet', async () => {
+    const fixture = TestBed.createComponent(SelectedGuestPanel);
+
+    fixture.componentRef.setInput('selectedGuest', createSelectedGuestViewModel([], [
+      { id: 'appleJuice', name: 'Apple Juice', displayPrice: '€3.50' },
+      { id: 'water', name: 'Water', displayPrice: '€2.00' },
+    ]));
+    fixture.componentRef.setInput('copy', {
+      selectedGuestPanel: DRINK_TALLY_COPY.selectedGuestPanel,
+      placeholder: DRINK_TALLY_COPY.placeholder,
+    });
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+
+    expect(compiled.querySelector('[data-testid="selected-guest-active-drinks-section"]')).toBeNull();
+    expect(
+      compiled.querySelector('[data-testid="selected-guest-available-drinks-section"]')
+        ?.textContent,
+    ).toContain('Add a drink');
   });
 
   it('should show a top shadow only after the selected guest panel is scrolled', async () => {
     const fixture = TestBed.createComponent(SelectedGuestPanel);
 
     fixture.componentRef.setInput('selectedGuest', createSelectedGuestViewModel());
-    fixture.componentRef.setInput('publicTotalCount', 4);
-    fixture.componentRef.setInput('activeGuestCount', 1);
     fixture.componentRef.setInput('copy', {
       selectedGuestPanel: DRINK_TALLY_COPY.selectedGuestPanel,
       placeholder: DRINK_TALLY_COPY.placeholder,
@@ -102,8 +129,22 @@ describe('SelectedGuestPanel', () => {
   });
 });
 
-function createSelectedGuestViewModel(): SelectedGuestViewModel {
-  const counts = buildCounts({ water: 2, beer: 1 });
+function createSelectedGuestViewModel(
+  activeDrinkTallies: SelectedGuestDrinkTally[] = [
+    { id: 'water', name: 'Water', count: 2, displayPrice: '€2.00' },
+    { id: 'beer', name: 'Beer', count: 1, displayPrice: '€4.50' },
+  ],
+  availableDrinks: AvailableDrinkReference[] = [
+    { id: 'appleJuice', name: 'Apple Juice', displayPrice: '€3.50' },
+    { id: 'cola', name: 'Cola', displayPrice: '€3.00' },
+  ],
+): SelectedGuestViewModel {
+  const counts = buildCounts(
+    Object.fromEntries(activeDrinkTallies.map((drink) => [drink.id, drink.count])) as Partial<
+      DrinkCounts
+    >,
+  );
+  const totalCount = activeDrinkTallies.reduce((total, drink) => total + drink.count, 0);
 
   return {
     id: 'guest-1',
@@ -112,22 +153,14 @@ function createSelectedGuestViewModel(): SelectedGuestViewModel {
     counts,
     createdAt: '2026-04-01T08:00:00.000Z',
     updatedAt: '2026-04-02T10:00:00.000Z',
-    totalCount: 3,
-    drinkSummary: [
-      { id: 'water', name: 'Water', count: 2 },
-      { id: 'beer', name: 'Beer', count: 1 },
-    ],
-    drinkTallies: [
-      { id: 'water', name: 'Water', count: 2, displayPrice: '€2.00' },
-      { id: 'sparklingWater', name: 'Sparkling Water', count: 0, displayPrice: '€2.50' },
-      { id: 'cola', name: 'Cola', count: 0, displayPrice: '€3.00' },
-      { id: 'colaZero', name: 'Cola Zero', count: 0, displayPrice: '€3.00' },
-      { id: 'lemonSoda', name: 'Lemon Soda', count: 0, displayPrice: '€3.00' },
-      { id: 'orangeSoda', name: 'Orange Soda', count: 0, displayPrice: '€3.00' },
-      { id: 'appleJuice', name: 'Apple Juice', count: 0, displayPrice: '€3.50' },
-      { id: 'beer', name: 'Beer', count: 1, displayPrice: '€4.50' },
-      { id: 'whiteWine', name: 'White Wine', count: 0, displayPrice: '€5.00' },
-    ],
+    totalCount,
+    drinkSummary: activeDrinkTallies.map((drink) => ({
+      id: drink.id,
+      name: drink.name,
+      count: drink.count,
+    })),
+    activeDrinkTallies,
+    availableDrinks,
   };
 }
 
