@@ -6,9 +6,9 @@
   (click)="selectTab.emit()"
 >
   <div class="guest-card__header">
-    <div>
-      <span class="guest-card__room">{{ roomLabel() }} {{ roomNumber() }}</span>
+    <div class="guest-card__identity">
       <h3>{{ fullName() }}</h3>
+      <span class="guest-card__room">{{ roomLabel() }} {{ roomNumber() }}</span>
     </div>
     <strong class="guest-card__total">{{ totalCount() }}</strong>
   </div>

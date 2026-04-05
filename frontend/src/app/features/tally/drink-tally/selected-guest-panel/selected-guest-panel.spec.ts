@@ -29,19 +29,17 @@ describe('SelectedGuestPanel', () => {
 
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
     expect(compiled.textContent).toContain('Choose a guest to start tallying.');
-    expect(compiled.textContent).toContain('Total drinks');
-    expect(compiled.textContent).toContain('Active guests');
+    expect(compiled.querySelector('nt-personal-panel-summary')).toBeNull();
+    expect(compiled.textContent).not.toContain('Across all active guest tabs');
   });
 
-  it('should render the selected guest state and emit increment, decrement, and close actions', async () => {
+  it('should render the selected guest state and emit increment and decrement actions', async () => {
     const fixture = TestBed.createComponent(SelectedGuestPanel);
     const incrementDrink = vi.fn();
     const decrementDrink = vi.fn();
-    const close = vi.fn();
 
     fixture.componentInstance.incrementDrink.subscribe(incrementDrink);
     fixture.componentInstance.decrementDrink.subscribe(decrementDrink);
-    fixture.componentInstance.close.subscribe(close);
     fixture.componentRef.setInput('selectedGuest', createSelectedGuestViewModel());
     fixture.componentRef.setInput('publicTotalCount', 4);
     fixture.componentRef.setInput('activeGuestCount', 1);
@@ -61,20 +59,16 @@ describe('SelectedGuestPanel', () => {
     const decrementButton = compiled.querySelector(
       'button[aria-label="Remove one Water"]',
     ) as HTMLButtonElement | null;
-    const closeButton = compiled.querySelector(
-      '[data-testid="close-personal-tab"]',
-    ) as HTMLButtonElement | null;
 
     expect(compiled.textContent).toContain('Ada Lovelace');
-    expect(compiled.textContent).toContain('Tap to close now');
+    expect(compiled.querySelector('[data-testid="inactivity-hint"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="close-personal-tab"]')).toBeNull();
 
     incrementButton?.click();
     decrementButton?.click();
-    closeButton?.click();
 
     expect(incrementDrink).toHaveBeenCalledWith('water');
     expect(decrementDrink).toHaveBeenCalledWith('water');
-    expect(close).toHaveBeenCalledTimes(1);
   });
 
   it('should show a top shadow only after the selected guest panel is scrolled', async () => {

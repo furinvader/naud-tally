@@ -52,12 +52,13 @@ This identification model is trust-based. The app should support it clearly, but
 - Use a single-screen shared-tablet layout with distinct public and personal layers.
 - A top bar should show the fixed drink catalog and display prices as informational reference.
 - The active guest list should be the primary interactive zone of the public screen and should use full-width guest tabs for fast scanning.
+- The active guest list should favor fast recognition by re-sorting finalized tabs based on total drinks first, then room number.
 - The `Add yourself` control should stay visible alongside the active guest list.
 - On tablet and desktop widths, the guest-list area and the personal tally surface should each fill the remaining vertical viewport space.
 - If either side grows too long, it should scroll internally instead of forcing page scroll for the full screen.
 - The personal tally surface should expand as a non-modal drawer or panel within the same screen.
-- When a guest tab is open, the personal tally surface should keep the selected-guest header and close hint visible while the drink controls scroll beneath them.
-- The personal tally surface should include a prominent close action.
+- When a guest tab is open, the personal tally surface should keep the selected-guest header visible while the drink controls scroll beneath it.
+- For now, the personal tally surface should rely on the inactivity timeout without showing a visible close hint or prominent close action.
 
 ## Sample Toolbar Prices
 
@@ -74,13 +75,13 @@ This identification model is trust-based. The app should support it clearly, but
 ## Interaction Notes
 
 - Active guest listing should optimize for fast recognition and repeat use, not for exhaustive hotel browsing.
+- Reordering in the active guest list should happen after a guest finishes, not while their selected tab is still being updated.
 - Room number should be selected before full name when creating a new guest tab.
 - Full name should confirm identity within the selected room.
 - The personal tally surface must make the selected guest unmistakable.
 - Creating a guest tab should feel lightweight, not like account registration.
 - After each drink change, the app should give immediate feedback and make recovery easy, such as through `Undo`.
-- The personal tally surface should close after 180 seconds of inactivity or explicit close so the next person does not accidentally use the previous tab.
-- The inactivity hint should preview that timeout with an obvious visual countdown, such as a filling background and a shrinking ring.
+- The personal tally surface should close after 180 seconds of inactivity so the next person does not accidentally use the previous tab.
 - If the active guest list grows large, later archive, grouping, or recency rules may become necessary to avoid stale noise.
 
 ## Flow Patterns Considered

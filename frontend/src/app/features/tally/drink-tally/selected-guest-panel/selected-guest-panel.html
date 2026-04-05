@@ -18,14 +18,6 @@
             <strong class="personal-panel__total-value">{{ guest.totalCount }}</strong>
           </div>
         </div>
-
-        <nt-inactivity-countdown-hint
-          [message]="copy().selectedGuestPanel.inactivityHint"
-          [actionLabel]="copy().selectedGuestPanel.closeNowAction"
-          [progressPercent]="timeoutProgressPercent()"
-          [ringOffset]="timeoutRingOffset()"
-          (close)="close.emit()"
-        />
       </div>
 
       <div
@@ -49,15 +41,6 @@
         <h2>{{ copy().placeholder.personalPanelPlaceholderTitle }}</h2>
         <p>{{ copy().placeholder.personalPanelPlaceholderBody }}</p>
       </div>
-
-      <nt-personal-panel-summary
-        [primaryLabel]="copy().placeholder.totalLabel"
-        [primaryValue]="publicTotalCount()"
-        [primaryCaption]="copy().placeholder.totalCaption"
-        [secondaryLabel]="copy().placeholder.activeGuestsLabel"
-        [secondaryValue]="activeGuestCount()"
-        [secondaryCaption]="copy().placeholder.activeGuestsCaption"
-      />
     </section>
   }
 </aside>
