@@ -32,6 +32,8 @@ jobs:
             CONTRIBUTING.md
             docs/agent-index.md
             docs/product.md
+            docs/architecture.md
+            docs/glossary.md
             docs/agentic-workflow.md
             docs/decisions.md
             docs/tasks.md
@@ -134,6 +136,8 @@ jobs:
           grep -q 'docs/workflows/publish.md' README.md
           grep -q 'frontend/README.md' README.md
           grep -q 'docs/product.md' README.md
+          grep -q 'docs/architecture.md' README.md
+          grep -q 'docs/glossary.md' README.md
           grep -q 'docs/agentic-workflow.md' README.md
           grep -q 'docs/decisions.md' README.md
           grep -q 'docs/github-setup.md' README.md

@@ -52,6 +52,8 @@ What is intentionally not done yet:
 - [Frontend Guide](frontend/README.md)
 - [Design Artifacts](docs/design/README.md)
 - [Product](docs/product.md)
+- [Architecture Guide](docs/architecture.md)
+- [Glossary](docs/glossary.md)
 - [Host Main Workflow UX](docs/ux/host-workflow-ux.md)
 - [Deferred Public Tally and Guest Self-Service UX](docs/ux/guest-tab-ux.md)
 - [Remote Persistence Options](docs/research/remote-persistence-options.md)
