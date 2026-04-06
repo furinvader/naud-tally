@@ -16,7 +16,8 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Frontend-specific Node tooling is pinned in [`.nvmrc`](.nvmrc).
 - App-level wiring stays in [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), [`src/app/app.scss`](src/app/app.scss), [`src/app/app.routes.ts`](src/app/app.routes.ts), and [`src/app/app.config.ts`](src/app/app.config.ts).
 - Cross-feature shared presentation and layout primitives live under [`src/app/ui/`](src/app/ui/).
-- The current drink tally feature lives in [`src/app/features/tally/drink-tally/`](src/app/features/tally/drink-tally/).
+- The route-level host workspace composition root lives in [`src/app/features/host-workspace/host-workspace/`](src/app/features/host-workspace/host-workspace/).
+- The current tally screen implementation still lives in [`src/app/features/tally/drink-tally/`](src/app/features/tally/drink-tally/) and is composed by the host workspace while the migration continues.
 - The target architecture for the next iterations is recorded in [`../docs/architecture.md`](../docs/architecture.md).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).
 - New feature work should follow the feature structure below.

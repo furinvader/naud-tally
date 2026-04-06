@@ -8,7 +8,6 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 
 ## Current Priority
 
-- [T-024 Create the Host Workspace Composition Root](tasks/open/T-024.md)
 - [T-025 Separate Host-Screen UI State From Persistent Business State](tasks/open/T-025.md)
 - [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](tasks/open/T-026.md)
 - [T-027 Introduce Repository Adapters for Local Persistence](tasks/open/T-027.md)
@@ -19,7 +18,6 @@ Complete these architecture tasks before resuming the remaining product-surface 
 
 ## Open Tasks
 
-- [T-024 Create the Host Workspace Composition Root](tasks/open/T-024.md)
 - [T-025 Separate Host-Screen UI State From Persistent Business State](tasks/open/T-025.md)
 - [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](tasks/open/T-026.md)
 - [T-027 Introduce Repository Adapters for Local Persistence](tasks/open/T-027.md)
@@ -52,3 +50,4 @@ Complete these architecture tasks before resuming the remaining product-surface 
 - [T-016 Add a Host Admin Route](tasks/done/T-016.md)
 - [T-017 Re-scope Docs for the Host-Operated Pilot](tasks/done/T-017.md)
 - [T-023 Introduce Shared UI Shell and Scroll Foundations](tasks/done/T-023.md)
+- [T-024 Create the Host Workspace Composition Root](tasks/done/T-024.md)
