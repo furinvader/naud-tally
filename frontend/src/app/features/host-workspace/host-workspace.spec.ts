@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 
-import { routes } from '../../../app.routes';
+import { routes } from '../../app.routes';
 import { HostWorkspace } from './host-workspace';
 
 describe('HostWorkspace', () => {

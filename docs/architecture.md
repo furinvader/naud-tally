@@ -14,7 +14,7 @@ It complements the product scope in [`product.md`](product.md), the workflow gui
 
 The current frontend is still small, but a few pressure points are already visible:
 
-- the default route now points at a lightweight host-workspace composition root in [`../frontend/src/app/features/host-workspace/host-workspace/host-workspace.ts`](../frontend/src/app/features/host-workspace/host-workspace/host-workspace.ts), but that route still mounts the older tally surface while the migration continues
+- the default route now points at a lightweight host-workspace composition root in [`../frontend/src/app/features/host-workspace/host-workspace.ts`](../frontend/src/app/features/host-workspace/host-workspace.ts), but that route still mounts the older tally surface while the migration continues
 - the current host admin screen imports the tally store directly from [`../frontend/src/app/features/tally/drink-tally/drink-tally.store.ts`](../frontend/src/app/features/tally/drink-tally/drink-tally.store.ts)
 - that store currently mixes domain types, business rules, route state, view-model shaping, and browser persistence
 
@@ -70,6 +70,8 @@ src/app/
 ```
 
 The exact file count can vary, but the ownership model should stay consistent.
+
+Top-level feature directories under [`../frontend/src/app/features/`](../frontend/src/app/features/) should stay flat. If a feature needs more internal structure, add subdirectories inside that feature instead of introducing another grouping layer above it.
 
 ## Ownership Rules
 

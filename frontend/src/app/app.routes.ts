@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { HostAdmin } from './features/admin/host-admin/host-admin';
-import { HostWorkspace } from './features/host-workspace/host-workspace/host-workspace';
+import { HostWorkspace } from './features/host-workspace/host-workspace';
 
 export const routes: Routes = [
   {

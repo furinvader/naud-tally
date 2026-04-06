@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { DrinkTally } from '../../tally/drink-tally/drink-tally';
+import { DrinkTally } from '../tally/drink-tally/drink-tally';
 
 @Component({
   selector: 'nt-host-workspace',
