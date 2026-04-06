@@ -6,7 +6,9 @@ import {
   withState,
 } from '@ngrx/signals';
 
-export const DRINK_CATALOG_STORAGE_KEY = 'naud-tally.drink-catalog';
+import { loadDrinkCatalog, saveDrinkCatalog } from './catalog.repository';
+
+export { DRINK_CATALOG_STORAGE_KEY } from './catalog.repository';
 
 export const DRINK_CATALOG = [
   { id: 'water', name: 'Water', priceCents: 200 },
@@ -94,7 +96,7 @@ export const CatalogStore = signalStore(
         );
 
         patchState(store, { drinkCatalog: nextDrinkCatalog });
-        persistDrinkCatalog(nextDrinkCatalog);
+        saveDrinkCatalog(nextDrinkCatalog);
 
         return { ok: true, action: 'restored', drinkId: existingDrink.id };
       }
@@ -113,7 +115,7 @@ export const CatalogStore = signalStore(
       ];
 
       patchState(store, { drinkCatalog: nextDrinkCatalog });
-      persistDrinkCatalog(nextDrinkCatalog);
+      saveDrinkCatalog(nextDrinkCatalog);
 
       return { ok: true, action: 'added', drinkId };
     },
@@ -136,7 +138,7 @@ export const CatalogStore = signalStore(
       );
 
       patchState(store, { drinkCatalog: nextDrinkCatalog });
-      persistDrinkCatalog(nextDrinkCatalog);
+      saveDrinkCatalog(nextDrinkCatalog);
 
       return true;
     },
@@ -159,19 +161,19 @@ export const CatalogStore = signalStore(
       );
 
       patchState(store, { drinkCatalog: nextDrinkCatalog });
-      persistDrinkCatalog(nextDrinkCatalog);
+      saveDrinkCatalog(nextDrinkCatalog);
 
       return true;
     },
   })),
   withHooks({
     onInit(store): void {
-      const restoredDrinkCatalog = readPersistedDrinkCatalog();
+      const restoredDrinkCatalog = loadDrinkCatalog(createDefaultDrinkCatalog);
 
       patchState(store, {
         drinkCatalog: restoredDrinkCatalog,
       });
-      persistDrinkCatalog(restoredDrinkCatalog);
+      saveDrinkCatalog(restoredDrinkCatalog);
     },
   }),
 );
@@ -203,106 +205,12 @@ export function formatEuroPrice(priceCents: number): string {
   return `€${(priceCents / 100).toFixed(2)}`;
 }
 
-function readPersistedDrinkCatalog(): DrinkCatalogEntry[] {
-  const storage = getStorage();
-
-  if (!storage) {
-    return createDefaultDrinkCatalog();
-  }
-
-  const rawDrinkCatalog = storage.getItem(DRINK_CATALOG_STORAGE_KEY);
-
-  if (!rawDrinkCatalog) {
-    return createDefaultDrinkCatalog();
-  }
-
-  try {
-    return normalizeDrinkCatalog(JSON.parse(rawDrinkCatalog));
-  } catch {
-    return createDefaultDrinkCatalog();
-  }
-}
-
-function normalizeDrinkCatalog(value: unknown): DrinkCatalogEntry[] {
-  if (!Array.isArray(value)) {
-    return createDefaultDrinkCatalog();
-  }
-
-  const seenIds = new Set<string>();
-  const timestamp = createTimestamp();
-  const normalizedDrinkCatalog = value.flatMap((entry, index) => {
-    const normalizedEntry = normalizeDrinkCatalogEntry(entry, index, timestamp);
-
-    if (!normalizedEntry || seenIds.has(normalizedEntry.id)) {
-      return [];
-    }
-
-    seenIds.add(normalizedEntry.id);
-    return [normalizedEntry];
-  });
-
-  return normalizedDrinkCatalog.length ? normalizedDrinkCatalog : createDefaultDrinkCatalog();
-}
-
-function normalizeDrinkCatalogEntry(
-  value: unknown,
-  index: number,
-  fallbackTimestamp: string,
-): DrinkCatalogEntry | null {
-  if (!value || typeof value !== 'object') {
-    return null;
-  }
-
-  const drink = value as Record<string, unknown>;
-  const name = normalizeDisplayText(drink['name']);
-
-  if (!name) {
-    return null;
-  }
-
-  return {
-    id: normalizeId(drink['id']) ?? createDrinkCatalogId(name, index),
-    name,
-    priceCents: normalizePriceCents(drink['priceCents']) ?? 0,
-    isActive: normalizeBoolean(drink['isActive'], true),
-    createdAt: normalizeTimestamp(drink['createdAt'], fallbackTimestamp),
-    updatedAt: normalizeTimestamp(drink['updatedAt'], fallbackTimestamp),
-  };
-}
-
-function normalizeId(value: unknown): string | null {
-  if (typeof value !== 'string') {
-    return null;
-  }
-
-  const normalized = value.trim();
-  return normalized ? normalized : null;
-}
-
 function normalizeDisplayText(value: unknown): string {
   if (typeof value !== 'string') {
     return '';
   }
 
   return value.trim().replace(/\s+/g, ' ');
-}
-
-function normalizeTimestamp(value: unknown, fallback: string): string {
-  if (typeof value !== 'string') {
-    return fallback;
-  }
-
-  const normalized = value.trim();
-
-  if (!normalized || Number.isNaN(Date.parse(normalized))) {
-    return fallback;
-  }
-
-  return normalized;
-}
-
-function normalizeBoolean(value: unknown, fallback: boolean): boolean {
-  return typeof value === 'boolean' ? value : fallback;
 }
 
 function normalizePriceCents(value: unknown): number | null {
@@ -358,26 +266,4 @@ function createDefaultDrinkCatalog(): DrinkCatalogEntry[] {
     createdAt: timestamp,
     updatedAt: timestamp,
   }));
-}
-
-function persistDrinkCatalog(drinkCatalog: DrinkCatalogEntry[]): void {
-  const storage = getStorage();
-
-  if (!storage) {
-    return;
-  }
-
-  try {
-    storage.setItem(DRINK_CATALOG_STORAGE_KEY, JSON.stringify(drinkCatalog));
-  } catch {
-    // Ignore storage failures so the catalog still works in restricted contexts.
-  }
-}
-
-function getStorage(): Storage | null {
-  try {
-    return globalThis.localStorage;
-  } catch {
-    return null;
-  }
 }
