@@ -12,8 +12,16 @@ Read this file before opening task files under [`docs/tasks/open/`](./).
 - Open only the task that matches the current goal.
 - If a task is completed, move it to the matching status folder and update [`../../tasks.md`](../../tasks.md) plus the affected status-folder indexes.
 
+The architecture-priority tasks are intentionally listed first and should be completed before the remaining open product tasks.
+
 ## Tasks
 
+- [T-024 Create the Host Workspace Composition Root](T-024.md)
+- [T-025 Separate Host-Screen UI State From Persistent Business State](T-025.md)
+- [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](T-026.md)
+- [T-027 Introduce Repository Adapters for Local Persistence](T-027.md)
+- [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](T-028.md)
+- [T-029 Add Frontend Import Boundary Checks](T-029.md)
 - [T-018 Design the Host Main Working Screen](T-018.md)
 - [T-019 Make the Host Screen the Default Route](T-019.md)
 - [T-014 Refine the Host Main Screen Layout](T-014.md)
