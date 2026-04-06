@@ -33,6 +33,31 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Consequence: new frontend feature work should live under [`src/app/features/`](src/app/features/), using the pattern `<feature-group>/<feature-name>/`, while app shell and bootstrap files stay under [`src/app/`](src/app/) and [`src/main.ts`](src/main.ts)
 - Consequence: frontend implementation conventions are documented in [`README.md`](README.md) and agents should consult that guide before creating or restructuring frontend features
 
+## Grow Larger Frontend Areas as Capability Modules Inside One App
+
+- Status: accepted
+- Why: feature-first folders work well at the current size, but the host workflow will accumulate multiple business capabilities that should not collapse into one oversized route feature or store
+- Consequence: keep the frontend as one Angular app under [`./`](./)
+- Consequence: use route-level composition features for major screens such as the future host workspace, and separate durable capabilities such as guest tabs, catalog, billing history, and sync or recovery into sibling feature areas under [`src/app/features/`](src/app/features/)
+- Consequence: when a feature area grows, expose a small public API or facade rather than letting other features import internal stores or helpers directly
+- Consequence: follow the module map in [`../docs/architecture.md`](../docs/architecture.md) when restructuring or adding new large feature areas
+
+## Separate Persistent Business State From Transient Screen State
+
+- Status: accepted
+- Why: the current pilot already has state that should survive reloads and other state that only exists to support one route interaction flow, and mixing those concerns makes later refactors harder
+- Consequence: persistent business state such as guest tabs, catalog items, billed history, and sync metadata should live with the capability that owns the business concept
+- Consequence: transient route state such as selected guest, draft inputs, and local flash messages should stay with the route composition feature that owns the screen interaction
+- Consequence: feature stores should avoid accumulating route-only view state just because it is convenient in the short term
+
+## Keep Storage and Remote IO Behind Data Adapters
+
+- Status: accepted
+- Why: local-first persistence and later remote recovery will stay easier to reason about if storage details are isolated from route composition code and domain rules
+- Consequence: browser persistence should live behind repositories or equivalent data adapters inside the owning feature area
+- Consequence: route features, components, and pure domain-rule files should not call browser storage APIs directly
+- Consequence: remote sync clients should sit behind the same capability boundary instead of being called from route components
+
 ## Use App-Owned `--nt-*` CSS Variables as the Theme Contract
 
 - Status: accepted

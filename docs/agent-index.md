@@ -5,6 +5,8 @@ Read this file before opening other files under [`docs/`](./).
 ## Read Only What You Need
 
 - For product scope and user-facing requirements, read [`product.md`](product.md).
+- For the target module map, state ownership, and dependency boundaries, read [`architecture.md`](architecture.md).
+- For stable domain and architecture vocabulary, read [`glossary.md`](glossary.md).
 - For UX flow briefs, read [`ux/agent-index.md`](ux/agent-index.md).
 - For repository-wide workflow or architecture decisions, read [`decisions.md`](decisions.md).
 - For research briefs, read [`research/agent-index.md`](research/agent-index.md).
@@ -18,5 +20,6 @@ Read this file before opening other files under [`docs/`](./).
 ## Notes
 
 - Prefer one task brief over scanning the whole backlog.
+- Prefer [`architecture.md`](architecture.md) over inferring long-term structure from one current implementation file.
 - Load publish rules only when publish work is actually happening.
 - If docs disagree, make the conflict explicit and update the source-of-truth file instead of carrying the disagreement in chat.

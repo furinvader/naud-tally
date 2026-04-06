@@ -6,6 +6,7 @@ Read this file before exploring files under [`frontend/`](./).
 
 - Read the current task brief from [`../docs/tasks/agent-index.md`](../docs/tasks/agent-index.md) before changing frontend behavior.
 - Re-read [`../docs/product.md`](../docs/product.md) only if the task changes product behavior or UX expectations.
+- If the task changes frontend feature boundaries, state ownership, or persistence shape, read [`../docs/architecture.md`](../docs/architecture.md).
 - If the task changes frontend architecture, tooling, runtime setup, or default conventions, read [`decisions.md`](decisions.md).
 - Before creating a new feature or restructuring frontend files, read [`README.md#feature-implementation`](README.md#feature-implementation).
 

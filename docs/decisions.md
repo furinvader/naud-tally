@@ -32,6 +32,23 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Consequence: the current pilot focuses on a host-operated room-name-order-billing workflow on a shared tablet
 - Consequence: public guest self-service remains deferred until the host workflow is solid
 
+## Grow the App as a Modular Monolith With Explicit Capability Boundaries
+
+- Status: accepted
+- Why: the pilot still fits comfortably in one deployable app, but we want boundaries that remain understandable for both humans and AI agents as the codebase grows
+- Consequence: keep one Angular app under [`../frontend/`](../frontend/) rather than splitting into services or packages prematurely
+- Consequence: organize durable business capabilities into explicit internal modules such as host workspace, guest tabs, catalog, billing history, and sync or recovery
+- Consequence: prefer small public APIs between capabilities over direct imports into another feature's internal files
+- Consequence: use [`architecture.md`](architecture.md) as the repository-level map for those boundaries
+
+## Keep a Repo-Native Architecture Map and Glossary
+
+- Status: accepted
+- Why: stable architecture and vocabulary should live in the repository so future prompts do not depend on chat memory or reverse-engineering the current implementation
+- Consequence: keep the current target structure in [`architecture.md`](architecture.md)
+- Consequence: keep stable domain and architecture terms in [`glossary.md`](glossary.md)
+- Consequence: update those docs when durable boundaries, ownership rules, or vocabulary change
+
 ## Optimize for Tablet-First Web Delivery
 
 - Status: accepted

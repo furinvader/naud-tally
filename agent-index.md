@@ -8,7 +8,8 @@ This is the first routing file for every agent task in this repository.
 - The earlier guest self-service slice is historical context, not the current target surface.
 - The host-tools route is already recorded in [`T-016`](docs/tasks/done/T-016.md).
 - The documentation re-scope for the host-operated pilot is recorded in [`T-017`](docs/tasks/done/T-017.md).
-- The next product priority is [`T-018`](docs/tasks/open/T-018.md): define the host main working screen.
+- The immediate repo priority is the architecture alignment track in [`T-024`](docs/tasks/open/T-024.md), [`T-025`](docs/tasks/open/T-025.md), [`T-026`](docs/tasks/open/T-026.md), [`T-027`](docs/tasks/open/T-027.md), [`T-028`](docs/tasks/open/T-028.md), and [`T-029`](docs/tasks/open/T-029.md).
+- The next product priority after that architecture track is [`T-018`](docs/tasks/open/T-018.md): define the host main working screen.
 - The design-solution decision is recorded in [`T-010`](docs/tasks/done/T-010.md).
 - The Penpot artifact workflow is documented in [`docs/design/penpot-codex-workflow.md`](docs/design/penpot-codex-workflow.md) and demonstrated in [`docs/design/`](docs/design/).
 

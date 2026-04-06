@@ -7,6 +7,7 @@ This document captures how we want to work with Codex so the lessons from this p
 ## Core Principles
 
 - Keep context explicit. Important assumptions belong in docs, not only in chat.
+- Start architecture changes in docs before starting larger refactors.
 - Ask for small, testable changes.
 - Prefer one coherent task at a time over vague multi-part requests.
 - Review behavior, not just generated code.
@@ -21,7 +22,7 @@ This document captures how we want to work with Codex so the lessons from this p
 
 ## Recommended Working Loop
 
-1. Update the docs if the product or constraints changed.
+1. Update the docs if the product, architecture, or constraints changed.
 2. Give Codex one focused task with a clear outcome.
 3. Let Codex inspect the repo and implement the change.
 4. Review the diff and the behavior together.
@@ -58,6 +59,8 @@ When Codex completes a task, review these points:
 
 - [`README.md`](../README.md) explains the project at a glance.
 - [`docs/product.md`](product.md) is the source of truth for product scope.
+- [`docs/architecture.md`](architecture.md) records the target module map, dependency boundaries, and state ownership model.
+- [`docs/glossary.md`](glossary.md) keeps domain and architecture vocabulary stable.
 - [`docs/decisions.md`](decisions.md) records repository-wide decisions and tradeoffs.
 - [`docs/research/agent-index.md`](research/agent-index.md) routes to reusable research briefs.
 - [`docs/design/penpot-codex-workflow.md`](design/penpot-codex-workflow.md) explains how Penpot should be used in a Codex-first workflow.

@@ -17,6 +17,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - App-level wiring stays in [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), [`src/app/app.scss`](src/app/app.scss), [`src/app/app.routes.ts`](src/app/app.routes.ts), and [`src/app/app.config.ts`](src/app/app.config.ts).
 - Cross-feature shared presentation and layout primitives live under [`src/app/ui/`](src/app/ui/).
 - The current drink tally feature lives in [`src/app/features/tally/drink-tally/`](src/app/features/tally/drink-tally/).
+- The target architecture for the next iterations is recorded in [`../docs/architecture.md`](../docs/architecture.md).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).
 - New feature work should follow the feature structure below.
 
@@ -29,6 +30,20 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Organize features by feature area, not by technical type.
 - Use the directory pattern `<feature-group>/<feature-name>/` under [`src/app/features/`](src/app/features/).
 - Keep app shell and bootstrap files in [`src/app/`](src/app/) and [`src/main.ts`](src/main.ts), not inside feature folders.
+
+### Scaling a Feature Area
+
+- When one route or screen starts owning several business concepts, keep the route feature as a composition root and split durable capabilities into sibling feature areas instead of growing one giant store.
+- Route composition features should own screen assembly and transient route state.
+- Capability features should own persistent business state, domain rules, and data adapters.
+- When a capability grows beyond a few closely related files, it may use clearer sub-areas or role-specific files such as `*.facade.ts`, `*.repository.ts`, or `*.model.ts`.
+- Follow [`../docs/architecture.md`](../docs/architecture.md) for the target module map and ownership model before restructuring a larger area.
+
+### Public APIs Between Features
+
+- If one feature needs another feature's behavior, prefer a small public API or facade file owned by the providing feature.
+- Do not deep-import another feature's internal store, helper, or implementation file by default.
+- If a reusable cross-feature API is missing, create it in the owning feature instead of bypassing the boundary.
 
 ### Shared UI
 
@@ -79,6 +94,13 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Use `readonly` for Angular-managed properties that should not be reassigned.
 - Prefer `class` and `style` bindings over `ngClass` and `ngStyle`.
 - Name event handlers for what they do, not for the triggering event.
+
+### State and Persistence Rules
+
+- Keep persistent business state with the capability that owns the business concept.
+- Keep transient screen state near the route composition feature that owns that interaction flow.
+- Do not call browser storage APIs directly from route components or route composition stores.
+- Put serialization, hydration, and storage access in repositories or equivalent data adapters inside the owning feature area.
 
 ### Styling and Theme Rules
 
