@@ -1,0 +1,13 @@
+<header class="app-bar">
+  <div class="app-bar__identity">
+    <span class="app-bar__title">{{ title() }}</span>
+
+    @if (eyebrow()) {
+      <span class="app-bar__eyebrow">{{ eyebrow() }}</span>
+    }
+  </div>
+
+  <div class="app-bar__actions">
+    <ng-content select="[actions]"></ng-content>
+  </div>
+</header>

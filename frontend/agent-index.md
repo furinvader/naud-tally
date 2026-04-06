@@ -13,8 +13,10 @@ Read this file before exploring files under [`frontend/`](./).
 
 - For frontend structure and feature-creation rules, read [`README.md`](README.md).
 - For frontend runtime setup and local commands, read [`README.md#runtime-setup`](README.md#runtime-setup).
-- Put new feature work under [`src/app/features/`](src/app/features/), unless the change is specifically app shell or bootstrap wiring.
+- Put new feature work under [`src/app/features/`](src/app/features/), unless the change is specifically app shell, bootstrap wiring, or cross-feature shared UI.
+- Put cross-feature reusable presentation and layout primitives under [`src/app/ui/`](src/app/ui/).
 - For the current drink tally feature, read [`src/app/features/tally/drink-tally/drink-tally.ts`](src/app/features/tally/drink-tally/drink-tally.ts), [`src/app/features/tally/drink-tally/drink-tally.html`](src/app/features/tally/drink-tally/drink-tally.html), and [`src/app/features/tally/drink-tally/drink-tally.scss`](src/app/features/tally/drink-tally/drink-tally.scss).
+- For shared page shell, app-bar, and scroll foundations, read [`src/app/ui/page-shell/page-shell.ts`](src/app/ui/page-shell/page-shell.ts), [`src/app/ui/app-bar/app-bar.ts`](src/app/ui/app-bar/app-bar.ts), [`src/app/ui/scroll-region/scroll-region.ts`](src/app/ui/scroll-region/scroll-region.ts), and [`src/app/ui/scroll-shadow/scroll-shadow.ts`](src/app/ui/scroll-shadow/scroll-shadow.ts).
 - For tally state and persistence, read [`src/app/features/tally/drink-tally/drink-tally.store.ts`](src/app/features/tally/drink-tally/drink-tally.store.ts) and [`src/app/features/tally/drink-tally/drink-tally.store.spec.ts`](src/app/features/tally/drink-tally/drink-tally.store.spec.ts).
 - For feature-level UI tests, read [`src/app/features/tally/drink-tally/drink-tally.spec.ts`](src/app/features/tally/drink-tally/drink-tally.spec.ts).
 - For the app shell that hosts the feature, read [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), [`src/app/app.scss`](src/app/app.scss), and [`src/app/app.spec.ts`](src/app/app.spec.ts).

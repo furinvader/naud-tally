@@ -1,13 +1,12 @@
-<mat-toolbar class="host-toolbar">
-  <div class="brand-block">
-    <span class="brand">{{ copy.title }}</span>
-    <span class="route-label">{{ copy.eyebrow }}</span>
-  </div>
+<nt-page-shell
+  [maxWidth]="'1360px'"
+  [background]="shellBackground"
+>
+  <nt-app-bar [title]="copy.title" [eyebrow]="copy.eyebrow">
+    <a actions mat-stroked-button routerLink="/">{{ copy.backAction }}</a>
+  </nt-app-bar>
 
-  <a mat-stroked-button routerLink="/">{{ copy.backAction }}</a>
-</mat-toolbar>
-
-<main class="host-shell">
+  <div class="host-shell">
   <section class="host-hero">
     <div class="hero-copy">
       <p class="eyebrow">{{ copy.eyebrow }}</p>
@@ -285,4 +284,5 @@
       </div>
     }
   </mat-card>
-</main>
+  </div>
+</nt-page-shell>
