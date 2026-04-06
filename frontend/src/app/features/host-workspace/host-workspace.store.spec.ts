@@ -1,10 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  DRINK_CATALOG,
-  DRINK_TALLY_STORAGE_KEY,
-  DrinkCounts,
-} from '../tally/drink-tally/drink-tally.store';
+import { DRINK_CATALOG } from '../catalog/catalog.store';
+import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs/guest-tabs.store';
 import { HostWorkspaceStore } from './host-workspace.store';
 
 describe('HostWorkspaceStore', () => {
@@ -56,7 +53,7 @@ describe('HostWorkspaceStore', () => {
       'Water',
       'White Wine',
     ]);
-    expect(localStorage.getItem(DRINK_TALLY_STORAGE_KEY)).toContain('"roomNumber":"204"');
+    expect(localStorage.getItem(GUEST_TABS_STORAGE_KEY)).toContain('"roomNumber":"204"');
   });
 
   it('should reuse an existing guest when the same normalized identity is submitted again', () => {
@@ -84,7 +81,7 @@ describe('HostWorkspaceStore', () => {
 
   it('should deselect the active guest when the same guest is selected again', () => {
     localStorage.setItem(
-      DRINK_TALLY_STORAGE_KEY,
+      GUEST_TABS_STORAGE_KEY,
       JSON.stringify([
         {
           id: 'guest-1',
@@ -120,7 +117,7 @@ describe('HostWorkspaceStore', () => {
 
   it('should keep active drink ordering stable while selected and re-sort it when reopened', () => {
     localStorage.setItem(
-      DRINK_TALLY_STORAGE_KEY,
+      GUEST_TABS_STORAGE_KEY,
       JSON.stringify([
         {
           id: 'guest-1',

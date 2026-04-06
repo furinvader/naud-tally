@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
+import { DrinkCounts } from '../../../guest-tabs/guest-tabs.store';
 import { DRINK_TALLY_COPY } from '../drink-tally.copy';
 import {
   AvailableDrinkReference,
-  DrinkCounts,
   SelectedGuestDrinkTally,
   SelectedGuestViewModel,
-} from '../drink-tally.store';
+} from '../drink-tally.models';
 import { SelectedGuestPanel } from './selected-guest-panel';
 
 describe('SelectedGuestPanel', () => {

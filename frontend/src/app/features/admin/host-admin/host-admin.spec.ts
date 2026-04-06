@@ -2,12 +2,9 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
+import { DRINK_CATALOG } from '../../catalog/catalog.store';
+import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../../guest-tabs/guest-tabs.store';
 import { HostAdmin } from './host-admin';
-import {
-  DRINK_CATALOG,
-  DRINK_TALLY_STORAGE_KEY,
-  DrinkCounts,
-} from '../../tally/drink-tally/drink-tally.store';
 
 describe('HostAdmin', () => {
   beforeEach(async () => {
@@ -141,7 +138,7 @@ describe('HostAdmin', () => {
 
 function seedOpenGuestTabs(): void {
   localStorage.setItem(
-    DRINK_TALLY_STORAGE_KEY,
+    GUEST_TABS_STORAGE_KEY,
     JSON.stringify([
       {
         id: 'guest-ada',

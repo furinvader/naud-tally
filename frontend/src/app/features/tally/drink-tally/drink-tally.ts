@@ -3,16 +3,16 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 
 import { AppBar } from '../../../ui/app-bar/app-bar';
+import { DrinkId } from '../../catalog/catalog.store';
 import { PageShell } from '../../../ui/page-shell/page-shell';
 import { ActiveGuestListPanel } from './active-guest-list-panel/active-guest-list-panel';
 import { AddGuestFlowCard } from './add-guest-flow-card/add-guest-flow-card';
 import { DRINK_TALLY_COPY, SelectedGuestPanelSectionCopy } from './drink-tally.copy';
 import {
   AddGuestFlowViewModel,
-  DrinkId,
   GuestCardViewModel,
   SelectedGuestViewModel,
-} from './drink-tally.store';
+} from './drink-tally.models';
 import { SelectedGuestPanel } from './selected-guest-panel/selected-guest-panel';
 
 @Component({

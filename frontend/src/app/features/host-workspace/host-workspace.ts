@@ -7,8 +7,9 @@ import {
 } from '@angular/core';
 
 import { DrinkTally } from '../tally/drink-tally/drink-tally';
-import { GUEST_TAB_INACTIVITY_TIMEOUT_MS } from '../tally/drink-tally/drink-tally.store';
 import { HostWorkspaceStore } from './host-workspace.store';
+
+export const GUEST_TAB_INACTIVITY_TIMEOUT_MS = 90_000;
 
 @Component({
   selector: 'nt-host-workspace',

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
-import { DrinkId } from '../drink-tally.store';
+import { DrinkId } from '../../../catalog/catalog.store';
 
 export type DrinkCounterGridItem = {
   id: DrinkId;

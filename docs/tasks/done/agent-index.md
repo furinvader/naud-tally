@@ -31,3 +31,4 @@ Read this file before opening task files under [`docs/tasks/done/`](./).
 - [T-023 Introduce Shared UI Shell and Scroll Foundations](T-023.md)
 - [T-024 Create the Host Workspace Composition Root](T-024.md)
 - [T-025 Separate Host-Screen UI State From Persistent Business State](T-025.md)
+- [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](T-026.md)

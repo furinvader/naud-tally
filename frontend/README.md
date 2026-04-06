@@ -18,8 +18,8 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Cross-feature shared presentation and layout primitives live under [`src/app/ui/`](src/app/ui/).
 - The route-level host workspace composition root lives in [`src/app/features/host-workspace/`](src/app/features/host-workspace/).
 - [`src/app/features/host-workspace/host-workspace.store.ts`](src/app/features/host-workspace/host-workspace.store.ts) owns transient host-screen state such as the selected guest, add-guest draft inputs, and inactivity clearing.
-- The current tally screen implementation still lives in [`src/app/features/tally/drink-tally/`](src/app/features/tally/drink-tally/) and is composed by the host workspace while the migration continues.
-- [`src/app/features/tally/drink-tally/drink-tally.store.ts`](src/app/features/tally/drink-tally/drink-tally.store.ts) now keeps durable guest tabs, catalog entries, and billed history while the later capability split is still pending.
+- Durable guest tabs, catalog entries, and billed history now live under [`src/app/features/guest-tabs/`](src/app/features/guest-tabs/), [`src/app/features/catalog/`](src/app/features/catalog/), and [`src/app/features/billing-history/`](src/app/features/billing-history/).
+- The current tally screen implementation still lives in [`src/app/features/tally/drink-tally/`](src/app/features/tally/drink-tally/) as a presentational surface composed by the host workspace.
 - The target architecture for the next iterations is recorded in [`../docs/architecture.md`](../docs/architecture.md).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).
 - New feature work should follow the feature structure below.
@@ -102,7 +102,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 
 - Keep persistent business state with the capability that owns the business concept.
 - Keep transient screen state near the route composition feature that owns that interaction flow.
-- In the current host workflow, [`src/app/features/host-workspace/host-workspace.store.ts`](src/app/features/host-workspace/host-workspace.store.ts) owns selection and draft-entry state, while [`src/app/features/tally/drink-tally/drink-tally.store.ts`](src/app/features/tally/drink-tally/drink-tally.store.ts) owns durable guest, catalog, and billing data.
+- In the current host workflow, [`src/app/features/host-workspace/host-workspace.store.ts`](src/app/features/host-workspace/host-workspace.store.ts) owns selection and draft-entry state, while [`src/app/features/guest-tabs/guest-tabs.store.ts`](src/app/features/guest-tabs/guest-tabs.store.ts), [`src/app/features/catalog/catalog.store.ts`](src/app/features/catalog/catalog.store.ts), and [`src/app/features/billing-history/billing-history.store.ts`](src/app/features/billing-history/billing-history.store.ts) own durable business data.
 - Do not call browser storage APIs directly from route components or route composition stores.
 - Put serialization, hydration, and storage access in repositories or equivalent data adapters inside the owning feature area.
 

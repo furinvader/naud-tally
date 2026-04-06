@@ -16,7 +16,6 @@ The architecture-priority tasks are intentionally listed first and should be com
 
 ## Tasks
 
-- [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](T-026.md)
 - [T-027 Introduce Repository Adapters for Local Persistence](T-027.md)
 - [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](T-028.md)
 - [T-029 Add Frontend Import Boundary Checks](T-029.md)

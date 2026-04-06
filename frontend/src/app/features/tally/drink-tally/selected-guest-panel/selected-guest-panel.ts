@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { ScrollRegion } from '../../../../ui/scroll-region/scroll-region';
+import { DrinkId } from '../../../catalog/catalog.store';
 import { AvailableDrinkGrid } from '../available-drink-grid/available-drink-grid';
 import { DrinkCounterGrid } from '../drink-counter-grid/drink-counter-grid';
 import { SelectedGuestPanelSectionCopy } from '../drink-tally.copy';
-import { DrinkId, SelectedGuestViewModel } from '../drink-tally.store';
+import { SelectedGuestViewModel } from '../drink-tally.models';
 
 @Component({
   selector: 'nt-selected-guest-panel',

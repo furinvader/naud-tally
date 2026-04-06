@@ -17,22 +17,22 @@
     <div class="hero-stats">
       <article class="hero-stat" data-testid="host-summary-active-drinks">
         <span class="hero-stat__label">{{ copy.activeDrinkCountLabel }}</span>
-        <strong>{{ tallyStore.hostSummary().activeDrinkCount }}</strong>
+        <strong>{{ hostSummary().activeDrinkCount }}</strong>
       </article>
 
       <article class="hero-stat" data-testid="host-summary-open-guests">
         <span class="hero-stat__label">{{ copy.openGuestCountLabel }}</span>
-        <strong>{{ tallyStore.hostSummary().openGuestCount }}</strong>
+        <strong>{{ hostSummary().openGuestCount }}</strong>
       </article>
 
       <article class="hero-stat" data-testid="host-summary-pending-balance">
         <span class="hero-stat__label">{{ copy.pendingLabel }}</span>
-        <strong>{{ tallyStore.hostSummary().displayPendingTotal }}</strong>
+        <strong>{{ hostSummary().displayPendingTotal }}</strong>
       </article>
 
       <article class="hero-stat" data-testid="host-summary-billed-total">
         <span class="hero-stat__label">{{ copy.billedLabel }}</span>
-        <strong>{{ tallyStore.hostSummary().displayBilledTotal }}</strong>
+        <strong>{{ hostSummary().displayBilledTotal }}</strong>
       </article>
     </div>
   </section>
@@ -97,7 +97,7 @@
         <section class="catalog-group">
           <div class="catalog-group__header">
             <h3>{{ copy.activeDrinksTitle }}</h3>
-            <span>{{ tallyStore.hostSummary().activeDrinkCount }}</span>
+            <span>{{ hostSummary().activeDrinkCount }}</span>
           </div>
 
           <div class="catalog-list" data-testid="host-active-drink-list">
@@ -136,12 +136,12 @@
 
         @if (removedDrinks().length) {
           <section class="catalog-group">
-            <div class="catalog-group__header">
-              <div>
-                <h3>{{ copy.removedDrinksTitle }}</h3>
-                <p>{{ copy.removedDrinksBody }}</p>
-              </div>
-              <span>{{ tallyStore.hostSummary().removedDrinkCount }}</span>
+              <div class="catalog-group__header">
+                <div>
+                  <h3>{{ copy.removedDrinksTitle }}</h3>
+                  <p>{{ copy.removedDrinksBody }}</p>
+                </div>
+              <span>{{ hostSummary().removedDrinkCount }}</span>
             </div>
 
             <div class="catalog-list" data-testid="host-removed-drink-list">
@@ -180,9 +180,9 @@
         </div>
       </div>
 
-      @if (tallyStore.openGuestBills().length) {
+      @if (openGuestBills().length) {
         <div class="guest-bill-list" data-testid="host-open-guest-list">
-          @for (guest of tallyStore.openGuestBills(); track guest.id) {
+          @for (guest of openGuestBills(); track guest.id) {
             <article class="guest-bill-card">
               <div class="guest-bill-card__header">
                 <div>
@@ -242,9 +242,9 @@
       </div>
     </div>
 
-    @if (tallyStore.billedGuestBills().length) {
+    @if (billedGuestBills().length) {
       <div class="history-list" data-testid="host-billed-guest-list">
-        @for (guest of tallyStore.billedGuestBills(); track guest.id) {
+        @for (guest of billedGuestBills(); track guest.id) {
           <article class="history-card">
             <div class="history-card__header">
               <div>

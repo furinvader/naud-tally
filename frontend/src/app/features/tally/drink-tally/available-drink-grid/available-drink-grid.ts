@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
-import { AvailableDrinkReference, DrinkId } from '../drink-tally.store';
+import { DrinkId } from '../../../catalog/catalog.store';
+import { AvailableDrinkReference } from '../drink-tally.models';
 
 @Component({
   selector: 'nt-available-drink-grid',
