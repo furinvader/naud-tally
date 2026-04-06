@@ -14,9 +14,9 @@ It complements the product scope in [`product.md`](product.md), the workflow gui
 
 The current frontend is still small, but a few pressure points are already visible:
 
-- the default route now points at a lightweight host-workspace composition root in [`../frontend/src/app/features/host-workspace/host-workspace.ts`](../frontend/src/app/features/host-workspace/host-workspace.ts), but that route still mounts the older tally surface while the migration continues
+- the default route now points at a host-workspace composition root in [`../frontend/src/app/features/host-workspace/host-workspace.ts`](../frontend/src/app/features/host-workspace/host-workspace.ts), and transient host-screen state now lives in [`../frontend/src/app/features/host-workspace/host-workspace.store.ts`](../frontend/src/app/features/host-workspace/host-workspace.store.ts) while the migration continues
 - the current host admin screen imports the tally store directly from [`../frontend/src/app/features/tally/drink-tally/drink-tally.store.ts`](../frontend/src/app/features/tally/drink-tally/drink-tally.store.ts)
-- that store currently mixes domain types, business rules, route state, view-model shaping, and browser persistence
+- that tally store still mixes domain types, multiple capability concerns, view-model shaping, and browser persistence even though route-only UI state has moved out
 
 That is acceptable for an early slice, but it is not the architecture we want to scale.
 
@@ -201,7 +201,7 @@ If a future prompt depends on module boundaries, public APIs, or state ownership
 The current backlog should treat these architecture tasks as the near-term implementation path:
 
 1. [T-024 Create the Host Workspace Composition Root](tasks/done/T-024.md)
-2. [T-025 Separate Host-Screen UI State From Persistent Business State](tasks/open/T-025.md)
+2. [T-025 Separate Host-Screen UI State From Persistent Business State](tasks/done/T-025.md)
 3. [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](tasks/open/T-026.md)
 4. [T-027 Introduce Repository Adapters for Local Persistence](tasks/open/T-027.md)
 5. [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](tasks/open/T-028.md)

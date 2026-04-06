@@ -19,7 +19,7 @@ describe('DrinkTallyStore', () => {
     localStorage.clear();
   });
 
-  it('should initialize with priced drinks, no selected guest, and no guest tabs', () => {
+  it('should initialize with priced drinks and no guest tabs', () => {
     const store = TestBed.inject(DrinkTallyStore);
 
     expect(store.toolbarDrinkReferences().map((drink) => drink.displayPrice)).toEqual([
@@ -34,75 +34,39 @@ describe('DrinkTallyStore', () => {
       '€5.00',
     ]);
     expect(store.activeGuests()).toEqual([]);
-    expect(store.selectedGuest()).toBeNull();
-    expect(store.addGuestFlow().step).toBe('closed');
     expect(store.publicTotalCount()).toBe(0);
   });
 
-  it('should create a guest through the room-number then full-name flow', () => {
+  it('should create a guest tab and persist it', () => {
     const store = TestBed.inject(DrinkTallyStore);
 
-    store.startAddGuestFlow();
-    store.updateDraftRoomNumber(' 204 ');
-    store.submitRoomNumber();
-    store.updateDraftFullName(' Grace Hopper ');
-    store.submitGuestIdentity();
+    const guest = store.ensureGuestTab(' 204 ', ' Grace Hopper ');
 
+    expect(guest?.roomNumber).toBe('204');
+    expect(guest?.fullName).toBe('Grace Hopper');
     expect(store.activeGuestCount()).toBe(1);
-    expect(store.selectedGuest()?.roomNumber).toBe('204');
-    expect(store.selectedGuest()?.fullName).toBe('Grace Hopper');
-    expect(store.selectedGuest()?.totalCount).toBe(0);
-    expect(store.selectedGuest()?.activeDrinkTallies).toEqual([]);
-    expect(store.selectedGuest()?.availableDrinks.map((drink) => drink.name)).toEqual([
-      'Apple Juice',
-      'Beer',
-      'Cola',
-      'Cola Zero',
-      'Lemon Soda',
-      'Orange Soda',
-      'Sparkling Water',
-      'Water',
-      'White Wine',
-    ]);
     expect(localStorage.getItem(DRINK_TALLY_STORAGE_KEY)).toContain('"roomNumber":"204"');
   });
 
-  it('should reuse an existing guest when the same normalized identity is submitted again', () => {
+  it('should reuse an existing guest when the normalized identity already exists', () => {
     const store = TestBed.inject(DrinkTallyStore);
 
-    store.startAddGuestFlow();
-    store.updateDraftRoomNumber('101');
-    store.submitRoomNumber();
-    store.updateDraftFullName('Ada Lovelace');
-    store.submitGuestIdentity();
+    const firstGuest = store.ensureGuestTab('101', 'Ada Lovelace');
+    const secondGuest = store.ensureGuestTab(' 101 ', ' ada    lovelace ');
 
-    const originalGuestId = store.selectedGuest()?.id;
-
-    store.closeSelectedGuestTab();
-    store.startAddGuestFlow();
-    store.updateDraftRoomNumber(' 101 ');
-    store.submitRoomNumber();
-    store.updateDraftFullName(' ada    lovelace ');
-    store.submitGuestIdentity();
-
+    expect(firstGuest?.id).toBe(secondGuest?.id);
     expect(store.activeGuestCount()).toBe(1);
-    expect(store.selectedGuest()?.id).toBe(originalGuestId);
-    expect(store.selectedGuest()?.fullName).toBe('Ada Lovelace');
   });
 
-  it('should update only the selected guest counts', () => {
+  it('should update only the targeted guest counts', () => {
     const store = TestBed.inject(DrinkTallyStore);
 
-    createGuest(store, '101', 'Ada Lovelace');
-    const firstGuestId = store.selectedGuest()?.id;
+    const firstGuestId = store.ensureGuestTab('101', 'Ada Lovelace')?.id;
+    const secondGuestId = store.ensureGuestTab('102', 'Grace Hopper')?.id;
 
-    createGuest(store, '102', 'Grace Hopper');
-    const secondGuestId = store.selectedGuest()?.id;
-
-    store.incrementDrink('beer');
-    store.incrementDrink('water');
-    store.selectGuestTab(firstGuestId!);
-    store.incrementDrink('cola');
+    store.updateGuestDrinkCount(secondGuestId!, 'beer', 1);
+    store.updateGuestDrinkCount(secondGuestId!, 'water', 1);
+    store.updateGuestDrinkCount(firstGuestId!, 'cola', 1);
 
     const firstGuest = store.activeGuests().find((guest) => guest.id === firstGuestId);
     const secondGuest = store.activeGuests().find((guest) => guest.id === secondGuestId);
@@ -117,106 +81,15 @@ describe('DrinkTallyStore', () => {
     expect(store.publicTotalCount()).toBe(3);
   });
 
-  it('should add an available drink at count one and remove it from the add-drink list', () => {
+  it('should remove a drink from the guest counts when its tally returns to zero', () => {
     const store = TestBed.inject(DrinkTallyStore);
 
-    createGuest(store, '101', 'Ada Lovelace');
-    store.incrementDrink('whiteWine');
+    const guestId = store.ensureGuestTab('101', 'Ada Lovelace')?.id;
 
-    expect(store.selectedGuest()?.activeDrinkTallies).toEqual([
-      { id: 'whiteWine', name: 'White Wine', count: 1, displayPrice: '€5.00' },
-    ]);
-    expect(store.selectedGuest()?.availableDrinks.some((drink) => drink.id === 'whiteWine')).toBe(
-      false,
-    );
-  });
+    store.updateGuestDrinkCount(guestId!, 'beer', 1);
+    store.updateGuestDrinkCount(guestId!, 'beer', -1);
 
-  it('should remove a drink from the active list when its count returns to zero', () => {
-    const store = TestBed.inject(DrinkTallyStore);
-
-    createGuest(store, '101', 'Ada Lovelace');
-    store.incrementDrink('beer');
-    store.decrementDrink('beer');
-
-    expect(store.selectedGuest()?.activeDrinkTallies).toEqual([]);
-    expect(store.selectedGuest()?.availableDrinks.some((drink) => drink.id === 'beer')).toBe(true);
-  });
-
-  it('should deselect the active guest when it is selected again', () => {
-    localStorage.setItem(
-      DRINK_TALLY_STORAGE_KEY,
-      JSON.stringify([
-        {
-          id: 'guest-1',
-          roomNumber: '210',
-          fullName: 'Ada Lovelace',
-          counts: buildCounts({ water: 1 }),
-          createdAt: '2026-04-01T08:00:00.000Z',
-          updatedAt: '2026-04-01T10:00:00.000Z',
-        },
-        {
-          id: 'guest-2',
-          roomNumber: '101',
-          fullName: 'Grace Hopper',
-          counts: buildCounts({ beer: 1 }),
-          createdAt: '2026-04-01T08:30:00.000Z',
-          updatedAt: '2026-04-01T09:00:00.000Z',
-        },
-      ]),
-    );
-
-    const store = TestBed.inject(DrinkTallyStore);
-
-    expect(store.activeGuests().map((guest) => guest.id)).toEqual(['guest-2', 'guest-1']);
-
-    store.selectGuestTab('guest-1');
-    store.incrementDrink('beer');
-    store.selectGuestTab('guest-1');
-
-    expect(store.selectedGuest()).toBeNull();
-    expect(store.activeGuests().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
-    expect(store.activeGuests().find((guest) => guest.id === 'guest-1')?.totalCount).toBe(2);
-  });
-
-  it('should keep active drink ordering stable while selected and re-sort it when reopened', () => {
-    localStorage.setItem(
-      DRINK_TALLY_STORAGE_KEY,
-      JSON.stringify([
-        {
-          id: 'guest-1',
-          roomNumber: '101',
-          fullName: 'Ada Lovelace',
-          counts: buildCounts({ water: 1, beer: 2 }),
-          createdAt: '2026-04-01T08:00:00.000Z',
-          updatedAt: '2026-04-01T10:00:00.000Z',
-        },
-      ]),
-    );
-
-    const store = TestBed.inject(DrinkTallyStore);
-
-    store.selectGuestTab('guest-1');
-
-    expect(store.selectedGuest()?.activeDrinkTallies.map((drink) => drink.id)).toEqual([
-      'beer',
-      'water',
-    ]);
-
-    store.incrementDrink('water');
-    store.incrementDrink('water');
-
-    expect(store.selectedGuest()?.activeDrinkTallies.map((drink) => drink.id)).toEqual([
-      'beer',
-      'water',
-    ]);
-
-    store.closeSelectedGuestTab();
-    store.selectGuestTab('guest-1');
-
-    expect(store.selectedGuest()?.activeDrinkTallies.map((drink) => drink.id)).toEqual([
-      'water',
-      'beer',
-    ]);
+    expect(store.activeGuests()[0]?.drinkSummary).toEqual([]);
   });
 
   it('should keep guest ordering stable while tallying and sort finalized tabs by drinks then room number', () => {
@@ -258,8 +131,7 @@ describe('DrinkTallyStore', () => {
       'guest-1',
     ]);
 
-    store.selectGuestTab('guest-1');
-    store.incrementDrink('beer');
+    store.updateGuestDrinkCount('guest-1', 'beer', 1);
 
     expect(store.activeGuests().map((guest) => guest.id)).toEqual([
       'guest-3',
@@ -267,7 +139,7 @@ describe('DrinkTallyStore', () => {
       'guest-1',
     ]);
 
-    store.closeSelectedGuestTab();
+    store.finalizeGuestTab('guest-1');
 
     expect(store.activeGuests().map((guest) => guest.id)).toEqual([
       'guest-3',
@@ -276,7 +148,7 @@ describe('DrinkTallyStore', () => {
     ]);
   });
 
-  it('should restore persisted guests and counts without restoring a selection', () => {
+  it('should restore persisted guests and counts', () => {
     localStorage.setItem(
       DRINK_TALLY_STORAGE_KEY,
       JSON.stringify([
@@ -295,30 +167,28 @@ describe('DrinkTallyStore', () => {
 
     expect(store.activeGuestCount()).toBe(1);
     expect(store.activeGuests()[0]?.totalCount).toBe(3);
-    expect(store.selectedGuest()).toBeNull();
-    expect(store.addGuestFlow().step).toBe('closed');
     expect(store.publicTotalCount()).toBe(3);
   });
 
-  it('should add a drink to the live catalog and make it available on open tabs', () => {
+  it('should add a drink to the live catalog and make it available to open tabs', () => {
     const store = TestBed.inject(DrinkTallyStore);
-
-    createGuest(store, '101', 'Ada Lovelace');
+    const guestId = store.ensureGuestTab('101', 'Ada Lovelace')?.id;
 
     expect(store.addDrink('Iced Tea', 420)).toEqual({
       ok: true,
       action: 'added',
       drinkId: expect.any(String),
     });
-    expect(store.selectedGuest()?.availableDrinks.map((drink) => drink.name)).toContain('Iced Tea');
+    expect(store.activeGuests().find((guest) => guest.id === guestId)?.drinkSummary).toEqual([]);
+    expect(store.hostDrinkCatalog().map((drink) => drink.name)).toContain('Iced Tea');
     expect(localStorage.getItem(DRINK_CATALOG_STORAGE_KEY)).toContain('"name":"Iced Tea"');
   });
 
   it('should remove only unused drinks from the guest catalog', () => {
     const store = TestBed.inject(DrinkTallyStore);
+    const guestId = store.ensureGuestTab('101', 'Ada Lovelace')?.id;
 
-    createGuest(store, '101', 'Ada Lovelace');
-    store.incrementDrink('beer');
+    store.updateGuestDrinkCount(guestId!, 'beer', 1);
 
     expect(store.removeDrink('beer')).toBe(false);
     expect(store.removeDrink('sparklingWater')).toBe(true);
@@ -329,12 +199,10 @@ describe('DrinkTallyStore', () => {
 
   it('should bill a guest tab and move it into billed history', () => {
     const store = TestBed.inject(DrinkTallyStore);
+    const guestId = store.ensureGuestTab('101', 'Ada Lovelace')?.id;
 
-    createGuest(store, '101', 'Ada Lovelace');
-    store.incrementDrink('beer');
-    store.incrementDrink('water');
-
-    const guestId = store.selectedGuest()?.id;
+    store.updateGuestDrinkCount(guestId!, 'beer', 1);
+    store.updateGuestDrinkCount(guestId!, 'water', 1);
 
     expect(store.billGuestTab(guestId!)).toBe(true);
     expect(store.activeGuestCount()).toBe(0);
@@ -346,24 +214,6 @@ describe('DrinkTallyStore', () => {
     );
   });
 });
-
-function createGuest(
-  store: {
-    startAddGuestFlow(): void;
-    updateDraftRoomNumber(roomNumber: string): void;
-    submitRoomNumber(): void;
-    updateDraftFullName(fullName: string): void;
-    submitGuestIdentity(): void;
-  },
-  roomNumber: string,
-  fullName: string,
-): void {
-  store.startAddGuestFlow();
-  store.updateDraftRoomNumber(roomNumber);
-  store.submitRoomNumber();
-  store.updateDraftFullName(fullName);
-  store.submitGuestIdentity();
-}
 
 function buildCounts(overrides: Partial<DrinkCounts>): DrinkCounts {
   return DRINK_CATALOG.reduce((counts, drink) => {

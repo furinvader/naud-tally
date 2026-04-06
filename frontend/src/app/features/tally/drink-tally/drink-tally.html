@@ -18,32 +18,32 @@
     <div class="public-column" [class.public-column--entry-open]="entryOpen()">
       @if (entryOpen()) {
         <nt-add-guest-flow-card
-          [flow]="tallyStore.addGuestFlow()"
+          [flow]="addGuestFlow()"
           [copy]="copy.addGuestFlow"
-          (roomNumberInput)="tallyStore.updateDraftRoomNumber($event)"
-          (fullNameInput)="tallyStore.updateDraftFullName($event)"
-          (submitRoomNumber)="tallyStore.submitRoomNumber()"
-          (submitGuestIdentity)="tallyStore.submitGuestIdentity()"
-          (back)="tallyStore.returnToRoomNumberStep()"
-          (cancel)="tallyStore.cancelAddGuestFlow()"
+          (roomNumberInput)="updateDraftRoomNumber.emit($event)"
+          (fullNameInput)="updateDraftFullName.emit($event)"
+          (submitRoomNumber)="submitRoomNumber.emit()"
+          (submitGuestIdentity)="submitGuestIdentity.emit()"
+          (back)="returnToRoomNumberStep.emit()"
+          (cancel)="cancelAddGuestFlow.emit()"
         />
       }
 
       <nt-active-guest-list-panel
-        [guests]="tallyStore.activeGuests()"
-        [selectedGuestId]="tallyStore.selectedGuest()?.id ?? null"
+        [guests]="activeGuests()"
+        [selectedGuestId]="selectedGuestId()"
         [entryOpen]="entryOpen()"
         [copy]="copy.activeGuestList"
-        (startAddGuest)="tallyStore.startAddGuestFlow()"
-        (selectGuest)="tallyStore.selectGuestTab($event)"
+        (startAddGuest)="startAddGuest.emit()"
+        (selectGuest)="selectGuest.emit($event)"
       />
     </div>
 
     <nt-selected-guest-panel
-      [selectedGuest]="tallyStore.selectedGuest()"
+      [selectedGuest]="selectedGuest()"
       [copy]="selectedGuestPanelCopy"
-      (incrementDrink)="tallyStore.incrementDrink($event)"
-      (decrementDrink)="tallyStore.decrementDrink($event)"
+      (incrementDrink)="incrementDrink.emit($event)"
+      (decrementDrink)="decrementDrink.emit($event)"
     />
   </section>
 </nt-page-shell>

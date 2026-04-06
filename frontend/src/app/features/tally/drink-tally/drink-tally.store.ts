@@ -73,12 +73,6 @@ type DrinkTallyState = {
   guestTabs: GuestTab[];
   billedGuestTabs: BilledGuestTab[];
   drinkCatalog: DrinkCatalogEntry[];
-  selectedGuestId: string | null;
-  selectedGuestDrinkOrder: DrinkId[];
-  addGuestStep: AddGuestStep;
-  draftRoomNumber: string;
-  draftFullName: string;
-  interactionVersion: number;
 };
 
 export type AddGuestFlowViewModel = {
@@ -184,12 +178,6 @@ const initialState: DrinkTallyState = {
   guestTabs: [],
   billedGuestTabs: [],
   drinkCatalog: createDefaultDrinkCatalog(),
-  selectedGuestId: null,
-  selectedGuestDrinkOrder: [],
-  addGuestStep: 'closed',
-  draftRoomNumber: '',
-  draftFullName: '',
-  interactionVersion: 0,
 };
 
 export const DrinkTallyStore = signalStore(
@@ -213,40 +201,6 @@ export const DrinkTallyStore = signalStore(
     activeGuests: computed<GuestCardViewModel[]>(() =>
       store.guestTabs().map((guest) => createGuestCardViewModel(guest, store.drinkCatalog())),
     ),
-    selectedGuest: computed<SelectedGuestViewModel | null>(() => {
-      const selectedGuestId = store.selectedGuestId();
-
-      if (!selectedGuestId) {
-        return null;
-      }
-
-      const guest = store.guestTabs().find((entry) => entry.id === selectedGuestId);
-
-      if (!guest) {
-        return null;
-      }
-
-      return {
-        ...createGuestCardViewModel(guest, store.drinkCatalog()),
-        activeDrinkTallies: normalizeSelectedGuestDrinkOrder(
-          guest.counts,
-          store.selectedGuestDrinkOrder(),
-          store.drinkCatalog(),
-        ).map((drinkId) =>
-          createSelectedGuestDrinkTally(
-            drinkId,
-            getDrinkCount(guest.counts, drinkId),
-            store.drinkCatalog(),
-          ),
-        ),
-        availableDrinks: createAvailableDrinkReferences(guest.counts, store.drinkCatalog()),
-      };
-    }),
-    addGuestFlow: computed<AddGuestFlowViewModel>(() => ({
-      step: store.addGuestStep(),
-      roomNumber: store.draftRoomNumber(),
-      fullName: store.draftFullName(),
-    })),
     hostDrinkCatalog: computed<HostDrinkCatalogItem[]>(() =>
       createHostDrinkCatalogItems(store.drinkCatalog(), store.guestTabs()),
     ),
@@ -282,202 +236,29 @@ export const DrinkTallyStore = signalStore(
     }),
   })),
   withMethods((store) => {
-    function closeSelectedGuestTabAndUpdateOrder(): void {
-      const selectedGuestId = store.selectedGuestId();
-
-      if (!selectedGuestId) {
-        patchState(store, {
-          addGuestStep: 'closed',
-          draftRoomNumber: '',
-          draftFullName: '',
-          selectedGuestDrinkOrder: [],
-        });
-        return;
-      }
-
-      const timestamp = createTimestamp();
-      let didUpdate = false;
-      const nextGuestTabs = store.guestTabs().map((guest) => {
-        if (guest.id !== selectedGuestId) {
-          return guest;
-        }
-
-        didUpdate = true;
-        return {
-          ...guest,
-          updatedAt: timestamp,
-        };
-      });
-
-      if (!didUpdate) {
-        patchState(store, {
-          selectedGuestId: null,
-          selectedGuestDrinkOrder: [],
-          addGuestStep: 'closed',
-          draftRoomNumber: '',
-          draftFullName: '',
-        });
-        return;
-      }
-
-      const sortedGuestTabs = sortGuestTabs(nextGuestTabs);
-
-      patchState(store, {
-        guestTabs: sortedGuestTabs,
-        selectedGuestId: null,
-        selectedGuestDrinkOrder: [],
-        addGuestStep: 'closed',
-        draftRoomNumber: '',
-        draftFullName: '',
-        interactionVersion: store.interactionVersion() + 1,
-      });
-      persistGuestTabs(sortedGuestTabs);
-    }
-
-    function selectGuestTabById(guestId: string): void {
-      const guest = store.guestTabs().find((entry) => entry.id === guestId);
-
-      if (!guest) {
-        return;
-      }
-
-      patchState(store, {
-        selectedGuestId: guestId,
-        selectedGuestDrinkOrder: createSelectedGuestDrinkOrder(guest.counts, store.drinkCatalog()),
-        addGuestStep: 'closed',
-        draftRoomNumber: '',
-        draftFullName: '',
-        interactionVersion: store.interactionVersion() + 1,
-      });
-    }
-
-    function updateSelectedGuestCountsByDelta(drinkId: DrinkId, delta: number): void {
-      const selectedGuestId = store.selectedGuestId();
-
-      if (!selectedGuestId) {
-        return;
-      }
-
-      const catalogDrink = findDrinkById(store.drinkCatalog(), drinkId);
-      if (delta > 0 && (!catalogDrink || !catalogDrink.isActive)) {
-        return;
-      }
-
-      let didUpdate = false;
-      let nextSelectedGuestDrinkOrder = store.selectedGuestDrinkOrder();
-      const nextGuestTabs = store.guestTabs().map((guest) => {
-        if (guest.id !== selectedGuestId) {
-          return guest;
-        }
-
-        const previousCount = getDrinkCount(guest.counts, drinkId);
-        const nextCount = Math.max(0, previousCount + delta);
-
-        if (nextCount === previousCount) {
-          return guest;
-        }
-
-        didUpdate = true;
-        nextSelectedGuestDrinkOrder = updateSelectedGuestDrinkOrder(
-          guest.counts,
-          store.selectedGuestDrinkOrder(),
-          drinkId,
-          previousCount,
-          nextCount,
-          store.drinkCatalog(),
-        );
-
-        return {
-          ...guest,
-          counts: setDrinkCount(guest.counts, drinkId, nextCount),
-        };
-      });
-
-      if (!didUpdate) {
-        return;
-      }
-
-      patchState(store, {
-        guestTabs: nextGuestTabs,
-        selectedGuestDrinkOrder: nextSelectedGuestDrinkOrder,
-        interactionVersion: store.interactionVersion() + 1,
-      });
-      persistGuestTabs(nextGuestTabs);
-    }
-
     return {
-      startAddGuestFlow(): void {
-        patchState(store, {
-          selectedGuestId: null,
-          selectedGuestDrinkOrder: [],
-          addGuestStep: 'roomNumber',
-          draftRoomNumber: '',
-          draftFullName: '',
-          interactionVersion: store.interactionVersion() + 1,
-        });
-      },
-      cancelAddGuestFlow(): void {
-        patchState(store, {
-          addGuestStep: 'closed',
-          draftRoomNumber: '',
-          draftFullName: '',
-        });
-      },
-      returnToRoomNumberStep(): void {
-        patchState(store, {
-          addGuestStep: 'roomNumber',
-          draftFullName: '',
-          interactionVersion: store.interactionVersion() + 1,
-        });
-      },
-      updateDraftRoomNumber(roomNumber: string): void {
-        patchState(store, {
-          draftRoomNumber: roomNumber,
-          interactionVersion: store.interactionVersion() + 1,
-        });
-      },
-      submitRoomNumber(): void {
-        const roomNumber = normalizeDisplayText(store.draftRoomNumber());
+      ensureGuestTab(roomNumber: string, fullName: string): GuestTab | null {
+        const normalizedRoomNumber = normalizeDisplayText(roomNumber);
+        const normalizedFullName = normalizeDisplayText(fullName);
 
-        if (!roomNumber) {
-          return;
+        if (!normalizedRoomNumber || !normalizedFullName) {
+          return null;
         }
 
-        patchState(store, {
-          draftRoomNumber: roomNumber,
-          addGuestStep: 'fullName',
-          interactionVersion: store.interactionVersion() + 1,
-        });
-      },
-      updateDraftFullName(fullName: string): void {
-        patchState(store, {
-          draftFullName: fullName,
-          interactionVersion: store.interactionVersion() + 1,
-        });
-      },
-      submitGuestIdentity(): void {
-        const roomNumber = normalizeDisplayText(store.draftRoomNumber());
-        const fullName = normalizeDisplayText(store.draftFullName());
-
-        if (!roomNumber || !fullName) {
-          return;
-        }
-
-        const identityKey = createIdentityKey(roomNumber, fullName);
+        const identityKey = createIdentityKey(normalizedRoomNumber, normalizedFullName);
         const existingGuest = store
           .guestTabs()
           .find((guest) => createIdentityKey(guest.roomNumber, guest.fullName) === identityKey);
 
         if (existingGuest) {
-          selectGuestTabById(existingGuest.id);
-          return;
+          return existingGuest;
         }
 
         const timestamp = createTimestamp();
         const guestTab: GuestTab = {
           id: createGuestTabId(),
-          roomNumber,
-          fullName,
+          roomNumber: normalizedRoomNumber,
+          fullName: normalizedFullName,
           counts: {},
           createdAt: timestamp,
           updatedAt: timestamp,
@@ -486,35 +267,81 @@ export const DrinkTallyStore = signalStore(
 
         patchState(store, {
           guestTabs: nextGuestTabs,
-          selectedGuestId: guestTab.id,
-          selectedGuestDrinkOrder: [],
-          addGuestStep: 'closed',
-          draftRoomNumber: '',
-          draftFullName: '',
-          interactionVersion: store.interactionVersion() + 1,
         });
         persistGuestTabs(nextGuestTabs);
+
+        return guestTab;
       },
-      selectGuestTab(guestId: string): void {
-        if (store.guestTabs().every((guest) => guest.id !== guestId)) {
-          return;
+      updateGuestDrinkCount(guestId: string, drinkId: DrinkId, delta: number): boolean {
+        if (delta === 0) {
+          return false;
         }
 
-        if (store.selectedGuestId() === guestId) {
-          closeSelectedGuestTabAndUpdateOrder();
-          return;
+        const catalogDrink = findDrinkById(store.drinkCatalog(), drinkId);
+        if (delta > 0 && (!catalogDrink || !catalogDrink.isActive)) {
+          return false;
         }
 
-        selectGuestTabById(guestId);
+        let didUpdate = false;
+        const nextGuestTabs = store.guestTabs().map((guest) => {
+          if (guest.id !== guestId) {
+            return guest;
+          }
+
+          const previousCount = getDrinkCount(guest.counts, drinkId);
+          const nextCount = Math.max(0, previousCount + delta);
+
+          if (nextCount === previousCount) {
+            return guest;
+          }
+
+          didUpdate = true;
+
+          return {
+            ...guest,
+            counts: setDrinkCount(guest.counts, drinkId, nextCount),
+          };
+        });
+
+        if (!didUpdate) {
+          return false;
+        }
+
+        patchState(store, {
+          guestTabs: nextGuestTabs,
+        });
+        persistGuestTabs(nextGuestTabs);
+
+        return true;
       },
-      closeSelectedGuestTab(): void {
-        closeSelectedGuestTabAndUpdateOrder();
-      },
-      incrementDrink(drinkId: DrinkId): void {
-        updateSelectedGuestCountsByDelta(drinkId, 1);
-      },
-      decrementDrink(drinkId: DrinkId): void {
-        updateSelectedGuestCountsByDelta(drinkId, -1);
+      finalizeGuestTab(guestId: string): boolean {
+        const timestamp = createTimestamp();
+        let didUpdate = false;
+        const nextGuestTabs = store.guestTabs().map((guest) => {
+          if (guest.id !== guestId) {
+            return guest;
+          }
+
+          didUpdate = true;
+
+          return {
+            ...guest,
+            updatedAt: timestamp,
+          };
+        });
+
+        if (!didUpdate) {
+          return false;
+        }
+
+        const sortedGuestTabs = sortGuestTabs(nextGuestTabs);
+
+        patchState(store, {
+          guestTabs: sortedGuestTabs,
+        });
+        persistGuestTabs(sortedGuestTabs);
+
+        return true;
       },
       addDrink(name: string, priceCents: number): AddDrinkResult {
         const normalizedName = normalizeDisplayText(name);
@@ -654,33 +481,15 @@ export const DrinkTallyStore = signalStore(
           billedGuestTab,
           ...store.billedGuestTabs(),
         ]);
-        const shouldClearSelection = store.selectedGuestId() === guestId;
 
         patchState(store, {
           guestTabs: nextGuestTabs,
           billedGuestTabs: nextBilledGuestTabs,
-          selectedGuestId: shouldClearSelection ? null : store.selectedGuestId(),
-          selectedGuestDrinkOrder: shouldClearSelection ? [] : store.selectedGuestDrinkOrder(),
-          interactionVersion: store.interactionVersion() + 1,
         });
         persistGuestTabs(nextGuestTabs);
         persistBilledGuestTabs(nextBilledGuestTabs);
 
         return true;
-      },
-      clearTransientState(): void {
-        if (store.selectedGuestId()) {
-          closeSelectedGuestTabAndUpdateOrder();
-          return;
-        }
-
-        patchState(store, {
-          selectedGuestId: null,
-          selectedGuestDrinkOrder: [],
-          addGuestStep: 'closed',
-          draftRoomNumber: '',
-          draftFullName: '',
-        });
       },
     };
   }),
@@ -714,6 +523,24 @@ function createGuestCardViewModel(
     totalPriceCents,
     displayTotalPrice: formatEuroPrice(totalPriceCents),
     drinkSummary: createDrinkSummary(guest.counts, drinkCatalog),
+  };
+}
+
+export function createSelectedGuestViewModel(
+  guest: GuestTab,
+  selectedGuestDrinkOrder: ReadonlyArray<DrinkId>,
+  drinkCatalog: ReadonlyArray<DrinkCatalogEntry>,
+): SelectedGuestViewModel {
+  return {
+    ...createGuestCardViewModel(guest, drinkCatalog),
+    activeDrinkTallies: normalizeSelectedGuestDrinkOrder(
+      guest.counts,
+      selectedGuestDrinkOrder,
+      drinkCatalog,
+    ).map((drinkId) =>
+      createSelectedGuestDrinkTally(drinkId, getDrinkCount(guest.counts, drinkId), drinkCatalog),
+    ),
+    availableDrinks: createAvailableDrinkReferences(guest.counts, drinkCatalog),
   };
 }
 
@@ -820,7 +647,7 @@ function sortBilledGuestTabs(guestTabs: BilledGuestTab[]): BilledGuestTab[] {
   });
 }
 
-function createSelectedGuestDrinkOrder(
+export function createSelectedGuestDrinkOrder(
   counts: DrinkCounts,
   drinkCatalog: ReadonlyArray<DrinkCatalogEntry>,
 ): DrinkId[] {
@@ -860,7 +687,7 @@ function normalizeSelectedGuestDrinkOrder(
   return normalizedOrder;
 }
 
-function updateSelectedGuestDrinkOrder(
+export function updateSelectedGuestDrinkOrder(
   counts: DrinkCounts,
   currentOrder: ReadonlyArray<DrinkId>,
   drinkId: DrinkId,

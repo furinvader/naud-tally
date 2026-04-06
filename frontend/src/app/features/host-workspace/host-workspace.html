@@ -1,1 +1,16 @@
-<nt-drink-tally></nt-drink-tally>
+<nt-drink-tally
+  [activeGuests]="hostWorkspaceStore.activeGuests()"
+  [selectedGuestId]="hostWorkspaceStore.selectedGuestId()"
+  [addGuestFlow]="hostWorkspaceStore.addGuestFlow()"
+  [selectedGuest]="hostWorkspaceStore.selectedGuest()"
+  (startAddGuest)="hostWorkspaceStore.startAddGuestFlow()"
+  (updateDraftRoomNumber)="hostWorkspaceStore.updateDraftRoomNumber($event)"
+  (updateDraftFullName)="hostWorkspaceStore.updateDraftFullName($event)"
+  (submitRoomNumber)="hostWorkspaceStore.submitRoomNumber()"
+  (submitGuestIdentity)="hostWorkspaceStore.submitGuestIdentity()"
+  (returnToRoomNumberStep)="hostWorkspaceStore.returnToRoomNumberStep()"
+  (cancelAddGuestFlow)="hostWorkspaceStore.cancelAddGuestFlow()"
+  (selectGuest)="hostWorkspaceStore.selectGuestTab($event)"
+  (incrementDrink)="hostWorkspaceStore.incrementDrink($event)"
+  (decrementDrink)="hostWorkspaceStore.decrementDrink($event)"
+></nt-drink-tally>
