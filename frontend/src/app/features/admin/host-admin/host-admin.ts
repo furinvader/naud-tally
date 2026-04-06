@@ -3,9 +3,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 
+import { AppBar } from '../../../ui/app-bar/app-bar';
+import { PageShell } from '../../../ui/page-shell/page-shell';
 import { HOST_ADMIN_COPY } from './host-admin.copy';
 import {
   DrinkTallyStore,
@@ -21,11 +22,12 @@ type FlashMessage = {
 @Component({
   selector: 'nt-host-admin',
   imports: [
+    AppBar,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatToolbarModule,
+    PageShell,
     RouterLink,
   ],
   templateUrl: './host-admin.html',
@@ -34,6 +36,23 @@ type FlashMessage = {
 })
 export class HostAdmin {
   protected readonly copy = HOST_ADMIN_COPY;
+  protected readonly shellBackground = `
+    radial-gradient(
+      circle at top right,
+      color-mix(in srgb, var(--nt-color-action) 14%, transparent),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      color-mix(in srgb, var(--nt-color-accent) 16%, transparent),
+      transparent 42%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--nt-color-canvas) 92%, white),
+      var(--nt-color-canvas)
+    )
+  `;
   protected readonly tallyStore = inject(DrinkTallyStore);
   protected readonly draftDrinkName = signal('');
   protected readonly draftDrinkPrice = signal('');

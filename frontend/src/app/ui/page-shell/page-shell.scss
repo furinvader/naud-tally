@@ -1,0 +1,37 @@
+:host {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 100%;
+  background: var(--nt-page-shell-background);
+  overflow: hidden;
+}
+
+.page-shell__body {
+  min-height: 0;
+  overflow: auto;
+}
+
+.page-shell__content {
+  width: min(100%, var(--nt-page-shell-max-width));
+  min-height: 100%;
+  margin: 0 auto;
+  padding: var(--nt-page-shell-padding);
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 959px) {
+  :host {
+    min-height: 100dvh;
+    overflow: visible;
+  }
+
+  .page-shell__body {
+    overflow: visible;
+  }
+
+  .page-shell__content {
+    min-height: 0;
+    padding: var(--nt-page-shell-compact-padding);
+  }
+}

@@ -44,3 +44,12 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Consequence: parent-facing component custom properties should be consumed inline with fallback to shared theme tokens and local literals, instead of being redefined on `:host`
 - Consequence: repo-authored styles should prefer shared theme tokens and Angular Material overrides over one-off local visual values
 - Consequence: repo-authored app and component styles should not read Angular Material `--mat-*` variables directly
+
+## Keep Cross-Feature Shared UI Under [`src/app/ui/`](src/app/ui/)
+
+- Status: accepted
+- Why: the tablet shell, app bar, and scroll behavior now span multiple routes, so keeping them under feature folders would duplicate route chrome and viewport rules
+- Consequence: cross-feature shared presentation and layout primitives live under [`src/app/ui/`](src/app/ui/)
+- Consequence: shared UI should stay state-light and feature-agnostic, with content projection and small input APIs preferred over broad configurable wrappers
+- Consequence: feature-owned business panels remain in their feature folders until a second consumer or a clearly foundational need appears
+- Consequence: the shared UI layer owns the default tablet viewport contract, including preferring owned scroll regions over browser-page scrolling when practical

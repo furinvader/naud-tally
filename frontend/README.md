@@ -15,6 +15,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - The Angular app entry point lives in [`src/main.ts`](src/main.ts).
 - Frontend-specific Node tooling is pinned in [`.nvmrc`](.nvmrc).
 - App-level wiring stays in [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), [`src/app/app.scss`](src/app/app.scss), [`src/app/app.routes.ts`](src/app/app.routes.ts), and [`src/app/app.config.ts`](src/app/app.config.ts).
+- Cross-feature shared presentation and layout primitives live under [`src/app/ui/`](src/app/ui/).
 - The current drink tally feature lives in [`src/app/features/tally/drink-tally/`](src/app/features/tally/drink-tally/).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).
 - New feature work should follow the feature structure below.
@@ -24,9 +25,18 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 ### Feature Areas
 
 - Put new feature code under [`src/app/features/`](src/app/features/).
+- Put cross-feature reusable presentation and layout primitives under [`src/app/ui/`](src/app/ui/).
 - Organize features by feature area, not by technical type.
 - Use the directory pattern `<feature-group>/<feature-name>/` under [`src/app/features/`](src/app/features/).
 - Keep app shell and bootstrap files in [`src/app/`](src/app/) and [`src/main.ts`](src/main.ts), not inside feature folders.
+
+### Shared UI
+
+- Use [`src/app/ui/`](src/app/ui/) only for app-wide reusable presentation and layout primitives.
+- Keep shared UI state-light and feature-agnostic.
+- Prefer content projection and a small input surface over large configurable wrappers.
+- Do not inject feature stores or feature-specific copy into shared UI primitives.
+- Leave business panels in their feature folders until a second consumer or a clearly foundational need appears.
 
 ### Feature File Shape
 
@@ -55,7 +65,8 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 
 - Group closely related files together in the same directory.
 - Keep one concept per file whenever practical.
-- Avoid type-based top-level folders such as `components/`, `services/`, or `directives/`.
+- Avoid type-based top-level folders such as `components/`, `services/`, or `directives/` inside feature areas.
+- The exception is [`src/app/ui/`](src/app/ui/) for truly cross-feature shared presentation and layout primitives.
 - If a directory starts to collect too many files, split it into clearer feature subdirectories instead of flattening more into one place.
 
 ### Component and Logic Rules

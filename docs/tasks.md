@@ -38,3 +38,4 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 - [T-015 Simplify Selected-Guest Drink Entry](tasks/done/T-015.md)
 - [T-016 Add a Host Admin Route](tasks/done/T-016.md)
 - [T-017 Re-scope Docs for the Host-Operated Pilot](tasks/done/T-017.md)
+- [T-023 Introduce Shared UI Shell and Scroll Foundations](tasks/done/T-023.md)

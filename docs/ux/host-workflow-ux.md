@@ -19,6 +19,7 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 - Keep the currently selected guest unmistakable while orders are being recorded.
 - Minimize context switching between order entry, product management, and billing.
 - Preserve large touch targets and low-friction use on a tablet.
+- Avoid full-page scroll on tablet layouts when an owned screen region can carry the scroll instead.
 - Make offline or sync state understandable without distracting the host during service.
 
 ## Working Terms
@@ -44,9 +45,11 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 - Use a tablet-first layout with one dominant order-entry panel and supporting side panels or sections.
 - Keep the guest lookup or open-tab list visible enough that the host can switch guests without losing context.
 - Keep the selected guest identity and running total visible while orders are added.
+- Let long lists and tall detail sections scroll inside their own owned regions or route content area instead of the browser page whenever practical.
 - Present products as fast tap targets with clear prices and counts.
 - Avoid deep modal flows for common service actions.
 - Reserve confirmations for destructive actions such as reset, delete, or final billing.
+- Keep top navigation and the active-work context visually anchored while supporting regions scroll.
 - Keep sync or offline status visible in a calm, low-noise way.
 
 ## Interaction Notes
@@ -56,6 +59,7 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 - The host should be able to add the most common order with one tap after selecting the guest.
 - Product-management actions should not interrupt active order entry unless they change the live catalog immediately.
 - Billing should show enough detail to confirm the tab confidently without turning into a full checkout or payment flow.
+- If a screen section can own its own scrolling without harming usability, prefer that over a full-window scroll on tablet layouts.
 - If connectivity is lost, the app should continue from local state and defer remote sync work.
 - When connectivity returns, sync should resume without requiring the host to re-enter data.
 

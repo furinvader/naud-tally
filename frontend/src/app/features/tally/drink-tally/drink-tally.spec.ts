@@ -42,6 +42,8 @@ describe('DrinkTally', () => {
     expect(compiled.textContent).not.toContain(
       'Open your tab and tally drinks on the shared tablet.',
     );
+    expect(compiled.querySelector('nt-page-shell')).not.toBeNull();
+    expect(compiled.querySelector('nt-app-bar')?.textContent).toContain('Naud Tally');
     expect(compiled.textContent).toContain('Add yourself');
     expect(compiled.textContent).toContain('No guest tabs yet');
     expect(compiled.querySelector('[data-testid="add-yourself-button"]')).not.toBeNull();

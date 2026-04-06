@@ -3,63 +3,8 @@
   --nt-public-column-content-padding: clamp(var(--nt-space-md), 3vw, var(--nt-space-lg));
   --nt-guest-list-shadow-bleed: var(--nt-space-xs);
 
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  height: 100dvh;
-  overflow: visible;
-  background:
-    radial-gradient(
-      circle at top right,
-      color-mix(in srgb, var(--nt-color-action) 11%, transparent),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at top left,
-      color-mix(in srgb, var(--nt-color-accent) 13%, transparent),
-      transparent 38%
-    ),
-    linear-gradient(
-      180deg,
-      var(--nt-color-canvas),
-      color-mix(in srgb, var(--nt-color-canvas) 88%, var(--nt-color-surface))
-    );
-}
-
-.app-toolbar {
-  position: relative;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--nt-space-sm);
-  padding-inline: clamp(var(--nt-space-sm), 3vw, var(--nt-space-lg));
-  padding-block: var(--nt-space-sm);
-  backdrop-filter: blur(18px);
-  border-bottom: 1px solid var(--nt-border-subtle);
-}
-
-.brand-block {
-  display: grid;
-  gap: 2px;
-}
-
-.brand {
-  font: var(--nt-type-kicker);
-  letter-spacing: var(--nt-tracking-kicker);
-  text-transform: uppercase;
-  color: var(--nt-color-ink);
-}
-
-.toolbar-action {
-  flex-shrink: 0;
-}
-
-.app-shell {
-  width: min(100%, var(--nt-drink-tally-shell-max-width));
-  height: 100%;
-  min-height: 0;
-  margin: 0 auto;
-  padding: clamp(var(--nt-space-md), 4vw, var(--nt-space-xl));
+  display: block;
+  min-height: 100%;
 }
 
 .screen-body {
@@ -67,8 +12,8 @@
   gap: var(--nt-space-md);
   align-items: stretch;
   grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
-  height: 100%;
   min-height: 0;
+  flex: 1;
 }
 
 .public-column {
@@ -83,14 +28,6 @@
 }
 
 @media (max-width: 959px) {
-  :host {
-    display: block;
-    height: auto;
-    min-height: 100dvh;
-    overflow: visible;
-  }
-
-  .app-shell,
   .screen-body,
   .public-column {
     height: auto;
@@ -102,16 +39,5 @@
 
   .public-column {
     grid-template-rows: auto;
-  }
-}
-
-@media (max-width: 599px) {
-  .app-shell {
-    padding: var(--nt-space-sm);
-  }
-
-  .app-toolbar {
-    align-items: start;
-    flex-direction: column;
   }
 }

@@ -196,6 +196,18 @@
     font: var(--nt-type-body);
   }
 
+  body > nt-root {
+    display: block;
+    min-height: 100%;
+  }
+
+  @media (min-width: 960px) {
+    html,
+    body {
+      overflow: hidden;
+    }
+  }
+
   @include nt-scroll-shadow.install();
 
   *,

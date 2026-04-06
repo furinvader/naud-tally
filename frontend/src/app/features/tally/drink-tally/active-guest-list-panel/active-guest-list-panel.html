@@ -20,9 +20,8 @@
     <p class="section-heading__hint">{{ copy().guestListHint }}</p>
   </div>
 
-  <div
+  <nt-scroll-region
     class="guest-list__scroll"
-    ntScrollShadow
     data-testid="active-guest-list-scroll"
   >
     @if (guests().length) {
@@ -46,5 +45,5 @@
         <p>{{ copy().emptyGuestListBody }}</p>
       </mat-card>
     }
-  </div>
+  </nt-scroll-region>
 </section>

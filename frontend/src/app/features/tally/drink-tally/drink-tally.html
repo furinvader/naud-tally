@@ -1,19 +1,19 @@
-<mat-toolbar class="app-toolbar">
-  <div class="brand-block">
-    <span class="brand">{{ copy.title }}</span>
-  </div>
+<nt-page-shell
+  [maxWidth]="'var(--nt-drink-tally-shell-max-width)'"
+  [background]="shellBackground"
+>
+  <nt-app-bar [title]="copy.title">
+    <a
+      actions
+      mat-stroked-button
+      class="toolbar-action"
+      data-testid="host-route-link"
+      [routerLink]="hostRoute"
+    >
+      Host tools
+    </a>
+  </nt-app-bar>
 
-  <a
-    mat-stroked-button
-    class="toolbar-action"
-    data-testid="host-route-link"
-    [routerLink]="hostRoute"
-  >
-    Host tools
-  </a>
-</mat-toolbar>
-
-<main class="app-shell">
   <section class="screen-body">
     <div class="public-column" [class.public-column--entry-open]="entryOpen()">
       @if (entryOpen()) {
@@ -46,4 +46,4 @@
       (decrementDrink)="tallyStore.decrementDrink($event)"
     />
   </section>
-</main>
+</nt-page-shell>

@@ -28,3 +28,4 @@ Read this file before opening task files under [`docs/tasks/done/`](./).
 - [T-015 Simplify Selected-Guest Drink Entry](T-015.md)
 - [T-016 Add a Host Admin Route](T-016.md)
 - [T-017 Re-scope Docs for the Host-Operated Pilot](T-017.md)
+- [T-023 Introduce Shared UI Shell and Scroll Foundations](T-023.md)

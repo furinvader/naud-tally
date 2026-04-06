@@ -33,6 +33,8 @@ describe('HostAdmin', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
 
+    expect(compiled.querySelector('nt-page-shell')).not.toBeNull();
+    expect(compiled.querySelector('nt-app-bar')?.textContent).toContain('Host route');
     expect(compiled.textContent).toContain('Host admin');
     expect(
       compiled.querySelector('[data-testid="host-summary-open-guests"]')?.textContent,
