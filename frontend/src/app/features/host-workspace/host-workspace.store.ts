@@ -7,16 +7,17 @@ import {
   withState,
 } from '@ngrx/signals';
 
+import { CatalogStore, DrinkId } from '../catalog/catalog.store';
+import { GuestTabsStore } from '../guest-tabs/guest-tabs.store';
 import {
   AddGuestFlowViewModel,
   AddGuestStep,
+  createGuestCardViewModel,
   createSelectedGuestDrinkOrder,
   createSelectedGuestViewModel,
-  DrinkId,
-  DrinkTallyStore,
   SelectedGuestViewModel,
   updateSelectedGuestDrinkOrder,
-} from '../tally/drink-tally/drink-tally.store';
+} from '../tally/drink-tally/drink-tally.models';
 
 type HostWorkspaceState = {
   selectedGuestId: string | null;
@@ -39,10 +40,15 @@ const initialState: HostWorkspaceState = {
 export const HostWorkspaceStore = signalStore(
   withState(initialState),
   withComputed((store) => {
-    const tallyStore = inject(DrinkTallyStore);
+    const guestTabsStore = inject(GuestTabsStore);
+    const catalogStore = inject(CatalogStore);
 
     return {
-      activeGuests: computed(() => tallyStore.activeGuests()),
+      activeGuests: computed(() =>
+        guestTabsStore
+          .guestTabs()
+          .map((guest) => createGuestCardViewModel(guest, catalogStore.drinkCatalog())),
+      ),
       selectedGuest: computed<SelectedGuestViewModel | null>(() => {
         const selectedGuestId = store.selectedGuestId();
 
@@ -50,7 +56,7 @@ export const HostWorkspaceStore = signalStore(
           return null;
         }
 
-        const guest = tallyStore.guestTabs().find((entry) => entry.id === selectedGuestId);
+        const guest = guestTabsStore.guestTabs().find((entry) => entry.id === selectedGuestId);
 
         if (!guest) {
           return null;
@@ -59,7 +65,7 @@ export const HostWorkspaceStore = signalStore(
         return createSelectedGuestViewModel(
           guest,
           store.selectedGuestDrinkOrder(),
-          tallyStore.drinkCatalog(),
+          catalogStore.drinkCatalog(),
         );
       }),
       addGuestFlow: computed<AddGuestFlowViewModel>(() => ({
@@ -70,7 +76,8 @@ export const HostWorkspaceStore = signalStore(
     };
   }),
   withMethods((store) => {
-    const tallyStore = inject(DrinkTallyStore);
+    const guestTabsStore = inject(GuestTabsStore);
+    const catalogStore = inject(CatalogStore);
 
     function patchInteractionState(nextState: Partial<HostWorkspaceState>): void {
       patchState(store, {
@@ -100,7 +107,7 @@ export const HostWorkspaceStore = signalStore(
       const selectedGuestId = store.selectedGuestId();
 
       if (selectedGuestId) {
-        tallyStore.finalizeGuestTab(selectedGuestId);
+        guestTabsStore.finalizeGuestTab(selectedGuestId);
       }
 
       clearScreenState(true);
@@ -114,18 +121,20 @@ export const HostWorkspaceStore = signalStore(
       }
 
       const selectedGuest = store.selectedGuest();
-      const guest = tallyStore.guestTabs().find((entry) => entry.id === selectedGuestId);
+      const guest = guestTabsStore.guestTabs().find((entry) => entry.id === selectedGuestId);
 
       if (!guest) {
         clearScreenState();
         return;
       }
 
+      const drinkCatalog = catalogStore.drinkCatalog();
+
       const previousCount =
         selectedGuest?.activeDrinkTallies.find((drink) => drink.id === drinkId)?.count ?? 0;
       const nextCount = Math.max(0, previousCount + delta);
 
-      if (!tallyStore.updateGuestDrinkCount(selectedGuestId, drinkId, delta)) {
+      if (!guestTabsStore.updateGuestDrinkCount(selectedGuestId, drinkId, delta, drinkCatalog)) {
         return;
       }
 
@@ -136,7 +145,7 @@ export const HostWorkspaceStore = signalStore(
           drinkId,
           previousCount,
           nextCount,
-          tallyStore.drinkCatalog(),
+          drinkCatalog,
         ),
       });
     }
@@ -194,7 +203,7 @@ export const HostWorkspaceStore = signalStore(
           return;
         }
 
-        const guest = tallyStore.ensureGuestTab(roomNumber, fullName);
+        const guest = guestTabsStore.ensureGuestTab(roomNumber, fullName);
 
         if (!guest) {
           return;
@@ -202,17 +211,14 @@ export const HostWorkspaceStore = signalStore(
 
         patchInteractionState({
           selectedGuestId: guest.id,
-          selectedGuestDrinkOrder: createSelectedGuestDrinkOrder(
-            guest.counts,
-            tallyStore.drinkCatalog(),
-          ),
+          selectedGuestDrinkOrder: createSelectedGuestDrinkOrder(guest.counts, catalogStore.drinkCatalog()),
           addGuestStep: 'closed',
           draftRoomNumber: '',
           draftFullName: '',
         });
       },
       selectGuestTab(guestId: string): void {
-        const guest = tallyStore.guestTabs().find((entry) => entry.id === guestId);
+        const guest = guestTabsStore.guestTabs().find((entry) => entry.id === guestId);
 
         if (!guest) {
           return;
@@ -225,10 +231,7 @@ export const HostWorkspaceStore = signalStore(
 
         patchInteractionState({
           selectedGuestId: guestId,
-          selectedGuestDrinkOrder: createSelectedGuestDrinkOrder(
-            guest.counts,
-            tallyStore.drinkCatalog(),
-          ),
+          selectedGuestDrinkOrder: createSelectedGuestDrinkOrder(guest.counts, catalogStore.drinkCatalog()),
           addGuestStep: 'closed',
           draftRoomNumber: '',
           draftFullName: '',

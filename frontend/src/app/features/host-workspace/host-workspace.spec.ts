@@ -3,13 +3,9 @@ import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
 import { routes } from '../../app.routes';
-import {
-  DRINK_CATALOG,
-  DRINK_TALLY_STORAGE_KEY,
-  DrinkCounts,
-  GUEST_TAB_INACTIVITY_TIMEOUT_MS,
-} from '../tally/drink-tally/drink-tally.store';
-import { HostWorkspace } from './host-workspace';
+import { DRINK_CATALOG } from '../catalog/catalog.store';
+import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs/guest-tabs.store';
+import { GUEST_TAB_INACTIVITY_TIMEOUT_MS, HostWorkspace } from './host-workspace';
 
 describe('HostWorkspace', () => {
   beforeEach(async () => {
@@ -417,7 +413,7 @@ describe('HostWorkspace', () => {
       compiled.querySelector('[data-testid="selected-guest-available-drinks-section"]')
         ?.textContent,
     ).toContain('Add a drink');
-    expect(localStorage.getItem(DRINK_TALLY_STORAGE_KEY)).toContain('"roomNumber":"204"');
+    expect(localStorage.getItem(GUEST_TABS_STORAGE_KEY)).toContain('"roomNumber":"204"');
   });
 
   it('should move a newly added drink from the add-drink section into Your drinks', async () => {
@@ -506,7 +502,7 @@ describe('HostWorkspace', () => {
 
 function seedGuestTabs(): void {
   localStorage.setItem(
-    DRINK_TALLY_STORAGE_KEY,
+    GUEST_TABS_STORAGE_KEY,
     JSON.stringify([
       {
         id: 'guest-1',
@@ -522,7 +518,7 @@ function seedGuestTabs(): void {
 
 function seedMultipleGuestTabs(): void {
   localStorage.setItem(
-    DRINK_TALLY_STORAGE_KEY,
+    GUEST_TABS_STORAGE_KEY,
     JSON.stringify([
       {
         id: 'guest-1',

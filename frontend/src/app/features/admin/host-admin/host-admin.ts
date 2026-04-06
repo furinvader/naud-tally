@@ -5,14 +5,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 
+import { CatalogStore } from '../../catalog/catalog.store';
+import { BillingHistoryStore } from '../../billing-history/billing-history.store';
+import { GuestTabsStore } from '../../guest-tabs/guest-tabs.store';
 import { AppBar } from '../../../ui/app-bar/app-bar';
 import { PageShell } from '../../../ui/page-shell/page-shell';
 import { HOST_ADMIN_COPY } from './host-admin.copy';
 import {
-  DrinkTallyStore,
   HostDrinkCatalogItem,
   OpenGuestBillViewModel,
-} from '../../tally/drink-tally/drink-tally.store';
+  countOpenGuestsUsingDrink,
+  createBilledGuestBillViewModel,
+  createHostDrinkCatalogItems,
+  createHostSummaryViewModel,
+  createOpenGuestBillViewModel,
+} from './host-admin.models';
 
 type FlashMessage = {
   text: string;
@@ -53,15 +60,37 @@ export class HostAdmin {
       var(--nt-color-canvas)
     )
   `;
-  protected readonly tallyStore = inject(DrinkTallyStore);
+  protected readonly guestTabsStore = inject(GuestTabsStore);
+  protected readonly catalogStore = inject(CatalogStore);
+  protected readonly billingHistoryStore = inject(BillingHistoryStore);
   protected readonly draftDrinkName = signal('');
   protected readonly draftDrinkPrice = signal('');
   protected readonly flashMessage = signal<FlashMessage | null>(null);
+  protected readonly hostSummary = computed(() =>
+    createHostSummaryViewModel(
+      this.catalogStore.drinkCatalog(),
+      this.guestTabsStore.guestTabs(),
+      this.billingHistoryStore.billedGuestTabs(),
+    ),
+  );
+  protected readonly hostDrinkCatalog = computed(() =>
+    createHostDrinkCatalogItems(this.catalogStore.drinkCatalog(), this.guestTabsStore.guestTabs()),
+  );
   protected readonly activeDrinks = computed(() =>
-    this.tallyStore.hostDrinkCatalog().filter((drink) => drink.isActive),
+    this.hostDrinkCatalog().filter((drink) => drink.isActive),
   );
   protected readonly removedDrinks = computed(() =>
-    this.tallyStore.hostDrinkCatalog().filter((drink) => !drink.isActive),
+    this.hostDrinkCatalog().filter((drink) => !drink.isActive),
+  );
+  protected readonly openGuestBills = computed(() =>
+    this.guestTabsStore
+      .guestTabs()
+      .map((guest) => createOpenGuestBillViewModel(guest, this.catalogStore.drinkCatalog())),
+  );
+  protected readonly billedGuestBills = computed(() =>
+    this.billingHistoryStore
+      .billedGuestTabs()
+      .map((guest) => createBilledGuestBillViewModel(guest)),
   );
   protected readonly canSubmitDrink = computed(
     () =>
@@ -81,7 +110,7 @@ export class HostAdmin {
     event.preventDefault();
 
     const priceCents = parsePriceInputToCents(this.draftDrinkPrice());
-    const result = this.tallyStore.addDrink(this.draftDrinkName(), priceCents ?? Number.NaN);
+    const result = this.catalogStore.addDrink(this.draftDrinkName(), priceCents ?? Number.NaN);
 
     if (!result.ok) {
       this.showFlashMessage(createAddDrinkErrorMessage(result.reason), 'error');
@@ -109,13 +138,18 @@ export class HostAdmin {
       return;
     }
 
-    if (this.tallyStore.removeDrink(drink.id)) {
+    if (
+      this.catalogStore.removeDrink(
+        drink.id,
+        countOpenGuestsUsingDrink(this.guestTabsStore.guestTabs(), drink.id),
+      )
+    ) {
       this.showFlashMessage(this.copy.flashSuccessRemove, 'success');
     }
   }
 
   protected restoreDrink(drink: HostDrinkCatalogItem): void {
-    if (this.tallyStore.restoreDrink(drink.id)) {
+    if (this.catalogStore.restoreDrink(drink.id)) {
       this.showFlashMessage(this.copy.flashSuccessRestore, 'success');
     }
   }
@@ -129,9 +163,14 @@ export class HostAdmin {
       return;
     }
 
-    if (this.tallyStore.billGuestTab(guest.id)) {
-      this.showFlashMessage(this.copy.flashSuccessBill, 'success');
+    const closedGuestTab = this.guestTabsStore.closeGuestTab(guest.id);
+
+    if (!closedGuestTab) {
+      return;
     }
+
+    this.billingHistoryStore.recordBilledGuestTab(closedGuestTab, this.catalogStore.drinkCatalog());
+    this.showFlashMessage(this.copy.flashSuccessBill, 'success');
   }
 
   private showFlashMessage(text: string, tone: FlashMessage['tone']): void {

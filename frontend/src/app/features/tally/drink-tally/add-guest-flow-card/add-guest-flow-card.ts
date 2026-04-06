@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
 import { AddGuestFlowCopy } from '../drink-tally.copy';
-import { AddGuestFlowViewModel } from '../drink-tally.store';
+import { AddGuestFlowViewModel } from '../drink-tally.models';
 
 @Component({
   selector: 'nt-add-guest-flow-card',

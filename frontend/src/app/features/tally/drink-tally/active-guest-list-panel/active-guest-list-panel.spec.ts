@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
+import { DrinkCounts } from '../../../guest-tabs/guest-tabs.store';
 import { DRINK_TALLY_COPY } from '../drink-tally.copy';
-import { DrinkCounts, GuestCardViewModel } from '../drink-tally.store';
+import { GuestCardViewModel } from '../drink-tally.models';
 import { ActiveGuestListPanel } from './active-guest-list-panel';
 
 describe('ActiveGuestListPanel', () => {
