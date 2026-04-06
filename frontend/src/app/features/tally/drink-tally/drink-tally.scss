@@ -7,6 +7,12 @@
   min-height: 100%;
 }
 
+@media (min-width: 960px) {
+  :host {
+    height: 100%;
+  }
+}
+
 .screen-body {
   display: grid;
   gap: var(--nt-space-md);

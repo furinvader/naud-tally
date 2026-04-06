@@ -3,6 +3,12 @@
   min-height: 100%;
 }
 
+@media (min-width: 960px) {
+  :host {
+    height: 100%;
+  }
+}
+
 .eyebrow,
 .panel-eyebrow {
   font: var(--nt-type-kicker);
