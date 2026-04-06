@@ -9,8 +9,9 @@ import {
 } from '@ngrx/signals';
 
 import { DrinkCatalogEntry, DrinkId, findDrinkById } from '../catalog/catalog.store';
+import { loadGuestTabs, saveGuestTabs } from './guest-tabs.repository';
 
-export const GUEST_TABS_STORAGE_KEY = 'naud-tally.guest-tabs';
+export { GUEST_TABS_STORAGE_KEY } from './guest-tabs.repository';
 
 export type DrinkCounts = Partial<Record<DrinkId, number>> & Record<string, number>;
 
@@ -74,7 +75,7 @@ export const GuestTabsStore = signalStore(
       patchState(store, {
         guestTabs: nextGuestTabs,
       });
-      persistGuestTabs(nextGuestTabs);
+      saveGuestTabs(nextGuestTabs);
 
       return guestTab;
     },
@@ -121,7 +122,7 @@ export const GuestTabsStore = signalStore(
       patchState(store, {
         guestTabs: nextGuestTabs,
       });
-      persistGuestTabs(nextGuestTabs);
+      saveGuestTabs(nextGuestTabs);
 
       return true;
     },
@@ -150,7 +151,7 @@ export const GuestTabsStore = signalStore(
       patchState(store, {
         guestTabs: sortedGuestTabs,
       });
-      persistGuestTabs(sortedGuestTabs);
+      saveGuestTabs(sortedGuestTabs);
 
       return true;
     },
@@ -166,19 +167,19 @@ export const GuestTabsStore = signalStore(
       patchState(store, {
         guestTabs: nextGuestTabs,
       });
-      persistGuestTabs(nextGuestTabs);
+      saveGuestTabs(nextGuestTabs);
 
       return guest;
     },
   })),
   withHooks({
     onInit(store): void {
-      const restoredGuestTabs = sortGuestTabs(readPersistedGuestTabs());
+      const restoredGuestTabs = sortGuestTabs(loadGuestTabs());
 
       patchState(store, {
         guestTabs: restoredGuestTabs,
       });
-      persistGuestTabs(restoredGuestTabs);
+      saveGuestTabs(restoredGuestTabs);
     },
   }),
 );
@@ -209,92 +210,6 @@ export function getDrinkCount(counts: DrinkCounts, drinkId: string): number {
   return normalizeCountValue(counts[drinkId]);
 }
 
-function readPersistedGuestTabs(): GuestTab[] {
-  const storage = getStorage();
-
-  if (!storage) {
-    return [];
-  }
-
-  const rawGuestTabs = storage.getItem(GUEST_TABS_STORAGE_KEY);
-
-  if (!rawGuestTabs) {
-    return [];
-  }
-
-  try {
-    return normalizeGuestTabs(JSON.parse(rawGuestTabs));
-  } catch {
-    return [];
-  }
-}
-
-function normalizeGuestTabs(value: unknown): GuestTab[] {
-  if (!Array.isArray(value)) {
-    return [];
-  }
-
-  const seenIds = new Set<string>();
-
-  return value
-    .map((guestTab) => normalizeGuestTab(guestTab))
-    .filter((guestTab): guestTab is GuestTab => {
-      if (!guestTab || seenIds.has(guestTab.id)) {
-        return false;
-      }
-
-      seenIds.add(guestTab.id);
-      return true;
-    });
-}
-
-function normalizeGuestTab(value: unknown): GuestTab | null {
-  if (!value || typeof value !== 'object') {
-    return null;
-  }
-
-  const guestTab = value as Record<string, unknown>;
-  const roomNumber = normalizeDisplayText(guestTab['roomNumber']);
-  const fullName = normalizeDisplayText(guestTab['fullName']);
-
-  if (!roomNumber || !fullName) {
-    return null;
-  }
-
-  const timestamp = createTimestamp();
-
-  return {
-    id: normalizeId(guestTab['id']) ?? createGuestTabId(),
-    roomNumber,
-    fullName,
-    counts: normalizeCounts(guestTab['counts']),
-    createdAt: normalizeTimestamp(guestTab['createdAt'], timestamp),
-    updatedAt: normalizeTimestamp(guestTab['updatedAt'], timestamp),
-  };
-}
-
-function normalizeCounts(value: unknown): DrinkCounts {
-  if (!value || typeof value !== 'object') {
-    return {};
-  }
-
-  const persistedCounts = value as Record<string, unknown>;
-  const counts: DrinkCounts = {};
-
-  for (const [drinkId, countValue] of Object.entries(persistedCounts)) {
-    const normalizedDrinkId = normalizeId(drinkId);
-    const normalizedCount = normalizeCountValue(countValue);
-
-    if (!normalizedDrinkId || normalizedCount <= 0) {
-      continue;
-    }
-
-    counts[normalizedDrinkId] = normalizedCount;
-  }
-
-  return counts;
-}
-
 function setDrinkCount(counts: DrinkCounts, drinkId: string, count: number): DrinkCounts {
   const normalizedCount = normalizeCountValue(count);
   const nextCounts = { ...counts };
@@ -306,29 +221,6 @@ function setDrinkCount(counts: DrinkCounts, drinkId: string, count: number): Dri
 
   nextCounts[drinkId] = normalizedCount;
   return nextCounts;
-}
-
-function normalizeId(value: unknown): string | null {
-  if (typeof value !== 'string') {
-    return null;
-  }
-
-  const normalized = value.trim();
-  return normalized ? normalized : null;
-}
-
-function normalizeTimestamp(value: unknown, fallback: string): string {
-  if (typeof value !== 'string') {
-    return fallback;
-  }
-
-  const normalized = value.trim();
-
-  if (!normalized || Number.isNaN(Date.parse(normalized))) {
-    return fallback;
-  }
-
-  return normalized;
 }
 
 function normalizeDisplayText(value: unknown): string {
@@ -367,26 +259,4 @@ function createRecordId(prefix: string): string {
 
 function createTimestamp(): string {
   return new Date().toISOString();
-}
-
-function persistGuestTabs(guestTabs: GuestTab[]): void {
-  const storage = getStorage();
-
-  if (!storage) {
-    return;
-  }
-
-  try {
-    storage.setItem(GUEST_TABS_STORAGE_KEY, JSON.stringify(guestTabs));
-  } catch {
-    // Ignore storage failures so the guest-tab flow still works in restricted contexts.
-  }
-}
-
-function getStorage(): Storage | null {
-  try {
-    return globalThis.localStorage;
-  } catch {
-    return null;
-  }
 }

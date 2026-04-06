@@ -8,7 +8,6 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 
 ## Current Priority
 
-- [T-027 Introduce Repository Adapters for Local Persistence](tasks/open/T-027.md)
 - [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](tasks/open/T-028.md)
 - [T-029 Add Frontend Import Boundary Checks](tasks/open/T-029.md)
 
@@ -16,7 +15,6 @@ Complete these architecture tasks before resuming the remaining product-surface 
 
 ## Open Tasks
 
-- [T-027 Introduce Repository Adapters for Local Persistence](tasks/open/T-027.md)
 - [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](tasks/open/T-028.md)
 - [T-029 Add Frontend Import Boundary Checks](tasks/open/T-029.md)
 - [T-018 Design the Host Main Working Screen](tasks/open/T-018.md)
@@ -49,3 +47,4 @@ Complete these architecture tasks before resuming the remaining product-surface 
 - [T-024 Create the Host Workspace Composition Root](tasks/done/T-024.md)
 - [T-025 Separate Host-Screen UI State From Persistent Business State](tasks/done/T-025.md)
 - [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](tasks/done/T-026.md)
+- [T-027 Introduce Repository Adapters for Local Persistence](tasks/done/T-027.md)
