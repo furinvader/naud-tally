@@ -30,7 +30,7 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 
 - Status: accepted
 - Why: the official [Angular Style Guide](https://angular.dev/style-guide) recommends organizing code by feature areas and grouping closely related files together, which improves discoverability for both humans and agents
-- Consequence: new frontend feature work should live under [`src/app/features/`](src/app/features/), using the pattern `<feature-group>/<feature-name>/`, while app shell and bootstrap files stay under [`src/app/`](src/app/) and [`src/main.ts`](src/main.ts)
+- Consequence: new frontend feature work should live under [`src/app/features/`](src/app/features/) with flat top-level feature paths such as `host-workspace/` or `billing-history/`, while app shell and bootstrap files stay under [`src/app/`](src/app/) and [`src/main.ts`](src/main.ts)
 - Consequence: frontend implementation conventions are documented in [`README.md`](README.md) and agents should consult that guide before creating or restructuring frontend features
 
 ## Grow Larger Frontend Areas as Capability Modules Inside One App

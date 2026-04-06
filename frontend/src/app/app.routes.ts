@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 
 import { HostAdmin } from './features/admin/host-admin/host-admin';
-import { DrinkTally } from './features/tally/drink-tally/drink-tally';
+import { HostWorkspace } from './features/host-workspace/host-workspace';
 
 export const routes: Routes = [
   {
     path: '',
-    component: DrinkTally,
+    component: HostWorkspace,
   },
   {
     path: 'host',

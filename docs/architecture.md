@@ -14,7 +14,7 @@ It complements the product scope in [`product.md`](product.md), the workflow gui
 
 The current frontend is still small, but a few pressure points are already visible:
 
-- the default route still points at the older tally surface in [`../frontend/src/app/app.routes.ts`](../frontend/src/app/app.routes.ts)
+- the default route now points at a lightweight host-workspace composition root in [`../frontend/src/app/features/host-workspace/host-workspace.ts`](../frontend/src/app/features/host-workspace/host-workspace.ts), but that route still mounts the older tally surface while the migration continues
 - the current host admin screen imports the tally store directly from [`../frontend/src/app/features/tally/drink-tally/drink-tally.store.ts`](../frontend/src/app/features/tally/drink-tally/drink-tally.store.ts)
 - that store currently mixes domain types, business rules, route state, view-model shaping, and browser persistence
 
@@ -70,6 +70,8 @@ src/app/
 ```
 
 The exact file count can vary, but the ownership model should stay consistent.
+
+Top-level feature directories under [`../frontend/src/app/features/`](../frontend/src/app/features/) should stay flat. If a feature needs more internal structure, add subdirectories inside that feature instead of introducing another grouping layer above it.
 
 ## Ownership Rules
 
@@ -198,7 +200,7 @@ If a future prompt depends on module boundaries, public APIs, or state ownership
 
 The current backlog should treat these architecture tasks as the near-term implementation path:
 
-1. [T-024 Create the Host Workspace Composition Root](tasks/open/T-024.md)
+1. [T-024 Create the Host Workspace Composition Root](tasks/done/T-024.md)
 2. [T-025 Separate Host-Screen UI State From Persistent Business State](tasks/open/T-025.md)
 3. [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](tasks/open/T-026.md)
 4. [T-027 Introduce Repository Adapters for Local Persistence](tasks/open/T-027.md)
