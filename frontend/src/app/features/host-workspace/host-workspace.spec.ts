@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
-import { routes } from '../../app.routes';
 import { DRINK_CATALOG } from '../catalog';
 import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs';
 import { GUEST_TAB_INACTIVITY_TIMEOUT_MS, HostWorkspace } from './host-workspace';
@@ -13,7 +12,7 @@ describe('HostWorkspace', () => {
 
     await TestBed.configureTestingModule({
       imports: [HostWorkspace],
-      providers: [provideRouter(routes)],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 

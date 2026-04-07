@@ -12,11 +12,10 @@ Read this file before opening task files under [`docs/tasks/open/`](./).
 - Open only the task that matches the current goal.
 - If a task is completed, move it to the matching status folder and update [`../../tasks.md`](../../tasks.md) plus the affected status-folder indexes.
 
-The architecture-priority tasks are intentionally listed first and should be completed before the remaining open product tasks.
+The remaining open tasks now resume with product-surface and sync work, starting from the host main screen.
 
 ## Tasks
 
-- [T-029 Add Frontend Import Boundary Checks](T-029.md)
 - [T-018 Design the Host Main Working Screen](T-018.md)
 - [T-019 Make the Host Screen the Default Route](T-019.md)
 - [T-014 Refine the Host Main Screen Layout](T-014.md)

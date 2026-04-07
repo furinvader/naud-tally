@@ -175,7 +175,9 @@ def find_issues(markdown_file: Path, tracked_paths: set[str]) -> list[tuple[int,
 
 def main() -> int:
     tracked_files, tracked_paths = load_tracked_paths()
-    markdown_files = sorted(path for path in tracked_files if path.suffix == ".md")
+    markdown_files = sorted(
+        path for path in tracked_files if path.suffix == ".md" and path.is_file()
+    )
 
     failures = []
     for markdown_file in markdown_files:

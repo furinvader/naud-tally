@@ -43,6 +43,16 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Consequence: top-level feature directories publish their cross-feature surface from a root [`index.ts`](src/app/features/catalog/index.ts), and consumers import the feature directory path rather than a deep internal file
 - Consequence: follow the module map in [`../docs/architecture.md`](../docs/architecture.md) when restructuring or adding new large feature areas
 
+## Enforce Frontend Import Boundaries With a Repo-Owned Check
+
+- Status: accepted
+- Why: the current feature split is now meaningful enough that relying on convention alone would make future architecture drift hard to catch in reviews
+- Consequence: [`scripts/check-import-boundaries.mjs`](scripts/check-import-boundaries.mjs) is the source of truth for the automated boundary rule under [`src/app/`](src/app/)
+- Consequence: app-shell files may import feature code only through a top-level feature [`index.ts`](src/app/features/catalog/index.ts) entrypoint
+- Consequence: cross-feature imports may target another feature only through that feature's root entrypoint, not an internal file
+- Consequence: shared UI under [`src/app/ui/`](src/app/ui/) may not import feature-owned business code
+- Consequence: temporary exceptions require a single explicit allowlist entry in [`scripts/check-import-boundaries.mjs`](scripts/check-import-boundaries.mjs) plus a task reference for cleanup
+
 ## Separate Persistent Business State From Transient Screen State
 
 - Status: accepted

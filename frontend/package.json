@@ -2,9 +2,10 @@
   "name": "naud-tally",
   "version": "0.0.0",
   "scripts": {
+    "check:import-boundaries": "node ./scripts/check-import-boundaries.mjs",
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "npm run check:import-boundaries && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
