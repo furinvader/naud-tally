@@ -15,7 +15,7 @@ import {
   createSelectedGuestViewModel,
   SelectedGuestViewModel,
   updateSelectedGuestDrinkOrder,
-} from '../tally';
+} from '../drink-tally';
 import { CatalogStore, DrinkId } from '../catalog';
 import { GuestTabsStore } from '../guest-tabs';
 

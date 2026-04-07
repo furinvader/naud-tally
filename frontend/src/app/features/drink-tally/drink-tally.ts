@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, Component, computed, input, output } from '@an
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 
-import { AppBar } from '../../../ui/app-bar/app-bar';
-import { PageShell } from '../../../ui/page-shell/page-shell';
-import { DrinkId } from '../../catalog';
+import { AppBar } from '../../ui/app-bar/app-bar';
+import { PageShell } from '../../ui/page-shell/page-shell';
+import { DrinkId } from '../catalog';
 import { ActiveGuestListPanel } from './active-guest-list-panel/active-guest-list-panel';
 import { AddGuestFlowCard } from './add-guest-flow-card/add-guest-flow-card';
 import { DRINK_TALLY_COPY, SelectedGuestPanelSectionCopy } from './drink-tally.copy';

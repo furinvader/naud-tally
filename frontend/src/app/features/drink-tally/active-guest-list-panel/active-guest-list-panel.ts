@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, input, output } from '@angular/core
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
-import { ScrollRegion } from '../../../../ui/scroll-region/scroll-region';
+import { ScrollRegion } from '../../../ui/scroll-region/scroll-region';
 import { ActiveGuestListCopy } from '../drink-tally.copy';
 import { GuestCardViewModel } from '../drink-tally.models';
 import { GuestTabCard } from '../guest-tab-card/guest-tab-card';
