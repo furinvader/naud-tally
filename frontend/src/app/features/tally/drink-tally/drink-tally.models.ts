@@ -3,9 +3,9 @@ import {
   DrinkId,
   formatEuroPrice,
   getDrinkById,
-} from '../../catalog/catalog.store';
-import { calculateGuestTotalPriceCents } from '../../billing-history/billing-history.store';
-import { DrinkCounts, GuestTab, countDrinks, getDrinkCount } from '../../guest-tabs/guest-tabs.store';
+} from '../../catalog';
+import { calculateGuestTotalPriceCents } from '../../billing-history';
+import { DrinkCounts, GuestTab, countDrinks, getDrinkCount } from '../../guest-tabs';
 
 export type AddGuestStep = 'closed' | 'roomNumber' | 'fullName';
 

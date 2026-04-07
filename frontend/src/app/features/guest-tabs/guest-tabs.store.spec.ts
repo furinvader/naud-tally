@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DRINK_CATALOG, DrinkCatalogEntry } from '../catalog/catalog.store';
+import { DRINK_CATALOG, DrinkCatalogEntry } from '../catalog';
 import {
   DrinkCounts,
   GUEST_TABS_STORAGE_KEY,

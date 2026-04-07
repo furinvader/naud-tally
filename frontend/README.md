@@ -45,6 +45,8 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 ### Public APIs Between Features
 
 - If one feature needs another feature's behavior, prefer a small public API or facade file owned by the providing feature.
+- For top-level features under [`src/app/features/`](src/app/features/), publish that cross-feature surface from the feature root, typically through an [`index.ts`](src/app/features/catalog/index.ts) entrypoint.
+- Import the feature directory path instead of a deep file path when consuming another feature.
 - Do not deep-import another feature's internal store, helper, or implementation file by default.
 - If a reusable cross-feature API is missing, create it in the owning feature instead of bypassing the boundary.
 

@@ -40,6 +40,7 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Consequence: keep the frontend as one Angular app under [`./`](./)
 - Consequence: use route-level composition features for major screens such as the future host workspace, and separate durable capabilities such as guest tabs, catalog, billing history, and sync or recovery into sibling feature areas under [`src/app/features/`](src/app/features/)
 - Consequence: when a feature area grows, expose a small public API or facade rather than letting other features import internal stores or helpers directly
+- Consequence: top-level feature directories publish their cross-feature surface from a root [`index.ts`](src/app/features/catalog/index.ts), and consumers import the feature directory path rather than a deep internal file
 - Consequence: follow the module map in [`../docs/architecture.md`](../docs/architecture.md) when restructuring or adding new large feature areas
 
 ## Separate Persistent Business State From Transient Screen State

@@ -8,7 +8,7 @@ import {
   withState,
 } from '@ngrx/signals';
 
-import { DrinkCatalogEntry, DrinkId, findDrinkById } from '../catalog/catalog.store';
+import { DrinkCatalogEntry, DrinkId, findDrinkById } from '../catalog';
 import { loadGuestTabs, saveGuestTabs } from './guest-tabs.repository';
 
 export { GUEST_TABS_STORAGE_KEY } from './guest-tabs.repository';

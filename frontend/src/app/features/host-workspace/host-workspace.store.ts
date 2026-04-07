@@ -7,8 +7,6 @@ import {
   withState,
 } from '@ngrx/signals';
 
-import { CatalogStore, DrinkId } from '../catalog/catalog.store';
-import { GuestTabsStore } from '../guest-tabs/guest-tabs.store';
 import {
   AddGuestFlowViewModel,
   AddGuestStep,
@@ -17,7 +15,9 @@ import {
   createSelectedGuestViewModel,
   SelectedGuestViewModel,
   updateSelectedGuestDrinkOrder,
-} from '../tally/drink-tally/drink-tally.models';
+} from '../tally';
+import { CatalogStore, DrinkId } from '../catalog';
+import { GuestTabsStore } from '../guest-tabs';
 
 type HostWorkspaceState = {
   selectedGuestId: string | null;

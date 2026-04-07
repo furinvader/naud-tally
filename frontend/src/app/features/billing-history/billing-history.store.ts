@@ -8,8 +8,8 @@ import {
   withState,
 } from '@ngrx/signals';
 
-import { DrinkCatalogEntry, DrinkId, getDrinkById } from '../catalog/catalog.store';
-import { DrinkCounts, GuestTab, countDrinks, getDrinkCount } from '../guest-tabs/guest-tabs.store';
+import { DrinkCatalogEntry, DrinkId, getDrinkById } from '../catalog';
+import { DrinkCounts, GuestTab, countDrinks, getDrinkCount } from '../guest-tabs';
 import { loadBilledGuestTabs, saveBilledGuestTabs } from './billing-history.repository';
 
 export { BILLED_GUEST_TABS_STORAGE_KEY } from './billing-history.repository';
