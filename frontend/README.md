@@ -20,7 +20,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - The route-level host workspace composition root lives in [`src/app/features/host-workspace/`](src/app/features/host-workspace/).
 - [`src/app/features/host-workspace/host-workspace.store.ts`](src/app/features/host-workspace/host-workspace.store.ts) owns transient host-screen state such as the selected guest, add-guest draft inputs, and inactivity clearing.
 - Durable guest tabs, catalog entries, and billed history now live under [`src/app/features/guest-tabs/`](src/app/features/guest-tabs/), [`src/app/features/catalog/`](src/app/features/catalog/), and [`src/app/features/billing-history/`](src/app/features/billing-history/), with adjacent `*.repository.ts` files owning browser persistence.
-- The current tally screen implementation still lives in [`src/app/features/tally/drink-tally/`](src/app/features/tally/drink-tally/) as a presentational surface composed by the host workspace.
+- The current tally screen implementation lives in [`src/app/features/drink-tally/`](src/app/features/drink-tally/) as a presentational surface composed by the host workspace.
 - The target architecture for the next iterations is recorded in [`../docs/architecture.md`](../docs/architecture.md).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).
 - New feature work should follow the feature structure below.

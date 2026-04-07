@@ -6,7 +6,7 @@ import {
   inject,
 } from '@angular/core';
 
-import { DrinkTally } from '../tally';
+import { DrinkTally } from '../drink-tally';
 import { HostWorkspaceStore } from './host-workspace.store';
 
 export const GUEST_TAB_INACTIVITY_TIMEOUT_MS = 90_000;
