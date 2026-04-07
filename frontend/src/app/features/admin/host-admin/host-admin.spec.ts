@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
-import { DRINK_CATALOG } from '../../catalog/catalog.store';
-import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../../guest-tabs/guest-tabs.store';
+import { DRINK_CATALOG } from '../../catalog';
+import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../../guest-tabs';
 import { HostAdmin } from './host-admin';
 
 describe('HostAdmin', () => {

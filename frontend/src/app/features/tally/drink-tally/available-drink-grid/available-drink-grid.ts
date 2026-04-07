@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
-import { DrinkId } from '../../../catalog/catalog.store';
+import { DrinkId } from '../../../catalog';
 import { AvailableDrinkReference } from '../drink-tally.models';
 
 @Component({

@@ -33,3 +33,4 @@ Read this file before opening task files under [`docs/tasks/done/`](./).
 - [T-025 Separate Host-Screen UI State From Persistent Business State](T-025.md)
 - [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](T-026.md)
 - [T-027 Introduce Repository Adapters for Local Persistence](T-027.md)
+- [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](T-028.md)

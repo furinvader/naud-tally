@@ -5,11 +5,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 
-import { CatalogStore } from '../../catalog/catalog.store';
-import { BillingHistoryStore } from '../../billing-history/billing-history.store';
-import { GuestTabsStore } from '../../guest-tabs/guest-tabs.store';
 import { AppBar } from '../../../ui/app-bar/app-bar';
 import { PageShell } from '../../../ui/page-shell/page-shell';
+import { BillingHistoryStore } from '../../billing-history';
+import { CatalogStore } from '../../catalog';
+import { GuestTabsStore } from '../../guest-tabs';
 import { HOST_ADMIN_COPY } from './host-admin.copy';
 import {
   HostDrinkCatalogItem,

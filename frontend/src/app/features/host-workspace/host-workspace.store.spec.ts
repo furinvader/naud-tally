@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DRINK_CATALOG } from '../catalog/catalog.store';
-import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs/guest-tabs.store';
+import { DRINK_CATALOG } from '../catalog';
+import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs';
 import { HostWorkspaceStore } from './host-workspace.store';
 
 describe('HostWorkspaceStore', () => {

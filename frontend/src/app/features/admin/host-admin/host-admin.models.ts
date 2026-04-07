@@ -1,11 +1,11 @@
-import { DrinkCatalogEntry, DrinkId, formatEuroPrice } from '../../catalog/catalog.store';
+import { DrinkCatalogEntry, DrinkId, formatEuroPrice } from '../../catalog';
 import {
   BilledGuestTab,
   GuestBillLineItem,
   calculateGuestTotalPriceCents,
   createBillLineItems,
-} from '../../billing-history/billing-history.store';
-import { GuestTab, countDrinks, getDrinkCount } from '../../guest-tabs/guest-tabs.store';
+} from '../../billing-history';
+import { GuestTab, countDrinks, getDrinkCount } from '../../guest-tabs';
 
 export type HostDrinkCatalogItem = {
   id: DrinkId;

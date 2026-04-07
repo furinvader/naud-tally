@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { vi } from 'vitest';
 
-import { DrinkCounts } from '../../../guest-tabs/guest-tabs.store';
+import { DrinkCounts } from '../../../guest-tabs';
 import { DRINK_TALLY_COPY } from '../drink-tally.copy';
 import {
   AvailableDrinkReference,

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 import { ScrollRegion } from '../../../../ui/scroll-region/scroll-region';
-import { DrinkId } from '../../../catalog/catalog.store';
+import { DrinkId } from '../../../catalog';
 import { AvailableDrinkGrid } from '../available-drink-grid/available-drink-grid';
 import { DrinkCounterGrid } from '../drink-counter-grid/drink-counter-grid';
 import { SelectedGuestPanelSectionCopy } from '../drink-tally.copy';
