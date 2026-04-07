@@ -18,7 +18,7 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render the host workspace route by default', async () => {
+  it('should render the order entry route by default', async () => {
     const fixture = TestBed.createComponent(App);
     const router = TestBed.inject(Router);
 
@@ -28,7 +28,7 @@ describe('App', () => {
 
     const compiled = fixture.nativeElement as HTMLElement;
 
-    expect(compiled.querySelector('nt-host-workspace')).not.toBeNull();
+    expect(compiled.querySelector('nt-order-entry')).not.toBeNull();
     expect(compiled.querySelector('nt-drink-tally')).not.toBeNull();
   });
 

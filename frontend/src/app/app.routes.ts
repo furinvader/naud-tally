@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
 
 import { HostAdmin } from './features/host-admin';
-import { HostWorkspace } from './features/host-workspace';
+import { OrderEntry } from './features/order-entry';
 
 export const routes: Routes = [
   {
     path: '',
-    component: HostWorkspace,
+    component: OrderEntry,
   },
   {
     path: 'host',

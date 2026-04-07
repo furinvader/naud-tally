@@ -4,14 +4,14 @@ import { vi } from 'vitest';
 
 import { DRINK_CATALOG } from '../catalog';
 import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs';
-import { GUEST_TAB_INACTIVITY_TIMEOUT_MS, HostWorkspace } from './host-workspace';
+import { GUEST_TAB_INACTIVITY_TIMEOUT_MS, OrderEntry } from './order-entry';
 
-describe('HostWorkspace', () => {
+describe('OrderEntry', () => {
   beforeEach(async () => {
     localStorage.clear();
 
     await TestBed.configureTestingModule({
-      imports: [HostWorkspace],
+      imports: [OrderEntry],
       providers: [provideRouter([])],
     }).compileComponents();
   });
@@ -21,15 +21,15 @@ describe('HostWorkspace', () => {
     localStorage.clear();
   });
 
-  it('should create the host workspace feature', () => {
-    const fixture = TestBed.createComponent(HostWorkspace);
+  it('should create the order entry feature', () => {
+    const fixture = TestBed.createComponent(OrderEntry);
     const component = fixture.componentInstance;
 
     expect(component).toBeTruthy();
   });
 
   it('should compose the current drink tally screen while the migration continues', async () => {
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -38,8 +38,8 @@ describe('HostWorkspace', () => {
     expect(compiled.querySelector('nt-drink-tally')).not.toBeNull();
   });
 
-  it('should render the public guest-tab screen by default', async () => {
-    const fixture = TestBed.createComponent(HostWorkspace);
+  it('should render the current order entry screen by default', async () => {
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -60,7 +60,7 @@ describe('HostWorkspace', () => {
   });
 
   it('should render only the placeholder copy when no guest is selected', async () => {
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -77,8 +77,8 @@ describe('HostWorkspace', () => {
     expect(placeholder?.querySelector('nt-personal-panel-summary')).toBeNull();
   });
 
-  it('should not render the toolbar price reference on the public screen', async () => {
-    const fixture = TestBed.createComponent(HostWorkspace);
+  it('should not render the toolbar price reference on the order entry screen', async () => {
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -90,7 +90,7 @@ describe('HostWorkspace', () => {
   });
 
   it('should place the Add yourself action inside the active guest tabs header', async () => {
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -117,7 +117,7 @@ describe('HostWorkspace', () => {
   it('should open the personal tally panel when selecting an active guest', async () => {
     seedGuestTabs();
 
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -166,7 +166,7 @@ describe('HostWorkspace', () => {
   it('should deselect the active guest when the same guest card is clicked again', async () => {
     seedGuestTabs();
 
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -193,7 +193,7 @@ describe('HostWorkspace', () => {
     vi.useFakeTimers();
     seedGuestTabs();
 
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -234,7 +234,7 @@ describe('HostWorkspace', () => {
   it('should show a top shadow on the selected guest panel only after scrolling', async () => {
     seedGuestTabs();
 
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -275,7 +275,7 @@ describe('HostWorkspace', () => {
   it('should show a top shadow on the active guest list only after scrolling', async () => {
     seedGuestTabs();
 
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -308,7 +308,7 @@ describe('HostWorkspace', () => {
   it('should preserve both scroll shadows when selecting another guest', async () => {
     seedMultipleGuestTabs();
 
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -363,7 +363,7 @@ describe('HostWorkspace', () => {
   });
 
   it('should create and select a guest from the inline Add yourself flow', async () => {
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -416,7 +416,7 @@ describe('HostWorkspace', () => {
   });
 
   it('should move a newly added drink from the add-drink section into Your drinks', async () => {
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -477,7 +477,7 @@ describe('HostWorkspace', () => {
     vi.useFakeTimers();
     seedGuestTabs();
 
-    const fixture = TestBed.createComponent(HostWorkspace);
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 

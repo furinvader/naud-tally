@@ -8,15 +8,15 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 
 ## Current Priority
 
-- [T-018 Design the Host Main Working Screen](tasks/open/T-018.md)
+- [T-018 Design the Order Entry Screen](tasks/open/T-018.md)
 
-The near-term architecture track is complete, so product-surface and sync work now resume with the host main screen.
+The near-term architecture track is complete, so product-surface and sync work now resume with the order entry screen.
 
 ## Open Tasks
 
-- [T-018 Design the Host Main Working Screen](tasks/open/T-018.md)
-- [T-019 Make the Host Screen the Default Route](tasks/open/T-019.md)
-- [T-014 Refine the Host Main Screen Layout](tasks/open/T-014.md)
+- [T-018 Design the Order Entry Screen](tasks/open/T-018.md)
+- [T-019 Make the Order Entry Screen the Default Route](tasks/open/T-019.md)
+- [T-014 Refine the Order Entry Screen Layout](tasks/open/T-014.md)
 - [T-020 Add PWA Installability and Offline Shell Support](tasks/open/T-020.md)
 - [T-021 Choose the Remote Backup and Sync Approach](tasks/open/T-021.md)
 - [T-022 Implement Remote Sync and Recovery](tasks/open/T-022.md)
@@ -41,8 +41,8 @@ The near-term architecture track is complete, so product-surface and sync work n
 - [T-016 Add a Host Admin Route](tasks/done/T-016.md)
 - [T-017 Re-scope Docs for the Host-Operated Pilot](tasks/done/T-017.md)
 - [T-023 Introduce Shared UI Shell and Scroll Foundations](tasks/done/T-023.md)
-- [T-024 Create the Host Workspace Composition Root](tasks/done/T-024.md)
-- [T-025 Separate Host-Screen UI State From Persistent Business State](tasks/done/T-025.md)
+- [T-024 Create the Order Entry Composition Root](tasks/done/T-024.md)
+- [T-025 Separate Order Entry UI State From Persistent Business State](tasks/done/T-025.md)
 - [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](tasks/done/T-026.md)
 - [T-027 Introduce Repository Adapters for Local Persistence](tasks/done/T-027.md)
 - [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](tasks/done/T-028.md)

@@ -37,7 +37,7 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Status: accepted
 - Why: the pilot still fits comfortably in one deployable app, but we want boundaries that remain understandable for both humans and AI agents as the codebase grows
 - Consequence: keep one Angular app under [`../frontend/`](../frontend/) rather than splitting into services or packages prematurely
-- Consequence: organize durable business capabilities into explicit internal modules such as host workspace, guest tabs, catalog, billing history, and sync or recovery
+- Consequence: organize durable business capabilities into explicit internal modules such as order entry, guest tabs, catalog, billing history, and sync or recovery
 - Consequence: prefer small public APIs between capabilities over direct imports into another feature's internal files
 - Consequence: use [`architecture.md`](architecture.md) as the repository-level map for those boundaries
 
@@ -103,24 +103,26 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Why: it is permissive, widely understood, and includes a clear warranty and liability disclaimer
 - Consequence: others can reuse the project broadly as long as the license notice is preserved
 
-## Keep the Pilot on One English Host-Operated Main Screen
+## Keep the Pilot on One English Host-Operated Order Entry Screen
 
 - Status: accepted
 - Why: the pilot should stay easy to learn and efficient to use on a tablet during real service
-- Consequence: the target product should center on one main host screen, English UI, and minimal navigation
+- Consequence: the target product should center on one main order entry screen, English UI, and minimal navigation
 - Consequence: supporting tools such as billing history or catalog editing should stay adjacent to that main working surface when possible
+- Consequence: a broader overview screen can come later, but it remains deferred until the order-entry workflow is stable
 
-## Shift the Pilot to a Host-Operated Main Screen
+## Shift the Pilot to a Host-Operated Order Entry Screen
 
 - Status: accepted
 - Why: the host, not the guest, is now the primary user we need to optimize for
 - Why: host-side order entry, product management, and billing match the real operating model better than public self-service on a shared tablet
 - Supporting UX reference: [`ux/host-workflow-ux.md`](ux/host-workflow-ux.md)
 - Deferred future UX: [`ux/guest-tab-ux.md`](ux/guest-tab-ux.md)
-- Consequence: the main accessible product surface should become a host-operated route and working screen
+- Consequence: the main accessible product surface should become a host-operated order entry route and working screen
 - Consequence: room number and full name remain the practical trust-based guest identifiers in the pilot
 - Consequence: the host workflow should support quick guest lookup or creation, order entry, and billing from one primary screen
 - Consequence: live product management and billed history remain in scope because they directly support the host workflow
+- Consequence: a future overview screen remains deferred until the order-entry screen is solid
 - Consequence: the public guest tally flow is now future consideration only and should not stay part of the active pilot surface
 
 ## Route Agents Through [`AGENTS.md`](../AGENTS.md) and [`agent-index.md`](../agent-index.md)

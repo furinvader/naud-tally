@@ -7,29 +7,29 @@ import {
 } from '@angular/core';
 
 import { DrinkTally } from '../drink-tally';
-import { HostWorkspaceStore } from './host-workspace.store';
+import { OrderEntryStore } from './order-entry.store';
 
 export const GUEST_TAB_INACTIVITY_TIMEOUT_MS = 90_000;
 
 @Component({
-  selector: 'nt-host-workspace',
+  selector: 'nt-order-entry',
   imports: [DrinkTally],
-  providers: [HostWorkspaceStore],
-  templateUrl: './host-workspace.html',
-  styleUrl: './host-workspace.scss',
+  providers: [OrderEntryStore],
+  templateUrl: './order-entry.html',
+  styleUrl: './order-entry.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HostWorkspace {
-  protected readonly hostWorkspaceStore = inject(HostWorkspaceStore);
+export class OrderEntry {
+  protected readonly orderEntryStore = inject(OrderEntryStore);
 
   private readonly destroyRef = inject(DestroyRef);
   private inactivityTimerId: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
     effect(() => {
-      const selectedGuest = this.hostWorkspaceStore.selectedGuest();
-      const addGuestFlow = this.hostWorkspaceStore.addGuestFlow();
-      this.hostWorkspaceStore.interactionVersion();
+      const selectedGuest = this.orderEntryStore.selectedGuest();
+      const addGuestFlow = this.orderEntryStore.addGuestFlow();
+      this.orderEntryStore.interactionVersion();
 
       if (!selectedGuest && addGuestFlow.step === 'closed') {
         this.clearInactivityTimer();
@@ -47,7 +47,7 @@ export class HostWorkspace {
   private scheduleInactivityTimer(): void {
     this.clearInactivityTimer();
     this.inactivityTimerId = setTimeout(() => {
-      this.hostWorkspaceStore.clearTransientState();
+      this.orderEntryStore.clearTransientState();
     }, GUEST_TAB_INACTIVITY_TIMEOUT_MS);
   }
 

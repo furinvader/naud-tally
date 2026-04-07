@@ -6,11 +6,12 @@ If a term changes in meaning and that change should matter in later sessions, up
 
 ## Product Terms
 
-- Host main screen: the primary tablet-first working surface for `room number -> full name -> orders -> billing`
-- Host workspace: the route-level frontend feature that composes the host main screen and owns transient host-screen UI state
+- Order entry screen: the current primary tablet-first working surface for `room number -> full name -> orders -> billing`
+- Order-entry feature: the route-level frontend feature that composes the order entry screen and owns transient order-entry UI state
+- Overview screen (deferred): a future landing surface that may later replace the order entry screen as the main screen
 - Open tab: a guest tab that is still active and not yet billed
 - Guest tab: the persistent record for one guest's active orders, identified in the pilot by room number and full name
-- Selected guest: the currently active guest context on the host screen
+- Selected guest: the currently active guest context on the order entry screen
 - Catalog item: a live or inactive product entry with a name, price, and product identity
 - Billed tab: the immutable billing snapshot created when an open guest tab is closed and moved into billed history
 - Billing history: the recent collection of billed tabs kept for host review

@@ -2,13 +2,13 @@ import { TestBed } from '@angular/core/testing';
 
 import { DRINK_CATALOG } from '../catalog';
 import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs';
-import { HostWorkspaceStore } from './host-workspace.store';
+import { OrderEntryStore } from './order-entry.store';
 
-describe('HostWorkspaceStore', () => {
+describe('OrderEntryStore', () => {
   beforeEach(() => {
     localStorage.clear();
     TestBed.configureTestingModule({
-      providers: [HostWorkspaceStore],
+      providers: [OrderEntryStore],
     });
   });
 
@@ -17,7 +17,7 @@ describe('HostWorkspaceStore', () => {
   });
 
   it('should initialize with no selected guest and a closed add-guest flow', () => {
-    const store = TestBed.inject(HostWorkspaceStore);
+    const store = TestBed.inject(OrderEntryStore);
 
     expect(store.selectedGuest()).toBeNull();
     expect(store.addGuestFlow()).toEqual({
@@ -29,7 +29,7 @@ describe('HostWorkspaceStore', () => {
   });
 
   it('should create and select a guest through the room-number then full-name flow', () => {
-    const store = TestBed.inject(HostWorkspaceStore);
+    const store = TestBed.inject(OrderEntryStore);
 
     store.startAddGuestFlow();
     store.updateDraftRoomNumber(' 204 ');
@@ -57,7 +57,7 @@ describe('HostWorkspaceStore', () => {
   });
 
   it('should reuse an existing guest when the same normalized identity is submitted again', () => {
-    const store = TestBed.inject(HostWorkspaceStore);
+    const store = TestBed.inject(OrderEntryStore);
 
     store.startAddGuestFlow();
     store.updateDraftRoomNumber('101');
@@ -102,7 +102,7 @@ describe('HostWorkspaceStore', () => {
       ]),
     );
 
-    const store = TestBed.inject(HostWorkspaceStore);
+    const store = TestBed.inject(OrderEntryStore);
 
     expect(store.activeGuests().map((guest) => guest.id)).toEqual(['guest-2', 'guest-1']);
 
@@ -130,7 +130,7 @@ describe('HostWorkspaceStore', () => {
       ]),
     );
 
-    const store = TestBed.inject(HostWorkspaceStore);
+    const store = TestBed.inject(OrderEntryStore);
 
     store.selectGuestTab('guest-1');
 
@@ -157,7 +157,7 @@ describe('HostWorkspaceStore', () => {
   });
 
   it('should clear the draft add-guest flow without mutating persistent guest tabs', () => {
-    const store = TestBed.inject(HostWorkspaceStore);
+    const store = TestBed.inject(OrderEntryStore);
 
     store.startAddGuestFlow();
     store.updateDraftRoomNumber('204');

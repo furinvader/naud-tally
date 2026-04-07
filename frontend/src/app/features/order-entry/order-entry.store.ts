@@ -19,7 +19,7 @@ import {
 import { CatalogStore, DrinkId } from '../catalog';
 import { GuestTabsStore } from '../guest-tabs';
 
-type HostWorkspaceState = {
+type OrderEntryState = {
   selectedGuestId: string | null;
   selectedGuestDrinkOrder: DrinkId[];
   addGuestStep: AddGuestStep;
@@ -28,7 +28,7 @@ type HostWorkspaceState = {
   interactionVersion: number;
 };
 
-const initialState: HostWorkspaceState = {
+const initialState: OrderEntryState = {
   selectedGuestId: null,
   selectedGuestDrinkOrder: [],
   addGuestStep: 'closed',
@@ -37,7 +37,7 @@ const initialState: HostWorkspaceState = {
   interactionVersion: 0,
 };
 
-export const HostWorkspaceStore = signalStore(
+export const OrderEntryStore = signalStore(
   withState(initialState),
   withComputed((store) => {
     const guestTabsStore = inject(GuestTabsStore);
@@ -79,7 +79,7 @@ export const HostWorkspaceStore = signalStore(
     const guestTabsStore = inject(GuestTabsStore);
     const catalogStore = inject(CatalogStore);
 
-    function patchInteractionState(nextState: Partial<HostWorkspaceState>): void {
+    function patchInteractionState(nextState: Partial<OrderEntryState>): void {
       patchState(store, {
         ...nextState,
         interactionVersion: store.interactionVersion() + 1,
@@ -87,7 +87,7 @@ export const HostWorkspaceStore = signalStore(
     }
 
     function clearScreenState(shouldIncrementInteraction = false): void {
-      const nextState: Partial<HostWorkspaceState> = {
+      const nextState: Partial<OrderEntryState> = {
         selectedGuestId: null,
         selectedGuestDrinkOrder: [],
         addGuestStep: 'closed',

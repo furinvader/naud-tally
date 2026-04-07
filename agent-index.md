@@ -8,12 +8,12 @@ This is the first routing file for every agent task in this repository.
 - The earlier guest self-service slice is historical context, not the current target surface.
 - The host-tools route is already recorded in [`T-016`](docs/tasks/done/T-016.md).
 - The documentation re-scope for the host-operated pilot is recorded in [`T-017`](docs/tasks/done/T-017.md).
-- The host-workspace composition root is now recorded in [`T-024`](docs/tasks/done/T-024.md).
+- The order-entry composition root is now recorded in [`T-024`](docs/tasks/done/T-024.md).
 - The capability split is now recorded in [`T-026`](docs/tasks/done/T-026.md).
 - The repository-adapter seam is now recorded in [`T-027`](docs/tasks/done/T-027.md).
 - The feature public API cleanup is now recorded in [`T-028`](docs/tasks/done/T-028.md).
 - The frontend import boundary enforcement is now recorded in [`T-029`](docs/tasks/done/T-029.md).
-- The immediate repo priority is now [`T-018`](docs/tasks/open/T-018.md): define the host main working screen.
+- The immediate repo priority is now [`T-018`](docs/tasks/open/T-018.md): define the order entry screen while it remains the main pilot surface.
 - The design-solution decision is recorded in [`T-010`](docs/tasks/done/T-010.md).
 - The Penpot artifact workflow is documented in [`docs/design/penpot-codex-workflow.md`](docs/design/penpot-codex-workflow.md) and demonstrated in [`docs/design/`](docs/design/).
 
