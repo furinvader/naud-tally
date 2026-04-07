@@ -30,7 +30,7 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 
 - Status: accepted
 - Why: the official [Angular Style Guide](https://angular.dev/style-guide) recommends organizing code by feature areas and grouping closely related files together, which improves discoverability for both humans and agents
-- Consequence: new frontend feature work should live under [`src/app/features/`](src/app/features/) with flat top-level feature paths such as `host-workspace/` or `billing-history/`, while app shell and bootstrap files stay under [`src/app/`](src/app/) and [`src/main.ts`](src/main.ts)
+- Consequence: new frontend feature work should live under [`src/app/features/`](src/app/features/) with flat top-level feature paths such as `order-entry/` or `billing-history/`, while app shell and bootstrap files stay under [`src/app/`](src/app/) and [`src/main.ts`](src/main.ts)
 - Consequence: frontend implementation conventions are documented in [`README.md`](README.md) and agents should consult that guide before creating or restructuring frontend features
 
 ## Grow Larger Frontend Areas as Capability Modules Inside One App
@@ -38,7 +38,7 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Status: accepted
 - Why: feature-first folders work well at the current size, but the host workflow will accumulate multiple business capabilities that should not collapse into one oversized route feature or store
 - Consequence: keep the frontend as one Angular app under [`./`](./)
-- Consequence: use route-level composition features for major screens such as the future host workspace, and separate durable capabilities such as guest tabs, catalog, billing history, and sync or recovery into sibling feature areas under [`src/app/features/`](src/app/features/)
+- Consequence: use route-level composition features for major screens such as the current order entry screen, and separate durable capabilities such as guest tabs, catalog, billing history, and sync or recovery into sibling feature areas under [`src/app/features/`](src/app/features/)
 - Consequence: when a feature area grows, expose a small public API or facade rather than letting other features import internal stores or helpers directly
 - Consequence: top-level feature directories publish their cross-feature surface from a root [`index.ts`](src/app/features/catalog/index.ts), and consumers import the feature directory path rather than a deep internal file
 - Consequence: follow the module map in [`../docs/architecture.md`](../docs/architecture.md) when restructuring or adding new large feature areas

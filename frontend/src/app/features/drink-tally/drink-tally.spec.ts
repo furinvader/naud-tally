@@ -18,7 +18,7 @@ describe('DrinkTally', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('should render the empty host screen state from inputs', async () => {
+  it('should render the empty order entry screen state from inputs', async () => {
     const fixture = createDrinkTallyFixture();
     fixture.detectChanges();
     await fixture.whenStable();

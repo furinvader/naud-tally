@@ -7,14 +7,14 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 ## Context
 
 - The host is the primary user in the current pilot.
-- The host needs one main working surface for quick room-name-order-billing flow on a tablet.
+- The host needs one main order entry surface for quick room-name-order-billing flow on a tablet.
 - Products and prices still need lightweight management because the host may change the live catalog.
 - Billing on departure is part of the core workflow, not a side tool.
 - The app must remain usable when connectivity drops and recover safely after reconnect, reinstall, or replacement-device setup.
 
 ## UX Goals
 
-- Keep the host on one primary screen for the main service workflow.
+- Keep the host on one primary order entry screen for the main service workflow.
 - Make `room number -> full name -> orders` feel fast and obvious.
 - Keep the currently selected guest unmistakable while orders are being recorded.
 - Minimize context switching between order entry, product management, and billing.
@@ -24,7 +24,7 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 
 ## Working Terms
 
-- Host main screen: the default pilot surface where the host finds or creates a guest tab, records orders, and reaches adjacent billing or product actions.
+- Order entry screen: the current default pilot surface where the host finds or creates a guest tab, records orders, and reaches adjacent billing or product actions. A future overview screen may later replace it as the landing surface, but that work is deferred.
 - Open tab: any guest record that is still active and not yet billed.
 - Quick order controls: touch-first product controls that let the host add, increment, or decrement orders for the selected guest.
 - Billing surface: the part of the host workflow where the host reviews totals and closes a tab on departure.
@@ -38,7 +38,7 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 - Keep the selected guest header visible while order controls remain nearby.
 - Show order-entry controls as the primary interaction zone once a guest is selected.
 - Keep billing and product-management actions visible but secondary to rapid order entry.
-- Preserve recent billed history as supporting context, not as the main screen focus.
+- Preserve recent billed history as supporting context, not as the main order entry screen focus.
 
 ## Recommended Layout
 

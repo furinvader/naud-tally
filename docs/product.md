@@ -2,7 +2,9 @@
 
 ## Working Definition
 
-This project is a tablet-first tally app operated by the host. The current pilot should give the host a primary working screen where they can identify a guest by room number and full name, record orders with an intuitive tap-first flow, manage products and prices, and bill the guest on departure.
+This project is a tablet-first tally app operated by the host. The current pilot should give the host a primary order entry screen where they can identify a guest by room number and full name, record orders with an intuitive tap-first flow, manage products and prices, and bill the guest on departure.
+
+That order entry screen remains the main app surface for now. A broader overview screen may replace it later, but that work is deferred.
 
 The product should stay simple enough for a small team to build and operate, but it now needs stronger data safety than same-device reload persistence. The app should keep working with offline-first local state on the tablet, then recover and sync safely after reconnect, reinstall, or replacement-device setup through a simple remote backup or sync solution.
 
@@ -46,6 +48,7 @@ These are the rules for the current pilot direction:
 - reinstall or replacement-device recovery is required for the target product direction
 - simultaneous multi-tablet live collaboration is not required for the current pilot
 - the current pilot surface is host-operated only
+- the order entry screen is the current main app surface, while a future overview screen remains deferred
 - the public tally screen remains deferred future work and should not be accessible in the active pilot
 - the UI is English-only for now
 - the code should keep future i18n in mind
@@ -66,13 +69,13 @@ The app should still start from these sample drinks and reference prices until t
 
 ## Primary Users
 
-- Host or organizer: wants one main tablet screen for quick room-and-name lookup, rapid order entry, product management, and billing on departure
+- Host or organizer: wants one main order entry screen for quick room-and-name lookup, rapid order entry, product management, and billing on departure
 - Guest or customer: is represented in the tally data and billed by the host, but does not use the app directly in the current pilot
 
 ## Core User Flow
 
 1. The host opens the app on the tablet.
-2. The host lands on the main host working screen.
+2. The host lands on the order entry screen, which serves as the main screen for now.
 3. The host finds an existing tab or creates a new one by entering room number and full name.
 4. The host records one or more orders immediately from the same working surface.
 5. The app keeps the selected guest context obvious while the host continues taking orders.
@@ -84,7 +87,7 @@ The app should still start from these sample drinks and reference prices until t
 
 ## In Scope for the Current Pilot
 
-- tablet-first host-operated main screen
+- tablet-first host-operated order entry screen
 - room-number then full-name guest lookup or creation
 - rapid product selection and quantity changes for a selected guest
 - visible open-tab context for the currently selected guest
@@ -123,7 +126,7 @@ The app should still start from these sample drinks and reference prices until t
 
 ## Functional Requirements
 
-- The app must provide a primary host screen for the `room number -> full name -> orders -> billing` workflow.
+- The app must provide a primary order entry screen for the `room number -> full name -> orders -> billing` workflow.
 - The app must let the host create a new guest tab with room number followed by full name.
 - The app must let the host reopen an existing guest tab without re-entering the full record manually.
 - The app must support fast add, increment, and decrement order actions for the selected guest.
@@ -147,7 +150,7 @@ The app should still start from these sample drinks and reference prices until t
 ## Risks
 
 - The current codebase still centers the default route and primary copy around a guest-facing public tablet flow.
-- A host-operated main screen can become cluttered if product management, order entry, and billing are not grouped carefully.
+- An order entry screen can become cluttered if product management, order entry, and billing are not grouped carefully.
 - Trust-based room and name entry can still produce mistaken identity or duplicate tabs.
 - Offline-first local state plus later sync introduces conflict and recovery rules that the current store does not yet define.
 - Reinstall recovery raises expectations that local-only storage cannot satisfy today.
@@ -159,7 +162,8 @@ The app should still start from these sample drinks and reference prices until t
 
 - Which remote persistence approach should we choose for the pilot: Google Sheets as backup or export, Firestore-style app sync, or a custom backend?
 - What is the simplest acceptable host setup for the remote recovery flow?
-- Should the host main screen favor search-first, open-tab list-first, or room-list-first entry?
+- Should the order entry screen favor search-first, open-tab list-first, or room-list-first entry?
+- What kind of overview screen, if any, should later replace order entry as the main landing surface?
 - How should product and billing controls be surfaced without slowing down order entry?
 - What conflict rule should apply if local changes and remote state differ during reconnect or restore?
 - What reset, export, or manual backup tools should exist alongside remote sync?

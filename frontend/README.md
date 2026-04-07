@@ -17,10 +17,10 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Frontend-specific Node tooling is pinned in [`.nvmrc`](.nvmrc).
 - App-level wiring stays in [`src/app/app.ts`](src/app/app.ts), [`src/app/app.html`](src/app/app.html), [`src/app/app.scss`](src/app/app.scss), [`src/app/app.routes.ts`](src/app/app.routes.ts), and [`src/app/app.config.ts`](src/app/app.config.ts).
 - Cross-feature shared presentation and layout primitives live under [`src/app/ui/`](src/app/ui/).
-- The route-level host workspace composition root lives in [`src/app/features/host-workspace/`](src/app/features/host-workspace/).
-- [`src/app/features/host-workspace/host-workspace.store.ts`](src/app/features/host-workspace/host-workspace.store.ts) owns transient host-screen state such as the selected guest, add-guest draft inputs, and inactivity clearing.
+- The route-level order-entry composition root lives in [`src/app/features/order-entry/`](src/app/features/order-entry/).
+- [`src/app/features/order-entry/order-entry.store.ts`](src/app/features/order-entry/order-entry.store.ts) owns transient order-entry screen state such as the selected guest, add-guest draft inputs, and inactivity clearing.
 - Durable guest tabs, catalog entries, and billed history now live under [`src/app/features/guest-tabs/`](src/app/features/guest-tabs/), [`src/app/features/catalog/`](src/app/features/catalog/), and [`src/app/features/billing-history/`](src/app/features/billing-history/), with adjacent `*.repository.ts` files owning browser persistence.
-- The current tally screen implementation lives in [`src/app/features/drink-tally/`](src/app/features/drink-tally/) as a presentational surface composed by the host workspace.
+- The current tally screen implementation lives in [`src/app/features/drink-tally/`](src/app/features/drink-tally/) as a presentational surface composed by the order-entry feature.
 - The target architecture for the next iterations is recorded in [`../docs/architecture.md`](../docs/architecture.md).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).
 - New feature work should follow the feature structure below.
@@ -32,7 +32,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Put new feature code under [`src/app/features/`](src/app/features/).
 - Put cross-feature reusable presentation and layout primitives under [`src/app/ui/`](src/app/ui/).
 - Organize features by feature area, not by technical type.
-- Keep top-level feature paths flat under [`src/app/features/`](src/app/features/), using one directory per feature such as `host-workspace/` or `billing-history/`.
+- Keep top-level feature paths flat under [`src/app/features/`](src/app/features/), using one directory per feature such as `order-entry/` or `billing-history/`.
 - Keep app shell and bootstrap files in [`src/app/`](src/app/) and [`src/main.ts`](src/main.ts), not inside feature folders.
 
 ### Scaling a Feature Area
@@ -107,7 +107,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 
 - Keep persistent business state with the capability that owns the business concept.
 - Keep transient screen state near the route composition feature that owns that interaction flow.
-- In the current host workflow, [`src/app/features/host-workspace/host-workspace.store.ts`](src/app/features/host-workspace/host-workspace.store.ts) owns selection and draft-entry state, while [`src/app/features/guest-tabs/guest-tabs.store.ts`](src/app/features/guest-tabs/guest-tabs.store.ts), [`src/app/features/catalog/catalog.store.ts`](src/app/features/catalog/catalog.store.ts), and [`src/app/features/billing-history/billing-history.store.ts`](src/app/features/billing-history/billing-history.store.ts) own durable business data and delegate browser persistence to their adjacent repository files.
+- In the current pilot, [`src/app/features/order-entry/order-entry.store.ts`](src/app/features/order-entry/order-entry.store.ts) owns selection and draft-entry state, while [`src/app/features/guest-tabs/guest-tabs.store.ts`](src/app/features/guest-tabs/guest-tabs.store.ts), [`src/app/features/catalog/catalog.store.ts`](src/app/features/catalog/catalog.store.ts), and [`src/app/features/billing-history/billing-history.store.ts`](src/app/features/billing-history/billing-history.store.ts) own durable business data and delegate browser persistence to their adjacent repository files.
 - Do not call browser storage APIs directly from route components or route composition stores.
 - Put serialization, hydration, and storage access in repositories or equivalent data adapters inside the owning feature area.
 

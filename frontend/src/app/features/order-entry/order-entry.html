@@ -1,0 +1,16 @@
+<nt-drink-tally
+  [activeGuests]="orderEntryStore.activeGuests()"
+  [selectedGuestId]="orderEntryStore.selectedGuestId()"
+  [addGuestFlow]="orderEntryStore.addGuestFlow()"
+  [selectedGuest]="orderEntryStore.selectedGuest()"
+  (startAddGuest)="orderEntryStore.startAddGuestFlow()"
+  (updateDraftRoomNumber)="orderEntryStore.updateDraftRoomNumber($event)"
+  (updateDraftFullName)="orderEntryStore.updateDraftFullName($event)"
+  (submitRoomNumber)="orderEntryStore.submitRoomNumber()"
+  (submitGuestIdentity)="orderEntryStore.submitGuestIdentity()"
+  (returnToRoomNumberStep)="orderEntryStore.returnToRoomNumberStep()"
+  (cancelAddGuestFlow)="orderEntryStore.cancelAddGuestFlow()"
+  (selectGuest)="orderEntryStore.selectGuestTab($event)"
+  (incrementDrink)="orderEntryStore.incrementDrink($event)"
+  (decrementDrink)="orderEntryStore.decrementDrink($event)"
+></nt-drink-tally>

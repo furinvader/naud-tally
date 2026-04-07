@@ -13,7 +13,7 @@ The repo now uses [`AGENTS.md`](AGENTS.md) plus small [`agent-index.md`](agent-i
 
 ## Current Phase
 
-We have already shipped a guest-facing tally slice plus a separate host-tools route. The project is now re-scoped around a host-operated pilot, and the next product work is to make the host workflow the primary tablet experience.
+We have already shipped a guest-facing tally slice plus a separate host-tools route. The project is now re-scoped around a host-operated pilot, and the next product work is to make the order entry screen the primary tablet experience.
 
 What exists today:
 
@@ -32,7 +32,7 @@ What exists today:
 
 What is intentionally not done yet:
 
-- the host-first main screen as the default route
+- the order entry screen as the default route
 - PWA installability and offline shell behavior
 - remote backup and recovery for reinstall or replacement-device scenarios
 - a chosen remote sync backend and reconnect-sync implementation
@@ -88,7 +88,7 @@ Directory notes:
 
 The pilot is successful if:
 
-- a host can use the app on a tablet as their main working surface without extra navigation
+- a host can use the app on a tablet from the order entry screen without extra navigation
 - room number, full name, and order entry are quick enough for on-the-fly service
 - products and prices can be managed without leaving the host workflow
 - billing on departure is clear and reliable
