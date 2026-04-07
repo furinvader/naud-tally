@@ -17,9 +17,9 @@ The current frontend is still small, but a few pressure points are already visib
 - the default route now points at a host-workspace composition root in [`../frontend/src/app/features/host-workspace/host-workspace.ts`](../frontend/src/app/features/host-workspace/host-workspace.ts), and transient host-screen state now lives in [`../frontend/src/app/features/host-workspace/host-workspace.store.ts`](../frontend/src/app/features/host-workspace/host-workspace.store.ts) while the migration continues
 - durable guest-tab state now lives in [`../frontend/src/app/features/guest-tabs/guest-tabs.store.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.store.ts), catalog state lives in [`../frontend/src/app/features/catalog/catalog.store.ts`](../frontend/src/app/features/catalog/catalog.store.ts), and billed history lives in [`../frontend/src/app/features/billing-history/billing-history.store.ts`](../frontend/src/app/features/billing-history/billing-history.store.ts), with adjacent repository adapters in [`../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts), [`../frontend/src/app/features/catalog/catalog.repository.ts`](../frontend/src/app/features/catalog/catalog.repository.ts), and [`../frontend/src/app/features/billing-history/billing-history.repository.ts`](../frontend/src/app/features/billing-history/billing-history.repository.ts)
 - the host workspace and host admin screens now compose those capability stores through local view-model helpers instead of a single broad tally store
-- public feature API entrypoints now live at feature roots, and import-boundary enforcement remains in the next architecture task
+- public feature API entrypoints now live at feature roots, and import-boundary enforcement now runs through [`../frontend/scripts/check-import-boundaries.mjs`](../frontend/scripts/check-import-boundaries.mjs)
 
-That is closer to the architecture we want to scale, but the public API and boundary-enforcement follow-through still matters.
+That is closer to the architecture we want to scale, and the next priority can now shift back to product-surface work on top of those seams.
 
 ## Target Direction
 
@@ -124,6 +124,8 @@ These are the intended dependency boundaries:
 
 If one feature needs another feature's behavior, add or refine the other feature's public API instead of importing its internal store or helper file directly.
 
+The repo now enforces the frontend part of that boundary in [`../frontend/scripts/check-import-boundaries.mjs`](../frontend/scripts/check-import-boundaries.mjs). The check allows cross-feature imports only when they resolve through a top-level feature root [`index.ts`](../frontend/src/app/features/catalog/index.ts), keeps app-shell files on feature public APIs, and blocks shared UI from importing feature-owned business code.
+
 ## State Ownership
 
 ### Persistent Business State
@@ -208,6 +210,6 @@ The current backlog should treat these architecture tasks as the near-term imple
 3. [T-026 Split Tally Logic Into Guest Tabs, Catalog, and Billing History Modules](tasks/done/T-026.md)
 4. [T-027 Introduce Repository Adapters for Local Persistence](tasks/done/T-027.md)
 5. [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](tasks/done/T-028.md)
-6. [T-029 Add Frontend Import Boundary Checks](tasks/open/T-029.md)
+6. [T-029 Add Frontend Import Boundary Checks](tasks/done/T-029.md)
 
 The host-screen product work should continue after these architectural seams are in place.

@@ -9,6 +9,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - The frontend Node version is pinned in [`.nvmrc`](.nvmrc).
 - Before running `npm` or `ng` commands in a new shell session, run `nvm use` from [`frontend/`](./).
 - Reuse the same shell session for multiple frontend commands when possible.
+- Use [`npm run check:import-boundaries`](scripts/check-import-boundaries.mjs) for a focused module-boundary check, or run [`npm run build`](package.json) to execute that check before the Angular production build.
 
 ## Current Frontend Layout
 
@@ -49,6 +50,8 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Import the feature directory path instead of a deep file path when consuming another feature.
 - Do not deep-import another feature's internal store, helper, or implementation file by default.
 - If a reusable cross-feature API is missing, create it in the owning feature instead of bypassing the boundary.
+- [`scripts/check-import-boundaries.mjs`](scripts/check-import-boundaries.mjs) enforces this rule for local validation and CI: app-shell files may import feature roots only, feature-to-feature imports may cross boundaries only through the target feature root, and shared UI may not import feature-owned code.
+- Temporary exceptions are off by default. If a migration truly needs one, add a single explicit allowlist entry in [`scripts/check-import-boundaries.mjs`](scripts/check-import-boundaries.mjs) with the task that will remove it.
 
 ### Shared UI
 

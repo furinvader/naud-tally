@@ -2,14 +2,13 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
-import { routes } from '../../../app.routes';
 import { DrinkTally } from './drink-tally';
 
 describe('DrinkTally', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [DrinkTally],
-      providers: [provideRouter(routes)],
+      providers: [provideRouter([])],
     }).compileComponents();
   });
 
