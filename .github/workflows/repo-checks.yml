@@ -26,6 +26,7 @@ jobs:
         run: |
           required_files=(
             AGENTS.md
+            PLANS.md
             agent-index.md
             README.md
             LICENSE

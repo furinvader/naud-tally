@@ -26,12 +26,14 @@ Each task file should use this order:
 - `Outcome`, if the task is done
 
 Supporting research belongs in [`docs/research/agent-index.md`](../research/agent-index.md). Link the relevant research brief from `Related docs` instead of adding a `Research Notes` section to the task file.
+If a task has a detailed execution plan, link the relevant plan from `Related docs` instead of duplicating the full plan in the task file.
 
 ## Load Rules
 
 - For the human-facing backlog and task-status overview, read [`../tasks.md`](../tasks.md).
 - Read the relevant status-folder index before opening a task file.
 - Open only the task file you are actively planning, implementing, or reviewing.
+- Load a linked plan only if it adds material context for the current task.
 - Do not scan every task file unless the user asks for backlog triage.
 
 ## Status Folders

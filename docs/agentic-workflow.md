@@ -23,11 +23,12 @@ This document captures how we want to work with Codex so the lessons from this p
 ## Recommended Working Loop
 
 1. Update the docs if the product, architecture, or constraints changed.
-2. Give Codex one focused task with a clear outcome.
-3. Let Codex inspect the repo and implement the change.
-4. Review the diff and the behavior together.
-5. Run checks or tests where possible.
-6. Capture decisions, follow-ups, and lessons learned.
+2. For complex or multi-session work, create or update an ExecPlan in [`plans/`](plans/) and keep it aligned with [`../PLANS.md`](../PLANS.md).
+3. Give Codex one focused task with a clear outcome.
+4. Let Codex inspect the repo and implement the change.
+5. Review the diff and the behavior together.
+6. Run checks or tests where possible.
+7. Capture decisions, follow-ups, and lessons learned.
 
 For Penpot-driven UI work, treat [`docs/design/penpot-codex-workflow.md`](design/penpot-codex-workflow.md) as the operational guide for how the browser file, MCP connection, and repo-native brief fit together.
 
@@ -66,6 +67,7 @@ When Codex completes a task, review these points:
 - [`docs/design/penpot-codex-workflow.md`](design/penpot-codex-workflow.md) explains how Penpot should be used in a Codex-first workflow.
 - local [`decisions.md`](../frontend/decisions.md) files record area-specific decisions next to the relevant [`agent-index.md`](../frontend/agent-index.md).
 - [`docs/tasks.md`](tasks.md) tracks current task status and links to the current task briefs.
+- [`../PLANS.md`](../PLANS.md) defines the ExecPlan format and indexes checked-in plans under [`plans/`](plans/).
 - when a markdown doc mentions a repo file or directory, it should use a markdown link to that path
 
 If a prompt depends on knowledge that should matter next week, it belongs in the repo docs.

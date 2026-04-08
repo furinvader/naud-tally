@@ -85,6 +85,15 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Why: one of the project goals is learning agentic AI development through real implementation work
 - Consequence: tasks should be written clearly enough that Codex can execute them from repo context, not only from chat memory
 
+## Keep ExecPlans in [`PLANS.md`](../PLANS.md) and [`plans/`](plans/)
+
+- Status: accepted
+- Why: complex work benefits from a living, self-contained plan, but loading long-form plans by default would add noise to ordinary task execution
+- Consequence: repository-wide ExecPlan rules and the project plan index live in [`../PLANS.md`](../PLANS.md)
+- Consequence: individual plan files live under [`plans/`](plans/) with short, action-oriented kebab-case filenames
+- Consequence: task briefs should link relevant plans from `Related docs` instead of copying the full plan into the task file
+- Consequence: agents should open plan files only when explicitly asked or when a linked plan provides needed implementation context
+
 ## Keep Open Questions Visible
 
 - Status: accepted

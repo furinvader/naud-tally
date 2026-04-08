@@ -13,6 +13,7 @@ Read this file before opening other files under [`docs/`](./).
 - For design workflows, reusable foundations, brief templates, and committed artifacts, read [`design/agent-index.md`](design/agent-index.md).
 - For frontend-specific decisions, read [`../frontend/agent-index.md`](../frontend/agent-index.md) and only open [`../frontend/decisions.md`](../frontend/decisions.md) if the task changes frontend conventions, tooling, or structure.
 - For how we collaborate with Codex, read [`agentic-workflow.md`](agentic-workflow.md).
+- For execution-plan rules or a specifically linked plan, read [`../PLANS.md`](../PLANS.md) only when plan context is explicitly needed.
 - For planning or executing a specific task, read [`tasks/agent-index.md`](tasks/agent-index.md).
 - For branch, commit, and pull request conventions, read [`workflows/agent-index.md`](workflows/agent-index.md).
 - For GitHub repository settings, read [`github-setup.md`](github-setup.md).
@@ -20,6 +21,7 @@ Read this file before opening other files under [`docs/`](./).
 ## Notes
 
 - Prefer one task brief over scanning the whole backlog.
+- Prefer a task brief plus a linked plan over loading unrelated plan files.
 - Prefer [`architecture.md`](architecture.md) over inferring long-term structure from one current implementation file.
 - Load publish rules only when publish work is actually happening.
 - If docs disagree, make the conflict explicit and update the source-of-truth file instead of carrying the disagreement in chat.
