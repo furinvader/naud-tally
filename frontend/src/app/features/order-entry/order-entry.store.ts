@@ -108,7 +108,19 @@ export const OrderEntryStore = signalStore(
       });
     }
 
+    function finalizeSelectedGuestTab(): void {
+      const selectedGuestId = store.selectedGuestId();
+
+      if (!selectedGuestId) {
+        return;
+      }
+
+      guestTabsStore.finalizeGuestTab(selectedGuestId);
+    }
+
     function clearScreenState(shouldIncrementInteraction = false): void {
+      finalizeSelectedGuestTab();
+
       const nextState: Partial<OrderEntryState> = {
         selectedRoomId: null,
         selectedGuestId: null,
@@ -175,6 +187,8 @@ export const OrderEntryStore = signalStore(
           return;
         }
 
+        finalizeSelectedGuestTab();
+
         patchInteractionState({
           selectedRoomId: room.id,
           selectedGuestId: null,
@@ -186,6 +200,8 @@ export const OrderEntryStore = signalStore(
         if (!getSelectedRoom()) {
           return;
         }
+
+        finalizeSelectedGuestTab();
 
         patchInteractionState({
           selectedGuestId: null,
@@ -242,6 +258,8 @@ export const OrderEntryStore = signalStore(
         }
 
         if (store.selectedGuestId() === guest.id) {
+          finalizeSelectedGuestTab();
+
           patchInteractionState({
             selectedGuestId: null,
             guestDraftOpen: false,

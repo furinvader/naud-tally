@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DRINK_CATALOG } from '../catalog';
-import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs';
+import { DrinkCounts, GUEST_TABS_STORAGE_KEY, GuestTabsStore } from '../guest-tabs';
 import { ROOMS_STORAGE_KEY } from '../rooms';
 import { OrderEntryStore } from './order-entry.store';
 
@@ -94,6 +94,41 @@ describe('OrderEntryStore', () => {
     expect(store.roomGuests().map((guest) => guest.fullName)).toEqual(['Ada Lovelace']);
   });
 
+  it('should finalize the selected guest when toggled off so guest-tab ordering stays current', () => {
+    seedRooms();
+    seedGuestTabsForFinalization();
+
+    const store = TestBed.inject(OrderEntryStore);
+    const guestTabsStore = TestBed.inject(GuestTabsStore);
+
+    store.selectRoom('room-101');
+    store.selectGuestTab('guest-1');
+    store.incrementDrink('beer');
+    store.incrementDrink('beer');
+    store.selectGuestTab('guest-1');
+
+    expect(store.selectedGuest()).toBeNull();
+    expect(guestTabsStore.guestTabs().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
+  });
+
+  it('should finalize the selected guest when inactivity clears transient state', () => {
+    seedRooms();
+    seedGuestTabsForFinalization();
+
+    const store = TestBed.inject(OrderEntryStore);
+    const guestTabsStore = TestBed.inject(GuestTabsStore);
+
+    store.selectRoom('room-101');
+    store.selectGuestTab('guest-1');
+    store.incrementDrink('beer');
+    store.incrementDrink('beer');
+    store.clearTransientState();
+
+    expect(store.selectedRoom()).toBeNull();
+    expect(store.selectedGuest()).toBeNull();
+    expect(guestTabsStore.guestTabs().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
+  });
+
   it('should clear the transient room and guest draft state without mutating persistent rooms', () => {
     seedRooms();
     const store = TestBed.inject(OrderEntryStore);
@@ -127,6 +162,30 @@ function seedRooms(): void {
         roomNumber: '204',
         createdAt: '2026-04-01T08:05:00.000Z',
         updatedAt: '2026-04-01T08:05:00.000Z',
+      },
+    ]),
+  );
+}
+
+function seedGuestTabsForFinalization(): void {
+  localStorage.setItem(
+    GUEST_TABS_STORAGE_KEY,
+    JSON.stringify([
+      {
+        id: 'guest-2',
+        roomNumber: '101',
+        fullName: 'Grace Hopper',
+        counts: buildCounts({ water: 2 }),
+        createdAt: '2026-04-01T08:10:00.000Z',
+        updatedAt: '2026-04-01T08:10:00.000Z',
+      },
+      {
+        id: 'guest-1',
+        roomNumber: '101',
+        fullName: 'Ada Lovelace',
+        counts: buildCounts({ water: 1 }),
+        createdAt: '2026-04-01T08:00:00.000Z',
+        updatedAt: '2026-04-01T08:00:00.000Z',
       },
     ]),
   );
