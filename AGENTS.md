@@ -12,13 +12,20 @@
 2. Before reading files under [`docs/`](docs/), read [`docs/agent-index.md`](docs/agent-index.md).
 3. Before reading files under [`docs/design/`](docs/design/), read [`docs/design/agent-index.md`](docs/design/agent-index.md).
 4. Before reading files under [`docs/research/`](docs/research/), read [`docs/research/agent-index.md`](docs/research/agent-index.md).
-5. Before reading files under [`docs/tasks/`](docs/tasks/), read [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md), then the relevant status-folder index, then open only the relevant task file.
-6. Before reading files under [`docs/workflows/`](docs/workflows/), read [`docs/workflows/agent-index.md`](docs/workflows/agent-index.md).
-7. Before reading files under [`frontend/`](frontend/), read [`frontend/agent-index.md`](frontend/agent-index.md).
+5. Before reading files under [`docs/plans/`](docs/plans/), read [`docs/plans/agent-index.md`](docs/plans/agent-index.md).
+6. Before reading files under [`docs/tasks/`](docs/tasks/), read [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md), then the relevant status-folder index, then open only the relevant task file.
+7. Before reading files under [`docs/workflows/`](docs/workflows/), read [`docs/workflows/agent-index.md`](docs/workflows/agent-index.md).
+8. Before reading files under [`frontend/`](frontend/), read [`frontend/agent-index.md`](frontend/agent-index.md).
 
 ## Runtime Setup Rule
 
 - Before running frontend `npm` or `ng` commands, follow the runtime setup note in [`frontend/agent-index.md`](frontend/agent-index.md).
+
+## Planning Rule
+
+- For complex features, significant refactors, or work that benefits from a living implementation plan, use an ExecPlan as defined in [`PLANS.md`](PLANS.md).
+- Individual plan files live under [`docs/plans/`](docs/plans/).
+- Do not open plan files by default. Read them only when the user asks for plan work, when a task file links to a plan, or when extra plan context is needed to execute a task safely.
 
 ## Publish-Time Rule
 
@@ -30,6 +37,7 @@
 - If product scope changes, update [`docs/product.md`](docs/product.md) and any other affected product docs.
 - If a repo-wide workflow or architecture decision changes, update [`docs/decisions.md`](docs/decisions.md).
 - If a local architecture, tooling, or convention decision changes, update the nearest relevant local decision file, such as [`frontend/decisions.md`](frontend/decisions.md).
+- If you create, rename, or materially revise an execution plan, update [`PLANS.md`](PLANS.md) and the relevant file under [`docs/plans/`](docs/plans/).
 - Research notes live under [`docs/research/`](docs/research/) in a flat, topic-based layout; link task or decision docs to the matching research brief instead of embedding research sections in task files.
 - Task files use only `open` and `done` statuses. Current-priority tasks still remain `open`.
 - If task state changes, update [`docs/tasks.md`](docs/tasks.md), the relevant task file, and the relevant status-folder index under [`docs/tasks/`](docs/tasks/).

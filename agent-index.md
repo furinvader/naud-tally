@@ -20,6 +20,7 @@ This is the first routing file for every agent task in this repository.
 ## Routing
 
 - For product, decision, or documentation context, read [`docs/agent-index.md`](docs/agent-index.md).
+- For execution plans or a plan-linked task, read [`docs/plans/agent-index.md`](docs/plans/agent-index.md) only when a task or user request explicitly points there.
 - For research briefs, read [`docs/research/agent-index.md`](docs/research/agent-index.md).
 - For backlog and current task briefs, read [`docs/tasks/agent-index.md`](docs/tasks/agent-index.md).
 - For design workflows, briefs, and committed artifacts, read [`docs/design/agent-index.md`](docs/design/agent-index.md).
@@ -30,5 +31,6 @@ This is the first routing file for every agent task in this repository.
 ## Load Rules
 
 - Start with the smallest relevant index and follow links from there.
+- Treat plans as opt-in context, not default context.
 - Avoid loading product, decision, task, and publish docs all at once unless the task truly spans them.
 - If the task is documentation or workflow only, stay out of frontend files unless the task explicitly requires them.
