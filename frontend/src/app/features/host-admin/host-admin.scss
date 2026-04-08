@@ -102,7 +102,7 @@
 .host-grid {
   display: grid;
   gap: var(--nt-space-md);
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 0.95fr) minmax(0, 1.15fr);
 }
 
 .panel {
@@ -137,12 +137,20 @@
   color: var(--nt-color-muted);
 }
 
+.room-form,
 .drink-form {
   display: grid;
   gap: var(--nt-space-sm);
-  grid-template-columns: minmax(0, 1.15fr) minmax(180px, 0.85fr) auto;
   align-items: start;
   margin-bottom: var(--nt-space-lg);
+}
+
+.room-form {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.drink-form {
+  grid-template-columns: minmax(0, 1.15fr) minmax(180px, 0.85fr) auto;
 }
 
 .submit-button {
@@ -261,6 +269,7 @@
 }
 
 @media (max-width: 799px) {
+  .room-form,
   .drink-form,
   .hero-stats {
     grid-template-columns: 1fr;

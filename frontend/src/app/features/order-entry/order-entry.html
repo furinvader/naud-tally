@@ -1,16 +1,243 @@
-<nt-drink-tally
-  [activeGuests]="orderEntryStore.activeGuests()"
-  [selectedGuestId]="orderEntryStore.selectedGuestId()"
-  [addGuestFlow]="orderEntryStore.addGuestFlow()"
-  [selectedGuest]="orderEntryStore.selectedGuest()"
-  (startAddGuest)="orderEntryStore.startAddGuestFlow()"
-  (updateDraftRoomNumber)="orderEntryStore.updateDraftRoomNumber($event)"
-  (updateDraftFullName)="orderEntryStore.updateDraftFullName($event)"
-  (submitRoomNumber)="orderEntryStore.submitRoomNumber()"
-  (submitGuestIdentity)="orderEntryStore.submitGuestIdentity()"
-  (returnToRoomNumberStep)="orderEntryStore.returnToRoomNumberStep()"
-  (cancelAddGuestFlow)="orderEntryStore.cancelAddGuestFlow()"
-  (selectGuest)="orderEntryStore.selectGuestTab($event)"
-  (incrementDrink)="orderEntryStore.incrementDrink($event)"
-  (decrementDrink)="orderEntryStore.decrementDrink($event)"
-></nt-drink-tally>
+<nt-page-shell
+  [maxWidth]="'1400px'"
+  [background]="shellBackground"
+>
+  <nt-app-bar [title]="copy.title" [eyebrow]="copy.eyebrow">
+    <a
+      actions
+      mat-stroked-button
+      data-testid="host-tools-link"
+      [routerLink]="hostRoute"
+    >
+      {{ copy.hostToolsAction }}
+    </a>
+  </nt-app-bar>
+
+  @if (orderEntryStore.rooms().length) {
+    <section class="order-entry-layout">
+      <mat-card class="workflow-panel room-panel">
+        <div class="workflow-panel__header">
+          <p class="workflow-panel__eyebrow">{{ copy.roomPanelEyebrow }}</p>
+          <h2>{{ copy.roomPanelTitle }}</h2>
+          <p>{{ copy.roomPanelHint }}</p>
+        </div>
+
+        <nt-scroll-region class="workflow-panel__scroll" data-testid="room-list-scroll">
+          <div class="room-list">
+            @for (room of orderEntryStore.rooms(); track room.id) {
+              <button
+                type="button"
+                class="selection-card room-card"
+                [class.selection-card--selected]="orderEntryStore.selectedRoomId() === room.id"
+                [attr.aria-label]="'Open room ' + room.roomNumber"
+                (click)="orderEntryStore.selectRoom(room.id)"
+              >
+                <span class="selection-card__eyebrow">{{ copy.roomLabel }}</span>
+                <strong>{{ room.roomNumber }}</strong>
+                <span class="selection-card__meta">
+                  {{ room.openGuestCount }}
+                  {{ copy.roomPanelOpenGuestsLabel }}
+                </span>
+              </button>
+            }
+          </div>
+        </nt-scroll-region>
+      </mat-card>
+
+      <mat-card class="workflow-panel guest-panel">
+        <div class="workflow-panel__header">
+          <p class="workflow-panel__eyebrow">{{ copy.guestPanelEyebrow }}</p>
+
+          @if (orderEntryStore.selectedRoom(); as selectedRoom) {
+            <div class="workflow-panel__title-row">
+              <div>
+                <h2>{{ copy.guestPanelTitle }}</h2>
+                <p>{{ copy.roomLabel }} {{ selectedRoom.roomNumber }}</p>
+              </div>
+
+              <button
+                mat-flat-button
+                color="primary"
+                data-testid="open-guest-draft-button"
+                type="button"
+                (click)="orderEntryStore.openGuestDraft()"
+              >
+                {{ copy.guestPanelAddAction }}
+              </button>
+            </div>
+          } @else {
+            <h2>{{ copy.guestPanelTitle }}</h2>
+            <p>{{ copy.guestPanelHint }}</p>
+          }
+        </div>
+
+        @if (orderEntryStore.selectedRoom()) {
+          @if (orderEntryStore.guestDraft().isOpen) {
+            <form
+              class="guest-form"
+              (submit)="$event.preventDefault(); orderEntryStore.submitGuestIdentity()"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>{{ copy.guestPanelNameLabel }}</mat-label>
+                <input
+                  matInput
+                  data-testid="guest-name-input"
+                  [value]="orderEntryStore.guestDraft().fullName"
+                  (input)="orderEntryStore.updateDraftGuestFullName($any($event.target).value)"
+                />
+              </mat-form-field>
+
+              <div class="guest-form__actions">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  data-testid="submit-guest-draft-button"
+                  type="submit"
+                >
+                  {{ copy.guestPanelSubmitAction }}
+                </button>
+
+                <button
+                  mat-stroked-button
+                  data-testid="cancel-guest-draft-button"
+                  type="button"
+                  (click)="orderEntryStore.cancelGuestDraft()"
+                >
+                  {{ copy.guestPanelCancelAction }}
+                </button>
+              </div>
+            </form>
+          }
+
+          <nt-scroll-region class="workflow-panel__scroll" data-testid="room-guests-scroll">
+            @if (orderEntryStore.roomGuests().length) {
+              <div class="guest-list">
+                @for (guest of orderEntryStore.roomGuests(); track guest.id) {
+                  <button
+                    type="button"
+                    class="selection-card guest-card"
+                    [class.selection-card--selected]="orderEntryStore.selectedGuestId() === guest.id"
+                    [attr.aria-label]="'Open tab for room ' + guest.roomNumber + ', ' + guest.fullName"
+                    (click)="orderEntryStore.selectGuestTab(guest.id)"
+                  >
+                    <span class="selection-card__eyebrow">{{ copy.guestPanelTitle }}</span>
+                    <strong>{{ guest.fullName }}</strong>
+                    <span class="selection-card__meta">
+                      @if (guest.totalCount > 0) {
+                        {{ guest.totalCount }} {{ copy.orderPanelRecordedSuffix }}
+                      } @else {
+                        No drinks yet
+                      }
+                    </span>
+                    <span class="selection-card__price">{{ guest.displayTotalPrice }}</span>
+                  </button>
+                }
+              </div>
+            } @else {
+              <div class="empty-state" data-testid="empty-room-guests">
+                <h3>{{ copy.guestPanelEmptyTitle }}</h3>
+                <p>{{ copy.guestPanelEmptyBody }}</p>
+              </div>
+            }
+          </nt-scroll-region>
+        } @else {
+          <div class="empty-state" data-testid="no-room-selected">
+            <h3>{{ copy.guestPanelNoRoomTitle }}</h3>
+            <p>{{ copy.guestPanelNoRoomBody }}</p>
+          </div>
+        }
+      </mat-card>
+
+      <mat-card class="workflow-panel order-panel">
+        <div class="workflow-panel__header">
+          <p class="workflow-panel__eyebrow">{{ copy.orderPanelEyebrow }}</p>
+          <h2>{{ copy.orderPanelTitle }}</h2>
+          <p>{{ copy.orderPanelHint }}</p>
+        </div>
+
+        @if (orderEntryStore.selectedGuest(); as guest) {
+          <section class="selected-guest" data-testid="selected-guest-panel">
+            <div class="selected-guest__summary">
+              <div class="selected-guest__identity">
+                <h3>{{ guest.fullName }}</h3>
+                <p>{{ copy.roomLabel }} {{ guest.roomNumber }}</p>
+              </div>
+
+              <div class="selected-guest__totals">
+                <article data-testid="selected-guest-total-price">
+                  <span>{{ copy.orderPanelTotalLabel }}</span>
+                  <strong>{{ guest.displayTotalPrice }}</strong>
+                </article>
+
+                <article data-testid="selected-guest-total-count">
+                  <span>{{ copy.orderPanelCountLabel }}</span>
+                  <strong>{{ guest.totalCount }}</strong>
+                </article>
+              </div>
+            </div>
+
+            <nt-scroll-region class="selected-guest__scroll" data-testid="selected-guest-drinks-scroll">
+              <div class="drink-grid">
+                @for (drink of guest.drinks; track drink.id) {
+                  <article class="drink-card">
+                    <div class="drink-card__copy">
+                      <h4>{{ drink.name }}</h4>
+                      <p>{{ drink.displayPrice }}</p>
+                    </div>
+
+                    <div class="drink-card__controls">
+                      <button
+                        type="button"
+                        class="drink-card__button drink-card__button--secondary"
+                        [disabled]="drink.count === 0"
+                        [attr.aria-label]="'Remove one ' + drink.name"
+                        (click)="orderEntryStore.decrementDrink(drink.id)"
+                      >
+                        −
+                      </button>
+
+                      <strong class="drink-card__count">{{ drink.count }}</strong>
+
+                      <button
+                        type="button"
+                        class="drink-card__button"
+                        [attr.aria-label]="'Add one ' + drink.name"
+                        (click)="orderEntryStore.incrementDrink(drink.id)"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </article>
+                }
+              </div>
+            </nt-scroll-region>
+          </section>
+        } @else if (orderEntryStore.selectedRoom()) {
+          <div class="empty-state" data-testid="no-guest-selected">
+            <h3>{{ copy.orderPanelNoGuestTitle }}</h3>
+            <p>{{ copy.orderPanelNoGuestBody }}</p>
+          </div>
+        } @else {
+          <div class="empty-state" data-testid="no-room-order-panel">
+            <h3>{{ copy.orderPanelNoRoomTitle }}</h3>
+            <p>{{ copy.orderPanelNoRoomBody }}</p>
+          </div>
+        }
+      </mat-card>
+    </section>
+  } @else {
+    <mat-card class="empty-shell" data-testid="no-rooms-empty-state">
+      <p class="workflow-panel__eyebrow">{{ copy.roomPanelEyebrow }}</p>
+      <h2>{{ copy.roomPanelEmptyTitle }}</h2>
+      <p>{{ copy.roomPanelEmptyBody }}</p>
+      <a
+        mat-flat-button
+        color="primary"
+        data-testid="no-rooms-host-tools-link"
+        [routerLink]="hostRoute"
+      >
+        {{ copy.roomPanelEmptyAction }}
+      </a>
+    </mat-card>
+  }
+</nt-page-shell>

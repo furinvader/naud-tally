@@ -6,6 +6,12 @@ import {
   createBillLineItems,
 } from '../billing-history';
 import { GuestTab, countDrinks, getDrinkCount } from '../guest-tabs';
+import { Room } from '../rooms';
+
+export type HostRoomItem = Room & {
+  openGuestCount: number;
+  canRemove: boolean;
+};
 
 export type HostDrinkCatalogItem = {
   id: DrinkId;
@@ -37,6 +43,7 @@ export type BilledGuestBillViewModel = BilledGuestTab & {
 };
 
 export type HostSummaryViewModel = {
+  activeRoomCount: number;
   activeDrinkCount: number;
   removedDrinkCount: number;
   openGuestCount: number;
@@ -57,6 +64,21 @@ const billedTimestampFormatter = new Intl.DateTimeFormat(undefined, {
 const drinkNameCollator = new Intl.Collator(undefined, {
   sensitivity: 'base',
 });
+
+export function createHostRoomItems(
+  rooms: ReadonlyArray<Room>,
+  guestTabs: ReadonlyArray<GuestTab>,
+): HostRoomItem[] {
+  return rooms.map((room) => {
+    const openGuestCount = countOpenGuestsInRoom(guestTabs, room.roomNumber);
+
+    return {
+      ...room,
+      openGuestCount,
+      canRemove: openGuestCount === 0,
+    };
+  });
+}
 
 export function createHostDrinkCatalogItems(
   drinkCatalog: ReadonlyArray<DrinkCatalogEntry>,
@@ -121,10 +143,12 @@ export function createBilledGuestBillViewModel(
 }
 
 export function createHostSummaryViewModel(
+  rooms: ReadonlyArray<Room>,
   drinkCatalog: ReadonlyArray<DrinkCatalogEntry>,
   guestTabs: ReadonlyArray<GuestTab>,
   billedGuestTabs: ReadonlyArray<BilledGuestTab>,
 ): HostSummaryViewModel {
+  const activeRoomCount = rooms.length;
   const activeDrinkCount = drinkCatalog.filter((drink) => drink.isActive).length;
   const removedDrinkCount = drinkCatalog.length - activeDrinkCount;
   const openGuestCount = guestTabs.length;
@@ -139,6 +163,7 @@ export function createHostSummaryViewModel(
   );
 
   return {
+    activeRoomCount,
     activeDrinkCount,
     removedDrinkCount,
     openGuestCount,
@@ -156,6 +181,16 @@ export function countOpenGuestsUsingDrink(
 ): number {
   return guestTabs.reduce(
     (total, guest) => total + (getDrinkCount(guest.counts, drinkId) > 0 ? 1 : 0),
+    0,
+  );
+}
+
+export function countOpenGuestsInRoom(
+  guestTabs: ReadonlyArray<GuestTab>,
+  roomNumber: string,
+): number {
+  return guestTabs.reduce(
+    (total, guest) => total + (guest.roomNumber === roomNumber ? 1 : 0),
     0,
   );
 }

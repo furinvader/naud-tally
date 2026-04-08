@@ -15,8 +15,8 @@ It complements the product scope in [`product.md`](product.md), the workflow gui
 The current frontend is still small, but a few pressure points are already visible:
 
 - the default route now points at an order-entry composition root in [`../frontend/src/app/features/order-entry/order-entry.ts`](../frontend/src/app/features/order-entry/order-entry.ts), and transient order-entry screen state now lives in [`../frontend/src/app/features/order-entry/order-entry.store.ts`](../frontend/src/app/features/order-entry/order-entry.store.ts) while the migration continues
-- durable guest-tab state now lives in [`../frontend/src/app/features/guest-tabs/guest-tabs.store.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.store.ts), catalog state lives in [`../frontend/src/app/features/catalog/catalog.store.ts`](../frontend/src/app/features/catalog/catalog.store.ts), and billed history lives in [`../frontend/src/app/features/billing-history/billing-history.store.ts`](../frontend/src/app/features/billing-history/billing-history.store.ts), with adjacent repository adapters in [`../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts), [`../frontend/src/app/features/catalog/catalog.repository.ts`](../frontend/src/app/features/catalog/catalog.repository.ts), and [`../frontend/src/app/features/billing-history/billing-history.repository.ts`](../frontend/src/app/features/billing-history/billing-history.repository.ts)
-- the order entry and host admin screens now compose those capability stores through local view-model helpers instead of a single broad tally store
+- durable room, guest-tab, catalog, and billed-history state now live in [`../frontend/src/app/features/rooms/rooms.store.ts`](../frontend/src/app/features/rooms/rooms.store.ts), [`../frontend/src/app/features/guest-tabs/guest-tabs.store.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.store.ts), [`../frontend/src/app/features/catalog/catalog.store.ts`](../frontend/src/app/features/catalog/catalog.store.ts), and [`../frontend/src/app/features/billing-history/billing-history.store.ts`](../frontend/src/app/features/billing-history/billing-history.store.ts), with adjacent repository adapters in [`../frontend/src/app/features/rooms/rooms.repository.ts`](../frontend/src/app/features/rooms/rooms.repository.ts), [`../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts), [`../frontend/src/app/features/catalog/catalog.repository.ts`](../frontend/src/app/features/catalog/catalog.repository.ts), and [`../frontend/src/app/features/billing-history/billing-history.repository.ts`](../frontend/src/app/features/billing-history/billing-history.repository.ts)
+- the order entry and host admin screens now compose those capability stores through local view-model helpers instead of a single broad tally store, and the active route no longer treats [`../frontend/src/app/features/drink-tally/`](../frontend/src/app/features/drink-tally/) as its screen contract
 - public feature API entrypoints now live at feature roots, and import-boundary enforcement now runs through [`../frontend/scripts/check-import-boundaries.mjs`](../frontend/scripts/check-import-boundaries.mjs)
 
 That is closer to the architecture we want to scale, and the next priority can now shift back to product-surface work on top of those seams.
@@ -42,6 +42,7 @@ We do not want:
 At a larger size, the frontend should revolve around these roles:
 
 - `order-entry`: the route-level [composition root](glossary.md#composition-root) for the current main pilot screen
+- `rooms`: the fixed room list that the host configures and the order-entry route consumes
 - `guest-tabs`: open [guest tabs](glossary.md#guest-tab), guest identity rules, and tab lifecycle rules
 - `catalog`: product catalog and price-management rules
 - `billing-history`: billed-tab creation and recent billed history
@@ -63,6 +64,7 @@ src/app/
       order-entry.ts
       order-entry.store.ts
       order-entry.facade.ts
+    rooms/
     guest-tabs/
     catalog/
     billing-history/
@@ -117,7 +119,7 @@ Shared UI should not import feature stores, feature copy, or feature-specific bu
 These are the intended dependency boundaries:
 
 - [`../frontend/src/app/app.ts`](../frontend/src/app/app.ts) and [`../frontend/src/app/app.routes.ts`](../frontend/src/app/app.routes.ts) may depend on feature public APIs and shared UI
-- `order-entry` may depend on public APIs from `guest-tabs`, `catalog`, `billing-history`, and `sync-recovery`
+- `order-entry` may depend on public APIs from `rooms`, `guest-tabs`, `catalog`, `billing-history`, and `sync-recovery`
 - `admin-tools` may depend on those same public APIs
 - capability features should not [deep-import](glossary.md#deep-import) each other's internal files
 - cross-feature imports should target the providing feature's public entrypoint instead of a deep file path
@@ -137,6 +139,7 @@ The repo now enforces the frontend part of that boundary in [`../frontend/script
 Examples:
 
 - open guest tabs belong to `guest-tabs`
+- configured rooms belong to `rooms`
 - live catalog entries belong to `catalog`
 - billed guest records belong to `billing-history`
 - sync metadata and queued operations belong to `sync-recovery`

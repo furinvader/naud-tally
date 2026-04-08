@@ -21,6 +21,7 @@ If a task has a relevant plan, link that plan from the task file's `Related docs
 ## Project Plan Index
 
 - [`docs/plans/document-execplan-workflow.md`](docs/plans/document-execplan-workflow.md): establishes the repo's ExecPlan documentation and routing convention. Related tasks: none yet; related docs: [`AGENTS.md`](AGENTS.md), [`agent-index.md`](agent-index.md), [`docs/agentic-workflow.md`](docs/agentic-workflow.md), [`docs/decisions.md`](docs/decisions.md).
+- [`docs/plans/build-room-first-order-entry-screen.md`](docs/plans/build-room-first-order-entry-screen.md): documents the room-first host order-entry implementation, including the new room capability, order-entry UI refactor, and supporting docs/design artifacts. Related tasks: [`docs/tasks/open/T-018.md`](docs/tasks/open/T-018.md), [`docs/tasks/open/T-014.md`](docs/tasks/open/T-014.md), [`docs/tasks/open/T-019.md`](docs/tasks/open/T-019.md); related docs: [`docs/product.md`](docs/product.md), [`docs/ux/host-workflow-ux.md`](docs/ux/host-workflow-ux.md), [`docs/architecture.md`](docs/architecture.md).
 
 ## Non-Negotiable Requirements
 

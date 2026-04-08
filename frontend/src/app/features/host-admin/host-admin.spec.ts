@@ -4,6 +4,7 @@ import { vi } from 'vitest';
 
 import { DRINK_CATALOG } from '../catalog';
 import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs';
+import { ROOMS_STORAGE_KEY } from '../rooms';
 import { HostAdmin } from './host-admin';
 
 describe('HostAdmin', () => {
@@ -23,6 +24,7 @@ describe('HostAdmin', () => {
 
   it('should render the host admin summary and guest billing list', async () => {
     seedOpenGuestTabs();
+    seedRooms();
 
     const fixture = TestBed.createComponent(HostAdmin);
     fixture.detectChanges();
@@ -34,8 +36,14 @@ describe('HostAdmin', () => {
     expect(compiled.querySelector('nt-app-bar')?.textContent).toContain('Host route');
     expect(compiled.textContent).toContain('Host admin');
     expect(
+      compiled.querySelector('[data-testid="host-summary-active-rooms"]')?.textContent,
+    ).toContain('2');
+    expect(
       compiled.querySelector('[data-testid="host-summary-open-guests"]')?.textContent,
     ).toContain('1');
+    expect(compiled.querySelector('[data-testid="host-room-list"]')?.textContent).toContain(
+      'Room 101',
+    );
     expect(compiled.querySelector('[data-testid="host-open-guest-list"]')?.textContent).toContain(
       'Ada Lovelace',
     );
@@ -87,12 +95,45 @@ describe('HostAdmin', () => {
     );
   });
 
+  it('should let the host add a new room to the live room list', async () => {
+    const fixture = TestBed.createComponent(HostAdmin);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const roomInput = compiled.querySelector(
+      '[data-testid="host-room-number-input"]',
+    ) as HTMLInputElement | null;
+    const submitButton = compiled.querySelector(
+      '[data-testid="host-add-room-button"]',
+    ) as HTMLButtonElement | null;
+
+    if (roomInput) {
+      roomInput.value = '204';
+      roomInput.dispatchEvent(new Event('input'));
+    }
+
+    fixture.detectChanges();
+
+    submitButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="host-room-list"]')?.textContent).toContain(
+      'Room 204',
+    );
+    expect(compiled.querySelector('[data-testid="host-flash-message"]')?.textContent).toContain(
+      'Room added to the live room list.',
+    );
+  });
+
   it('should remove an unused drink and move a billed guest into history', async () => {
     vi.stubGlobal(
       'confirm',
       vi.fn(() => true),
     );
     seedOpenGuestTabs();
+    seedRooms();
 
     const fixture = TestBed.createComponent(HostAdmin);
     fixture.detectChanges();
@@ -135,6 +176,26 @@ describe('HostAdmin', () => {
     );
   });
 });
+
+function seedRooms(): void {
+  localStorage.setItem(
+    ROOMS_STORAGE_KEY,
+    JSON.stringify([
+      {
+        id: 'room-101',
+        roomNumber: '101',
+        createdAt: '2026-04-01T08:00:00.000Z',
+        updatedAt: '2026-04-01T08:00:00.000Z',
+      },
+      {
+        id: 'room-102',
+        roomNumber: '102',
+        createdAt: '2026-04-01T08:05:00.000Z',
+        updatedAt: '2026-04-01T08:05:00.000Z',
+      },
+    ]),
+  );
+}
 
 function seedOpenGuestTabs(): void {
   localStorage.setItem(

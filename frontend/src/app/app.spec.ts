@@ -29,7 +29,7 @@ describe('App', () => {
     const compiled = fixture.nativeElement as HTMLElement;
 
     expect(compiled.querySelector('nt-order-entry')).not.toBeNull();
-    expect(compiled.querySelector('nt-drink-tally')).not.toBeNull();
+    expect(compiled.querySelector('nt-drink-tally')).toBeNull();
   });
 
   it('should render the host admin route', async () => {
