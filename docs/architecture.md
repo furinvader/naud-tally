@@ -23,7 +23,7 @@ That is closer to the architecture we want to scale, and the next priority can n
 
 ## Target Direction
 
-We want a modular monolith:
+We want a [modular monolith](glossary.md#modular-monolith):
 
 - one Angular app under [`../frontend/`](../frontend/)
 - one primary host-operated route surface for the pilot
@@ -41,11 +41,11 @@ We do not want:
 
 At a larger size, the frontend should revolve around these roles:
 
-- `order-entry`: the route-level composition root for the current main pilot screen
-- `guest-tabs`: open guest tabs, guest identity rules, and tab lifecycle rules
+- `order-entry`: the route-level [composition root](glossary.md#composition-root) for the current main pilot screen
+- `guest-tabs`: open [guest tabs](glossary.md#guest-tab), guest identity rules, and tab lifecycle rules
 - `catalog`: product catalog and price-management rules
 - `billing-history`: billed-tab creation and recent billed history
-- `sync-recovery`: sync status, local outbox or operation log, and remote recovery integration
+- `sync-recovery`: [sync status](glossary.md#sync-status), local [outbox](glossary.md#outbox) or operation log, and remote recovery integration
 - `admin-tools`: host-facing supporting screens that consume the same public feature APIs
 - [`../frontend/src/app/ui/`](../frontend/src/app/ui/): shared presentation and layout primitives only
 - small app-wide platform helpers under a future `core` area only when they are truly cross-feature and not domain-owned
@@ -78,7 +78,7 @@ Top-level feature directories under [`../frontend/src/app/features/`](../fronten
 
 ### Route Composition
 
-The route feature for the current order entry screen should be the composition root.
+The route feature for the current order entry screen should be the [composition root](glossary.md#composition-root).
 
 A future overview screen may later replace it as the default landing surface, but that work is deferred and should not blur the current ownership boundaries.
 
@@ -91,15 +91,15 @@ That route feature should:
 
 ### Capability Features
 
-Each durable business capability should own:
+Each durable [capability feature](glossary.md#capability-feature) should own:
 
 - its domain models
-- its domain rules
-- its persistent state
+- its [domain rules](glossary.md#domain-rule)
+- its [persistent business state](glossary.md#persistent-business-state)
 - its data adapters and serialization rules
 - its focused tests
 
-Each capability should expose a small public API, usually through a facade or clearly named public file.
+Each capability should expose a small [public API](glossary.md#public-api), usually through a facade or clearly named public file.
 For top-level features under [`../frontend/src/app/features/`](../frontend/src/app/features/), prefer publishing that surface from the feature root, such as an [`index.ts`](../frontend/src/app/features/catalog/index.ts) entrypoint.
 
 ### Shared UI
@@ -119,12 +119,12 @@ These are the intended dependency boundaries:
 - [`../frontend/src/app/app.ts`](../frontend/src/app/app.ts) and [`../frontend/src/app/app.routes.ts`](../frontend/src/app/app.routes.ts) may depend on feature public APIs and shared UI
 - `order-entry` may depend on public APIs from `guest-tabs`, `catalog`, `billing-history`, and `sync-recovery`
 - `admin-tools` may depend on those same public APIs
-- capability features should not deep-import each other's internal files
+- capability features should not [deep-import](glossary.md#deep-import) each other's internal files
 - cross-feature imports should target the providing feature's public entrypoint instead of a deep file path
 - shared UI should not depend on feature-owned business code
-- domain rules should not depend on browser storage or remote APIs directly
+- [domain rules](glossary.md#domain-rule) should not depend on browser storage or remote APIs directly
 
-If one feature needs another feature's behavior, add or refine the other feature's public API instead of importing its internal store or helper file directly.
+If one feature needs another feature's behavior, add or refine the other feature's [public API](glossary.md#public-api) instead of importing its internal store or helper file directly.
 
 The repo now enforces the frontend part of that boundary in [`../frontend/scripts/check-import-boundaries.mjs`](../frontend/scripts/check-import-boundaries.mjs). The check allows cross-feature imports only when they resolve through a top-level feature root [`index.ts`](../frontend/src/app/features/catalog/index.ts), keeps app-shell files on feature public APIs, and blocks shared UI from importing feature-owned business code.
 
@@ -132,7 +132,7 @@ The repo now enforces the frontend part of that boundary in [`../frontend/script
 
 ### Persistent Business State
 
-Persistent state should live with the capability that owns the business concept.
+[Persistent business state](glossary.md#persistent-business-state) should live with the capability that owns the business concept.
 
 Examples:
 
@@ -143,7 +143,7 @@ Examples:
 
 ### Transient Route State
 
-Transient screen state should live with the route composition feature.
+[Transient route state](glossary.md#transient-route-state) should live with the route composition feature.
 
 Examples:
 
@@ -161,7 +161,7 @@ The app should remain local-first, but the code should stop assuming that browse
 
 ### Repository Boundary
 
-Capability features should read and write through repositories or equivalent data adapters.
+Capability features should read and write through [repositories](glossary.md#repository) or equivalent data adapters.
 
 That means:
 
@@ -173,14 +173,14 @@ That means:
 
 The intended write model is:
 
-1. validate the user action against domain rules
+1. validate the user action against [domain rules](glossary.md#domain-rule)
 2. update local capability state
-3. persist locally through the capability repository
+3. persist locally through the capability [repository](glossary.md#repository)
 4. record sync metadata or queue a sync operation when that architecture is introduced
 
 ### Sync and Recovery Boundary
 
-The app will eventually need a local outbox or operation-log-style boundary for remote recovery and sync.
+The app will eventually need a local [outbox](glossary.md#outbox) or operation-log-style boundary for remote recovery and sync.
 
 That future boundary should:
 

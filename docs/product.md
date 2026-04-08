@@ -2,13 +2,13 @@
 
 ## Working Definition
 
-This project is a tablet-first tally app operated by the host. The current pilot should give the host a primary order entry screen where they can identify a guest by room number and full name, record orders with an intuitive tap-first flow, manage products and prices, and bill the guest on departure.
+This project is a tablet-first tally app operated by the host. The current pilot should give the host a primary [order entry screen](glossary.md#order-entry-screen) where they can identify a guest by room number and full name, record orders with an intuitive tap-first flow, manage products and prices, and bill the guest on departure.
 
 That order entry screen remains the main app surface for now. A broader overview screen may replace it later, but that work is deferred.
 
 The product should stay simple enough for a small team to build and operate, but it now needs stronger data safety than same-device reload persistence. The app should keep working with offline-first local state on the tablet, then recover and sync safely after reconnect, reinstall, or replacement-device setup through a simple remote backup or sync solution.
 
-The current implementation already has host-side catalog management, billing, billed history, and local persistence, but the default route and older core docs still reflect the earlier guest-first public-tablet slice.
+The current implementation already has host-side catalog management, billing, [billing history](glossary.md#billing-history), and local persistence, but the default route and older core docs still reflect the earlier guest-first public-tablet slice.
 
 The supporting UX reference for the current pilot lives in [`ux/host-workflow-ux.md`](ux/host-workflow-ux.md). The older public self-service concept is kept only as deferred future work in [`ux/guest-tab-ux.md`](ux/guest-tab-ux.md). Remote persistence tradeoffs are summarized in [`research/remote-persistence-options.md`](research/remote-persistence-options.md).
 
@@ -39,7 +39,7 @@ These are the rules for the current pilot direction:
 - guest identification remains trust-based and is entered directly by the host
 - guest identification uses room number and full name
 - the app must support creating and updating the live product catalog with prices
-- the app must support billing a guest tab and keeping recent billed history
+- the app must support billing a [guest tab](glossary.md#guest-tab) and keeping recent [billing history](glossary.md#billing-history)
 - the current implementation already persists drink catalog, open tabs, and billed history locally across reloads
 - the product requirement now expands persistence to offline-first local app state plus remote recovery or sync
 - the app should continue working when internet access is unavailable
@@ -76,9 +76,9 @@ The app should still start from these sample drinks and reference prices until t
 
 1. The host opens the app on the tablet.
 2. The host lands on the order entry screen, which serves as the main screen for now.
-3. The host finds an existing tab or creates a new one by entering room number and full name.
+3. The host finds an existing [guest tab](glossary.md#guest-tab) or creates a new one by entering room number and full name.
 4. The host records one or more orders immediately from the same working surface.
-5. The app keeps the selected guest context obvious while the host continues taking orders.
+5. The app keeps the [selected guest](glossary.md#selected-guest) context obvious while the host continues taking orders.
 6. The host can add products, remove inactive products, or adjust prices from host-managed controls without leaving the overall workflow.
 7. The app saves changes locally immediately so the host can continue working offline.
 8. When connectivity is available, the app syncs or backs up local changes to the chosen remote recovery store.
@@ -121,8 +121,8 @@ The app should still start from these sample drinks and reference prices until t
 - Common order-entry actions should take as few taps as possible.
 - Product management and billing should feel adjacent to the host workflow, not like a separate admin tool.
 - Offline behavior should fail gently and keep the host moving.
-- Sync status should be understandable without becoming noisy.
-- Recovery should be simple if the host taps the wrong thing or loses connection.
+- [Sync status](glossary.md#sync-status) should be understandable without becoming noisy.
+- [Recovery](glossary.md#recovery) should be simple if the host taps the wrong thing or loses connection.
 
 ## Functional Requirements
 

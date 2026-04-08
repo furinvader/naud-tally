@@ -49,6 +49,14 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Consequence: keep stable domain and architecture terms in [`glossary.md`](glossary.md)
 - Consequence: update those docs when durable boundaries, ownership rules, or vocabulary change
 
+## Link First Mentions of Glossary Terms
+
+- Status: accepted
+- Why: humans and agents both understand project-specific language faster when a term points directly to its canonical definition
+- Consequence: keep glossary entries as direct-linkable headings in [`glossary.md`](glossary.md)
+- Consequence: when a markdown doc introduces or relies on a glossary-defined term, link the first meaningful mention to that glossary entry
+- Consequence: avoid linking every repetition of the same term so docs stay readable
+
 ## Optimize for Tablet-First Web Delivery
 
 - Status: accepted
