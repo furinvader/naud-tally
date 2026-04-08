@@ -16,6 +16,7 @@ After this change, the repository will have a clear, reusable way to store long-
 - [x] (2026-04-08 04:01Z) Added [`PLANS.md`](../../PLANS.md), [`docs/plans/agent-index.md`](agent-index.md), and this seeded plan file under [`docs/plans/`](./).
 - [x] (2026-04-08 04:01Z) Updated the repo routing, workflow, and decision docs so plans can be linked to tasks without becoming default context.
 - [x] (2026-04-08 04:03Z) Verified the new docs wiring with a repo search and confirmed the markdown edits were clean with `git diff --check`.
+- [x] (2026-04-08 04:12Z) Fixed the first PR's `repo-hygiene` failure by removing raw tracked-path mentions that violated the markdown link rule and by adding the new planning docs to the required-files check.
 
 ## Surprises & Discoveries
 
@@ -24,6 +25,9 @@ After this change, the repository will have a clear, reusable way to store long-
 
 - Observation: The existing task template already had a `Related docs` slot, so plan-to-task linking could be added without changing the task file structure.
   Evidence: [`docs/tasks/agent-index.md`](../tasks/agent-index.md) already defined `Related docs` as part of the standard task layout.
+
+- Observation: The repo markdown-link checker treats raw tracked-path mentions in inline code and indented command examples as failures, so even validation examples inside plan docs need link-safe wording.
+  Evidence: `python3 scripts/check-markdown-repo-links.py` initially flagged raw mentions of [`PLANS.md`](../../PLANS.md), [`docs/plans/`](./), and command-argument path tokens in this file, then passed after those references were rewritten.
 
 ## Decision Log
 
@@ -39,6 +43,10 @@ After this change, the repository will have a clear, reusable way to store long-
   Rationale: Reusing the existing task structure keeps task briefs compact and avoids introducing another required task-field convention.
   Date/Author: 2026-04-08 / Codex
 
+- Decision: Add [`PLANS.md`](../../PLANS.md) and [`docs/plans/agent-index.md`](agent-index.md) to the repo-hygiene required-files list and avoid raw tracked-path tokens in plan validation prose.
+  Rationale: The planning convention is now repository-level workflow, so the hygiene workflow should enforce its presence, and the plan file itself should comply with the repo's markdown-link rule.
+  Date/Author: 2026-04-08 / Codex
+
 ## Outcomes & Retrospective
 
 The repo now has a documented ExecPlan convention, a plan index, and a first plan file that records how the convention was introduced. The routing docs make plan files discoverable without making them mandatory reading, which matches the goal of keeping plans available for deeper context while protecting ordinary task focus.
@@ -47,7 +55,7 @@ No product or runtime behavior changed. Future work should only add more plan fi
 
 ## Context and Orientation
 
-Before this change, the repository already had a strong routing pattern built around [`AGENTS.md`](../../AGENTS.md) and local [`agent-index.md`](../../agent-index.md) files, plus human-facing workflow guidance in [`docs/agentic-workflow.md`](../agentic-workflow.md). It did not have a checked-in `PLANS.md` file, a local routing doc for [`docs/plans/`](./), or a defined place to store repository execution plans.
+Before this change, the repository already had a strong routing pattern built around [`AGENTS.md`](../../AGENTS.md) and local [`agent-index.md`](../../agent-index.md) files, plus human-facing workflow guidance in [`docs/agentic-workflow.md`](../agentic-workflow.md). It did not have a checked-in [`PLANS.md`](../../PLANS.md) file, a local routing doc for [`docs/plans/`](./), or a defined place to store repository execution plans.
 
 Task files already support `Related docs`, and repository-wide workflow decisions already live in [`docs/decisions.md`](../decisions.md). That meant the smallest coherent change was to add a plan contract and index, create the plans subtree routing file, and connect the convention to the existing task and workflow docs.
 
@@ -61,13 +69,13 @@ Then update [`AGENTS.md`](../../AGENTS.md), [`agent-index.md`](../../agent-index
 
 From the repository root at [`./`](../../), inspect the current routing docs and workflow docs, then edit the documentation files listed in this plan to add the new planning convention.
 
-After editing, verify the wiring by searching for `PLANS.md` and `docs/plans/` references across the repo docs so the new convention is reachable from the normal agent entry points.
+After editing, verify the wiring by searching for links to the root plan contract and the plans subtree across the repo docs so the new convention is reachable from the normal agent entry points.
 
 ## Validation and Acceptance
 
-Run the following from the repository root and confirm that the new plan files and routing references exist:
+Run a repository search from the root and confirm that the new plan files and routing references exist.
 
-    rg -n "PLANS.md|docs/plans|plans/agent-index.md" AGENTS.md agent-index.md docs/ PLANS.md
+One reliable way is to search all tracked markdown docs for the new plan links, for example by matching the link target fragments rather than raw path tokens.
 
 Acceptance is met when the output shows:
 
@@ -90,7 +98,7 @@ The validation search command is intentionally simple so future contributors can
 
 Validation evidence:
 
-- `rg -n "PLANS.md|docs/plans|plans/agent-index.md" AGENTS.md agent-index.md docs/ PLANS.md` returned hits in the repo instruction layer, the routing docs, the workflow docs, the task guidance, and the new plan files.
+- A repository search for the new plan-link targets returned hits in the repo instruction layer, the routing docs, the workflow docs, the task guidance, and the new plan files.
 - `git diff --check` returned no output.
 
 ## Interfaces and Dependencies
