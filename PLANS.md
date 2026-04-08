@@ -14,11 +14,13 @@ When implementing from an ExecPlan, keep the plan current instead of treating it
 
 Individual plans live in [`docs/plans/`](docs/plans/), using short, action-oriented kebab-case filenames such as [`docs/plans/document-execplan-workflow.md`](docs/plans/document-execplan-workflow.md).
 
+This file is the routing and context-management entrypoint for plan work in this repository. There is no separate plans-local agent index unless the plans folder grows enough to need one later.
+
 If a task has a relevant plan, link that plan from the task file's `Related docs` section instead of copying the whole plan into the task brief.
 
 ## Project Plan Index
 
-- [`docs/plans/document-execplan-workflow.md`](docs/plans/document-execplan-workflow.md): establishes the repo's ExecPlan documentation and routing convention. Related tasks: none yet; related docs: [`AGENTS.md`](AGENTS.md), [`docs/agentic-workflow.md`](docs/agentic-workflow.md), [`docs/decisions.md`](docs/decisions.md).
+- [`docs/plans/document-execplan-workflow.md`](docs/plans/document-execplan-workflow.md): establishes the repo's ExecPlan documentation and routing convention. Related tasks: none yet; related docs: [`AGENTS.md`](AGENTS.md), [`agent-index.md`](agent-index.md), [`docs/agentic-workflow.md`](docs/agentic-workflow.md), [`docs/decisions.md`](docs/decisions.md).
 
 ## Non-Negotiable Requirements
 

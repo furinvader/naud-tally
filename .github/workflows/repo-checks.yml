@@ -37,7 +37,6 @@ jobs:
             docs/glossary.md
             docs/agentic-workflow.md
             docs/decisions.md
-            docs/plans/agent-index.md
             docs/tasks.md
             docs/tasks/agent-index.md
             docs/tasks/open/agent-index.md
