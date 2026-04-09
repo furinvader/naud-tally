@@ -125,7 +125,7 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Status: accepted
 - Why: the pilot should stay easy to learn and efficient to use on a tablet during real service
 - Consequence: the target product should center on one main order entry screen, English UI, and minimal navigation
-- Consequence: supporting tools such as billing history or catalog editing should stay adjacent to that main working surface when possible
+- Consequence: supporting tools such as room setup, billing history, or catalog editing should stay easy to reach from that main working surface without crowding the order-taking path
 - Consequence: a broader overview screen can come later, but it remains deferred until the order-entry workflow is stable
 
 ## Shift the Pilot to a Host-Operated Order Entry Screen
@@ -137,7 +137,9 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Deferred future UX: [`ux/guest-tab-ux.md`](ux/guest-tab-ux.md)
 - Consequence: the main accessible product surface should become a host-operated order entry route and working screen
 - Consequence: room number and full name remain the practical trust-based guest identifiers in the pilot
+- Consequence: room selection should come from a fixed host-managed room list before guest selection and order entry
 - Consequence: the host workflow should support quick guest lookup or creation, order entry, and billing from one primary screen
+- Consequence: the first order-entry iteration may keep room setup, catalog management, and billing on the host tools screen while the main route focuses on fast order taking
 - Consequence: live product management and billed history remain in scope because they directly support the host workflow
 - Consequence: a future overview screen remains deferred until the order-entry screen is solid
 - Consequence: the public guest tally flow is now future consideration only and should not stay part of the active pilot surface

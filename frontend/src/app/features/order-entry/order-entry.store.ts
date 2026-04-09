@@ -7,33 +7,31 @@ import {
   withState,
 } from '@ngrx/signals';
 
-import {
-  AddGuestFlowViewModel,
-  AddGuestStep,
-  createGuestCardViewModel,
-  createSelectedGuestDrinkOrder,
-  createSelectedGuestViewModel,
-  SelectedGuestViewModel,
-  updateSelectedGuestDrinkOrder,
-} from '../drink-tally';
 import { CatalogStore, DrinkId } from '../catalog';
-import { GuestTabsStore } from '../guest-tabs';
+import { GuestTabsStore, roomNumbersMatch } from '../guest-tabs';
+import { RoomsStore } from '../rooms';
+import {
+  RoomGuestViewModel,
+  RoomListItemViewModel,
+  SelectedGuestOrderViewModel,
+  createRoomGuestViewModels,
+  createRoomListItemViewModels,
+  createSelectedGuestOrderViewModel,
+} from './order-entry.models';
 
 type OrderEntryState = {
+  selectedRoomId: string | null;
   selectedGuestId: string | null;
-  selectedGuestDrinkOrder: DrinkId[];
-  addGuestStep: AddGuestStep;
-  draftRoomNumber: string;
-  draftFullName: string;
+  guestDraftOpen: boolean;
+  draftGuestFullName: string;
   interactionVersion: number;
 };
 
 const initialState: OrderEntryState = {
+  selectedRoomId: null,
   selectedGuestId: null,
-  selectedGuestDrinkOrder: [],
-  addGuestStep: 'closed',
-  draftRoomNumber: '',
-  draftFullName: '',
+  guestDraftOpen: false,
+  draftGuestFullName: '',
   interactionVersion: 0,
 };
 
@@ -42,42 +40,67 @@ export const OrderEntryStore = signalStore(
   withComputed((store) => {
     const guestTabsStore = inject(GuestTabsStore);
     const catalogStore = inject(CatalogStore);
+    const roomsStore = inject(RoomsStore);
+    const selectedRoom = computed(() => {
+      const selectedRoomId = store.selectedRoomId();
+
+      if (!selectedRoomId) {
+        return null;
+      }
+
+      return roomsStore.rooms().find((room) => room.id === selectedRoomId) ?? null;
+    });
 
     return {
-      activeGuests: computed(() =>
-        guestTabsStore
-          .guestTabs()
-          .map((guest) => createGuestCardViewModel(guest, catalogStore.drinkCatalog())),
+      rooms: computed<ReadonlyArray<RoomListItemViewModel>>(() =>
+        createRoomListItemViewModels(roomsStore.rooms(), guestTabsStore.guestTabs()),
       ),
-      selectedGuest: computed<SelectedGuestViewModel | null>(() => {
-        const selectedGuestId = store.selectedGuestId();
+      selectedRoom,
+      roomGuests: computed<ReadonlyArray<RoomGuestViewModel>>(() => {
+        const currentRoom = selectedRoom();
 
-        if (!selectedGuestId) {
+        if (!currentRoom) {
+          return [];
+        }
+
+        return createRoomGuestViewModels(
+          currentRoom.roomNumber,
+          guestTabsStore.guestTabs(),
+          catalogStore.drinkCatalog(),
+        );
+      }),
+      selectedGuest: computed<SelectedGuestOrderViewModel | null>(() => {
+        const selectedGuestId = store.selectedGuestId();
+        const currentRoom = selectedRoom();
+
+        if (!selectedGuestId || !currentRoom) {
           return null;
         }
 
-        const guest = guestTabsStore.guestTabs().find((entry) => entry.id === selectedGuestId);
+        const guest = guestTabsStore
+          .guestTabs()
+          .find(
+            (entry) =>
+              entry.id === selectedGuestId &&
+              roomNumbersMatch(entry.roomNumber, currentRoom.roomNumber),
+          );
 
         if (!guest) {
           return null;
         }
 
-        return createSelectedGuestViewModel(
-          guest,
-          store.selectedGuestDrinkOrder(),
-          catalogStore.drinkCatalog(),
-        );
+        return createSelectedGuestOrderViewModel(guest, catalogStore.drinkCatalog());
       }),
-      addGuestFlow: computed<AddGuestFlowViewModel>(() => ({
-        step: store.addGuestStep(),
-        roomNumber: store.draftRoomNumber(),
-        fullName: store.draftFullName(),
+      guestDraft: computed(() => ({
+        isOpen: store.guestDraftOpen(),
+        fullName: store.draftGuestFullName(),
       })),
     };
   }),
   withMethods((store) => {
     const guestTabsStore = inject(GuestTabsStore);
     const catalogStore = inject(CatalogStore);
+    const roomsStore = inject(RoomsStore);
 
     function patchInteractionState(nextState: Partial<OrderEntryState>): void {
       patchState(store, {
@@ -86,13 +109,24 @@ export const OrderEntryStore = signalStore(
       });
     }
 
+    function finalizeSelectedGuestTab(): void {
+      const selectedGuestId = store.selectedGuestId();
+
+      if (!selectedGuestId) {
+        return;
+      }
+
+      guestTabsStore.finalizeGuestTab(selectedGuestId);
+    }
+
     function clearScreenState(shouldIncrementInteraction = false): void {
+      finalizeSelectedGuestTab();
+
       const nextState: Partial<OrderEntryState> = {
+        selectedRoomId: null,
         selectedGuestId: null,
-        selectedGuestDrinkOrder: [],
-        addGuestStep: 'closed',
-        draftRoomNumber: '',
-        draftFullName: '',
+        guestDraftOpen: false,
+        draftGuestFullName: '',
       };
 
       if (shouldIncrementInteraction) {
@@ -103,16 +137,6 @@ export const OrderEntryStore = signalStore(
       patchState(store, nextState);
     }
 
-    function closeSelectedGuestTabAndClearState(): void {
-      const selectedGuestId = store.selectedGuestId();
-
-      if (selectedGuestId) {
-        guestTabsStore.finalizeGuestTab(selectedGuestId);
-      }
-
-      clearScreenState(true);
-    }
-
     function updateSelectedGuestCountsByDelta(drinkId: DrinkId, delta: number): void {
       const selectedGuestId = store.selectedGuestId();
 
@@ -120,7 +144,6 @@ export const OrderEntryStore = signalStore(
         return;
       }
 
-      const selectedGuest = store.selectedGuest();
       const guest = guestTabsStore.guestTabs().find((entry) => entry.id === selectedGuestId);
 
       if (!guest) {
@@ -128,82 +151,85 @@ export const OrderEntryStore = signalStore(
         return;
       }
 
-      const drinkCatalog = catalogStore.drinkCatalog();
-
-      const previousCount =
-        selectedGuest?.activeDrinkTallies.find((drink) => drink.id === drinkId)?.count ?? 0;
-      const nextCount = Math.max(0, previousCount + delta);
-
-      if (!guestTabsStore.updateGuestDrinkCount(selectedGuestId, drinkId, delta, drinkCatalog)) {
+      if (
+        !guestTabsStore.updateGuestDrinkCount(
+          selectedGuestId,
+          drinkId,
+          delta,
+          catalogStore.drinkCatalog(),
+        )
+      ) {
         return;
       }
 
-      patchInteractionState({
-        selectedGuestDrinkOrder: updateSelectedGuestDrinkOrder(
-          guest.counts,
-          store.selectedGuestDrinkOrder(),
-          drinkId,
-          previousCount,
-          nextCount,
-          drinkCatalog,
-        ),
-      });
+      patchInteractionState({});
+    }
+
+    function getSelectedRoom() {
+      const selectedRoomId = store.selectedRoomId();
+
+      if (!selectedRoomId) {
+        return null;
+      }
+
+      return roomsStore.rooms().find((room) => room.id === selectedRoomId) ?? null;
     }
 
     return {
-      startAddGuestFlow(): void {
-        patchInteractionState({
-          selectedGuestId: null,
-          selectedGuestDrinkOrder: [],
-          addGuestStep: 'roomNumber',
-          draftRoomNumber: '',
-          draftFullName: '',
-        });
-      },
-      cancelAddGuestFlow(): void {
-        patchState(store, {
-          addGuestStep: 'closed',
-          draftRoomNumber: '',
-          draftFullName: '',
-        });
-      },
-      returnToRoomNumberStep(): void {
-        patchInteractionState({
-          addGuestStep: 'roomNumber',
-          draftFullName: '',
-        });
-      },
-      updateDraftRoomNumber(roomNumber: string): void {
-        patchInteractionState({
-          draftRoomNumber: roomNumber,
-        });
-      },
-      submitRoomNumber(): void {
-        const roomNumber = normalizeDisplayText(store.draftRoomNumber());
+      selectRoom(roomId: string): void {
+        const room = roomsStore.rooms().find((entry) => entry.id === roomId);
 
-        if (!roomNumber) {
+        if (!room) {
           return;
         }
 
+        if (store.selectedRoomId() === room.id) {
+          patchInteractionState({});
+          return;
+        }
+
+        finalizeSelectedGuestTab();
+
         patchInteractionState({
-          draftRoomNumber: roomNumber,
-          addGuestStep: 'fullName',
+          selectedRoomId: room.id,
+          selectedGuestId: null,
+          guestDraftOpen: false,
+          draftGuestFullName: '',
         });
       },
-      updateDraftFullName(fullName: string): void {
+      openGuestDraft(): void {
+        if (!getSelectedRoom()) {
+          return;
+        }
+
+        finalizeSelectedGuestTab();
+
         patchInteractionState({
-          draftFullName: fullName,
+          selectedGuestId: null,
+          guestDraftOpen: true,
+          draftGuestFullName: '',
+        });
+      },
+      cancelGuestDraft(): void {
+        patchInteractionState({
+          guestDraftOpen: false,
+          draftGuestFullName: '',
+        });
+      },
+      updateDraftGuestFullName(fullName: string): void {
+        patchInteractionState({
+          draftGuestFullName: fullName,
         });
       },
       submitGuestIdentity(): void {
-        const roomNumber = normalizeDisplayText(store.draftRoomNumber());
-        const fullName = normalizeDisplayText(store.draftFullName());
+        const selectedRoom = getSelectedRoom();
+        const fullName = normalizeDisplayText(store.draftGuestFullName());
 
-        if (!roomNumber || !fullName) {
+        if (!selectedRoom || !fullName) {
           return;
         }
 
-        const guest = guestTabsStore.ensureGuestTab(roomNumber, fullName);
+        const guest = guestTabsStore.ensureGuestTab(selectedRoom.roomNumber, fullName);
 
         if (!guest) {
           return;
@@ -211,38 +237,44 @@ export const OrderEntryStore = signalStore(
 
         patchInteractionState({
           selectedGuestId: guest.id,
-          selectedGuestDrinkOrder: createSelectedGuestDrinkOrder(guest.counts, catalogStore.drinkCatalog()),
-          addGuestStep: 'closed',
-          draftRoomNumber: '',
-          draftFullName: '',
+          guestDraftOpen: false,
+          draftGuestFullName: '',
         });
       },
       selectGuestTab(guestId: string): void {
-        const guest = guestTabsStore.guestTabs().find((entry) => entry.id === guestId);
+        const selectedRoom = getSelectedRoom();
+
+        if (!selectedRoom) {
+          return;
+        }
+
+        const guest = guestTabsStore
+          .guestTabs()
+          .find(
+            (entry) =>
+              entry.id === guestId && roomNumbersMatch(entry.roomNumber, selectedRoom.roomNumber),
+          );
 
         if (!guest) {
           return;
         }
 
-        if (store.selectedGuestId() === guestId) {
-          closeSelectedGuestTabAndClearState();
+        if (store.selectedGuestId() === guest.id) {
+          finalizeSelectedGuestTab();
+
+          patchInteractionState({
+            selectedGuestId: null,
+            guestDraftOpen: false,
+            draftGuestFullName: '',
+          });
           return;
         }
 
         patchInteractionState({
-          selectedGuestId: guestId,
-          selectedGuestDrinkOrder: createSelectedGuestDrinkOrder(guest.counts, catalogStore.drinkCatalog()),
-          addGuestStep: 'closed',
-          draftRoomNumber: '',
-          draftFullName: '',
+          selectedGuestId: guest.id,
+          guestDraftOpen: false,
+          draftGuestFullName: '',
         });
-      },
-      closeSelectedGuestTab(): void {
-        if (!store.selectedGuestId()) {
-          return;
-        }
-
-        closeSelectedGuestTabAndClearState();
       },
       incrementDrink(drinkId: DrinkId): void {
         updateSelectedGuestCountsByDelta(drinkId, 1);
@@ -251,12 +283,7 @@ export const OrderEntryStore = signalStore(
         updateSelectedGuestCountsByDelta(drinkId, -1);
       },
       clearTransientState(): void {
-        if (store.selectedGuestId()) {
-          closeSelectedGuestTabAndClearState();
-          return;
-        }
-
-        clearScreenState();
+        clearScreenState(true);
       },
     };
   }),

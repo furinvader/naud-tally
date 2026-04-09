@@ -20,6 +20,11 @@
         <strong>{{ hostSummary().activeDrinkCount }}</strong>
       </article>
 
+      <article class="hero-stat" data-testid="host-summary-active-rooms">
+        <span class="hero-stat__label">{{ copy.activeRoomCountLabel }}</span>
+        <strong>{{ hostSummary().activeRoomCount }}</strong>
+      </article>
+
       <article class="hero-stat" data-testid="host-summary-open-guests">
         <span class="hero-stat__label">{{ copy.openGuestCountLabel }}</span>
         <strong>{{ hostSummary().openGuestCount }}</strong>
@@ -49,6 +54,79 @@
   }
 
   <section class="host-grid">
+    <mat-card class="panel rooms-panel">
+      <div class="panel-header">
+        <div>
+          <p class="panel-eyebrow">{{ copy.roomsTitle }}</p>
+          <h2>{{ copy.addRoomTitle }}</h2>
+          <p>{{ copy.roomsBody }}</p>
+        </div>
+      </div>
+
+      <form class="room-form" (submit)="submitAddRoom($event)">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ copy.roomNumberLabel }}</mat-label>
+          <input
+            matInput
+            data-testid="host-room-number-input"
+            [value]="draftRoomNumber()"
+            (input)="updateDraftRoomNumber($any($event.target).value)"
+          />
+        </mat-form-field>
+
+        <button
+          mat-flat-button
+          class="submit-button"
+          color="primary"
+          data-testid="host-add-room-button"
+          [disabled]="!canSubmitRoom()"
+          type="submit"
+        >
+          {{ copy.addRoomAction }}
+        </button>
+      </form>
+
+      @if (activeRooms().length) {
+        <div class="catalog-list" data-testid="host-room-list">
+          @for (room of activeRooms(); track room.id) {
+            <article class="catalog-item">
+              <div class="catalog-item__copy">
+                <div class="catalog-item__title-row">
+                  <h4>{{ copy.roomLabel }} {{ room.roomNumber }}</h4>
+                  <strong>{{ room.openGuestCount }}</strong>
+                </div>
+
+                <p class="catalog-item__hint">
+                  @if (room.openGuestCount > 0) {
+                    {{ copy.roomInUseHintPrefix }}
+                    {{ room.openGuestCount }}
+                    {{ copy.roomInUseHintSuffix }}
+                  } @else {
+                    {{ copy.canRemoveRoomHint }}
+                  }
+                </p>
+              </div>
+
+              <button
+                mat-stroked-button
+                data-testid="host-remove-room-button"
+                [disabled]="!room.canRemove"
+                type="button"
+                (click)="removeRoom(room)"
+              >
+                {{ copy.removeRoomAction }}
+              </button>
+            </article>
+          }
+        </div>
+      } @else {
+        <div class="empty-state" data-testid="host-room-empty">
+          <h3>{{ copy.roomsEmptyTitle }}</h3>
+          <p>{{ copy.roomsEmptyBody }}</p>
+        </div>
+      }
+    </mat-card>
+
     <mat-card class="panel drinks-panel">
       <div class="panel-header">
         <div>
