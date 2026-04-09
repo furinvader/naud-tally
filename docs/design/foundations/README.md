@@ -5,7 +5,7 @@
 - Repo artifact directory: [`./`](./)
 - Repo SVG export: [`design-foundation.svg`](design-foundation.svg)
 - Optional Penpot share link: `not required for the repo workflow`
-- Status: `reframed on 2026-04-02 as the default mobile-first design foundation for Naud Tally`
+- Status: `refreshed on 2026-04-09 to further tighten container radii and shadow softness`
 
 ## Goal
 
@@ -54,10 +54,11 @@
 
 ## Shape and UI Rules
 
-- Use `16` to `20` radius for cards and major panels.
-- Use `14` radius for primary action buttons and counter controls.
+- Use `8` radius for utility surfaces, compact inputs, and helper treatments.
+- Use `10` radius for primary action buttons and counter controls.
+- Use `14` radius for cards and `16` radius for major panels.
 - Prefer visible 1px borders over very soft glassmorphism.
-- Keep shadows light and functional rather than decorative.
+- Keep shadows light and functional rather than decorative, with tighter blur and clearer separation from the canvas.
 - Use compact chips and utility badges instead of oversized pills.
 - Start layout work from a narrow one-column flow before expanding into multi-panel tablet compositions.
 

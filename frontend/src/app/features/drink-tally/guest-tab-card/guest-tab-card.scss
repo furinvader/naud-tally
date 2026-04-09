@@ -30,7 +30,7 @@
   border-color: color-mix(in srgb, var(--nt-color-action) 35%, var(--nt-border-subtle));
   box-shadow:
     var(--nt-shadow-panel),
-    0 10px 28px color-mix(in srgb, var(--nt-color-action) 12%, transparent);
+    var(--nt-shadow-panel-accent);
 }
 
 .guest-card__header {
@@ -72,7 +72,7 @@
 
 .guest-card__chip {
   padding: 0.35rem 0.65rem;
-  border-radius: 999px;
+  border-radius: var(--nt-radius-pill);
   background: var(--nt-color-surface-count);
   font: var(--nt-type-label);
   color: var(--nt-color-ink);

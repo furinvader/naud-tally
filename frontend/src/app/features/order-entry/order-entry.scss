@@ -207,7 +207,7 @@
   width: 48px;
   height: 44px;
   border: 0;
-  border-radius: 14px;
+  border-radius: var(--nt-radius-button);
   background: var(--nt-color-action);
   color: white;
   font: var(--nt-type-section);
