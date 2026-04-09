@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1940" viewBox="0 0 1600 1940" fill="none" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1980" viewBox="0 0 1600 1980" fill="none" role="img" aria-labelledby="title desc">
   <title id="title">Naud Tally Design Foundation</title>
   <desc id="desc">A custom mobile-first design foundation for Naud Tally with a restrained palette, firmer geometry, and a tally-screen example.</desc>
   <defs>
@@ -6,14 +6,19 @@
       .display { font: 700 62px/1 "Manrope", "Inter", sans-serif; fill: #1E2630; }
       .headline { font: 700 28px/1.18 "Manrope", "Inter", sans-serif; fill: #1E2630; }
       .title { font: 700 24px/1.1 "Manrope", "Inter", sans-serif; fill: #1E2630; }
+      .title-action { font: 700 24px/1.1 "Manrope", "Inter", sans-serif; fill: #355061; }
       .number { font: 700 66px/0.95 "Manrope", "Inter", sans-serif; fill: #355061; }
       .body-lg { font: 400 18px/1.45 "Inter Tight", "Inter", sans-serif; fill: #67717A; }
       .body { font: 400 16px/1.45 "Inter Tight", "Inter", sans-serif; fill: #67717A; }
       .label { font: 600 14px/1.2 "Inter Tight", "Inter", sans-serif; fill: #1E2630; }
+      .label-action { font: 600 14px/1.2 "Inter Tight", "Inter", sans-serif; fill: #355061; }
       .label-soft { font: 500 14px/1.3 "Inter Tight", "Inter", sans-serif; fill: #67717A; }
       .small { font: 600 13px/1.2 "Inter Tight", "Inter", sans-serif; fill: #67717A; letter-spacing: 1.1px; }
       .kicker { font: 700 12px/1.2 "Inter Tight", "Inter", sans-serif; fill: #67717A; letter-spacing: 1.6px; }
       .chip { font: 600 14px/1.2 "Inter Tight", "Inter", sans-serif; }
+      .chip-sm { font: 600 13px/1.2 "Inter Tight", "Inter", sans-serif; }
+      .headline-lg { font: 700 34px/1.15 "Manrope", "Inter", sans-serif; fill: #1E2630; }
+      .headline-inverse { font: 700 28px/1.18 "Manrope", "Inter", sans-serif; fill: #FFFFFF; }
       .card { fill: #FBFAF8; stroke: #D7D0C7; stroke-width: 1; filter: url(#cardShadow); }
       .tile { fill: #FFFFFF; stroke: #D7D0C7; stroke-width: 1; }
       .stroke { stroke: #355061; stroke-width: 1.8; stroke-linecap: square; fill: none; }
@@ -26,7 +31,7 @@
     </filter>
   </defs>
 
-  <rect width="1600" height="1940" rx="28" fill="#F4F2EE"/>
+  <rect width="1600" height="1980" rx="28" fill="#F4F2EE"/>
   <ellipse cx="1330" cy="92" rx="210" ry="110" fill="#355061" fill-opacity="0.08"/>
   <ellipse cx="1430" cy="156" rx="120" ry="120" fill="#7E8974" fill-opacity="0.08"/>
   <rect x="124" y="214" width="96" height="6" rx="3" fill="#355061"/>
@@ -60,38 +65,45 @@
   <text class="body" x="124" y="584">Accent and signal exist, but they stay secondary to the actual counting task.</text>
 
   <g transform="translate(124 610)">
-    <rect class="tile" width="420" height="104" rx="16"/>
+    <rect class="tile" width="356" height="104" rx="16"/>
     <rect x="18" y="18" width="86" height="68" rx="14" fill="#355061"/>
     <text class="title" x="126" y="42">Action</text>
-    <text class="label" x="126" y="66" fill="#355061">#355061</text>
+    <text class="label-action" x="126" y="66">#355061</text>
     <text class="label-soft" x="126" y="90">Primary buttons, active emphasis</text>
   </g>
-  <g transform="translate(568 610)">
-    <rect class="tile" width="420" height="104" rx="16"/>
+  <g transform="translate(500 610)">
+    <rect class="tile" width="356" height="104" rx="16"/>
     <rect x="18" y="18" width="86" height="68" rx="14" fill="#1E2630"/>
     <text class="title" x="126" y="42">Ink</text>
-    <text class="label" x="126" y="66" fill="#355061">#1E2630</text>
+    <text class="label-action" x="126" y="66">#1E2630</text>
     <text class="label-soft" x="126" y="90">Headlines, counts, primary text</text>
   </g>
-  <g transform="translate(1012 610)">
-    <rect class="tile" width="420" height="104" rx="16"/>
+  <g transform="translate(876 610)">
+    <rect class="tile" width="356" height="104" rx="16"/>
     <rect x="18" y="18" width="86" height="68" rx="14" fill="#F4F2EE" stroke="#D7D0C7"/>
     <text class="title" x="126" y="42">Canvas</text>
-    <text class="label" x="126" y="66" fill="#355061">#F4F2EE</text>
+    <text class="label-action" x="126" y="66">#F4F2EE</text>
     <text class="label-soft" x="126" y="90">App background, layout field</text>
   </g>
 
-  <g transform="translate(124 684)">
-    <rect width="144" height="30" rx="10" fill="#FFFFFF" stroke="#D7D0C7"/>
-    <text class="label-soft" x="72" y="20" text-anchor="middle">Accent  #7E8974</text>
-  </g>
-  <g transform="translate(284 684)">
-    <rect width="144" height="30" rx="10" fill="#FFFFFF" stroke="#D7D0C7"/>
-    <text class="label-soft" x="72" y="20" text-anchor="middle">Signal  #A4653A</text>
-  </g>
-  <g transform="translate(444 684)">
-    <rect width="140" height="30" rx="10" fill="#FFFFFF" stroke="#D7D0C7"/>
-    <text class="label-soft" x="70" y="20" text-anchor="middle">Line  #D7D0C7</text>
+  <g transform="translate(1252 610)">
+    <rect class="tile" width="224" height="104" rx="16"/>
+    <text class="small" x="20" y="28">SUPPORT TONES</text>
+    <g transform="translate(20 40)">
+      <rect width="184" height="18" rx="9" fill="#FFFFFF" stroke="#D7D0C7"/>
+      <rect x="10" y="5" width="8" height="8" rx="4" fill="#7E8974"/>
+      <text class="chip-sm" x="30" y="13" fill="#1E2630">Accent  #7E8974</text>
+    </g>
+    <g transform="translate(20 62)">
+      <rect width="184" height="18" rx="9" fill="#FFFFFF" stroke="#D7D0C7"/>
+      <rect x="10" y="5" width="8" height="8" rx="4" fill="#A4653A"/>
+      <text class="chip-sm" x="30" y="13" fill="#1E2630">Signal  #A4653A</text>
+    </g>
+    <g transform="translate(20 84)">
+      <rect width="184" height="18" rx="9" fill="#FFFFFF" stroke="#D7D0C7"/>
+      <rect x="10" y="5" width="8" height="8" rx="4" fill="#D7D0C7"/>
+      <text class="chip-sm" x="30" y="13" fill="#1E2630">Line  #D7D0C7</text>
+    </g>
   </g>
 
   <rect class="card" x="72" y="772" width="696" height="414" rx="20"/>
@@ -108,37 +120,37 @@
   <text class="body" x="124" y="1244">count visibility across all future screens.</text>
 
   <rect class="card" x="800" y="772" width="728" height="414" rx="20"/>
-  <text class="small" x="852" y="818">UI RULES</text>
-  <text class="headline" x="852" y="870">Sharper cards, clear strokes, simple iconography</text>
-  <text class="body" x="852" y="912">Avoid pill-heavy UI. Keep cards between 16 and 20 radius, buttons around 14 radius,</text>
-  <text class="body" x="852" y="938">and use quiet line icons with squared ends.</text>
-  <text class="small" x="852" y="988">CORNER TOKENS</text>
-  <rect x="852" y="1004" width="96" height="64" rx="12" fill="#FFFFFF" stroke="#D7D0C7"/>
-  <rect x="968" y="1004" width="96" height="64" rx="16" fill="#E6EDF1" stroke="#D7D0C7"/>
-  <rect x="1084" y="1004" width="96" height="64" rx="20" fill="#E7ECE5" stroke="#D7D0C7"/>
-  <text class="label-soft" x="852" y="1094">12 for utility, 16 for cards, 20 for major panels</text>
-  <text class="small" x="852" y="1140">ICON DIRECTION</text>
+  <text class="small" x="872" y="818">UI RULES</text>
+  <text class="headline" x="872" y="870">Sharper cards, clear strokes, quiet icons</text>
+  <text class="body" x="872" y="912">Avoid pill-heavy UI. Keep cards between 16 and 20 radius, buttons around 14 radius,</text>
+  <text class="body" x="872" y="938">and use quiet line icons with squared ends.</text>
+  <text class="small" x="872" y="988">CORNER TOKENS</text>
+  <rect x="872" y="1004" width="96" height="64" rx="12" fill="#FFFFFF" stroke="#D7D0C7"/>
+  <rect x="988" y="1004" width="96" height="64" rx="16" fill="#E6EDF1" stroke="#D7D0C7"/>
+  <rect x="1104" y="1004" width="96" height="64" rx="20" fill="#E7ECE5" stroke="#D7D0C7"/>
+  <text class="label-soft" x="872" y="1094">12 for utility, 16 for cards, 20 for major panels</text>
+  <text class="small" x="872" y="1140">ICON DIRECTION</text>
 
-  <g transform="translate(852 1158)">
+  <g transform="translate(872 1158)">
     <rect class="tile" width="56" height="56" rx="14"/>
     <path class="stroke" d="M14 18H42"/>
     <path class="stroke" d="M14 28H42"/>
     <path class="stroke" d="M14 38H42"/>
   </g>
-  <g transform="translate(932 1158)">
+  <g transform="translate(952 1158)">
     <rect class="tile" width="56" height="56" rx="14"/>
     <path class="stroke" d="M18 16H30V30C30 38.284 23.284 45 15 45C6.716 45 0 38.284 0 30V21C0 18.239 2.239 16 5 16H18Z" transform="translate(13 3)"/>
     <path class="stroke" d="M0 0H10C13.314 0 16 2.686 16 6C16 9.314 13.314 12 10 12H0" transform="translate(34 23)"/>
   </g>
-  <g transform="translate(1012 1158)">
+  <g transform="translate(1032 1158)">
     <rect class="tile" width="56" height="56" rx="14"/>
     <path class="stroke" d="M28 14V42"/>
     <path class="stroke" d="M14 28H42"/>
   </g>
-  <text class="label-soft" x="1094" y="1192">Use quiet 1.75-2px outline icons</text>
-  <text class="label-soft" x="1094" y="1216">with squared ends and minimal metaphors.</text>
+  <text class="label-soft" x="1114" y="1192">Use quiet 1.75-2px outline icons</text>
+  <text class="label-soft" x="1114" y="1216">with squared ends and minimal metaphors.</text>
 
-  <rect class="card" x="72" y="1230" width="1456" height="624" rx="20"/>
+  <rect class="card" x="72" y="1230" width="1456" height="688" rx="20"/>
   <text class="small" x="124" y="1276">PRIMARY SCREEN EXAMPLE</text>
   <text class="headline" x="124" y="1328">Brand the tally screen itself, not a fake marketing site</text>
   <text class="body" x="124" y="1368">This example translates the existing tally layout into the new foundation:</text>
@@ -155,7 +167,7 @@
   </g>
   <rect x="124" y="1528" width="12" height="170" rx="6" fill="#355061"/>
   <text class="small" x="164" y="1560">TODAY</text>
-  <text class="headline" x="164" y="1602" font-size="34">Tap what you took.</text>
+  <text class="headline-lg" x="164" y="1602">Tap what you took.</text>
   <text class="body" x="164" y="1644">Fast counting, low friction, easy reading at a shared table.</text>
 
   <rect x="1048" y="1528" width="428" height="170" rx="20" fill="#E6EDF1" stroke="#D7D0C7"/>
@@ -168,34 +180,34 @@
     <text class="title" x="24" y="40">Water</text>
     <text class="label-soft" x="24" y="68">quick tap control</text>
     <rect x="24" y="88" width="90" height="34" rx="12" fill="#E6EDF1" stroke="#D7D0C7"/>
-    <text class="title" x="69" y="112" text-anchor="middle" fill="#355061">4</text>
+    <text class="title-action" x="69" y="112" text-anchor="middle">4</text>
     <rect x="242" y="82" width="56" height="44" rx="14" fill="#FFFFFF" stroke="#B8B0A6"/>
     <text class="headline" x="270" y="111" text-anchor="middle">-</text>
     <rect x="312" y="82" width="64" height="44" rx="14" fill="#355061"/>
-    <text class="headline" x="344" y="111" text-anchor="middle" fill="#FFFFFF">+</text>
+    <text class="headline-inverse" x="344" y="111" text-anchor="middle">+</text>
   </g>
   <g transform="translate(560 1730)">
     <rect width="400" height="138" rx="18" fill="#FBFAF8" stroke="#D7D0C7" filter="url(#softShadow)"/>
     <text class="title" x="24" y="40">Cola</text>
     <text class="label-soft" x="24" y="68">quick tap control</text>
     <rect x="24" y="88" width="90" height="34" rx="12" fill="#E6EDF1" stroke="#D7D0C7"/>
-    <text class="title" x="69" y="112" text-anchor="middle" fill="#355061">3</text>
+    <text class="title-action" x="69" y="112" text-anchor="middle">3</text>
     <rect x="242" y="82" width="56" height="44" rx="14" fill="#FFFFFF" stroke="#B8B0A6"/>
     <text class="headline" x="270" y="111" text-anchor="middle">-</text>
     <rect x="312" y="82" width="64" height="44" rx="14" fill="#355061"/>
-    <text class="headline" x="344" y="111" text-anchor="middle" fill="#FFFFFF">+</text>
+    <text class="headline-inverse" x="344" y="111" text-anchor="middle">+</text>
   </g>
   <g transform="translate(996 1730)">
     <rect width="400" height="138" rx="18" fill="#FBFAF8" stroke="#D7D0C7" filter="url(#softShadow)"/>
     <text class="title" x="24" y="40">Beer</text>
     <text class="label-soft" x="24" y="68">quick tap control</text>
     <rect x="24" y="88" width="90" height="34" rx="12" fill="#E6EDF1" stroke="#D7D0C7"/>
-    <text class="title" x="69" y="112" text-anchor="middle" fill="#355061">5</text>
+    <text class="title-action" x="69" y="112" text-anchor="middle">5</text>
     <rect x="242" y="82" width="56" height="44" rx="14" fill="#FFFFFF" stroke="#B8B0A6"/>
     <text class="headline" x="270" y="111" text-anchor="middle">-</text>
     <rect x="312" y="82" width="64" height="44" rx="14" fill="#355061"/>
-    <text class="headline" x="344" y="111" text-anchor="middle" fill="#FFFFFF">+</text>
+    <text class="headline-inverse" x="344" y="111" text-anchor="middle">+</text>
   </g>
 
-  <text class="label-soft" x="124" y="1906">Base rules: 16-20 radius panels, 14 radius buttons, 8/12/16/24 spacing, restrained accent use, numbers always read first.</text>
+  <text class="label-soft" x="124" y="1892">Base rules: 16-20 radius panels, 14 radius buttons, 8/12/16/24 spacing, restrained accent use, numbers always read first.</text>
 </svg>
