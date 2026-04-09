@@ -15,7 +15,7 @@
   gap: var(--nt-space-xs);
   padding: 0.55rem 0.8rem;
   border: 1px solid var(--nt-border-subtle);
-  border-radius: 999px;
+  border-radius: var(--nt-radius-pill);
   background: color-mix(in srgb, var(--nt-color-surface-panel) 90%, white);
   white-space: nowrap;
 }

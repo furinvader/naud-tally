@@ -5,7 +5,7 @@
 - Repo artifact directory: [`./`](./)
 - Repo SVG export: [`order-entry-screen.svg`](order-entry-screen.svg)
 - Optional Penpot share link: `not required for the repo workflow`
-- Status: `drafted for the room-first host workflow on 2026-04-08`
+- Status: `updated for the room-first host workflow on 2026-04-09`
 
 ## Goal
 
@@ -21,6 +21,7 @@
 
 - Smallest supported layout: stack the room list, guest list, and selected-guest order panel in that order.
 - Tablet layout: use three simultaneous regions with a narrow room rail, a guest list for the selected room, and one dominant order-entry panel.
+- Stay aligned with the shared foundation: `16` radius outer panels, `14` radius selection and drink cards, `10` radius action controls, `8` radius compact inputs, and subtle tighter shadows only where containers need separation.
 - Keep the room list and guest list in owned scroll regions so the main browser page does not become the primary scroll surface.
 - Keep the selected guest header and running total anchored at the top of the dominant order-entry panel.
 - Keep the host-tools shortcut in the top app bar instead of embedding room setup, catalog forms, or billing cards into the main route.

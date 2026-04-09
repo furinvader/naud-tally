@@ -40,14 +40,15 @@ $color-on-action: #FBFAF8;
 $color-on-accent: #FBFAF8;
 $color-on-signal: #FBFAF8;
 
-$radius-utility: 12px;
-$radius-button: 14px;
-$radius-card: 18px;
-$radius-panel: 20px;
+$radius-utility: 8px;
+$radius-button: 10px;
+$radius-card: 14px;
+$radius-panel: 16px;
 $radius-pill: 999px;
 
-$shadow-panel: 0 8px 20px rgba(10, 20, 30, 0.08);
-$shadow-card: 0 6px 16px rgba(10, 20, 30, 0.05);
+$shadow-panel: 0 7px 16px rgba(10, 20, 30, 0.09);
+$shadow-card: 0 5px 12px rgba(10, 20, 30, 0.06);
+$shadow-panel-accent: 0 8px 18px rgba($color-action, 0.1);
 
 $space-2xs: 8px;
 $space-xs: 12px;
@@ -118,6 +119,7 @@ $tracking-kicker: 0.13em;
 
   --nt-shadow-panel: #{$shadow-panel};
   --nt-shadow-card: #{$shadow-card};
+  --nt-shadow-panel-accent: #{$shadow-panel-accent};
 
   --nt-space-2xs: #{$space-2xs};
   --nt-space-xs: #{$space-xs};
