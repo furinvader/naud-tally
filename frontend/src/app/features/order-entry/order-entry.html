@@ -16,54 +16,24 @@
 
   @if (orderEntryStore.rooms().length) {
     <section class="order-entry-stepper">
-      <mat-stepper
-        class="workflow-stepper"
-        linear
-        [selectedIndex]="activeStepIndex()"
-        (selectionChange)="onStepperSelectionChange($event)"
-      >
-        <mat-step
-          [completed]="!!orderEntryStore.selectedRoom()"
-          [editable]="true"
-          data-testid="step-nav-room"
-        >
-          <ng-template matStepLabel>
-            <span class="step-label" data-testid="step-label-room">Room</span>
-          </ng-template>
-        </mat-step>
-
-        <mat-step
-          [completed]="!!orderEntryStore.selectedGuest()"
-          [editable]="!!orderEntryStore.selectedRoom()"
-          data-testid="step-nav-guest"
-        >
-          <ng-template matStepLabel>
-            <span class="step-label" data-testid="step-label-guest">Guest</span>
-          </ng-template>
-        </mat-step>
-
-        <mat-step [editable]="!!orderEntryStore.selectedGuest()" data-testid="step-nav-drinks">
-          <ng-template matStepLabel>
-            <span class="step-label" data-testid="step-label-drinks">Drinks</span>
-          </ng-template>
-        </mat-step>
-      </mat-stepper>
-
-      @if (orderEntryStore.selectedRoom() || orderEntryStore.selectedGuest()) {
-        <div class="workflow-context" data-testid="workflow-context">
-          @if (orderEntryStore.selectedRoom(); as selectedRoom) {
-            <span class="workflow-context__pill">
-              {{ copy.roomLabel }} {{ selectedRoom.roomNumber }}
-            </span>
-          }
-
-          @if (orderEntryStore.selectedGuest(); as selectedGuest) {
-            <span class="workflow-context__pill">
-              {{ selectedGuest.fullName }}
-            </span>
-          }
-        </div>
-      }
+      <nav class="stepper-header" aria-label="Order entry steps">
+        @for (step of steps(); track step.id) {
+          <button
+            type="button"
+            class="step-chip"
+            [class.step-chip--complete]="step.isComplete"
+            [class.step-chip--current]="step.isCurrent"
+            [disabled]="!step.isEnabled"
+            [attr.aria-current]="step.isCurrent ? 'step' : null"
+            [attr.data-testid]="step.testId"
+            (click)="activateStep(step.id)"
+          >
+            <span class="step-chip__eyebrow">{{ step.eyebrow }}</span>
+            <strong class="step-chip__label">{{ step.label }}</strong>
+            <span class="step-chip__summary">{{ step.summary }}</span>
+          </button>
+        }
+      </nav>
 
       <mat-card class="step-panel">
         @switch (orderEntryStore.activeStep()) {

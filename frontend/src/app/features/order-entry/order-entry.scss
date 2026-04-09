@@ -9,7 +9,8 @@
   }
 }
 
-.workflow-panel__eyebrow {
+.workflow-panel__eyebrow,
+.step-chip__eyebrow {
   font: var(--nt-type-kicker);
   letter-spacing: var(--nt-tracking-kicker);
   text-transform: uppercase;
@@ -18,7 +19,9 @@
 
 .order-entry-stepper {
   display: grid;
-  gap: var(--nt-space-sm);
+  gap: var(--nt-space-md);
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: start;
   min-height: 0;
   flex: 1;
   overflow: hidden;
@@ -28,63 +31,14 @@
   min-height: 0;
 }
 
-.workflow-stepper {
-  --mat-stepper-container-color: transparent;
-  --mat-stepper-header-height: 60px;
-  --mat-stepper-line-color: var(--nt-color-line);
-  --mat-stepper-header-hover-state-layer-color: color-mix(
-    in srgb,
-    var(--nt-color-ink) 5%,
-    transparent
-  );
-  --mat-stepper-header-focus-state-layer-color: color-mix(
-    in srgb,
-    var(--nt-color-action) 10%,
-    transparent
-  );
-  --mat-stepper-header-icon-background-color: var(--nt-color-surface-soft);
-  --mat-stepper-header-icon-foreground-color: var(--nt-color-ink);
-  --mat-stepper-header-selected-state-icon-background-color: var(--nt-color-action);
-  --mat-stepper-header-selected-state-icon-foreground-color: var(--nt-color-on-action);
-  --mat-stepper-header-done-state-icon-background-color: var(--nt-color-action);
-  --mat-stepper-header-done-state-icon-foreground-color: var(--nt-color-on-action);
-  --mat-stepper-header-label-text-color: var(--nt-color-muted);
-  --mat-stepper-header-selected-state-label-text-color: var(--nt-color-ink);
-  --mat-stepper-header-edit-state-icon-background-color: var(--nt-color-action);
-  --mat-stepper-header-edit-state-icon-foreground-color: var(--nt-color-on-action);
-
-  border: 1px solid var(--nt-border-subtle);
-  border-radius: var(--nt-radius-panel);
-  background: color-mix(in srgb, var(--nt-color-surface) 92%, white);
-  box-shadow: var(--nt-shadow-card);
-  overflow: hidden;
+.stepper-header {
+  display: grid;
+  gap: var(--nt-space-sm);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
 }
 
-.step-label {
-  display: inline-block;
-  font: var(--nt-type-label);
-  letter-spacing: var(--nt-tracking-label);
-  color: inherit;
-}
-
-.workflow-context {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--nt-space-xs);
-}
-
-.workflow-context__pill {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-  padding-inline: var(--nt-space-sm);
-  border: 1px solid var(--nt-border-subtle);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--nt-color-surface) 82%, white);
-  color: var(--nt-color-ink);
-  font: var(--nt-type-label);
-}
-
+.step-chip,
 .step-panel,
 .empty-shell,
 .selection-card,
@@ -93,6 +47,47 @@
   border: 1px solid var(--nt-border-subtle);
   background: color-mix(in srgb, var(--nt-color-surface) 92%, white);
   box-shadow: var(--nt-shadow-card);
+}
+
+.step-chip {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: var(--nt-space-sm) var(--nt-space-md);
+  border-radius: var(--nt-radius-card);
+  text-align: left;
+  cursor: pointer;
+  align-content: start;
+}
+
+.step-chip__label {
+  color: var(--nt-color-ink);
+  font: var(--nt-type-section);
+}
+
+.step-chip__summary {
+  display: block;
+  color: var(--nt-color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.step-chip--complete,
+.step-chip--current,
+.selection-card--selected {
+  border-color: color-mix(in srgb, var(--nt-color-action) 44%, white);
+  background: color-mix(in srgb, var(--nt-color-action-soft) 74%, white);
+}
+
+.step-chip--current {
+  background: color-mix(in srgb, var(--nt-color-action-soft) 82%, white);
+}
+
+.step-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+  box-shadow: none;
 }
 
 .step-panel,
@@ -227,11 +222,6 @@
   align-content: start;
 }
 
-.selection-card--selected {
-  border-color: color-mix(in srgb, var(--nt-color-action) 44%, white);
-  background: color-mix(in srgb, var(--nt-color-action-soft) 74%, white);
-}
-
 .selection-card strong {
   font: var(--nt-type-section);
 }
@@ -326,10 +316,6 @@
   opacity: 0.45;
 }
 
-:host ::ng-deep .workflow-stepper .mat-horizontal-content-container {
-  display: none;
-}
-
 @media (max-width: 959px) {
   .order-entry-stepper,
   .step-panel {
@@ -342,14 +328,8 @@
 }
 
 @media (max-width: 719px) {
-  :host ::ng-deep .workflow-stepper .mat-horizontal-stepper-header-container {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-
-  :host ::ng-deep .workflow-stepper .mat-horizontal-stepper-header {
-    flex: 1 1 33%;
-    min-width: 96px;
+  .stepper-header {
+    grid-template-columns: 1fr;
   }
 
   .step-view__title-row,

@@ -5,14 +5,11 @@ import {
   computed,
   effect,
   inject,
-  viewChild,
 } from '@angular/core';
-import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
 import { RouterLink } from '@angular/router';
 
 import { AppBar } from '../../ui/app-bar/app-bar';
@@ -22,7 +19,6 @@ import { ORDER_ENTRY_COPY } from './order-entry.copy';
 import { OrderEntryStep, OrderEntryStore } from './order-entry.store';
 
 export const GUEST_TAB_INACTIVITY_TIMEOUT_MS = 90_000;
-const ORDER_ENTRY_STEPS: readonly OrderEntryStep[] = ['room', 'guest', 'drinks'];
 
 @Component({
   selector: 'nt-order-entry',
@@ -32,7 +28,6 @@ const ORDER_ENTRY_STEPS: readonly OrderEntryStep[] = ['room', 'guest', 'drinks']
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatStepperModule,
     PageShell,
     RouterLink,
     ScrollRegion,
@@ -46,9 +41,48 @@ export class OrderEntry {
   protected readonly orderEntryStore = inject(OrderEntryStore);
   protected readonly copy = ORDER_ENTRY_COPY;
   protected readonly hostRoute = '/host';
-  protected readonly activeStepIndex = computed(() =>
-    ORDER_ENTRY_STEPS.indexOf(this.orderEntryStore.activeStep()),
-  );
+  protected readonly steps = computed(() => {
+    const activeStep = this.orderEntryStore.activeStep();
+    const selectedRoom = this.orderEntryStore.selectedRoom();
+    const selectedGuest = this.orderEntryStore.selectedGuest();
+
+    return [
+      {
+        id: 'room' as const,
+        eyebrow: this.copy.roomPanelEyebrow,
+        label: this.copy.roomStepLabel,
+        summary: selectedRoom
+          ? `${this.copy.roomLabel} ${selectedRoom.roomNumber}`
+          : this.copy.roomStepPlaceholder,
+        isEnabled: true,
+        isCurrent: activeStep === 'room',
+        isComplete: !!selectedRoom && activeStep !== 'room',
+        testId: 'step-nav-room',
+      },
+      {
+        id: 'guest' as const,
+        eyebrow: this.copy.guestPanelEyebrow,
+        label: this.copy.guestStepLabel,
+        summary: selectedGuest ? selectedGuest.fullName : this.copy.guestStepPlaceholder,
+        isEnabled: !!selectedRoom,
+        isCurrent: activeStep === 'guest',
+        isComplete: !!selectedGuest && activeStep !== 'guest',
+        testId: 'step-nav-guest',
+      },
+      {
+        id: 'drinks' as const,
+        eyebrow: this.copy.orderPanelEyebrow,
+        label: this.copy.drinksStepLabel,
+        summary: selectedGuest
+          ? `${this.copy.orderPanelTotalLabel}: ${selectedGuest.displayTotalPrice}`
+          : this.copy.drinksStepPlaceholder,
+        isEnabled: !!selectedGuest,
+        isCurrent: activeStep === 'drinks',
+        isComplete: false,
+        testId: 'step-nav-drinks',
+      },
+    ];
+  });
   protected readonly shellBackground = `
     radial-gradient(
       circle at top right,
@@ -68,7 +102,6 @@ export class OrderEntry {
   `;
 
   private readonly destroyRef = inject(DestroyRef);
-  private readonly stepper = viewChild(MatStepper);
   private inactivityTimerId: ReturnType<typeof setTimeout> | null = null;
 
   constructor() {
@@ -86,17 +119,6 @@ export class OrderEntry {
       this.scheduleInactivityTimer();
     });
 
-    effect(() => {
-      const stepper = this.stepper();
-      const activeStepIndex = this.activeStepIndex();
-
-      if (!stepper || stepper.selectedIndex === activeStepIndex) {
-        return;
-      }
-
-      stepper.selectedIndex = activeStepIndex;
-    });
-
     this.destroyRef.onDestroy(() => {
       this.clearInactivityTimer();
     });
@@ -104,16 +126,6 @@ export class OrderEntry {
 
   protected activateStep(step: OrderEntryStep): void {
     this.orderEntryStore.activateStep(step);
-  }
-
-  protected onStepperSelectionChange(event: StepperSelectionEvent): void {
-    const selectedStep = ORDER_ENTRY_STEPS[event.selectedIndex];
-
-    if (!selectedStep) {
-      return;
-    }
-
-    this.activateStep(selectedStep);
   }
 
   private scheduleInactivityTimer(): void {

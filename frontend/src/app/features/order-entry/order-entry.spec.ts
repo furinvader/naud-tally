@@ -34,7 +34,7 @@ describe('OrderEntry', () => {
     expect(pageShell?.classList.contains('nt-page-shell--body-fixed')).toBe(true);
     expect(compiled.querySelector('nt-app-bar')?.textContent).toContain('Order entry');
     expect(compiled.querySelector('[data-testid="no-rooms-empty-state"]')).not.toBeNull();
-    expect(compiled.querySelector('.mat-step-header')).toBeNull();
+    expect(compiled.querySelector('[data-testid="step-nav-room"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="no-rooms-host-tools-link"]')).not.toBeNull();
   });
 
@@ -46,18 +46,23 @@ describe('OrderEntry', () => {
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
-    const roomStepHeader = findStepHeader(compiled, 'room');
-    const guestStepHeader = findStepHeader(compiled, 'guest');
-    const drinksStepHeader = findStepHeader(compiled, 'drinks');
+    const roomStepButton = compiled.querySelector(
+      '[data-testid="step-nav-room"]',
+    ) as HTMLButtonElement | null;
+    const guestStepButton = compiled.querySelector(
+      '[data-testid="step-nav-guest"]',
+    ) as HTMLButtonElement | null;
+    const drinksStepButton = compiled.querySelector(
+      '[data-testid="step-nav-drinks"]',
+    ) as HTMLButtonElement | null;
 
     expect(compiled.querySelector('[data-testid="room-step-panel"]')).not.toBeNull();
     expect(compiled.querySelector('[data-testid="guest-step-panel"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="room-list-scroll"]')).not.toBeNull();
-    expect(roomStepHeader?.getAttribute('aria-selected')).toBe('true');
-    expect(guestStepHeader?.getAttribute('aria-disabled')).toBe('true');
-    expect(drinksStepHeader?.getAttribute('aria-disabled')).toBe('true');
-    expect(compiled.querySelector('[data-testid="workflow-context"]')).toBeNull();
+    expect(roomStepButton?.getAttribute('aria-current')).toBe('step');
+    expect(guestStepButton?.disabled).toBe(true);
+    expect(drinksStepButton?.disabled).toBe(true);
   });
 
   it('should auto-advance to the guest step after selecting a room', async () => {
@@ -76,19 +81,20 @@ describe('OrderEntry', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const guestStepHeader = findStepHeader(compiled, 'guest');
-    const drinksStepHeader = findStepHeader(compiled, 'drinks');
+    const guestStepButton = compiled.querySelector(
+      '[data-testid="step-nav-guest"]',
+    ) as HTMLButtonElement | null;
+    const drinksStepButton = compiled.querySelector(
+      '[data-testid="step-nav-drinks"]',
+    ) as HTMLButtonElement | null;
 
     expect(compiled.querySelector('[data-testid="room-step-panel"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="guest-step-panel"]')).not.toBeNull();
     expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="open-guest-draft-button"]')).not.toBeNull();
-    expect(guestStepHeader?.getAttribute('aria-selected')).toBe('true');
-    expect(guestStepHeader?.getAttribute('aria-disabled')).toBeNull();
-    expect(drinksStepHeader?.getAttribute('aria-disabled')).toBe('true');
-    expect(compiled.querySelector('[data-testid="workflow-context"]')?.textContent).toContain(
-      'Room 101',
-    );
+    expect(guestStepButton?.getAttribute('aria-current')).toBe('step');
+    expect(guestStepButton?.disabled).toBe(false);
+    expect(drinksStepButton?.disabled).toBe(true);
   });
 
   it('should let the host add a guest and advance to the drinks step', async () => {
@@ -134,7 +140,9 @@ describe('OrderEntry', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const drinksStepHeader = findStepHeader(compiled, 'drinks');
+    const drinksStepButton = compiled.querySelector(
+      '[data-testid="step-nav-drinks"]',
+    ) as HTMLButtonElement | null;
 
     expect(compiled.querySelector('[data-testid="guest-step-panel"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).not.toBeNull();
@@ -144,10 +152,7 @@ describe('OrderEntry', () => {
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')?.textContent).toContain(
       'Room 101',
     );
-    expect(drinksStepHeader?.getAttribute('aria-selected')).toBe('true');
-    expect(compiled.querySelector('[data-testid="workflow-context"]')?.textContent).toContain(
-      'Ada Lovelace',
-    );
+    expect(drinksStepButton?.getAttribute('aria-current')).toBe('step');
   });
 
   it('should let the host reopen the guest step and return to drinks for the same guest', async () => {
@@ -175,9 +180,11 @@ describe('OrderEntry', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const guestStepHeader = findStepHeader(compiled, 'guest');
+    const guestStepButton = compiled.querySelector(
+      '[data-testid="step-nav-guest"]',
+    ) as HTMLButtonElement | null;
 
-    guestStepHeader?.click();
+    guestStepButton?.click();
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -223,9 +230,11 @@ describe('OrderEntry', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const roomStepHeader = findStepHeader(compiled, 'room');
+    const roomStepButton = compiled.querySelector(
+      '[data-testid="step-nav-room"]',
+    ) as HTMLButtonElement | null;
 
-    roomStepHeader?.click();
+    roomStepButton?.click();
     fixture.detectChanges();
     await fixture.whenStable();
 
@@ -241,10 +250,15 @@ describe('OrderEntry', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
+    const drinksStepButton = compiled.querySelector(
+      '[data-testid="step-nav-drinks"]',
+    ) as HTMLButtonElement | null;
+
     expect(compiled.querySelector('[data-testid="guest-step-panel"]')).not.toBeNull();
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
     expect(compiled.querySelector('button[aria-label="Open tab for room 101, Ada Lovelace"]')).toBeNull();
     expect(compiled.querySelector('button[aria-label="Open tab for room 102, Grace Hopper"]')).not.toBeNull();
+    expect(drinksStepButton?.disabled).toBe(true);
 
     confirmSpy.mockRestore();
   });
@@ -295,21 +309,15 @@ describe('OrderEntry', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const guestStepHeader = findStepHeader(compiled, 'guest');
+    const guestStepButton = compiled.querySelector(
+      '[data-testid="step-nav-guest"]',
+    ) as HTMLButtonElement | null;
 
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="room-step-panel"]')).not.toBeNull();
-    expect(guestStepHeader?.getAttribute('aria-disabled')).toBe('true');
+    expect(guestStepButton?.disabled).toBe(true);
   });
 });
-
-function findStepHeader(compiled: HTMLElement, step: 'room' | 'guest' | 'drinks'): HTMLElement | null {
-  const stepLabel = compiled.querySelector(
-    `[data-testid="step-label-${step}"]`,
-  ) as HTMLElement | null;
-
-  return stepLabel?.closest('.mat-step-header') as HTMLElement | null;
-}
 
 function seedRooms(): void {
   localStorage.setItem(

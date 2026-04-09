@@ -77,7 +77,7 @@ The repo should also gain the documentation needed to carry that work across mul
 
 ## Outcomes & Retrospective
 
-The active pilot route now renders a host-first order-entry screen built around a focused three-step flow: Room, Guest, and Drinks. Only one step body is visible at a time, completed steps remain tappable from the compact stepper, and the room and guest steps now use touch-friendly grids while the drinks step preserves the familiar selected-guest summary and drink controls. The route still preserves the transient inactivity reset, but it no longer uses the legacy guest-facing tally presentation as its screen contract.
+The active pilot route now renders a host-first order-entry screen built around a focused three-step flow: Room, Guest, and Drinks. Only one step body is visible at a time, completed steps remain tappable from the persistent step header, and the room and guest steps now use touch-friendly grids while the drinks step preserves the familiar selected-guest summary and drink controls. The route still preserves the transient inactivity reset, but it no longer uses the legacy guest-facing tally presentation as its screen contract.
 
 The repo also now has a durable [`rooms`](../../frontend/src/app/features/rooms/) capability and a host-tools screen that manages rooms, catalog items, and billing together. That keeps setup and billing one tap away without crowding the main order-entry surface.
 
