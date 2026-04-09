@@ -7,5 +7,8 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './app.html',
   styleUrl: './app.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: 'nt-app-shell',
+  },
 })
 export class App {}

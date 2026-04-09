@@ -28,8 +28,10 @@ describe('OrderEntry', () => {
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
+    const pageShell = compiled.querySelector('nt-page-shell');
 
-    expect(compiled.querySelector('nt-page-shell')).not.toBeNull();
+    expect(pageShell).not.toBeNull();
+    expect(pageShell?.classList.contains('nt-page-shell--body-fixed')).toBe(true);
     expect(compiled.querySelector('nt-app-bar')?.textContent).toContain('Order entry');
     expect(compiled.querySelector('[data-testid="no-rooms-empty-state"]')).not.toBeNull();
     expect(compiled.querySelector('[data-testid="room-list-scroll"]')).toBeNull();
