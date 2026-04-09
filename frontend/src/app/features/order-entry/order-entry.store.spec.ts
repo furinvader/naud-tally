@@ -20,6 +20,7 @@ describe('OrderEntryStore', () => {
   it('should initialize with no configured rooms and no selection', () => {
     const store = TestBed.inject(OrderEntryStore);
 
+    expect(store.activeStep()).toBe('room');
     expect(store.rooms()).toEqual([]);
     expect(store.selectedRoom()).toBeNull();
     expect(store.selectedGuest()).toBeNull();
@@ -31,10 +32,13 @@ describe('OrderEntryStore', () => {
     const store = TestBed.inject(OrderEntryStore);
 
     store.selectRoom('room-204');
+    expect(store.activeStep()).toBe('guest');
+
     store.openGuestDraft();
     store.updateDraftGuestFullName(' Grace Hopper ');
     store.submitGuestIdentity();
 
+    expect(store.activeStep()).toBe('drinks');
     expect(store.selectedRoom()?.roomNumber).toBe('204');
     expect(store.selectedGuest()?.roomNumber).toBe('204');
     expect(store.selectedGuest()?.fullName).toBe('Grace Hopper');
@@ -60,6 +64,7 @@ describe('OrderEntryStore', () => {
     store.submitGuestIdentity();
 
     expect(store.roomGuests()).toHaveLength(1);
+    expect(store.activeStep()).toBe('drinks');
     expect(store.selectedGuest()?.id).toBe(originalGuestId);
   });
 
@@ -111,7 +116,7 @@ describe('OrderEntryStore', () => {
     expect(store.selectedGuest()?.roomNumber).toBe('1a');
   });
 
-  it('should finalize the selected guest when toggled off so guest-tab ordering stays current', () => {
+  it('should finalize the previous guest when switching guests so guest-tab ordering stays current', () => {
     seedRooms();
     seedGuestTabsForFinalization();
 
@@ -122,10 +127,34 @@ describe('OrderEntryStore', () => {
     store.selectGuestTab('guest-1');
     store.incrementDrink('beer');
     store.incrementDrink('beer');
+    store.activateStep('guest');
+    store.selectGuestTab('guest-2');
+
+    expect(store.activeStep()).toBe('drinks');
+    expect(store.selectedGuest()?.id).toBe('guest-2');
+    expect(guestTabsStore.guestTabs().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
+  });
+
+  it('should reopen completed steps without clearing the current selection', () => {
+    seedRooms();
+    seedGuestTabsForFinalization();
+
+    const store = TestBed.inject(OrderEntryStore);
+
+    store.selectRoom('room-101');
     store.selectGuestTab('guest-1');
 
-    expect(store.selectedGuest()).toBeNull();
-    expect(guestTabsStore.guestTabs().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
+    expect(store.activeStep()).toBe('drinks');
+
+    store.activateStep('guest');
+
+    expect(store.activeStep()).toBe('guest');
+    expect(store.selectedGuest()?.id).toBe('guest-1');
+
+    store.selectGuestTab('guest-1');
+
+    expect(store.activeStep()).toBe('drinks');
+    expect(store.selectedGuest()?.id).toBe('guest-1');
   });
 
   it('should finalize the selected guest when inactivity clears transient state', () => {
@@ -141,6 +170,7 @@ describe('OrderEntryStore', () => {
     store.incrementDrink('beer');
     store.clearTransientState();
 
+    expect(store.activeStep()).toBe('room');
     expect(store.selectedRoom()).toBeNull();
     expect(store.selectedGuest()).toBeNull();
     expect(guestTabsStore.guestTabs().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
@@ -155,6 +185,7 @@ describe('OrderEntryStore', () => {
     store.updateDraftGuestFullName('Ada Lovelace');
     store.clearTransientState();
 
+    expect(store.activeStep()).toBe('room');
     expect(store.selectedRoom()).toBeNull();
     expect(store.guestDraft()).toEqual({
       isOpen: false,

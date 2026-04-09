@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  computed,
   effect,
   inject,
 } from '@angular/core';
@@ -15,7 +16,7 @@ import { AppBar } from '../../ui/app-bar/app-bar';
 import { PageShell } from '../../ui/page-shell/page-shell';
 import { ScrollRegion } from '../../ui/scroll-region/scroll-region';
 import { ORDER_ENTRY_COPY } from './order-entry.copy';
-import { OrderEntryStore } from './order-entry.store';
+import { OrderEntryStep, OrderEntryStore } from './order-entry.store';
 
 export const GUEST_TAB_INACTIVITY_TIMEOUT_MS = 90_000;
 
@@ -40,6 +41,48 @@ export class OrderEntry {
   protected readonly orderEntryStore = inject(OrderEntryStore);
   protected readonly copy = ORDER_ENTRY_COPY;
   protected readonly hostRoute = '/host';
+  protected readonly steps = computed(() => {
+    const activeStep = this.orderEntryStore.activeStep();
+    const selectedRoom = this.orderEntryStore.selectedRoom();
+    const selectedGuest = this.orderEntryStore.selectedGuest();
+
+    return [
+      {
+        id: 'room' as const,
+        eyebrow: this.copy.roomPanelEyebrow,
+        label: this.copy.roomStepLabel,
+        summary: selectedRoom
+          ? `${this.copy.roomLabel} ${selectedRoom.roomNumber}`
+          : this.copy.roomStepPlaceholder,
+        isEnabled: true,
+        isCurrent: activeStep === 'room',
+        isComplete: !!selectedRoom && activeStep !== 'room',
+        testId: 'step-nav-room',
+      },
+      {
+        id: 'guest' as const,
+        eyebrow: this.copy.guestPanelEyebrow,
+        label: this.copy.guestStepLabel,
+        summary: selectedGuest ? selectedGuest.fullName : this.copy.guestStepPlaceholder,
+        isEnabled: !!selectedRoom,
+        isCurrent: activeStep === 'guest',
+        isComplete: !!selectedGuest && activeStep !== 'guest',
+        testId: 'step-nav-guest',
+      },
+      {
+        id: 'drinks' as const,
+        eyebrow: this.copy.orderPanelEyebrow,
+        label: this.copy.drinksStepLabel,
+        summary: selectedGuest
+          ? `${this.copy.orderPanelTotalLabel}: ${selectedGuest.displayTotalPrice}`
+          : this.copy.drinksStepPlaceholder,
+        isEnabled: !!selectedGuest,
+        isCurrent: activeStep === 'drinks',
+        isComplete: false,
+        testId: 'step-nav-drinks',
+      },
+    ];
+  });
   protected readonly shellBackground = `
     radial-gradient(
       circle at top right,
@@ -79,6 +122,10 @@ export class OrderEntry {
     this.destroyRef.onDestroy(() => {
       this.clearInactivityTimer();
     });
+  }
+
+  protected activateStep(step: OrderEntryStep): void {
+    this.orderEntryStore.activateStep(step);
   }
 
   private scheduleInactivityTimer(): void {

@@ -19,7 +19,10 @@ import {
   createSelectedGuestOrderViewModel,
 } from './order-entry.models';
 
+export type OrderEntryStep = 'room' | 'guest' | 'drinks';
+
 type OrderEntryState = {
+  activeStep: OrderEntryStep;
   selectedRoomId: string | null;
   selectedGuestId: string | null;
   guestDraftOpen: boolean;
@@ -28,6 +31,7 @@ type OrderEntryState = {
 };
 
 const initialState: OrderEntryState = {
+  activeStep: 'room',
   selectedRoomId: null,
   selectedGuestId: null,
   guestDraftOpen: false,
@@ -123,6 +127,7 @@ export const OrderEntryStore = signalStore(
       finalizeSelectedGuestTab();
 
       const nextState: Partial<OrderEntryState> = {
+        activeStep: 'room',
         selectedRoomId: null,
         selectedGuestId: null,
         guestDraftOpen: false,
@@ -176,6 +181,19 @@ export const OrderEntryStore = signalStore(
     }
 
     return {
+      activateStep(step: OrderEntryStep): void {
+        if (step === 'guest' && !store.selectedRoomId()) {
+          return;
+        }
+
+        if (step === 'drinks' && !store.selectedGuestId()) {
+          return;
+        }
+
+        patchInteractionState({
+          activeStep: step,
+        });
+      },
       selectRoom(roomId: string): void {
         const room = roomsStore.rooms().find((entry) => entry.id === roomId);
 
@@ -184,13 +202,16 @@ export const OrderEntryStore = signalStore(
         }
 
         if (store.selectedRoomId() === room.id) {
-          patchInteractionState({});
+          patchInteractionState({
+            activeStep: 'guest',
+          });
           return;
         }
 
         finalizeSelectedGuestTab();
 
         patchInteractionState({
+          activeStep: 'guest',
           selectedRoomId: room.id,
           selectedGuestId: null,
           guestDraftOpen: false,
@@ -205,6 +226,7 @@ export const OrderEntryStore = signalStore(
         finalizeSelectedGuestTab();
 
         patchInteractionState({
+          activeStep: 'guest',
           selectedGuestId: null,
           guestDraftOpen: true,
           draftGuestFullName: '',
@@ -212,6 +234,7 @@ export const OrderEntryStore = signalStore(
       },
       cancelGuestDraft(): void {
         patchInteractionState({
+          activeStep: 'guest',
           guestDraftOpen: false,
           draftGuestFullName: '',
         });
@@ -236,6 +259,7 @@ export const OrderEntryStore = signalStore(
         }
 
         patchInteractionState({
+          activeStep: 'drinks',
           selectedGuestId: guest.id,
           guestDraftOpen: false,
           draftGuestFullName: '',
@@ -260,17 +284,16 @@ export const OrderEntryStore = signalStore(
         }
 
         if (store.selectedGuestId() === guest.id) {
-          finalizeSelectedGuestTab();
-
           patchInteractionState({
-            selectedGuestId: null,
-            guestDraftOpen: false,
-            draftGuestFullName: '',
+            activeStep: 'drinks',
           });
           return;
         }
 
+        finalizeSelectedGuestTab();
+
         patchInteractionState({
+          activeStep: 'drinks',
           selectedGuestId: guest.id,
           guestDraftOpen: false,
           draftGuestFullName: '',

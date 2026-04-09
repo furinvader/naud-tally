@@ -18,6 +18,7 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 - Make `select room -> select guest -> orders` feel fast and obvious.
 - Keep the currently selected guest unmistakable while orders are being recorded.
 - Minimize context switching during order taking, while keeping host tools easy to reach when setup or billing work is needed.
+- Keep one workflow step in focus at a time without making correction paths feel hidden.
 - Preserve large touch targets and low-friction use on a tablet.
 - Avoid full-page scroll on tablet layouts when an owned screen region can carry the scroll instead.
 - Make offline or sync state understandable without distracting the host during service.
@@ -33,18 +34,21 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 
 - Keep the host workflow on one main route.
 - Start from a host-first screen, not from a public guest-facing surface.
+- Use a visible three-step header for `room -> guest -> drinks`.
 - Make room selection, then guest selection or creation, the clear entry path for new orders.
+- Let the host tap completed or current steps in the header to move back without opening a separate modal flow.
 - Let the host reopen an existing guest tab quickly when the guest returns or orders again.
-- Keep the selected guest header visible while order controls remain nearby.
-- Show order-entry controls as the primary interaction zone once a guest is selected.
+- Keep the selected room and selected guest visible in the step header after they are chosen.
+- Show only one step body at a time, with order-entry controls becoming the primary interaction zone once a guest is selected.
 - Keep the host tools shortcut visible, but let the main screen focus on order taking rather than setup or billing detail.
 
 ## Recommended Layout
 
-- Use a tablet-first layout with one dominant order-entry panel plus supporting room and guest-selection panels.
-- Keep the room list and the guest list for the selected room visible enough that the host can switch context without losing the active guest.
-- Keep the selected guest identity and running total visible while orders are added.
-- Let long lists and tall detail sections scroll inside their own owned regions or route content area instead of the browser page whenever practical.
+- Use a tablet-first layout with a persistent step header and one dominant step panel below it.
+- Present rooms as a touch-friendly grid in the room step.
+- Present guests for the selected room as a touch-friendly grid in the guest step.
+- Keep the selected guest identity and running total visible while orders are added in the drinks step.
+- Let long room lists, guest lists, and drink lists scroll inside their own owned regions or route content area instead of the browser page whenever practical.
 - Present products as fast tap targets with clear prices and counts.
 - Avoid deep modal flows for common service actions.
 - Reserve confirmations for destructive actions such as reset, delete, or final billing.
@@ -56,6 +60,8 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 - Creating a guest tab should feel closer to opening a paper tab than to filling out an account form.
 - Reopening an existing tab should be faster than creating a new one.
 - The host should not need to type a room number while taking an order if the room has already been configured.
+- Stepping back to room or guest selection should not interrupt the host with a warning dialog.
+- If the host changes room or guest after stepping back, drinks already recorded should remain on the originally selected tab until the host makes a new selection.
 - The host should be able to add the most common order with one tap after selecting the guest.
 - Moving to host tools for room setup, catalog edits, or billing should be explicit and easy, but not the default interaction path while taking orders.
 - If a screen section can own its own scrolling without harming usability, prefer that over a full-window scroll on tablet layouts.
@@ -75,3 +81,5 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 - Treat this file and [`../product.md`](../product.md) as the UX reference for [`../tasks/open/T-018.md`](../tasks/open/T-018.md).
 - Treat this file as supporting context for [`../tasks/open/T-019.md`](../tasks/open/T-019.md), [`../tasks/open/T-020.md`](../tasks/open/T-020.md), and [`../tasks/open/T-022.md`](../tasks/open/T-022.md).
 - Treat [`guest-tab-ux.md`](guest-tab-ux.md) as deferred future UX, not as the current pilot target.
+- Revisit search, recents, or grouping if room or guest grids grow beyond the pilot’s small-list assumptions.
+- Revisit an adaptive split view later if host testing shows the focused stepper slows extra-wide tablet usage.
