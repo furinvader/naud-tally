@@ -8,7 +8,7 @@ import {
 } from '@ngrx/signals';
 
 import { CatalogStore, DrinkId } from '../catalog';
-import { GuestTabsStore } from '../guest-tabs';
+import { GuestTabsStore, roomNumbersMatch } from '../guest-tabs';
 import { RoomsStore } from '../rooms';
 import {
   RoomGuestViewModel,
@@ -81,7 +81,8 @@ export const OrderEntryStore = signalStore(
           .guestTabs()
           .find(
             (entry) =>
-              entry.id === selectedGuestId && entry.roomNumber === currentRoom.roomNumber,
+              entry.id === selectedGuestId &&
+              roomNumbersMatch(entry.roomNumber, currentRoom.roomNumber),
           );
 
         if (!guest) {
@@ -250,7 +251,8 @@ export const OrderEntryStore = signalStore(
         const guest = guestTabsStore
           .guestTabs()
           .find(
-            (entry) => entry.id === guestId && entry.roomNumber === selectedRoom.roomNumber,
+            (entry) =>
+              entry.id === guestId && roomNumbersMatch(entry.roomNumber, selectedRoom.roomNumber),
           );
 
         if (!guest) {

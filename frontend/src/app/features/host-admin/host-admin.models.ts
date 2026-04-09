@@ -5,7 +5,7 @@ import {
   calculateGuestTotalPriceCents,
   createBillLineItems,
 } from '../billing-history';
-import { GuestTab, countDrinks, getDrinkCount } from '../guest-tabs';
+import { GuestTab, countDrinks, getDrinkCount, roomNumbersMatch } from '../guest-tabs';
 import { Room } from '../rooms';
 
 export type HostRoomItem = Room & {
@@ -190,7 +190,7 @@ export function countOpenGuestsInRoom(
   roomNumber: string,
 ): number {
   return guestTabs.reduce(
-    (total, guest) => total + (guest.roomNumber === roomNumber ? 1 : 0),
+    (total, guest) => total + (roomNumbersMatch(guest.roomNumber, roomNumber) ? 1 : 0),
     0,
   );
 }

@@ -206,6 +206,13 @@ export function countDrinks(counts: DrinkCounts): number {
   return Object.values(counts).reduce((total, count) => total + normalizeCountValue(count), 0);
 }
 
+export function roomNumbersMatch(left: unknown, right: unknown): boolean {
+  const normalizedLeft = normalizeRoomNumber(left);
+  const normalizedRight = normalizeRoomNumber(right);
+
+  return normalizedLeft.length > 0 && normalizedLeft === normalizedRight;
+}
+
 export function getDrinkCount(counts: DrinkCounts, drinkId: string): number {
   return normalizeCountValue(counts[drinkId]);
 }
@@ -231,10 +238,12 @@ function normalizeDisplayText(value: unknown): string {
   return value.trim().replace(/\s+/g, ' ');
 }
 
+function normalizeRoomNumber(value: unknown): string {
+  return normalizeDisplayText(value).toLowerCase();
+}
+
 function createIdentityKey(roomNumber: string, fullName: string): string {
-  return `${normalizeDisplayText(roomNumber).toLowerCase()}::${normalizeDisplayText(
-    fullName,
-  ).toLowerCase()}`;
+  return `${normalizeRoomNumber(roomNumber)}::${normalizeDisplayText(fullName).toLowerCase()}`;
 }
 
 function normalizeCountValue(value: unknown): number {

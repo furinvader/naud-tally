@@ -1,6 +1,6 @@
 import { calculateGuestTotalPriceCents } from '../billing-history';
 import { DrinkCatalogEntry, formatEuroPrice } from '../catalog';
-import { GuestTab, countDrinks, getDrinkCount } from '../guest-tabs';
+import { GuestTab, countDrinks, getDrinkCount, roomNumbersMatch } from '../guest-tabs';
 import { Room } from '../rooms';
 
 export type RoomListItemViewModel = Room & {
@@ -35,7 +35,7 @@ export function createRoomListItemViewModels(
   return rooms.map((room) => ({
     ...room,
     openGuestCount: guestTabs.reduce(
-      (total, guest) => total + (guest.roomNumber === room.roomNumber ? 1 : 0),
+      (total, guest) => total + (roomNumbersMatch(guest.roomNumber, room.roomNumber) ? 1 : 0),
       0,
     ),
   }));
@@ -47,7 +47,7 @@ export function createRoomGuestViewModels(
   drinkCatalog: ReadonlyArray<DrinkCatalogEntry>,
 ): RoomGuestViewModel[] {
   return guestTabs
-    .filter((guest) => guest.roomNumber === roomNumber)
+    .filter((guest) => roomNumbersMatch(guest.roomNumber, roomNumber))
     .sort((left, right) => fullNameCollator.compare(left.fullName, right.fullName))
     .map((guest) => createRoomGuestViewModel(guest, drinkCatalog));
 }

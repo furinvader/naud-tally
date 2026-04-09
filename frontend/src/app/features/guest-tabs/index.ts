@@ -3,6 +3,7 @@ export {
   GuestTabsStore,
   countDrinks,
   getDrinkCount,
+  roomNumbersMatch,
   sortGuestTabs,
 } from './guest-tabs.store';
 

@@ -127,6 +127,28 @@ describe('HostAdmin', () => {
     );
   });
 
+  it('should keep room removal disabled when open tabs only differ by room-number casing', async () => {
+    seedMixedCaseRooms();
+    seedMixedCaseGuestTabs();
+
+    const fixture = TestBed.createComponent(HostAdmin);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const roomItems = [...compiled.querySelectorAll('[data-testid="host-room-list"] .catalog-item')];
+    const mixedCaseRoom = roomItems.find((item) => item.textContent?.includes('Room 1A'));
+    const removeButton = mixedCaseRoom?.querySelector(
+      '[data-testid="host-remove-room-button"]',
+    ) as HTMLButtonElement | null;
+
+    expect(
+      compiled.querySelector('[data-testid="host-summary-open-guests"]')?.textContent,
+    ).toContain('1');
+    expect(mixedCaseRoom?.textContent).toContain('1');
+    expect(removeButton?.disabled).toBe(true);
+  });
+
   it('should remove an unused drink and move a billed guest into history', async () => {
     vi.stubGlobal(
       'confirm',
@@ -197,6 +219,20 @@ function seedRooms(): void {
   );
 }
 
+function seedMixedCaseRooms(): void {
+  localStorage.setItem(
+    ROOMS_STORAGE_KEY,
+    JSON.stringify([
+      {
+        id: 'room-1A',
+        roomNumber: '1A',
+        createdAt: '2026-04-01T08:00:00.000Z',
+        updatedAt: '2026-04-01T08:00:00.000Z',
+      },
+    ]),
+  );
+}
+
 function seedOpenGuestTabs(): void {
   localStorage.setItem(
     GUEST_TABS_STORAGE_KEY,
@@ -204,6 +240,22 @@ function seedOpenGuestTabs(): void {
       {
         id: 'guest-ada',
         roomNumber: '101',
+        fullName: 'Ada Lovelace',
+        counts: buildCounts({ beer: 1, water: 1 }),
+        createdAt: '2026-04-01T08:00:00.000Z',
+        updatedAt: '2026-04-01T08:30:00.000Z',
+      },
+    ]),
+  );
+}
+
+function seedMixedCaseGuestTabs(): void {
+  localStorage.setItem(
+    GUEST_TABS_STORAGE_KEY,
+    JSON.stringify([
+      {
+        id: 'guest-ada',
+        roomNumber: '1a',
         fullName: 'Ada Lovelace',
         counts: buildCounts({ beer: 1, water: 1 }),
         createdAt: '2026-04-01T08:00:00.000Z',

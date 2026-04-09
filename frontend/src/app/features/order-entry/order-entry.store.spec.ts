@@ -94,6 +94,23 @@ describe('OrderEntryStore', () => {
     expect(store.roomGuests().map((guest) => guest.fullName)).toEqual(['Ada Lovelace']);
   });
 
+  it('should match configured rooms to legacy guest tabs case-insensitively', () => {
+    seedMixedCaseRooms();
+    seedMixedCaseGuestTabs();
+
+    const store = TestBed.inject(OrderEntryStore);
+
+    store.selectRoom('room-1A');
+
+    expect(store.rooms().find((room) => room.id === 'room-1A')?.openGuestCount).toBe(1);
+    expect(store.roomGuests().map((guest) => guest.fullName)).toEqual(['Ada Lovelace']);
+
+    store.selectGuestTab('guest-legacy');
+
+    expect(store.selectedGuest()?.fullName).toBe('Ada Lovelace');
+    expect(store.selectedGuest()?.roomNumber).toBe('1a');
+  });
+
   it('should finalize the selected guest when toggled off so guest-tab ordering stays current', () => {
     seedRooms();
     seedGuestTabsForFinalization();
@@ -162,6 +179,36 @@ function seedRooms(): void {
         roomNumber: '204',
         createdAt: '2026-04-01T08:05:00.000Z',
         updatedAt: '2026-04-01T08:05:00.000Z',
+      },
+    ]),
+  );
+}
+
+function seedMixedCaseRooms(): void {
+  localStorage.setItem(
+    ROOMS_STORAGE_KEY,
+    JSON.stringify([
+      {
+        id: 'room-1A',
+        roomNumber: '1A',
+        createdAt: '2026-04-01T08:00:00.000Z',
+        updatedAt: '2026-04-01T08:00:00.000Z',
+      },
+    ]),
+  );
+}
+
+function seedMixedCaseGuestTabs(): void {
+  localStorage.setItem(
+    GUEST_TABS_STORAGE_KEY,
+    JSON.stringify([
+      {
+        id: 'guest-legacy',
+        roomNumber: '1a',
+        fullName: 'Ada Lovelace',
+        counts: buildCounts({ water: 1 }),
+        createdAt: '2026-04-01T08:00:00.000Z',
+        updatedAt: '2026-04-01T08:00:00.000Z',
       },
     ]),
   );
