@@ -24,7 +24,9 @@ describe('DrinkTally', () => {
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
+    const pageShell = compiled.querySelector('nt-page-shell');
 
+    expect(pageShell?.classList.contains('nt-page-shell--body-fixed')).toBe(true);
     expect(compiled.textContent).toContain('Add yourself');
     expect(compiled.textContent).toContain('No guest tabs yet');
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();

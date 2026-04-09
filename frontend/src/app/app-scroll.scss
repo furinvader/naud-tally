@@ -1,4 +1,26 @@
 @mixin install() {
+  html {
+    height: 100%;
+  }
+
+  body {
+    min-height: 100%;
+  }
+
+  body > nt-root.nt-app-shell {
+    display: block;
+    height: 100%;
+    min-height: 100%;
+  }
+
+  @media (min-width: 960px) {
+    body > nt-root.nt-app-shell {
+      height: 100dvh;
+      min-height: 100dvh;
+      overflow: hidden;
+    }
+  }
+
   .nt-scroll-shadow {
     position: relative;
     min-height: 0;

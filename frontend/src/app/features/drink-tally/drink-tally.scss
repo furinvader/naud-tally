@@ -20,6 +20,11 @@
   grid-template-columns: minmax(0, 1.12fr) minmax(340px, 0.88fr);
   min-height: 0;
   flex: 1;
+  overflow: hidden;
+}
+
+.screen-body > * {
+  min-height: 0;
 }
 
 .public-column {
@@ -27,6 +32,11 @@
   gap: var(--nt-space-sm);
   min-height: 0;
   grid-template-rows: minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.public-column > * {
+  min-height: 0;
 }
 
 .public-column--entry-open {
@@ -36,7 +46,7 @@
 @media (max-width: 959px) {
   .screen-body,
   .public-column {
-    height: auto;
+    overflow: visible;
   }
 
   .screen-body {

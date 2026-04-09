@@ -1,3 +1,5 @@
+@use './app/app-scroll' as app-scroll;
 @use './styles/nt-theme' as nt-theme;
 
 @include nt-theme.install();
+@include app-scroll.install();

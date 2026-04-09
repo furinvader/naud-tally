@@ -9,16 +9,32 @@
 
 .page-shell__body {
   min-height: 0;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .page-shell__content {
+  flex: 1 1 auto;
   width: min(100%, var(--nt-page-shell-max-width));
-  min-height: 100%;
+  min-height: 0;
   margin: 0 auto;
   padding: var(--nt-page-shell-padding);
   display: flex;
   flex-direction: column;
+}
+
+:host.nt-page-shell--body-scrollable .page-shell__body {
+  overflow: auto;
+}
+
+:host.nt-page-shell--body-scrollable .page-shell__content {
+  min-height: 100%;
+}
+
+:host.nt-page-shell--body-fixed .page-shell__body,
+:host.nt-page-shell--body-fixed .page-shell__content {
+  overflow: hidden;
 }
 
 @media (max-width: 959px) {
@@ -34,6 +50,7 @@
 
   .page-shell__content {
     min-height: 0;
+    overflow: visible;
     padding: var(--nt-page-shell-compact-padding);
   }
 }
