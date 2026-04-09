@@ -21,7 +21,7 @@
 ## Layout and Spacing Notes
 
 - Keep a persistent step header below the app bar with three chips for Room, Guest, and Drinks.
-- Each step chip should show the step number, the step label, and a short summary such as the selected room, selected guest, or running total.
+- Keep the stepper labels compact and focus them on step identity rather than full workflow summaries.
 - Completed and current step chips should stay tappable; future steps should stay disabled until their prerequisites exist.
 - Smallest supported layout: stack the step chips vertically, then show one step panel below them.
 - Tablet layout: keep the step chips in one row and show one dominant step panel below them.
@@ -50,7 +50,7 @@
 - Room step heading should describe configured rooms, not open tabs.
 - Guest step heading should describe guests in the selected room.
 - Add-guest action should ask only for full name because room context is already fixed.
-- The step header should keep the selected room and guest visible once they are chosen.
+- Keep the selected room and guest visible in adjacent workflow context once they are chosen.
 - Selected guest header should show room and guest name together.
 - The drinks step should show running price totals rather than billing-copy framing.
 

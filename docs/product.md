@@ -81,7 +81,7 @@ The app should still start from these sample drinks and reference prices until t
 3. The host selects a room from the fixed room list shown on the order entry screen.
 4. The app advances to the guest step, where the host reopens an existing [guest tab](glossary.md#guest-tab) in that room or creates a new one by entering the guest's full name.
 5. The app advances to the drinks step so the host can record one or more orders immediately from the same working surface.
-6. The app keeps the selected room and [selected guest](glossary.md#selected-guest) context obvious in the step header, and completed steps remain tappable so the host can correct the room or guest without a warning dialog.
+6. The app keeps the selected room and [selected guest](glossary.md#selected-guest) context obvious around the stepper, and completed steps remain tappable so the host can correct the room or guest without a warning dialog.
 7. The host can open the host tools screen to manage rooms, adjust products and prices, or bill guests on departure.
 8. The app saves changes locally immediately so the host can continue working offline.
 9. When connectivity is available, the app syncs or backs up local changes to the chosen remote recovery store.
@@ -123,7 +123,7 @@ The app should still start from these sample drinks and reference prices until t
 - Minimal navigation during service.
 - One workflow step should be the clear focus at a time instead of trying to show every step equally.
 - Room, full name, and the current order context should stay easy to verify at a glance.
-- After a room or guest is chosen, the step header should keep that context visible and make correction paths obvious.
+- After a room or guest is chosen, the workflow chrome around the stepper should keep that context visible and make correction paths obvious.
 - Room and guest selection should use large grid cards that work well for quick taps on a tablet.
 - Common order-entry actions should take as few taps as possible.
 - Room setup, product management, and billing should stay one clear step away on the host tools screen without crowding the main order-entry workflow.

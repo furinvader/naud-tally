@@ -38,7 +38,7 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 - Make room selection, then guest selection or creation, the clear entry path for new orders.
 - Let the host tap completed or current steps in the header to move back without opening a separate modal flow.
 - Let the host reopen an existing guest tab quickly when the guest returns or orders again.
-- Keep the selected room and selected guest visible in the step header after they are chosen.
+- Keep the selected room and selected guest visible near the stepper after they are chosen.
 - Show only one step body at a time, with order-entry controls becoming the primary interaction zone once a guest is selected.
 - Keep the host tools shortcut visible, but let the main screen focus on order taking rather than setup or billing detail.
 

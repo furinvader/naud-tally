@@ -190,6 +190,10 @@ export const OrderEntryStore = signalStore(
           return;
         }
 
+        if (store.activeStep() === step) {
+          return;
+        }
+
         patchInteractionState({
           activeStep: step,
         });
