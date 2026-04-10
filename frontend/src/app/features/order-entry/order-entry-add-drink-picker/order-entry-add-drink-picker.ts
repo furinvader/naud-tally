@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
-import { DrinkId } from '../catalog';
-import { ORDER_ENTRY_COPY } from './order-entry.copy';
-import { AvailableDrinkViewModel } from './order-entry.models';
+import { DrinkId } from '../../catalog';
+import { ORDER_ENTRY_COPY } from '../order-entry.copy';
+import { AvailableDrinkViewModel } from '../order-entry.models';
 
 @Component({
   selector: 'nt-order-entry-add-drink-picker',

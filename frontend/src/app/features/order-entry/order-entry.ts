@@ -15,8 +15,8 @@ import { RouterLink } from '@angular/router';
 import { AppBar } from '../../ui/app-bar/app-bar';
 import { PageShell } from '../../ui/page-shell/page-shell';
 import { ScrollRegion } from '../../ui/scroll-region/scroll-region';
-import { OrderEntryAddDrinkPicker } from './order-entry-add-drink-picker';
-import { OrderEntryBillGuestDialog } from './order-entry-bill-guest-dialog';
+import { OrderEntryAddDrinkPicker } from './order-entry-add-drink-picker/order-entry-add-drink-picker';
+import { OrderEntryBillGuestDialog } from './order-entry-bill-guest-dialog/order-entry-bill-guest-dialog';
 import { ORDER_ENTRY_COPY } from './order-entry.copy';
 import { OrderEntryStep, OrderEntryStore } from './order-entry.store';
 

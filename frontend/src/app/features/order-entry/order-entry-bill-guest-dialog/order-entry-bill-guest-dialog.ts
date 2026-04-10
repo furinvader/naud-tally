@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
-import { ORDER_ENTRY_COPY } from './order-entry.copy';
-import { SelectedGuestOrderViewModel } from './order-entry.models';
+import { ORDER_ENTRY_COPY } from '../order-entry.copy';
+import { SelectedGuestOrderViewModel } from '../order-entry.models';
 
 @Component({
   selector: 'nt-order-entry-bill-guest-dialog',
