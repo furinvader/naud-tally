@@ -2,7 +2,7 @@
 
 ## Working Definition
 
-This project is a tablet-first tally app operated by the host. The current pilot should give the host a primary [order entry screen](glossary.md#order-entry-screen) where they move through a focused `room -> guest -> drinks` flow, can revisit completed steps to correct a miss-tap, and record orders with an intuitive tap-first flow. Product management and billing remain part of the pilot, but they should live on the host tools screen instead of sharing the main order-entry surface for now.
+This project is a tablet-first tally app operated by the host. The current pilot should give the host a primary [order entry screen](glossary.md#order-entry-screen) where they move through a focused `room -> guest -> drinks` flow, can revisit completed steps to correct a miss-tap, and record orders with an intuitive tap-first flow that keeps only ordered drinks in view while adding new drink types from a lightweight picker. The drinks step should also allow the host to open a quick billing overview for the current guest and confirm checkout without leaving the main workflow, while room and catalog management stay on the host tools screen.
 
 That order entry screen remains the main app surface for now. A broader overview screen may replace it later, but that work is deferred.
 
@@ -71,7 +71,7 @@ The app should still start from these sample drinks and reference prices until t
 
 ## Primary Users
 
-- Host or organizer: wants one main order entry screen for quick room selection, guest selection, and rapid order entry, with room setup, product management, and billing available on the host tools screen
+- Host or organizer: wants one main order entry screen for quick room selection, guest selection, rapid order entry, and fast guest billing confirmation, with room setup, product management, and broader admin review available on the host tools screen
 - Guest or customer: is represented in the tally data and billed by the host, but does not use the app directly in the current pilot
 
 ## Core User Flow
@@ -81,18 +81,24 @@ The app should still start from these sample drinks and reference prices until t
 3. The host selects a room from the fixed room list shown on the order entry screen.
 4. The app advances to the guest step, where the host reopens an existing [guest tab](glossary.md#guest-tab) in that room or creates a new one by entering the guest's full name.
 5. The app advances to the drinks step so the host can record one or more orders immediately from the same working surface.
-6. The app keeps the selected room and [selected guest](glossary.md#selected-guest) context obvious in the step header, and completed steps remain tappable so the host can correct the room or guest without a warning dialog.
-7. The host can open the host tools screen to manage rooms, adjust products and prices, or bill guests on departure.
-8. The app saves changes locally immediately so the host can continue working offline.
-9. When connectivity is available, the app syncs or backs up local changes to the chosen remote recovery store.
-10. On departure, the host reviews the open tab from the host tools screen, bills it, and moves it into billed history.
-11. If the tablet reloads, loses connection, or must be replaced, the host can recover the data from local storage first and from the remote source when needed.
+6. The drinks step starts with only the guest's ordered drinks in view, keeps them in first-added order, and offers an `Add drink` picker for bringing another drink type onto the tab.
+7. The host can tap plus or minus for quick adjustments or type a larger count directly into the quantity field.
+8. The drinks step also offers a `Bill guest` action that opens a lightweight overview modal so the host and guest can quickly verify the ordered drinks and total together.
+9. When billing is confirmed, the app closes the open tab, moves it into billed history, and returns the host to the guest step for the current room.
+10. The app keeps the selected room and [selected guest](glossary.md#selected-guest) context obvious in the step header, and completed steps remain tappable so the host can correct the room or guest without a warning dialog.
+11. The current room stays selected until the host explicitly taps Room to change context, while the current guest stays selected until the host switches guests or bills the tab.
+12. The host can open the host tools screen to manage rooms, adjust products and prices, or review open and billed tabs from the broader admin surface.
+13. The app saves changes locally immediately so the host can continue working offline.
+14. When connectivity is available, the app syncs or backs up local changes to the chosen remote recovery store.
+15. If the tablet reloads, loses connection, or must be replaced, the host can recover the data from local storage first and from the remote source when needed.
 
 ## In Scope for the Current Pilot
 
 - tablet-first host-operated order entry screen
 - fixed room-list selection followed by guest lookup or creation
 - rapid product selection and quantity changes for a selected guest
+- ordered-drinks-first drinks panel with a lightweight add-drink picker for new drink types
+- inline guest billing confirmation from the drinks step
 - visible open-tab context for the currently selected guest
 - host-managed room list
 - host-managed drink or product catalog
@@ -124,9 +130,13 @@ The app should still start from these sample drinks and reference prices until t
 - One workflow step should be the clear focus at a time instead of trying to show every step equally.
 - Room, full name, and the current order context should stay easy to verify at a glance.
 - After a room or guest is chosen, the step header should keep that context visible and make correction paths obvious.
+- The app should not auto-clear the current room or guest on the host-operated screen; context changes should be explicit.
 - Room and guest selection should use large grid cards that work well for quick taps on a tablet.
+- The drinks step should show only ordered drinks by default and keep their order stable by first add time.
+- Adding a new drink type should be a lightweight overlay action, while larger quantity changes should support direct numeric entry.
+- Billing the current guest should be possible from the drinks step through a quick review modal, without turning the route into a full admin dashboard.
 - Common order-entry actions should take as few taps as possible.
-- Room setup, product management, and billing should stay one clear step away on the host tools screen without crowding the main order-entry workflow.
+- Room setup, product management, and billing history should stay one clear step away on the host tools screen without crowding the main order-entry workflow.
 - Offline behavior should fail gently and keep the host moving.
 - [Sync status](glossary.md#sync-status) should be understandable without becoming noisy.
 - [Recovery](glossary.md#recovery) should be simple if the host taps the wrong thing or loses connection.
@@ -139,7 +149,11 @@ The app should still start from these sample drinks and reference prices until t
 - The app must let the host create a new guest tab from a selected room followed by the guest's full name.
 - The app must let the host reopen an existing guest tab without re-entering the full record manually.
 - The app must let the host revisit completed room or guest steps without modal warnings so they can correct a miss-tap quickly.
-- The app must support fast add, increment, and decrement order actions for the selected guest.
+- The app must keep the current room and guest selection active until the host explicitly changes it.
+- The app must show only ordered drinks on the selected tab by default, sorted by when each drink was first added.
+- The app must provide an `Add drink` action that opens a lightweight picker for active catalog items not yet on the tab.
+- The app must support direct quantity entry as well as fast add, increment, and decrement order actions for the selected guest.
+- The app must provide a `Bill guest` action in the drinks step that opens a lightweight confirmation overview for the current tab.
 - The app must let the host manage the live product catalog and prices.
 - The app must calculate per-guest totals for billing.
 - The app must move billed tabs out of the open working set while preserving recent billed history.
@@ -176,7 +190,7 @@ The app should still start from these sample drinks and reference prices until t
 - What is the simplest acceptable host setup for the remote recovery flow?
 - How should the room list scale if the host later manages far more rooms than the pilot expects today?
 - What kind of overview screen, if any, should later replace order entry as the main landing surface?
-- When should billing or catalog work move closer to order entry, if later real usage shows the separate host tools screen is too slow?
+- Should the drinks-step billing modal stay minimal, or should it later absorb more checkout details such as notes, discounts, or receipt actions?
 - What conflict rule should apply if local changes and remote state differ during reconnect or restore?
 - What reset, export, or manual backup tools should exist alongside remote sync?
 - When we add i18n, which languages should come first after English?

@@ -28,9 +28,8 @@
             [attr.data-testid]="step.testId"
             (click)="activateStep(step.id)"
           >
-            <span class="step-chip__eyebrow">{{ step.eyebrow }}</span>
-            <strong class="step-chip__label">{{ step.label }}</strong>
-            <span class="step-chip__summary">{{ step.summary }}</span>
+            <span class="step-chip__eyebrow">{{ step.label }}</span>
+            <strong class="step-chip__label">{{ step.detail }}</strong>
           </button>
         }
       </nav>
@@ -39,12 +38,6 @@
         @switch (orderEntryStore.activeStep()) {
           @case ('room') {
             <section class="step-view step-view--room" data-testid="room-step-panel">
-              <div class="step-view__header">
-                <p class="workflow-panel__eyebrow">{{ copy.roomPanelEyebrow }}</p>
-                <h2>{{ copy.roomPanelTitle }}</h2>
-                <p>{{ copy.roomPanelHint }}</p>
-              </div>
-
               <nt-scroll-region class="step-view__scroll" data-testid="room-list-scroll">
                 <div class="selection-grid room-grid">
                   @for (room of orderEntryStore.rooms(); track room.id) {
@@ -70,16 +63,9 @@
 
           @case ('guest') {
             <section class="step-view step-view--guest" data-testid="guest-step-panel">
-              <div class="step-view__header">
-                <p class="workflow-panel__eyebrow">{{ copy.guestPanelEyebrow }}</p>
-
-                @if (orderEntryStore.selectedRoom(); as selectedRoom) {
-                  <div class="step-view__title-row">
-                    <div>
-                      <h2>{{ copy.guestPanelTitle }}</h2>
-                      <p>{{ copy.roomLabel }} {{ selectedRoom.roomNumber }}</p>
-                    </div>
-
+              @if (orderEntryStore.selectedRoom()) {
+                <div class="guest-step__body">
+                  <div class="guest-step__actions">
                     <button
                       mat-flat-button
                       color="primary"
@@ -90,14 +76,7 @@
                       {{ copy.guestPanelAddAction }}
                     </button>
                   </div>
-                } @else {
-                  <h2>{{ copy.guestPanelTitle }}</h2>
-                  <p>{{ copy.guestPanelHint }}</p>
-                }
-              </div>
 
-              @if (orderEntryStore.selectedRoom()) {
-                <div class="guest-step__body">
                   @if (orderEntryStore.guestDraft().isOpen) {
                     <form
                       class="guest-form"
@@ -178,12 +157,6 @@
 
           @case ('drinks') {
             <section class="step-view step-view--drinks" data-testid="drinks-step-panel">
-              <div class="step-view__header">
-                <p class="workflow-panel__eyebrow">{{ copy.orderPanelEyebrow }}</p>
-                <h2>{{ copy.orderPanelTitle }}</h2>
-                <p>{{ copy.orderPanelHint }}</p>
-              </div>
-
               @if (orderEntryStore.selectedGuest(); as guest) {
                 <section class="drinks-step__body" data-testid="selected-guest-panel">
                   <div class="selected-guest__summary">
@@ -192,53 +165,96 @@
                       <p>{{ copy.roomLabel }} {{ guest.roomNumber }}</p>
                     </div>
 
-                    <div class="selected-guest__totals">
-                      <article data-testid="selected-guest-total-price">
-                        <span>{{ copy.orderPanelTotalLabel }}</span>
-                        <strong>{{ guest.displayTotalPrice }}</strong>
-                      </article>
+                    <div class="selected-guest__summary-side">
+                      <button
+                        mat-stroked-button
+                        color="primary"
+                        class="selected-guest__summary-action selected-guest__bill-guest"
+                        data-testid="open-bill-guest-dialog-button"
+                        type="button"
+                        (click)="openBillGuestDialog()"
+                      >
+                        {{ copy.orderPanelBillAction }}
+                      </button>
 
-                      <article data-testid="selected-guest-total-count">
-                        <span>{{ copy.orderPanelCountLabel }}</span>
-                        <strong>{{ guest.totalCount }}</strong>
-                      </article>
+                      <div class="selected-guest__totals">
+                        <article data-testid="selected-guest-total-price">
+                          <span>{{ copy.orderPanelTotalLabel }}</span>
+                          <strong>{{ guest.displayTotalPrice }}</strong>
+                        </article>
+
+                        <article data-testid="selected-guest-total-count">
+                          <span>{{ copy.orderPanelCountLabel }}</span>
+                          <strong>{{ guest.totalCount }}</strong>
+                        </article>
+                      </div>
+
+                      <button
+                        mat-flat-button
+                        color="primary"
+                        class="selected-guest__summary-action selected-guest__add-drink"
+                        data-testid="open-add-drink-dialog-button"
+                        type="button"
+                        [disabled]="!guest.availableDrinks.length"
+                        (click)="openAddDrinkPicker()"
+                      >
+                        {{ copy.orderPanelAddDrinkAction }}
+                      </button>
                     </div>
                   </div>
 
                   <nt-scroll-region class="step-view__scroll" data-testid="selected-guest-drinks-scroll">
-                    <div class="drink-grid">
-                      @for (drink of guest.drinks; track drink.id) {
-                        <article class="drink-card">
-                          <div class="drink-card__copy">
-                            <h4>{{ drink.name }}</h4>
-                            <p>{{ drink.displayPrice }}</p>
-                          </div>
+                    @if (guest.drinks.length) {
+                      <div class="drink-grid">
+                        @for (drink of guest.drinks; track drink.id) {
+                          <article class="drink-card">
+                            <div class="drink-card__copy">
+                              <h4>{{ drink.name }}</h4>
+                              <p>{{ drink.displayPrice }}</p>
+                            </div>
 
-                          <div class="drink-card__controls">
-                            <button
-                              type="button"
-                              class="drink-card__button drink-card__button--secondary"
-                              [disabled]="drink.count === 0"
-                              [attr.aria-label]="'Remove one ' + drink.name"
-                              (click)="orderEntryStore.decrementDrink(drink.id)"
-                            >
-                              −
-                            </button>
+                            <div class="drink-card__controls">
+                              <button
+                                type="button"
+                                class="drink-card__button drink-card__button--secondary"
+                                [disabled]="drink.count === 0"
+                                [attr.aria-label]="'Remove one ' + drink.name"
+                                (click)="orderEntryStore.decrementDrink(drink.id)"
+                              >
+                                −
+                              </button>
 
-                            <strong class="drink-card__count">{{ drink.count }}</strong>
+                              <input
+                                type="number"
+                                class="drink-card__count-input"
+                                min="0"
+                                step="1"
+                                inputmode="numeric"
+                                [value]="drink.count"
+                                [attr.data-testid]="'drink-count-input-' + drink.id"
+                                [attr.aria-label]="'Set count for ' + drink.name"
+                                (focus)="selectDrinkCount($event)"
+                                (input)="orderEntryStore.setDrinkCount(drink.id, $any($event.target).value)"
+                              />
 
-                            <button
-                              type="button"
-                              class="drink-card__button"
-                              [attr.aria-label]="'Add one ' + drink.name"
-                              (click)="orderEntryStore.incrementDrink(drink.id)"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </article>
-                      }
-                    </div>
+                              <button
+                                type="button"
+                                class="drink-card__button"
+                                [attr.aria-label]="'Add one ' + drink.name"
+                                (click)="orderEntryStore.incrementDrink(drink.id)"
+                              >
+                                +
+                              </button>
+                            </div>
+                          </article>
+                        }
+                      </div>
+                    } @else {
+                      <div class="empty-state" data-testid="empty-ordered-drinks">
+                        <h3>{{ copy.orderPanelEmptyTitle }}</h3>
+                        <p>{{ copy.orderPanelEmptyBody }}</p>
+                      </div>
+                    }
                   </nt-scroll-region>
                 </section>
               } @else if (orderEntryStore.selectedRoom()) {
@@ -257,6 +273,22 @@
         }
       </mat-card>
     </section>
+
+    @if (addDrinkPickerOpen() && orderEntryStore.selectedGuest(); as guest) {
+      <nt-order-entry-add-drink-picker
+        [drinks]="guest.availableDrinks"
+        (closeRequested)="closeAddDrinkPicker()"
+        (drinkSelected)="addDrink($event)"
+      />
+    }
+
+    @if (billGuestDialogOpen() && orderEntryStore.selectedGuest(); as guest) {
+      <nt-order-entry-bill-guest-dialog
+        [guest]="guest"
+        (closeRequested)="closeBillGuestDialog()"
+        (confirmRequested)="confirmBilling()"
+      />
+    }
   } @else {
     <mat-card class="empty-shell" data-testid="no-rooms-empty-state">
       <p class="workflow-panel__eyebrow">{{ copy.roomPanelEyebrow }}</p>

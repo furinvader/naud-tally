@@ -1,0 +1,77 @@
+<div
+  class="bill-guest-dialog"
+  data-testid="bill-guest-dialog-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Bill guest"
+>
+  <button
+    type="button"
+    class="bill-guest-dialog__backdrop"
+    aria-label="Close billing overview"
+    (click)="closeRequested.emit()"
+  ></button>
+
+  <section class="bill-guest-dialog__sheet">
+    <div class="bill-guest-dialog__header">
+      <div>
+        <h2>{{ copy.orderPanelBillDialogTitle }}</h2>
+        <p>{{ guest().fullName }} · {{ copy.roomLabel }} {{ guest().roomNumber }}</p>
+      </div>
+
+      <button
+        mat-stroked-button
+        type="button"
+        data-testid="cancel-bill-guest-button"
+        (click)="closeRequested.emit()"
+      >
+        {{ copy.orderPanelBillDialogCancelAction }}
+      </button>
+    </div>
+
+    <p class="bill-guest-dialog__body">{{ copy.orderPanelBillDialogBody }}</p>
+
+    <div class="bill-guest-dialog__totals">
+      <article data-testid="bill-guest-total-price">
+        <span>{{ copy.orderPanelTotalLabel }}</span>
+        <strong>{{ guest().displayTotalPrice }}</strong>
+      </article>
+
+      <article data-testid="bill-guest-total-count">
+        <span>{{ copy.orderPanelCountLabel }}</span>
+        <strong>{{ guest().totalCount }}</strong>
+      </article>
+    </div>
+
+    @if (guest().lineItems.length) {
+      <div class="bill-guest-dialog__list" data-testid="bill-guest-line-items">
+        @for (lineItem of guest().lineItems; track lineItem.id) {
+          <div class="bill-guest-line-item">
+            <div class="bill-guest-line-item__copy">
+              <strong>{{ lineItem.count }} × {{ lineItem.name }}</strong>
+              <span>{{ lineItem.displayUnitPrice }} {{ copy.orderPanelBillDialogUnitSuffix }}</span>
+            </div>
+
+            <strong>{{ lineItem.displayLineTotal }}</strong>
+          </div>
+        }
+      </div>
+    } @else {
+      <p class="bill-guest-dialog__empty" data-testid="bill-guest-empty-state">
+        {{ copy.orderPanelBillDialogEmptyBody }}
+      </p>
+    }
+
+    <div class="bill-guest-dialog__footer">
+      <button
+        mat-flat-button
+        color="primary"
+        data-testid="confirm-bill-guest-button"
+        type="button"
+        (click)="confirmRequested.emit()"
+      >
+        {{ copy.orderPanelBillDialogConfirmAction }}
+      </button>
+    </div>
+  </section>
+</div>

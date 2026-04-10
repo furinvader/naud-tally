@@ -153,6 +153,7 @@ function createGuestCardViewModel() {
     roomNumber: '101',
     fullName: 'Ada Lovelace',
     counts: { beer: 1 },
+    drinkOrder: ['beer'],
     createdAt: '2026-04-01T08:00:00.000Z',
     updatedAt: '2026-04-02T10:00:00.000Z',
     totalCount: 1,
