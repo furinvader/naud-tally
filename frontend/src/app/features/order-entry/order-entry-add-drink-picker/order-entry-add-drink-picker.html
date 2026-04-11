@@ -1,0 +1,49 @@
+<div
+  class="add-drink-picker"
+  data-testid="add-drink-picker-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Add drink"
+>
+  <button
+    type="button"
+    class="add-drink-picker__backdrop"
+    aria-label="Close add drink picker"
+    (click)="closeRequested.emit()"
+  ></button>
+
+  <section class="add-drink-picker__sheet">
+    <div class="add-drink-picker__header">
+      <h2>{{ copy.orderPanelAddDrinkAction }}</h2>
+
+      <button
+        mat-stroked-button
+        type="button"
+        data-testid="close-add-drink-dialog-button"
+        (click)="closeRequested.emit()"
+      >
+        Close
+      </button>
+    </div>
+
+    @if (drinks().length) {
+      <div class="add-drink-picker__grid">
+        @for (drink of drinks(); track drink.id) {
+          <button
+            type="button"
+            class="add-drink-picker__option"
+            [attr.data-testid]="'add-drink-option-' + drink.id"
+            (click)="drinkSelected.emit(drink.id)"
+          >
+            <strong>{{ drink.name }}</strong>
+            <span>{{ drink.displayPrice }}</span>
+          </button>
+        }
+      </div>
+    } @else {
+      <p class="add-drink-picker__empty" data-testid="add-drink-empty-state">
+        All active drinks are already on this tab.
+      </p>
+    }
+  </section>
+</div>

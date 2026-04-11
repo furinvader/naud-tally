@@ -9,36 +9,83 @@
   }
 }
 
-.workflow-panel__eyebrow {
+.workflow-panel__eyebrow,
+.step-chip__eyebrow {
   font: var(--nt-type-kicker);
   letter-spacing: var(--nt-tracking-kicker);
   text-transform: uppercase;
   color: var(--nt-color-muted);
 }
 
-.order-entry-layout {
+.order-entry-stepper {
   display: grid;
   gap: var(--nt-space-md);
-  grid-template-columns: minmax(180px, 0.46fr) minmax(300px, 0.74fr) minmax(0, 1.2fr);
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: start;
   min-height: 0;
   flex: 1;
   overflow: hidden;
 }
 
-.order-entry-layout > * {
+.order-entry-stepper > * {
   min-height: 0;
 }
 
-.workflow-panel,
+.stepper-header {
+  display: grid;
+  gap: var(--nt-space-sm);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+}
+
+.step-chip,
+.step-panel,
 .empty-shell,
 .selection-card,
-.drink-card {
+.drink-card,
+.guest-form {
   border: 1px solid var(--nt-border-subtle);
   background: color-mix(in srgb, var(--nt-color-surface) 92%, white);
   box-shadow: var(--nt-shadow-card);
 }
 
-.workflow-panel,
+.step-chip {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  padding: var(--nt-space-sm) var(--nt-space-md);
+  border-radius: var(--nt-radius-card);
+  text-align: left;
+  cursor: pointer;
+  align-content: start;
+}
+
+.step-chip__label {
+  color: var(--nt-color-ink);
+  font: var(--nt-type-section);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.step-chip--complete,
+.step-chip--current,
+.selection-card--selected {
+  border-color: color-mix(in srgb, var(--nt-color-action) 44%, white);
+  background: color-mix(in srgb, var(--nt-color-action-soft) 74%, white);
+}
+
+.step-chip--current {
+  background: color-mix(in srgb, var(--nt-color-action-soft) 82%, white);
+}
+
+.step-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+  box-shadow: none;
+}
+
+.step-panel,
 .empty-shell {
   display: grid;
   gap: var(--nt-space-md);
@@ -47,25 +94,11 @@
   border-radius: var(--nt-radius-panel);
 }
 
-.workflow-panel {
+.step-panel {
   overflow: hidden;
 }
 
-.workflow-panel > * {
-  min-height: 0;
-}
-
-.workflow-panel__header,
-.workflow-panel__title-row,
-.selected-guest__summary,
-.drink-card__controls,
-.guest-form__actions {
-  display: flex;
-  gap: var(--nt-space-sm);
-}
-
-.workflow-panel__header,
-.selected-guest,
+.step-view,
 .selected-guest__identity,
 .selected-guest__totals,
 .drink-card,
@@ -73,19 +106,29 @@
 .empty-state,
 .empty-shell,
 .selection-card,
-.room-list,
-.guest-list,
-.drink-grid,
+.selection-grid,
 .guest-form {
   display: grid;
 }
 
-.workflow-panel__header {
-  gap: var(--nt-space-xs);
+.step-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nt-space-md);
+  min-height: 0;
+  height: 100%;
 }
 
-.workflow-panel__header h2,
-.workflow-panel__header p,
+.guest-step__actions,
+.drinks-step__actions,
+.selected-guest__summary,
+.selected-guest__summary-side,
+.drink-card__controls,
+.guest-form__actions {
+  display: flex;
+  gap: var(--nt-space-sm);
+}
+
 .selected-guest__identity h3,
 .selected-guest__identity p,
 .drink-card__copy h4,
@@ -97,7 +140,6 @@
   margin: 0;
 }
 
-.workflow-panel__header h2,
 .selected-guest__identity h3,
 .drink-card__copy h4,
 .selection-card strong,
@@ -106,7 +148,6 @@
   color: var(--nt-color-ink);
 }
 
-.workflow-panel__header p,
 .selected-guest__identity p,
 .drink-card__copy p,
 .selection-card__eyebrow,
@@ -117,61 +158,83 @@
   color: var(--nt-color-muted);
 }
 
-.workflow-panel__title-row,
+.guest-step__actions,
 .selected-guest__summary,
+.selected-guest__summary-side,
 .drink-card__controls,
 .guest-form__actions {
   align-items: center;
   justify-content: space-between;
 }
 
-.workflow-panel__scroll,
-.selected-guest__scroll {
+.drink-card__controls {
+  justify-content: flex-start;
+}
+
+.step-view__scroll,
+.guest-step__body,
+.drinks-step__body,
+.step-view > .empty-state {
   min-height: 0;
+  flex: 1;
 }
 
-.room-panel,
-.order-panel {
-  grid-template-rows: auto minmax(0, 1fr);
+.step-view__scroll {
+  height: 100%;
 }
 
-.guest-panel {
-  grid-template-rows: auto auto minmax(0, 1fr);
-}
-
-.guest-panel > .guest-form {
-  grid-row: 2;
-}
-
-.guest-panel > .workflow-panel__scroll,
-.guest-panel > .empty-state {
-  grid-row: 3;
-}
-
-.room-list,
-.guest-list,
-.drink-grid,
+.selection-grid,
 .guest-form {
   gap: var(--nt-space-sm);
 }
 
+.guest-step__body,
+.drinks-step__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nt-space-md);
+}
+
+.guest-step__actions {
+  justify-content: flex-end;
+}
+
+.selection-grid {
+  align-content: start;
+}
+
+.room-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.guest-grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
 .selection-card {
+  gap: 6px;
+  min-height: 132px;
   width: 100%;
-  gap: 4px;
   padding: var(--nt-space-md);
   border-radius: var(--nt-radius-card);
   text-align: left;
   cursor: pointer;
+  align-content: start;
 }
 
-.selection-card--selected {
-  border-color: color-mix(in srgb, var(--nt-color-action) 44%, white);
-  background: color-mix(in srgb, var(--nt-color-action-soft) 74%, white);
+.selection-card strong {
+  font: var(--nt-type-section);
 }
 
 .selection-card__price {
+  margin-top: auto;
   font: var(--nt-type-title);
   color: var(--nt-color-ink);
+}
+
+.guest-form {
+  padding: var(--nt-space-md);
+  border-radius: var(--nt-radius-card);
 }
 
 .guest-form__actions {
@@ -190,15 +253,16 @@
   background: color-mix(in srgb, var(--nt-color-surface) 76%, transparent);
 }
 
-.selected-guest {
-  gap: var(--nt-space-md);
-  min-height: 0;
-  grid-template-rows: auto minmax(0, 1fr);
-  overflow: hidden;
-}
-
 .selected-guest__summary {
   align-items: start;
+}
+
+.selected-guest__summary-side {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nt-space-sm);
+  align-items: stretch;
+  justify-content: flex-end;
 }
 
 .selected-guest__totals {
@@ -219,21 +283,27 @@
   color: var(--nt-color-ink);
 }
 
+.selected-guest__summary-action {
+  display: inline-flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  padding-block: var(--nt-space-sm);
+  white-space: nowrap;
+}
+
 .drink-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: grid;
+  gap: var(--nt-space-sm);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-content: start;
 }
 
 .drink-card {
   gap: var(--nt-space-sm);
   padding: var(--nt-space-md);
   border-radius: var(--nt-radius-card);
-}
-
-.drink-card__count {
-  min-width: 2ch;
-  text-align: center;
-  font: var(--nt-type-title);
-  color: var(--nt-color-ink);
 }
 
 .drink-card__button {
@@ -247,6 +317,31 @@
   cursor: pointer;
 }
 
+.drink-card__count-input {
+  appearance: textfield;
+  -moz-appearance: textfield;
+  width: 88px;
+  height: 44px;
+  padding-inline: var(--nt-space-xs);
+  border: 1px solid var(--nt-border-subtle);
+  border-radius: var(--nt-radius-button);
+  background: color-mix(in srgb, var(--nt-color-surface) 88%, white);
+  color: var(--nt-color-ink);
+  font: var(--nt-type-title);
+  text-align: center;
+}
+
+.drink-card__count-input:focus {
+  outline: 2px solid color-mix(in srgb, var(--nt-color-action) 35%, transparent);
+  outline-offset: 1px;
+}
+
+.drink-card__count-input::-webkit-outer-spin-button,
+.drink-card__count-input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
 .drink-card__button--secondary {
   background: color-mix(in srgb, var(--nt-color-surface-soft) 72%, white);
   color: var(--nt-color-ink);
@@ -257,42 +352,34 @@
   opacity: 0.45;
 }
 
-@media (max-width: 1199px) {
-  .order-entry-layout {
-    grid-template-columns: minmax(180px, 0.52fr) minmax(260px, 0.8fr) minmax(0, 1fr);
-  }
-}
-
 @media (max-width: 959px) {
-  .order-entry-layout {
-    grid-template-columns: 1fr;
+  .order-entry-stepper,
+  .step-panel {
     overflow: visible;
   }
 
   .selected-guest__totals {
     grid-template-columns: 1fr;
   }
-
-  .workflow-panel,
-  .room-panel,
-  .guest-panel,
-  .order-panel,
-  .selected-guest {
-    grid-template-rows: auto;
-    overflow: visible;
-  }
 }
 
 @media (max-width: 719px) {
-  .drink-grid {
+  .stepper-header {
     grid-template-columns: 1fr;
   }
 
-  .workflow-panel__title-row,
+  .guest-step__actions,
   .selected-guest__summary,
+  .selected-guest__summary-side,
   .drink-card__controls,
   .guest-form__actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .room-grid,
+  .guest-grid,
+  .drink-grid {
+    grid-template-columns: 1fr;
   }
 }

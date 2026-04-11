@@ -2,7 +2,7 @@ export const HOST_ADMIN_COPY = {
   title: 'Naud Tally',
   eyebrow: 'Host route',
   heading: 'Host admin',
-  body: 'Manage rooms, the live drink list, and guest billing without crowding the main order-entry screen.',
+  body: 'Manage rooms, the live drink list, and broader guest-billing review from one admin surface.',
   backAction: 'Back to order entry',
   flashSuccessAddRoom: 'Room added to the live room list.',
   flashSuccessRemoveRoom: 'Room removed from the live room list.',

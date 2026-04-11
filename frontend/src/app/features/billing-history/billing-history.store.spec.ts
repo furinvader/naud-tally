@@ -29,6 +29,7 @@ describe('BillingHistoryStore', () => {
         roomNumber: '101',
         fullName: 'Ada Lovelace',
         counts: { beer: 1, water: 1 },
+        drinkOrder: ['water', 'beer'],
         createdAt: '2026-04-01T08:00:00.000Z',
         updatedAt: '2026-04-01T08:30:00.000Z',
       },

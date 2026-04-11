@@ -61,6 +61,8 @@ describe('GuestTabsStore', () => {
 
     expect(firstGuest?.counts).toEqual({ cola: 1 });
     expect(secondGuest?.counts).toEqual({ beer: 1, water: 1 });
+    expect(firstGuest?.drinkOrder).toEqual(['cola']);
+    expect(secondGuest?.drinkOrder).toEqual(['beer', 'water']);
   });
 
   it('should remove a drink from the guest counts when its tally returns to zero', () => {
@@ -72,6 +74,19 @@ describe('GuestTabsStore', () => {
     store.updateGuestDrinkCount(guestId!, 'beer', -1, catalog);
 
     expect(store.guestTabs()[0]?.counts).toEqual({});
+    expect(store.guestTabs()[0]?.drinkOrder).toEqual([]);
+  });
+
+  it('should keep drink order by first add time instead of sorting by count', () => {
+    const store = TestBed.inject(GuestTabsStore);
+    const guestId = store.ensureGuestTab('101', 'Ada Lovelace')?.id;
+    const catalog = createCatalogSnapshot();
+
+    store.updateGuestDrinkCount(guestId!, 'water', 1, catalog);
+    store.updateGuestDrinkCount(guestId!, 'beer', 1, catalog);
+    store.updateGuestDrinkCount(guestId!, 'water', 3, catalog);
+
+    expect(store.guestTabs()[0]?.drinkOrder).toEqual(['water', 'beer']);
   });
 
   it('should keep guest ordering stable while tallying and sort finalized tabs by drinks then room number', () => {
@@ -128,6 +143,7 @@ describe('GuestTabsStore', () => {
           roomNumber: '301',
           fullName: 'Alan Turing',
           counts: buildCounts({ water: 2, beer: 1 }),
+          drinkOrder: ['beer', 'water'],
           createdAt: '2026-04-01T08:00:00.000Z',
           updatedAt: '2026-04-02T10:00:00.000Z',
         },
@@ -138,6 +154,7 @@ describe('GuestTabsStore', () => {
 
     expect(store.activeGuestCount()).toBe(1);
     expect(store.guestTabs()[0]?.counts).toEqual(buildCounts({ water: 2, beer: 1 }));
+    expect(store.guestTabs()[0]?.drinkOrder).toEqual(['beer', 'water']);
   });
 });
 

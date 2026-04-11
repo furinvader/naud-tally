@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { BillingHistoryStore } from '../billing-history';
 import { DRINK_CATALOG } from '../catalog';
 import { DrinkCounts, GUEST_TABS_STORAGE_KEY, GuestTabsStore } from '../guest-tabs';
 import { ROOMS_STORAGE_KEY } from '../rooms';
@@ -20,6 +21,7 @@ describe('OrderEntryStore', () => {
   it('should initialize with no configured rooms and no selection', () => {
     const store = TestBed.inject(OrderEntryStore);
 
+    expect(store.activeStep()).toBe('room');
     expect(store.rooms()).toEqual([]);
     expect(store.selectedRoom()).toBeNull();
     expect(store.selectedGuest()).toBeNull();
@@ -31,10 +33,13 @@ describe('OrderEntryStore', () => {
     const store = TestBed.inject(OrderEntryStore);
 
     store.selectRoom('room-204');
+    expect(store.activeStep()).toBe('guest');
+
     store.openGuestDraft();
     store.updateDraftGuestFullName(' Grace Hopper ');
     store.submitGuestIdentity();
 
+    expect(store.activeStep()).toBe('drinks');
     expect(store.selectedRoom()?.roomNumber).toBe('204');
     expect(store.selectedGuest()?.roomNumber).toBe('204');
     expect(store.selectedGuest()?.fullName).toBe('Grace Hopper');
@@ -53,13 +58,14 @@ describe('OrderEntryStore', () => {
 
     const originalGuestId = store.selectedGuest()?.id;
 
-    store.clearTransientState();
+    store.activateStep('room');
     store.selectRoom('room-101');
     store.openGuestDraft();
     store.updateDraftGuestFullName(' ada   lovelace ');
     store.submitGuestIdentity();
 
     expect(store.roomGuests()).toHaveLength(1);
+    expect(store.activeStep()).toBe('drinks');
     expect(store.selectedGuest()?.id).toBe(originalGuestId);
   });
 
@@ -111,7 +117,7 @@ describe('OrderEntryStore', () => {
     expect(store.selectedGuest()?.roomNumber).toBe('1a');
   });
 
-  it('should finalize the selected guest when toggled off so guest-tab ordering stays current', () => {
+  it('should finalize the previous guest when switching guests so guest-tab ordering stays current', () => {
     seedRooms();
     seedGuestTabsForFinalization();
 
@@ -122,40 +128,97 @@ describe('OrderEntryStore', () => {
     store.selectGuestTab('guest-1');
     store.incrementDrink('beer');
     store.incrementDrink('beer');
-    store.selectGuestTab('guest-1');
+    store.activateStep('guest');
+    store.selectGuestTab('guest-2');
 
-    expect(store.selectedGuest()).toBeNull();
+    expect(store.activeStep()).toBe('drinks');
+    expect(store.selectedGuest()?.id).toBe('guest-2');
     expect(guestTabsStore.guestTabs().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
   });
 
-  it('should finalize the selected guest when inactivity clears transient state', () => {
+  it('should reopen completed steps without clearing the current selection', () => {
+    seedRooms();
+    seedGuestTabsForFinalization();
+
+    const store = TestBed.inject(OrderEntryStore);
+
+    store.selectRoom('room-101');
+    store.selectGuestTab('guest-1');
+
+    expect(store.activeStep()).toBe('drinks');
+
+    store.activateStep('guest');
+
+    expect(store.activeStep()).toBe('guest');
+    expect(store.selectedGuest()?.id).toBe('guest-1');
+
+    store.selectGuestTab('guest-1');
+
+    expect(store.activeStep()).toBe('drinks');
+    expect(store.selectedGuest()?.id).toBe('guest-1');
+  });
+
+  it('should let the host set a drink count directly', () => {
+    seedRooms();
+    seedGuestTabsForFinalization();
+
+    const store = TestBed.inject(OrderEntryStore);
+
+    store.selectRoom('room-101');
+    store.selectGuestTab('guest-1');
+    store.setDrinkCount('water', '6');
+
+    expect(store.selectedGuest()?.drinks.find((drink) => drink.id === 'water')?.count).toBe(6);
+    expect(store.selectedGuest()?.totalCount).toBe(6);
+    expect(store.selectedGuest()?.displayTotalPrice).toBe('€12.00');
+  });
+
+  it('should keep ordered drinks in first-added order when more drinks are added later', () => {
+    seedRooms();
+    seedGuestTabsForFinalization();
+
+    const store = TestBed.inject(OrderEntryStore);
+
+    store.selectRoom('room-101');
+    store.selectGuestTab('guest-1');
+    store.incrementDrink('beer');
+
+    expect(store.selectedGuest()?.drinks.map((drink) => drink.id)).toEqual(['water', 'beer']);
+  });
+
+  it('should bill the selected guest and move them into billing history', () => {
     seedRooms();
     seedGuestTabsForFinalization();
 
     const store = TestBed.inject(OrderEntryStore);
     const guestTabsStore = TestBed.inject(GuestTabsStore);
+    const billingHistoryStore = TestBed.inject(BillingHistoryStore);
 
     store.selectRoom('room-101');
     store.selectGuestTab('guest-1');
-    store.incrementDrink('beer');
-    store.incrementDrink('beer');
-    store.clearTransientState();
 
-    expect(store.selectedRoom()).toBeNull();
+    expect(store.billSelectedGuest()).toBe(true);
+
+    expect(store.activeStep()).toBe('guest');
+    expect(store.selectedRoom()?.roomNumber).toBe('101');
     expect(store.selectedGuest()).toBeNull();
-    expect(guestTabsStore.guestTabs().map((guest) => guest.id)).toEqual(['guest-1', 'guest-2']);
+    expect(guestTabsStore.guestTabs().map((guest) => guest.id)).toEqual(['guest-2']);
+    expect(billingHistoryStore.billedGuestTabs()[0]?.fullName).toBe('Ada Lovelace');
+    expect(billingHistoryStore.billedGuestTabs()[0]?.totalPriceCents).toBe(200);
   });
 
-  it('should clear the transient room and guest draft state without mutating persistent rooms', () => {
+  it('should keep the room selected while the host opens and cancels a guest draft', () => {
     seedRooms();
     const store = TestBed.inject(OrderEntryStore);
 
     store.selectRoom('room-101');
     store.openGuestDraft();
     store.updateDraftGuestFullName('Ada Lovelace');
-    store.clearTransientState();
+    store.cancelGuestDraft();
 
-    expect(store.selectedRoom()).toBeNull();
+    expect(store.activeStep()).toBe('guest');
+    expect(store.selectedRoom()?.roomNumber).toBe('101');
+    expect(store.selectedGuest()).toBeNull();
     expect(store.guestDraft()).toEqual({
       isOpen: false,
       fullName: '',

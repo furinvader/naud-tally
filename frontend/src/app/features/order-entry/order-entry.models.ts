@@ -1,5 +1,5 @@
 import { calculateGuestTotalPriceCents } from '../billing-history';
-import { DrinkCatalogEntry, formatEuroPrice } from '../catalog';
+import { DrinkCatalogEntry, DrinkId, formatEuroPrice, getDrinkById } from '../catalog';
 import { GuestTab, countDrinks, getDrinkCount, roomNumbersMatch } from '../guest-tabs';
 import { Room } from '../rooms';
 
@@ -14,14 +14,31 @@ export type RoomGuestViewModel = GuestTab & {
 };
 
 export type SelectedGuestOrderDrinkViewModel = {
-  id: string;
+  id: DrinkId;
   name: string;
   count: number;
   displayPrice: string;
+  displayLineTotal: string;
+};
+
+export type AvailableDrinkViewModel = {
+  id: DrinkId;
+  name: string;
+  displayPrice: string;
+};
+
+export type SelectedGuestOrderLineItemViewModel = {
+  id: DrinkId;
+  name: string;
+  count: number;
+  displayUnitPrice: string;
+  displayLineTotal: string;
 };
 
 export type SelectedGuestOrderViewModel = RoomGuestViewModel & {
   drinks: SelectedGuestOrderDrinkViewModel[];
+  availableDrinks: AvailableDrinkViewModel[];
+  lineItems: SelectedGuestOrderLineItemViewModel[];
 };
 
 const fullNameCollator = new Intl.Collator(undefined, {
@@ -56,16 +73,38 @@ export function createSelectedGuestOrderViewModel(
   guest: GuestTab,
   drinkCatalog: ReadonlyArray<DrinkCatalogEntry>,
 ): SelectedGuestOrderViewModel {
+  const drinks = guest.drinkOrder
+    .filter((drinkId) => getDrinkCount(guest.counts, drinkId) > 0)
+    .map((drinkId) => {
+      const drink = getDrinkById(drinkCatalog, drinkId);
+      const count = getDrinkCount(guest.counts, drink.id);
+
+      return {
+        id: drink.id,
+        name: drink.name,
+        count,
+        displayPrice: formatEuroPrice(drink.priceCents),
+        displayLineTotal: formatEuroPrice(count * drink.priceCents),
+      };
+    });
+
   return {
     ...createRoomGuestViewModel(guest, drinkCatalog),
-    drinks: drinkCatalog
-      .filter((drink) => drink.isActive)
+    drinks,
+    availableDrinks: drinkCatalog
+      .filter((drink) => drink.isActive && getDrinkCount(guest.counts, drink.id) === 0)
       .map((drink) => ({
         id: drink.id,
         name: drink.name,
-        count: getDrinkCount(guest.counts, drink.id),
         displayPrice: formatEuroPrice(drink.priceCents),
       })),
+    lineItems: drinks.map((drink) => ({
+      id: drink.id,
+      name: drink.name,
+      count: drink.count,
+      displayUnitPrice: drink.displayPrice,
+      displayLineTotal: drink.displayLineTotal,
+    })),
   };
 }
 

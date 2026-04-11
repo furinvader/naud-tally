@@ -133,6 +133,7 @@ function createGuestCardViewModel(overrides: {
     roomNumber: overrides.roomNumber,
     fullName: overrides.fullName,
     counts,
+    drinkOrder: overrides.totalCount > 0 ? ['water'] : [],
     createdAt: '2026-04-01T08:00:00.000Z',
     updatedAt: '2026-04-02T10:00:00.000Z',
     totalCount: overrides.totalCount,

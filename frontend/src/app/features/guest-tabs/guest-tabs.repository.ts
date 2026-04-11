@@ -69,12 +69,14 @@ function normalizeGuestTab(value: unknown): GuestTab | null {
   }
 
   const timestamp = createTimestamp();
+  const counts = normalizeCounts(guestTab['counts']);
 
   return {
     id: normalizeId(guestTab['id']) ?? createGuestTabId(),
     roomNumber,
     fullName,
-    counts: normalizeCounts(guestTab['counts']),
+    counts,
+    drinkOrder: normalizeDrinkOrder(guestTab['drinkOrder'], counts),
     createdAt: normalizeTimestamp(guestTab['createdAt'], timestamp),
     updatedAt: normalizeTimestamp(guestTab['updatedAt'], timestamp),
   };
@@ -100,6 +102,43 @@ function normalizeCounts(value: unknown): DrinkCounts {
   }
 
   return counts;
+}
+
+function normalizeDrinkOrder(value: unknown, counts: DrinkCounts): string[] {
+  const normalizedOrder: string[] = [];
+  const seen = new Set<string>();
+
+  if (Array.isArray(value)) {
+    for (const entry of value) {
+      if (typeof entry !== 'string') {
+        continue;
+      }
+
+      const normalizedEntry = entry.trim();
+
+      if (
+        !normalizedEntry ||
+        seen.has(normalizedEntry) ||
+        normalizeCountValue(counts[normalizedEntry]) <= 0
+      ) {
+        continue;
+      }
+
+      normalizedOrder.push(normalizedEntry);
+      seen.add(normalizedEntry);
+    }
+  }
+
+  for (const drinkId of Object.keys(counts)) {
+    if (seen.has(drinkId) || normalizeCountValue(counts[drinkId]) <= 0) {
+      continue;
+    }
+
+    normalizedOrder.push(drinkId);
+    seen.add(drinkId);
+  }
+
+  return normalizedOrder;
 }
 
 function normalizeId(value: unknown): string | null {

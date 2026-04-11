@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1024" role="img" aria-labelledby="title desc">
-  <title id="title">Room-first order entry screen</title>
-  <desc id="desc">A tablet layout for Naud Tally with a room list, guest list, and dominant selected-guest order panel plus a host tools shortcut in the app bar, using firmer radii and subtle functional shadows.</desc>
+  <title id="title">Focused room-first order entry stepper</title>
+  <desc id="desc">A tablet layout for Naud Tally with a host app bar, a three-step room-guest-drinks header, one visible guest-selection panel, and a no-rooms empty-state variant.</desc>
   <defs>
     <style>
       .canvas { fill: #F4F2EE; }
       .surface { fill: #FBFAF8; stroke: #D7D0C7; stroke-width: 1; }
-      .surface-soft { fill: #E8E3DC; stroke: #D7D0C7; stroke-width: 1; }
+      .surface-soft { fill: #F1ECE5; stroke: #D7D0C7; stroke-width: 1; }
       .action { fill: #355061; }
       .action-soft { fill: #E6EDF1; stroke: #355061; stroke-width: 1; }
       .accent-soft { fill: #E7ECE5; stroke: #B8B0A6; stroke-width: 1; }
@@ -15,7 +15,7 @@
       .title { font-size: 32px; font-weight: 700; }
       .section { font-size: 24px; font-weight: 700; }
       .body { font-size: 18px; font-weight: 500; }
-      .number { font-family: "Manrope", sans-serif; font-size: 38px; font-weight: 700; }
+      .number { font-family: "Manrope", sans-serif; font-size: 34px; font-weight: 700; }
       .button-text { fill: #FBFAF8; font-size: 18px; font-weight: 700; font-family: "Inter Tight", sans-serif; }
       .card-title { font-size: 20px; font-weight: 700; }
       .small { font-size: 16px; font-weight: 500; }
@@ -28,7 +28,7 @@
     </filter>
   </defs>
 
-  <rect class="canvas" x="0" y="0" width="1440" height="1024" rx="0" />
+  <rect class="canvas" x="0" y="0" width="1440" height="1024" />
 
   <rect class="surface" x="40" y="32" width="1360" height="80" rx="16" filter="url(#panelShadow)" />
   <text class="ink label" x="80" y="66">Host order entry</text>
@@ -36,101 +36,60 @@
   <rect class="action" x="1210" y="48" width="150" height="48" rx="10" />
   <text class="button-text" x="1250" y="79">Host tools</text>
 
-  <rect class="surface" x="40" y="144" width="220" height="840" rx="16" filter="url(#panelShadow)" />
-  <text class="muted label" x="72" y="184">Rooms</text>
-  <text class="ink section" x="72" y="220">Configured rooms</text>
-  <rect class="accent-soft" x="64" y="248" width="172" height="72" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="92" y="291">101</text>
-  <text class="muted small" x="92" y="314">Selected room</text>
-  <rect class="surface-soft" x="64" y="336" width="172" height="72" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="92" y="379">102</text>
-  <rect class="surface-soft" x="64" y="424" width="172" height="72" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="92" y="467">103</text>
-  <rect class="surface-soft" x="64" y="512" width="172" height="72" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="92" y="555">104</text>
+  <rect class="accent-soft" x="40" y="144" width="420" height="108" rx="16" filter="url(#panelShadow)" />
+  <text class="muted label" x="72" y="178">Step 1</text>
+  <text class="ink section" x="72" y="212">Room</text>
+  <text class="muted body" x="72" y="238">Room 101</text>
 
-  <rect class="surface" x="284" y="144" width="360" height="840" rx="16" filter="url(#panelShadow)" />
-  <text class="muted label" x="316" y="184">Guests</text>
-  <text class="ink section" x="316" y="220">Room 101 guests</text>
-  <rect class="action-soft" x="476" y="176" width="136" height="40" rx="10" />
-  <text class="ink small" x="513" y="202">Add guest</text>
+  <rect class="action-soft" x="480" y="144" width="420" height="108" rx="16" filter="url(#panelShadow)" />
+  <text class="muted label" x="512" y="178">Step 2</text>
+  <text class="ink section" x="512" y="212">Guest</text>
+  <text class="muted body" x="512" y="238">Ada Lovelace</text>
 
-  <rect class="accent-soft" x="308" y="252" width="312" height="112" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="336" y="294">Ada Lovelace</text>
-  <text class="muted body" x="336" y="322">2 drinks recorded</text>
-  <text class="ink number" x="532" y="323">€6.50</text>
+  <rect class="surface-soft" x="920" y="144" width="480" height="108" rx="16" filter="url(#panelShadow)" />
+  <text class="muted label" x="952" y="178">Step 3</text>
+  <text class="ink section" x="952" y="212">Drinks</text>
+  <text class="muted body" x="952" y="238">Running total €6.50</text>
 
-  <rect class="surface-soft" x="308" y="380" width="312" height="112" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="336" y="422">Grace Hopper</text>
-  <text class="muted body" x="336" y="450">No drinks yet</text>
-  <text class="ink number" x="548" y="451">€0.00</text>
+  <rect class="surface" x="40" y="284" width="1360" height="700" rx="16" filter="url(#panelShadow)" />
+  <text class="muted label" x="76" y="324">Step 2</text>
+  <text class="ink section" x="76" y="360">Choose a guest</text>
+  <text class="muted body" x="76" y="390">Room 101</text>
+  <rect class="action" x="1228" y="312" width="124" height="44" rx="10" />
+  <text class="button-text" x="1260" y="340">Add guest</text>
 
-  <rect class="surface-soft" x="308" y="520" width="312" height="154" rx="14" filter="url(#cardShadow)" />
-  <text class="muted label" x="336" y="556">New guest</text>
-  <text class="ink body" x="336" y="592">Full name</text>
-  <rect class="surface" x="336" y="610" width="256" height="40" rx="8" />
-  <text class="muted small" x="352" y="636">Enter guest name</text>
+  <rect class="accent-soft" x="76" y="432" width="300" height="156" rx="14" filter="url(#cardShadow)" />
+  <text class="muted label" x="108" y="468">Guest</text>
+  <text class="ink card-title" x="108" y="504">Ada Lovelace</text>
+  <text class="muted body" x="108" y="536">2 drinks recorded</text>
+  <text class="ink number" x="108" y="574">€6.50</text>
 
-  <rect class="surface" x="668" y="144" width="732" height="840" rx="16" filter="url(#panelShadow)" />
-  <text class="muted label" x="704" y="184">Selected guest</text>
-  <text class="ink section" x="704" y="220">Ada Lovelace</text>
-  <text class="muted body" x="704" y="250">Room 101</text>
+  <rect class="surface-soft" x="396" y="432" width="300" height="156" rx="14" filter="url(#cardShadow)" />
+  <text class="muted label" x="428" y="468">Guest</text>
+  <text class="ink card-title" x="428" y="504">Grace Hopper</text>
+  <text class="muted body" x="428" y="536">No drinks yet</text>
+  <text class="ink number" x="428" y="574">€0.00</text>
 
-  <rect class="action-soft" x="1188" y="176" width="176" height="84" rx="14" filter="url(#cardShadow)" />
-  <text class="muted label" x="1218" y="208">Running total</text>
-  <text class="ink number" x="1218" y="244">€6.50</text>
+  <rect class="surface-soft" x="716" y="432" width="300" height="220" rx="14" filter="url(#cardShadow)" />
+  <text class="muted label" x="748" y="468">New guest</text>
+  <text class="ink body" x="748" y="506">Full name</text>
+  <rect class="surface" x="748" y="526" width="236" height="42" rx="8" />
+  <text class="muted small" x="764" y="553">Enter guest name</text>
+  <rect class="action" x="748" y="590" width="112" height="44" rx="10" />
+  <text class="button-text" x="778" y="618">Open tab</text>
+  <rect class="surface" x="872" y="590" width="112" height="44" rx="10" />
+  <text class="ink small" x="907" y="618">Cancel</text>
 
-  <text class="ink section" x="704" y="312">Quick drinks</text>
-  <rect class="surface-soft" x="704" y="340" width="212" height="158" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="732" y="382">Water</text>
-  <text class="muted body" x="732" y="412">€2.00</text>
-  <text class="ink number" x="736" y="466">1</text>
-  <rect class="action" x="820" y="434" width="64" height="44" rx="10" />
-  <text class="button-text" x="845" y="462">+</text>
-  <rect class="surface" x="744" y="434" width="64" height="44" rx="10" />
-  <text class="ink body" x="770" y="462">−</text>
+  <rect class="surface-soft" x="1036" y="432" width="316" height="220" rx="14" filter="url(#cardShadow)" />
+  <text class="muted label" x="1068" y="468">Header behavior</text>
+  <text class="ink body" x="1068" y="506">Tap Room or Guest to correct a miss-tap.</text>
+  <text class="ink body" x="1068" y="542">Keep recorded drinks on the original tab</text>
+  <text class="ink body" x="1068" y="578">until a new room or guest is chosen.</text>
 
-  <rect class="surface-soft" x="936" y="340" width="212" height="158" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="964" y="382">Beer</text>
-  <text class="muted body" x="964" y="412">€4.50</text>
-  <text class="ink number" x="968" y="466">1</text>
-  <rect class="action" x="1052" y="434" width="64" height="44" rx="10" />
-  <text class="button-text" x="1077" y="462">+</text>
-  <rect class="surface" x="976" y="434" width="64" height="44" rx="10" />
-  <text class="ink body" x="1002" y="462">−</text>
-
-  <rect class="surface-soft" x="1168" y="340" width="196" height="158" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="1196" y="382">Cola</text>
-  <text class="muted body" x="1196" y="412">€3.00</text>
-  <text class="ink number" x="1200" y="466">0</text>
-  <rect class="action" x="1272" y="434" width="64" height="44" rx="10" />
-  <text class="button-text" x="1297" y="462">+</text>
-
-  <rect class="surface-soft" x="704" y="522" width="212" height="158" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="732" y="564">Sparkling Water</text>
-  <text class="muted body" x="732" y="594">€2.50</text>
-  <text class="ink number" x="736" y="648">0</text>
-  <rect class="action" x="820" y="616" width="64" height="44" rx="10" />
-  <text class="button-text" x="845" y="644">+</text>
-
-  <rect class="surface-soft" x="936" y="522" width="212" height="158" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="964" y="564">Lemon Soda</text>
-  <text class="muted body" x="964" y="594">€3.00</text>
-  <text class="ink number" x="968" y="648">0</text>
-  <rect class="action" x="1052" y="616" width="64" height="44" rx="10" />
-  <text class="button-text" x="1077" y="644">+</text>
-
-  <rect class="surface-soft" x="1168" y="522" width="196" height="158" rx="14" filter="url(#cardShadow)" />
-  <text class="ink card-title" x="1196" y="564">White Wine</text>
-  <text class="muted body" x="1196" y="594">€5.00</text>
-  <text class="ink number" x="1200" y="648">0</text>
-  <rect class="action" x="1272" y="616" width="64" height="44" rx="10" />
-  <text class="button-text" x="1297" y="644">+</text>
-
-  <rect class="surface-soft" x="704" y="714" width="660" height="228" rx="14" filter="url(#cardShadow)" />
-  <text class="muted label" x="736" y="752">Empty state variant</text>
-  <text class="ink section" x="736" y="792">No rooms configured yet</text>
-  <text class="muted body" x="736" y="826">Show this instead of the room rail and guest list when setup is incomplete.</text>
-  <rect class="action" x="736" y="854" width="190" height="52" rx="10" />
-  <text class="button-text" x="772" y="887">Open host tools</text>
+  <rect class="surface-soft" x="76" y="684" width="1276" height="236" rx="14" filter="url(#cardShadow)" />
+  <text class="muted label" x="108" y="724">Empty state variant</text>
+  <text class="ink section" x="108" y="764">No rooms configured yet</text>
+  <text class="muted body" x="108" y="798">Show this instead of the stepper when the host has not configured the fixed room list.</text>
+  <rect class="action" x="108" y="826" width="190" height="52" rx="10" />
+  <text class="button-text" x="144" y="859">Open host tools</text>
 </svg>

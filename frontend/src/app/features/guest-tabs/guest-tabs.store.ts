@@ -20,6 +20,7 @@ export type GuestTab = {
   roomNumber: string;
   fullName: string;
   counts: DrinkCounts;
+  drinkOrder: DrinkId[];
   createdAt: string;
   updatedAt: string;
 };
@@ -67,6 +68,7 @@ export const GuestTabsStore = signalStore(
         roomNumber: normalizedRoomNumber,
         fullName: normalizedFullName,
         counts: {},
+        drinkOrder: [],
         createdAt: timestamp,
         updatedAt: timestamp,
       };
@@ -108,10 +110,12 @@ export const GuestTabsStore = signalStore(
         }
 
         didUpdate = true;
+        const nextCounts = setDrinkCount(guest.counts, drinkId, nextCount);
 
         return {
           ...guest,
-          counts: setDrinkCount(guest.counts, drinkId, nextCount),
+          counts: nextCounts,
+          drinkOrder: updateDrinkOrder(guest.drinkOrder, nextCounts, drinkId, previousCount, nextCount),
         };
       });
 
@@ -228,6 +232,62 @@ function setDrinkCount(counts: DrinkCounts, drinkId: string, count: number): Dri
 
   nextCounts[drinkId] = normalizedCount;
   return nextCounts;
+}
+
+function updateDrinkOrder(
+  currentOrder: ReadonlyArray<DrinkId>,
+  nextCounts: DrinkCounts,
+  drinkId: DrinkId,
+  previousCount: number,
+  nextCount: number,
+): DrinkId[] {
+  const normalizedOrder = normalizeDrinkOrder(currentOrder, nextCounts);
+
+  if (previousCount === 0 && nextCount > 0) {
+    return [...normalizedOrder.filter((entry) => entry !== drinkId), drinkId];
+  }
+
+  if (previousCount > 0 && nextCount === 0) {
+    return normalizedOrder.filter((entry) => entry !== drinkId);
+  }
+
+  return normalizedOrder;
+}
+
+function normalizeDrinkOrder(
+  value: unknown,
+  counts: DrinkCounts,
+): DrinkId[] {
+  const normalizedOrder: DrinkId[] = [];
+  const seen = new Set<string>();
+
+  if (Array.isArray(value)) {
+    for (const entry of value) {
+      if (typeof entry !== 'string') {
+        continue;
+      }
+
+      const normalizedEntry = entry.trim();
+
+      if (!normalizedEntry || seen.has(normalizedEntry) || getDrinkCount(counts, normalizedEntry) <= 0) {
+        continue;
+      }
+
+      normalizedOrder.push(normalizedEntry);
+      seen.add(normalizedEntry);
+    }
+  }
+
+  for (const drinkId of Object.keys(counts)) {
+    if (seen.has(drinkId) || getDrinkCount(counts, drinkId) <= 0) {
+      continue;
+    }
+
+    normalizedOrder.push(drinkId);
+    seen.add(drinkId);
+  }
+
+  return normalizedOrder;
 }
 
 function normalizeDisplayText(value: unknown): string {

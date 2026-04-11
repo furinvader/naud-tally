@@ -2,10 +2,11 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { vi } from 'vitest';
 
+import { BILLED_GUEST_TABS_STORAGE_KEY } from '../billing-history';
 import { DRINK_CATALOG } from '../catalog';
 import { DrinkCounts, GUEST_TABS_STORAGE_KEY } from '../guest-tabs';
 import { ROOMS_STORAGE_KEY } from '../rooms';
-import { GUEST_TAB_INACTIVITY_TIMEOUT_MS, OrderEntry } from './order-entry';
+import { OrderEntry } from './order-entry';
 
 describe('OrderEntry', () => {
   beforeEach(async () => {
@@ -34,12 +35,11 @@ describe('OrderEntry', () => {
     expect(pageShell?.classList.contains('nt-page-shell--body-fixed')).toBe(true);
     expect(compiled.querySelector('nt-app-bar')?.textContent).toContain('Order entry');
     expect(compiled.querySelector('[data-testid="no-rooms-empty-state"]')).not.toBeNull();
-    expect(compiled.querySelector('[data-testid="room-list-scroll"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="step-nav-room"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="no-rooms-host-tools-link"]')).not.toBeNull();
-    expect(compiled.querySelector('nt-drink-tally')).toBeNull();
   });
 
-  it('should render the room list and placeholders when rooms are configured', async () => {
+  it('should start on the room step and keep later steps disabled until selections exist', async () => {
     seedRooms();
 
     const fixture = TestBed.createComponent(OrderEntry);
@@ -47,17 +47,58 @@ describe('OrderEntry', () => {
     await fixture.whenStable();
 
     const compiled = fixture.nativeElement as HTMLElement;
+    const roomStepButton = compiled.querySelector(
+      '[data-testid="step-nav-room"]',
+    ) as HTMLButtonElement | null;
+    const guestStepButton = compiled.querySelector(
+      '[data-testid="step-nav-guest"]',
+    ) as HTMLButtonElement | null;
+    const drinksStepButton = compiled.querySelector(
+      '[data-testid="step-nav-drinks"]',
+    ) as HTMLButtonElement | null;
 
+    expect(compiled.querySelector('[data-testid="room-step-panel"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="guest-step-panel"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).toBeNull();
     expect(compiled.querySelector('[data-testid="room-list-scroll"]')).not.toBeNull();
-    expect(compiled.textContent).toContain('Choose a room');
-    expect(compiled.querySelector('button[aria-label="Open room 101"]')?.textContent).toContain(
-      '101',
-    );
-    expect(compiled.querySelector('[data-testid="no-room-selected"]')).not.toBeNull();
-    expect(compiled.querySelector('[data-testid="no-room-order-panel"]')).not.toBeNull();
+    expect(roomStepButton?.getAttribute('aria-current')).toBe('step');
+    expect(guestStepButton?.disabled).toBe(true);
+    expect(drinksStepButton?.disabled).toBe(true);
   });
 
-  it('should let the host add a guest after selecting a room', async () => {
+  it('should auto-advance to the guest step after selecting a room', async () => {
+    seedRooms();
+
+    const fixture = TestBed.createComponent(OrderEntry);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const roomButton = compiled.querySelector(
+      'button[aria-label="Open room 101"]',
+    ) as HTMLButtonElement | null;
+
+    roomButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const guestStepButton = compiled.querySelector(
+      '[data-testid="step-nav-guest"]',
+    ) as HTMLButtonElement | null;
+    const drinksStepButton = compiled.querySelector(
+      '[data-testid="step-nav-drinks"]',
+    ) as HTMLButtonElement | null;
+
+    expect(compiled.querySelector('[data-testid="room-step-panel"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="guest-step-panel"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="open-guest-draft-button"]')).not.toBeNull();
+    expect(guestStepButton?.getAttribute('aria-current')).toBe('step');
+    expect(guestStepButton?.disabled).toBe(false);
+    expect(drinksStepButton?.disabled).toBe(true);
+  });
+
+  it('should let the host add a guest and advance to the drinks step', async () => {
     seedRooms();
 
     const fixture = TestBed.createComponent(OrderEntry);
@@ -100,15 +141,22 @@ describe('OrderEntry', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
+    const drinksStepButton = compiled.querySelector(
+      '[data-testid="step-nav-drinks"]',
+    ) as HTMLButtonElement | null;
+
+    expect(compiled.querySelector('[data-testid="guest-step-panel"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).not.toBeNull();
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')?.textContent).toContain(
       'Ada Lovelace',
     );
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')?.textContent).toContain(
       'Room 101',
     );
+    expect(drinksStepButton?.getAttribute('aria-current')).toBe('step');
   });
 
-  it('should render existing room guests and let the host increment a drink count', async () => {
+  it('should let the host reopen the guest step and return to drinks for the same guest', async () => {
     seedRooms();
     seedGuestTabs();
 
@@ -133,20 +181,90 @@ describe('OrderEntry', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    const incrementButton = compiled.querySelector(
-      'button[aria-label="Add one Water"]',
+    const guestStepButton = compiled.querySelector(
+      '[data-testid="step-nav-guest"]',
     ) as HTMLButtonElement | null;
 
-    incrementButton?.click();
+    guestStepButton?.click();
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(compiled.querySelector('[data-testid="selected-guest-total-count"]')?.textContent).toContain(
-      '2',
-    );
+    const reopenedGuestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
+    ) as HTMLButtonElement | null;
+
+    expect(compiled.querySelector('[data-testid="guest-step-panel"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).toBeNull();
+    expect(reopenedGuestButton?.classList.contains('selection-card--selected')).toBe(true);
+
+    reopenedGuestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="guest-step-panel"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).not.toBeNull();
   });
 
-  it('should reset the inactivity timeout after interaction and clear the transient state', async () => {
+  it('should let the host go back without warning and change the room context', async () => {
+    const confirmSpy = vi.spyOn(window, 'confirm');
+    seedRooms();
+    seedGuestTabs();
+
+    const fixture = TestBed.createComponent(OrderEntry);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const roomButton = compiled.querySelector(
+      'button[aria-label="Open room 101"]',
+    ) as HTMLButtonElement | null;
+
+    roomButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const guestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
+    ) as HTMLButtonElement | null;
+
+    guestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const roomStepButton = compiled.querySelector(
+      '[data-testid="step-nav-room"]',
+    ) as HTMLButtonElement | null;
+
+    roomStepButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(confirmSpy).not.toHaveBeenCalled();
+    expect(compiled.querySelector('[data-testid="room-step-panel"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).toBeNull();
+
+    const otherRoomButton = compiled.querySelector(
+      'button[aria-label="Open room 102"]',
+    ) as HTMLButtonElement | null;
+
+    otherRoomButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const drinksStepButton = compiled.querySelector(
+      '[data-testid="step-nav-drinks"]',
+    ) as HTMLButtonElement | null;
+
+    expect(compiled.querySelector('[data-testid="guest-step-panel"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
+    expect(compiled.querySelector('button[aria-label="Open tab for room 101, Ada Lovelace"]')).toBeNull();
+    expect(compiled.querySelector('button[aria-label="Open tab for room 102, Grace Hopper"]')).not.toBeNull();
+    expect(drinksStepButton?.disabled).toBe(true);
+
+    confirmSpy.mockRestore();
+  });
+
+  it('should keep the selected guest active until the host changes room or guest', async () => {
     vi.useFakeTimers();
     seedRooms();
     seedGuestTabs();
@@ -172,28 +290,180 @@ describe('OrderEntry', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    await vi.advanceTimersByTimeAsync(10_000);
-
-    const incrementButton = compiled.querySelector(
-      'button[aria-label="Add one Water"]',
-    ) as HTMLButtonElement | null;
-
-    incrementButton?.click();
-    fixture.detectChanges();
-    await fixture.whenStable();
-
-    await vi.advanceTimersByTimeAsync(GUEST_TAB_INACTIVITY_TIMEOUT_MS - 1);
+    await vi.advanceTimersByTimeAsync(5 * 60_000);
     fixture.detectChanges();
     await fixture.whenStable();
 
     expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="selected-guest-total-count"]')?.textContent).toContain(
+      '1',
+    );
+  });
 
-    await vi.advanceTimersByTimeAsync(1);
+  it('should show only ordered drinks and let the host add another drink from the dialog', async () => {
+    seedRooms();
+    seedGuestTabs();
+
+    const fixture = TestBed.createComponent(OrderEntry);
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).toBeNull();
-    expect(compiled.querySelector('[data-testid="no-room-selected"]')).not.toBeNull();
+    const compiled = fixture.nativeElement as HTMLElement;
+    const roomButton = compiled.querySelector(
+      'button[aria-label="Open room 101"]',
+    ) as HTMLButtonElement | null;
+
+    roomButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const guestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
+    ) as HTMLButtonElement | null;
+
+    guestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="drink-count-input-water"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="drink-count-input-beer"]')).toBeNull();
+
+    const addDrinkButton = compiled.querySelector(
+      '[data-testid="open-add-drink-dialog-button"]',
+    ) as HTMLButtonElement | null;
+
+    addDrinkButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const addBeerButton = compiled.querySelector(
+      '[data-testid="add-drink-option-beer"]',
+    ) as HTMLButtonElement | null;
+
+    addBeerButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const visibleDrinkNames = [
+      ...compiled.querySelectorAll('.drink-card__copy h4'),
+    ].map((heading) => heading.textContent?.trim());
+
+    expect(visibleDrinkNames).toEqual(['Water', 'Beer']);
+    expect(compiled.querySelector('[data-testid="drink-count-input-beer"]')).not.toBeNull();
+  });
+
+  it('should update the totals immediately while the host types a drink count', async () => {
+    seedRooms();
+    seedGuestTabs();
+
+    const fixture = TestBed.createComponent(OrderEntry);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const roomButton = compiled.querySelector(
+      'button[aria-label="Open room 101"]',
+    ) as HTMLButtonElement | null;
+
+    roomButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const guestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
+    ) as HTMLButtonElement | null;
+
+    guestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const waterCountInput = compiled.querySelector(
+      '[data-testid="drink-count-input-water"]',
+    ) as HTMLInputElement | null;
+
+    if (waterCountInput) {
+      waterCountInput.value = '6';
+      waterCountInput.dispatchEvent(new Event('input'));
+    }
+
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(waterCountInput?.value).toBe('6');
+    expect(compiled.querySelector('[data-testid="selected-guest-total-count"]')?.textContent).toContain(
+      '6',
+    );
+    expect(compiled.querySelector('[data-testid="selected-guest-total-price"]')?.textContent).toContain(
+      '€12.00',
+    );
+  });
+
+  it('should let the host review and confirm billing from the drinks step', async () => {
+    seedRooms();
+    seedGuestTabs();
+
+    const fixture = TestBed.createComponent(OrderEntry);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const roomButton = compiled.querySelector(
+      'button[aria-label="Open room 101"]',
+    ) as HTMLButtonElement | null;
+
+    roomButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const guestButton = compiled.querySelector(
+      'button[aria-label="Open tab for room 101, Ada Lovelace"]',
+    ) as HTMLButtonElement | null;
+
+    guestButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const openBillButton = compiled.querySelector(
+      '[data-testid="open-bill-guest-dialog-button"]',
+    ) as HTMLButtonElement | null;
+
+    openBillButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="bill-guest-dialog-overlay"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="bill-guest-line-items"]')?.textContent).toContain(
+      '1 × Water',
+    );
+
+    const cancelBillButton = compiled.querySelector(
+      '[data-testid="cancel-bill-guest-button"]',
+    ) as HTMLButtonElement | null;
+
+    cancelBillButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="bill-guest-dialog-overlay"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="selected-guest-panel"]')).not.toBeNull();
+
+    openBillButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const confirmBillButton = compiled.querySelector(
+      '[data-testid="confirm-bill-guest-button"]',
+    ) as HTMLButtonElement | null;
+
+    confirmBillButton?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(compiled.querySelector('[data-testid="drinks-step-panel"]')).toBeNull();
+    expect(compiled.querySelector('[data-testid="guest-step-panel"]')).not.toBeNull();
+    expect(compiled.querySelector('[data-testid="empty-room-guests"]')).not.toBeNull();
+    expect(localStorage.getItem(BILLED_GUEST_TABS_STORAGE_KEY)).toContain('Ada Lovelace');
   });
 });
 
