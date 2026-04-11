@@ -1,6 +1,6 @@
 # Codex Execution Plans (ExecPlans)
 
-This file defines how this repository uses long-form execution plans. It also serves as the index for checked-in plans.
+This file defines how this repository uses long-form execution plans. It also serves as the lightweight routing index for checked-in plans.
 
 Use an ExecPlan for complex features, significant refactors, multi-session work, or any task where Codex or a human contributor will benefit from a living implementation document that stays aligned with the work.
 
@@ -20,8 +20,10 @@ If a task has a relevant plan, link that plan from the task file's `Related docs
 
 ## Project Plan Index
 
-- [`docs/plans/document-execplan-workflow.md`](docs/plans/document-execplan-workflow.md): establishes the repo's ExecPlan documentation and routing convention. Related tasks: none yet; related docs: [`AGENTS.md`](AGENTS.md), [`agent-index.md`](agent-index.md), [`docs/agentic-workflow.md`](docs/agentic-workflow.md), [`docs/decisions.md`](docs/decisions.md).
-- [`docs/plans/build-room-first-order-entry-screen.md`](docs/plans/build-room-first-order-entry-screen.md): documents the room-first host order-entry implementation, including the durable room capability, the focused stepper refinement for the active route, the host-controlled room or guest correction flow, the ordered-drinks-first drinks step with lightweight add-drink and bill-guest overlays, and supporting [`docs/`](docs/) and [`docs/design/`](docs/design/) artifacts. Related tasks: [`docs/tasks/open/T-018.md`](docs/tasks/open/T-018.md), [`docs/tasks/open/T-014.md`](docs/tasks/open/T-014.md), [`docs/tasks/open/T-019.md`](docs/tasks/open/T-019.md); related docs: [`docs/product.md`](docs/product.md), [`docs/ux/host-workflow-ux.md`](docs/ux/host-workflow-ux.md), [`docs/architecture.md`](docs/architecture.md).
+Keep this index lightweight and routing-focused. Each entry should provide the plan link and a short summary only. Do not repeat a plan file's `Related tasks` or `Related docs` metadata here unless a temporary routing note is truly necessary.
+
+- [`docs/plans/document-execplan-workflow.md`](docs/plans/document-execplan-workflow.md): establishes the repo's ExecPlan documentation and routing convention.
+- [`docs/plans/build-room-first-order-entry-screen.md`](docs/plans/build-room-first-order-entry-screen.md): documents the room-first host order-entry implementation and its supporting product, UX, design, and frontend work.
 
 ## Non-Negotiable Requirements
 
@@ -40,9 +42,9 @@ Each plan file in [`docs/plans/`](docs/plans/) should contain only the plan docu
 
 Name files with short, action-oriented kebab-case names that describe the intended outcome.
 
-## Required Plan Structure
+## Plan Structure
 
-Each plan file should use this structure and order:
+Each plan file should usually use this structure and order:
 
 1. `# <Short, action-oriented description>`
 2. A short living-document note that references [`PLANS.md`](PLANS.md)
@@ -63,8 +65,11 @@ Each plan file should use this structure and order:
 
 Use timestamps in `Progress` entries so later contributors can see the pace and sequence of work.
 
+`Related tasks` and `Related docs` are strongly encouraged near the top of each plan because they help keep the plan self-contained and make task-to-plan routing easier. They do not need to be duplicated in the index above.
+
 ## Maintenance Rules
 
 - Update this file whenever you add, rename, or materially revise a checked-in plan.
+- Keep the index entries short and routing-focused, and keep detailed task or supporting-doc cross-links inside the plan files themselves.
 - Keep plan links in sync with the relevant task files and supporting docs.
 - Open only the specific plan you need; do not scan the whole plans folder unless the user asks for plan triage.
