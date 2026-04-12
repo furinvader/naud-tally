@@ -13,7 +13,9 @@ This is the first routing file for every agent task in this repository.
 - The repository-adapter seam is now recorded in [`T-027`](docs/tasks/done/T-027.md).
 - The feature public API cleanup is now recorded in [`T-028`](docs/tasks/done/T-028.md).
 - The frontend import boundary enforcement is now recorded in [`T-029`](docs/tasks/done/T-029.md).
-- The immediate repo priority is now [`T-018`](docs/tasks/open/T-018.md): define the order entry screen while it remains the main pilot surface.
+- The order-entry screen design and focused stepper are now recorded in [`T-018`](docs/tasks/done/T-018.md) and [`T-014`](docs/tasks/done/T-014.md).
+- The default-route flip to the host-operated order-entry flow is now recorded in [`T-019`](docs/tasks/done/T-019.md).
+- The immediate repo priority is now [`T-020`](docs/tasks/open/T-020.md): add PWA installability and offline shell support for the host-operated pilot.
 - The design-solution decision is recorded in [`T-010`](docs/tasks/done/T-010.md).
 - The Penpot artifact workflow is documented in [`docs/design/penpot-codex-workflow.md`](docs/design/penpot-codex-workflow.md) and demonstrated in [`docs/design/`](docs/design/).
 

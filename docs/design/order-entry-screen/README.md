@@ -5,7 +5,7 @@
 - Repo artifact directory: [`./`](./)
 - Repo SVG export: [`order-entry-screen.svg`](order-entry-screen.svg)
 - Optional Penpot share link: `not required for the repo workflow`
-- Status: `brief updated for the ordered-drinks and inline-billing drinks-step refinement on 2026-04-10; the SVG still captures the broader focused-stepper shell`
+- Status: `brief and SVG define the focused stepper shell; the brief also records the 2026-04-10 ordered-drinks and inline-billing refinements that were applied after the first snapshot`
 
 ## Goal
 

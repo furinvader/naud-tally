@@ -8,15 +8,12 @@ If you need agent routing rules before opening task files, start with [`tasks/ag
 
 ## Current Priority
 
-- [T-018 Design the Order Entry Screen](tasks/open/T-018.md)
+- [T-020 Add PWA Installability and Offline Shell Support](tasks/open/T-020.md)
 
-The near-term architecture track is complete, so product-surface and sync work now resume with the order entry screen.
+The near-term architecture and order-entry-surface track are complete, so the remaining open work now starts with installability, offline shell behavior, and remote recovery.
 
 ## Open Tasks
 
-- [T-018 Design the Order Entry Screen](tasks/open/T-018.md)
-- [T-019 Make the Order Entry Screen the Default Route](tasks/open/T-019.md)
-- [T-014 Refine the Order Entry Screen Layout](tasks/open/T-014.md)
 - [T-020 Add PWA Installability and Offline Shell Support](tasks/open/T-020.md)
 - [T-021 Choose the Remote Backup and Sync Approach](tasks/open/T-021.md)
 - [T-022 Implement Remote Sync and Recovery](tasks/open/T-022.md)
@@ -37,9 +34,12 @@ The near-term architecture track is complete, so product-surface and sync work n
 - [T-011 Document the Penpot Handoff Workflow](tasks/done/T-011.md)
 - [T-012 Create a Reusable Design Foundation Board](tasks/done/T-012.md)
 - [T-013 Apply the Design Foundations to the Angular Theme](tasks/done/T-013.md)
+- [T-014 Refine the Order Entry Screen Layout](tasks/done/T-014.md)
 - [T-015 Simplify Selected-Guest Drink Entry](tasks/done/T-015.md)
 - [T-016 Add a Host Admin Route](tasks/done/T-016.md)
 - [T-017 Re-scope Docs for the Host-Operated Pilot](tasks/done/T-017.md)
+- [T-018 Design the Order Entry Screen](tasks/done/T-018.md)
+- [T-019 Make the Order Entry Screen the Default Route](tasks/done/T-019.md)
 - [T-023 Introduce Shared UI Shell and Scroll Foundations](tasks/done/T-023.md)
 - [T-024 Create the Order Entry Composition Root](tasks/done/T-024.md)
 - [T-025 Separate Order Entry UI State From Persistent Business State](tasks/done/T-025.md)
