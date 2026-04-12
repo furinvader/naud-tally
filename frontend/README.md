@@ -19,7 +19,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Cross-feature shared presentation and layout primitives live under [`src/app/ui/`](src/app/ui/).
 - The route-level order-entry composition root lives in [`src/app/features/order-entry/`](src/app/features/order-entry/).
 - [`src/app/features/order-entry/order-entry.store.ts`](src/app/features/order-entry/order-entry.store.ts) owns transient order-entry screen state such as the active step, selected room, selected guest, and guest-name draft inputs.
-- Durable room, guest-tab, catalog, and billed-history state now live under [`src/app/features/rooms/`](src/app/features/rooms/), [`src/app/features/guest-tabs/`](src/app/features/guest-tabs/), [`src/app/features/catalog/`](src/app/features/catalog/), and [`src/app/features/billing-history/`](src/app/features/billing-history/), with adjacent `*.repository.ts` files owning browser persistence.
+- Durable room, guest-tab, catalog, and `billing-history` state now live under [`src/app/features/rooms/`](src/app/features/rooms/), [`src/app/features/guest-tabs/`](src/app/features/guest-tabs/), [`src/app/features/catalog/`](src/app/features/catalog/), and [`src/app/features/billing-history/`](src/app/features/billing-history/), with adjacent `*.repository.ts` files owning browser persistence.
 - [`src/app/features/drink-tally/`](src/app/features/drink-tally/) is now historical guest-flow presentation rather than the active route contract.
 - The target architecture for the next iterations is recorded in [`../docs/architecture.md`](../docs/architecture.md).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).

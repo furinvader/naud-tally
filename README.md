@@ -5,7 +5,7 @@
 1. Learn agentic AI development by building with Codex end-to-end.
 2. Ship a functional, host-operated tablet app that lets the host quickly record guest orders, manage products and prices, bill tabs on departure, and recover safely after reloads, reinstall, or connection loss.
 
-This repository is intentionally starting with documentation before scaffolding. The docs are the first layer of the product and the first layer of the agent workflow.
+This repository began with documentation rather than app scaffolding, and the docs remain the first layer of the product and the first layer of the agent workflow.
 
 The project is also being prepared to live well as an open-source repository with a clean public history and visible GitHub workflow activity.
 
@@ -13,7 +13,7 @@ The repo now uses [`AGENTS.md`](AGENTS.md) plus small [`agent-index.md`](agent-i
 
 ## Current Phase
 
-We have already shipped a guest-facing tally slice plus a separate host-tools route. The project is now re-scoped around a host-operated pilot, and the order entry screen is already the primary tablet experience. The next product work is installability, offline shell behavior, remote recovery, and host data-safety tooling.
+The repo still includes a guest-facing tally slice plus a separate host tools route at `/host`, but the active pilot is scoped around a host-operated tablet workflow. The order entry screen is the primary tablet experience, and the next product work is installability, offline shell behavior, remote recovery, and host data-safety tooling.
 
 What exists today:
 
@@ -28,7 +28,7 @@ What exists today:
 - Angular app scaffold under [`frontend/`](frontend/) with Material and SignalStore dependencies
 - host-operated order entry route at `/` with a room-first stepper
 - separate host route for room management, product management, and broader billing review
-- local room, guest-tab, billed-history, and live drink catalog management
+- local room, guest-tab, billing history, and live drink catalog management
 - historical guest-tab tally slice kept in code as deferred future context
 
 What is intentionally not done yet:
@@ -98,4 +98,4 @@ The pilot is successful if:
 
 ## Notes
 
-Some product details are still intentionally open. Those are captured as assumptions and questions in the docs so we can refine them before scaffolding.
+Some product details are still intentionally open. Those are captured as assumptions and questions in the docs so we can refine them before deeper implementation.
