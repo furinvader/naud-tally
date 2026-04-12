@@ -8,7 +8,7 @@ That order entry screen remains the main app surface for now. A broader overview
 
 The product should stay simple enough for a small team to build and operate, but it now needs stronger data safety than same-device reload persistence. The app should keep working with offline-first local state on the tablet, then recover and sync safely after reconnect, reinstall, or replacement-device setup through a simple remote backup or sync solution.
 
-The current implementation already has host-side catalog management, billing, [billing history](glossary.md#billing-history), and local persistence, but the default route and older core docs still reflect the earlier guest-first public-tablet slice.
+The current implementation already has host-side room management, catalog management, billing, [billing history](glossary.md#billing-history), and local persistence, with the host-operated order-entry route now serving as the default app surface.
 
 The supporting UX reference for the current pilot lives in [`ux/host-workflow-ux.md`](ux/host-workflow-ux.md). The older public self-service concept is kept only as deferred future work in [`ux/guest-tab-ux.md`](ux/guest-tab-ux.md). Remote persistence tradeoffs are summarized in [`research/remote-persistence-options.md`](research/remote-persistence-options.md).
 
@@ -42,7 +42,7 @@ These are the rules for the current pilot direction:
 - the app must support creating and updating the live product catalog with prices
 - the app must support creating and updating the live room list
 - the app must support billing a [guest tab](glossary.md#guest-tab) and keeping recent [billing history](glossary.md#billing-history)
-- the current implementation already persists drink catalog, open tabs, and billed history locally across reloads
+- the current implementation already persists the room list, drink catalog, open tabs, and billed history locally across reloads
 - the product requirement now expands persistence to offline-first local app state plus remote recovery or sync
 - the app should continue working when internet access is unavailable
 - the app should sync or back up changes after connectivity returns
@@ -173,7 +173,7 @@ The app should still start from these sample drinks and reference prices until t
 
 ## Risks
 
-- The current codebase still centers the default route and primary copy around a guest-facing public tablet flow.
+- Historical guest-flow components still exist in the codebase as deferred future context, so routing and copy must keep them out of the active pilot surface.
 - An order entry screen can become cluttered if room selection, guest selection, and product controls are not grouped carefully.
 - A focused stepper removes cross-step visibility, so the selected room and selected guest context must stay obvious even while only one step body is visible.
 - Trust-based room and name entry can still produce mistaken identity or duplicate tabs.

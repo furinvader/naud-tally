@@ -86,8 +86,8 @@ It supports the repository decisions recorded in [`../decisions.md`](../decision
 
 ## Follow-Up
 
-- Treat this file and [`../product.md`](../product.md) as the UX reference for [`../tasks/open/T-018.md`](../tasks/open/T-018.md).
-- Treat this file as supporting context for [`../tasks/open/T-019.md`](../tasks/open/T-019.md), [`../tasks/open/T-020.md`](../tasks/open/T-020.md), and [`../tasks/open/T-022.md`](../tasks/open/T-022.md).
+- Treat this file and [`../product.md`](../product.md) as the UX reference for [`../tasks/done/T-018.md`](../tasks/done/T-018.md) and later refinements recorded in [`../tasks/done/T-014.md`](../tasks/done/T-014.md).
+- Treat this file as supporting context for [`../tasks/done/T-019.md`](../tasks/done/T-019.md), [`../tasks/open/T-020.md`](../tasks/open/T-020.md), and [`../tasks/open/T-022.md`](../tasks/open/T-022.md).
 - Treat [`guest-tab-ux.md`](guest-tab-ux.md) as deferred future UX, not as the current pilot target.
 - Revisit search, recents, or grouping if room or guest grids grow beyond the pilot’s small-list assumptions.
 - Revisit an adaptive split view later if host testing shows the focused stepper slows extra-wide tablet usage.

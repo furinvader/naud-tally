@@ -2,7 +2,7 @@
 
 This ExecPlan is a living document. The sections `Progress`, `Surprises & Discoveries`, `Decision Log`, and `Outcomes & Retrospective` must be kept up to date as work proceeds. Maintain this document in accordance with [`PLANS.md`](../../PLANS.md).
 
-Related tasks: [`docs/tasks/open/T-018.md`](../tasks/open/T-018.md), [`docs/tasks/open/T-014.md`](../tasks/open/T-014.md), [`docs/tasks/open/T-019.md`](../tasks/open/T-019.md).
+Related tasks: [`docs/tasks/done/T-018.md`](../tasks/done/T-018.md), [`docs/tasks/done/T-014.md`](../tasks/done/T-014.md), [`docs/tasks/done/T-019.md`](../tasks/done/T-019.md).
 
 Related docs: [`docs/product.md`](../product.md), [`docs/ux/host-workflow-ux.md`](../ux/host-workflow-ux.md), [`docs/architecture.md`](../architecture.md), [`frontend/README.md`](../../frontend/README.md), [`frontend/agent-index.md`](../../frontend/agent-index.md), [`docs/design/foundations/README.md`](../design/foundations/README.md), [`docs/design/penpot-codex-workflow.md`](../design/penpot-codex-workflow.md).
 
@@ -35,7 +35,7 @@ The repo should also gain the documentation needed to carry that work across mul
 
 ## Surprises & Discoveries
 
-- Observation: The current default route work in [`docs/tasks/open/T-019.md`](../tasks/open/T-019.md) is partially complete already because [`frontend/src/app/app.routes.ts`](../../frontend/src/app/app.routes.ts) already points `/` at [`OrderEntry`](../../frontend/src/app/features/order-entry/order-entry.ts).
+- Observation: The current default route work in [`docs/tasks/done/T-019.md`](../tasks/done/T-019.md) was partially complete already because [`frontend/src/app/app.routes.ts`](../../frontend/src/app/app.routes.ts) already pointed `/` at [`OrderEntry`](../../frontend/src/app/features/order-entry/order-entry.ts).
   Evidence: The current routes array maps the empty path directly to [`OrderEntry`](../../frontend/src/app/features/order-entry/order-entry.ts).
 
 - Observation: The active pilot docs still describe room number as direct entry text rather than a host-managed list, so the new fixed-room requirement is a product-doc change, not just a frontend implementation detail.

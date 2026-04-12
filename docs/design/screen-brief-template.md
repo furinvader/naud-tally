@@ -5,7 +5,7 @@ Use this file as the starting point for any task-specific Penpot brief under [`d
 ## Artifact
 
 - Repo artifact directory: [`./`](./)
-- Repo SVG export: [`name-your-artifact.svg`](name-your-artifact.svg)
+- Repo SVG export: `name-your-artifact.svg` (replace with the committed SVG filename in this folder)
 - Optional Penpot share link: `not required for the repo workflow`
 - Status: `draft`
 

@@ -47,7 +47,7 @@ At a larger size, the frontend should revolve around these roles:
 - `catalog`: product catalog and price-management rules
 - `billing-history`: billed-tab creation and recent billed history
 - `sync-recovery`: [sync status](glossary.md#sync-status), local [outbox](glossary.md#outbox) or operation log, and remote recovery integration
-- `admin-tools`: host-facing supporting screens that consume the same public feature APIs
+- `host-admin`: host-facing supporting screens that consume the same public feature APIs
 - [`../frontend/src/app/ui/`](../frontend/src/app/ui/): shared presentation and layout primitives only
 - small app-wide platform helpers under a future `core` area only when they are truly cross-feature and not domain-owned
 
@@ -69,7 +69,7 @@ src/app/
     catalog/
     billing-history/
     sync-recovery/
-    admin-tools/
+    host-admin/
 ```
 
 The exact file count can vary, but the ownership model should stay consistent.
@@ -120,7 +120,7 @@ These are the intended dependency boundaries:
 
 - [`../frontend/src/app/app.ts`](../frontend/src/app/app.ts) and [`../frontend/src/app/app.routes.ts`](../frontend/src/app/app.routes.ts) may depend on feature public APIs and shared UI
 - `order-entry` may depend on public APIs from `rooms`, `guest-tabs`, `catalog`, `billing-history`, and `sync-recovery`
-- `admin-tools` may depend on those same public APIs
+- `host-admin` may depend on those same public APIs
 - capability features should not [deep-import](glossary.md#deep-import) each other's internal files
 - cross-feature imports should target the providing feature's public entrypoint instead of a deep file path
 - shared UI should not depend on feature-owned business code
