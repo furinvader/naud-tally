@@ -6,6 +6,7 @@ Read this file before opening other files under [`docs/`](./).
 
 - For product scope and user-facing requirements, read [`product.md`](product.md).
 - For the target module map, state ownership, and dependency boundaries, read [`architecture.md`](architecture.md).
+- For feature-internal layer responsibilities and import direction inside one feature, read [`layering.md`](layering.md).
 - For stable domain and architecture vocabulary, read [`glossary.md`](glossary.md).
 - For UX flow briefs, read [`ux/agent-index.md`](ux/agent-index.md).
 - For repository-wide workflow or architecture decisions, read [`decisions.md`](decisions.md).

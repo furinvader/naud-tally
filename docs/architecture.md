@@ -2,7 +2,7 @@
 
 This document records the target application architecture for the current pilot and the next scaling steps we want to take before adding more product work.
 
-It complements the product scope in [`product.md`](product.md), the workflow guidance in [`agentic-workflow.md`](agentic-workflow.md), the repository decisions in [`decisions.md`](decisions.md), and the frontend-local conventions in [`../frontend/decisions.md`](../frontend/decisions.md).
+It complements the product scope in [`product.md`](product.md), the workflow guidance in [`agentic-workflow.md`](agentic-workflow.md), the repository decisions in [`decisions.md`](decisions.md), the feature-internal layer rules in [`layering.md`](layering.md), and the frontend-local conventions in [`../frontend/decisions.md`](../frontend/decisions.md).
 
 ## Purpose
 
@@ -76,6 +76,25 @@ The exact file count can vary, but the ownership model should stay consistent.
 
 Top-level feature directories under [`../frontend/src/app/features/`](../frontend/src/app/features/) should stay flat. If a feature needs more internal structure, add subdirectories inside that feature instead of introducing another grouping layer above it.
 
+## Feature-Internal Layering
+
+Within one feature or one real subfeature, responsibilities should be described with four logical layers:
+
+- `presentation`
+- `application`
+- `adapters`
+- `domain`
+
+Those layers complement the feature boundary; they do not replace it.
+
+- keep folders meaning "owned area" or "subfeature", not "layer bucket"
+- do not create `presentation/`, `application/`, `adapters/`, or `domain/` folders as a repo convention
+- keep feature-root `index.ts` files as the feature [public API](glossary.md#public-api), not as internal layer shortcuts
+- keep dependencies flowing inward from `presentation` to `application`, from `application` to `adapters` or `domain`, and from `adapters` to `domain`
+- keep `domain` free of framework, storage, and remote-IO concerns
+
+The general layer responsibilities and dependency rules live in [`layering.md`](layering.md). Concrete file naming examples should live in the nearest area-specific docs such as [`../frontend/README.md`](../frontend/README.md).
+
 ## Ownership Rules
 
 ### Route Composition
@@ -98,7 +117,7 @@ Each durable [capability feature](glossary.md#capability-feature) should own:
 - its domain models
 - its [domain rules](glossary.md#domain-rule)
 - its [persistent business state](glossary.md#persistent-business-state)
-- its data adapters and serialization rules
+- its adapters and serialization rules
 - its focused tests
 
 Each capability should expose a small [public API](glossary.md#public-api), usually through a facade or clearly named public file.
@@ -164,13 +183,13 @@ The app should remain local-first, but the code should stop assuming that browse
 
 ### Repository Boundary
 
-Capability features should read and write through [repositories](glossary.md#repository) or equivalent data adapters.
+Capability features should read and write through [repositories](glossary.md#repository) or equivalent [adapters](glossary.md#adapter).
 
 That means:
 
 - no direct `localStorage` access from route components
 - no direct `localStorage` access from business-rule files
-- serialization and hydration logic live in data adapters, not in route composition code
+- serialization and hydration logic live in adapters, not in route composition code
 
 ### Local-First Write Path
 
@@ -198,13 +217,13 @@ The remote backend choice remains open, but the architecture should make that ch
 
 To keep future work efficient:
 
-- start architecture-changing tasks from [`architecture.md`](architecture.md), [`glossary.md`](glossary.md), and [`../frontend/README.md`](../frontend/README.md)
+- start architecture-changing tasks from [`architecture.md`](architecture.md), [`layering.md`](layering.md), [`glossary.md`](glossary.md), and [`../frontend/README.md`](../frontend/README.md)
 - prefer one capability-focused task at a time
 - add a local [`README.md`](../README.md) or [`agent-index.md`](../agent-index.md) when a feature area becomes large enough that its public API is not obvious
 - keep tests close to the feature or capability they protect
 - avoid introducing broad `shared`, `common`, or `utils` folders as default destinations
 
-If a future prompt depends on module boundaries, public APIs, or state ownership, update this file instead of leaving the decision in chat history.
+If a future prompt depends on module boundaries, public APIs, state ownership, or feature-internal layer rules, update this file instead of leaving the decision in chat history.
 
 ## Completed Migration Track
 
