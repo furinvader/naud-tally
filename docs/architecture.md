@@ -14,10 +14,10 @@ It complements the product scope in [`product.md`](product.md), the workflow gui
 
 The current frontend is still small, but a few pressure points are already visible:
 
-- the default route now points at an order-entry composition root in [`../frontend/src/app/features/order-entry/order-entry.ts`](../frontend/src/app/features/order-entry/order-entry.ts), and transient order-entry screen state now lives in [`../frontend/src/app/features/order-entry/order-entry.store.ts`](../frontend/src/app/features/order-entry/order-entry.store.ts) while the migration continues
-- durable room, guest-tab, catalog, and billed-history state now live in [`../frontend/src/app/features/rooms/rooms.store.ts`](../frontend/src/app/features/rooms/rooms.store.ts), [`../frontend/src/app/features/guest-tabs/guest-tabs.store.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.store.ts), [`../frontend/src/app/features/catalog/catalog.store.ts`](../frontend/src/app/features/catalog/catalog.store.ts), and [`../frontend/src/app/features/billing-history/billing-history.store.ts`](../frontend/src/app/features/billing-history/billing-history.store.ts), with adjacent repository adapters in [`../frontend/src/app/features/rooms/rooms.repository.ts`](../frontend/src/app/features/rooms/rooms.repository.ts), [`../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts), [`../frontend/src/app/features/catalog/catalog.repository.ts`](../frontend/src/app/features/catalog/catalog.repository.ts), and [`../frontend/src/app/features/billing-history/billing-history.repository.ts`](../frontend/src/app/features/billing-history/billing-history.repository.ts)
-- the order entry and host admin screens now compose those capability stores through local view-model helpers instead of a single broad tally store, and the active route no longer treats [`../frontend/src/app/features/drink-tally/`](../frontend/src/app/features/drink-tally/) as its screen contract
-- public feature API entrypoints now live at feature roots, and import-boundary enforcement now runs through [`../frontend/scripts/check-import-boundaries.mjs`](../frontend/scripts/check-import-boundaries.mjs)
+- the default route points at an order-entry composition root in [`../frontend/src/app/features/order-entry/order-entry.ts`](../frontend/src/app/features/order-entry/order-entry.ts), and transient order-entry screen state lives in [`../frontend/src/app/features/order-entry/order-entry.store.ts`](../frontend/src/app/features/order-entry/order-entry.store.ts)
+- durable room, guest-tab, catalog, and `billing-history` state live in [`../frontend/src/app/features/rooms/rooms.store.ts`](../frontend/src/app/features/rooms/rooms.store.ts), [`../frontend/src/app/features/guest-tabs/guest-tabs.store.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.store.ts), [`../frontend/src/app/features/catalog/catalog.store.ts`](../frontend/src/app/features/catalog/catalog.store.ts), and [`../frontend/src/app/features/billing-history/billing-history.store.ts`](../frontend/src/app/features/billing-history/billing-history.store.ts), with adjacent repository adapters in [`../frontend/src/app/features/rooms/rooms.repository.ts`](../frontend/src/app/features/rooms/rooms.repository.ts), [`../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts), [`../frontend/src/app/features/catalog/catalog.repository.ts`](../frontend/src/app/features/catalog/catalog.repository.ts), and [`../frontend/src/app/features/billing-history/billing-history.repository.ts`](../frontend/src/app/features/billing-history/billing-history.repository.ts)
+- the order entry and host admin screens compose those capability stores through local view-model helpers instead of a single broad tally store, and the active route no longer treats [`../frontend/src/app/features/drink-tally/`](../frontend/src/app/features/drink-tally/) as its screen contract
+- public feature API entrypoints live at feature roots, and import-boundary enforcement runs through [`../frontend/scripts/check-import-boundaries.mjs`](../frontend/scripts/check-import-boundaries.mjs)
 
 That is closer to the architecture we want to scale, and the next priority can now shift back to product-surface work on top of those seams.
 
@@ -206,9 +206,9 @@ To keep future work efficient:
 
 If a future prompt depends on module boundaries, public APIs, or state ownership, update this file instead of leaving the decision in chat history.
 
-## Migration Order
+## Completed Migration Track
 
-The current backlog should treat these architecture tasks as the near-term implementation path:
+The recent architecture track followed this order:
 
 1. [T-024 Create the Order Entry Composition Root](tasks/done/T-024.md)
 2. [T-025 Separate Order Entry UI State From Persistent Business State](tasks/done/T-025.md)
@@ -217,4 +217,4 @@ The current backlog should treat these architecture tasks as the near-term imple
 5. [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](tasks/done/T-028.md)
 6. [T-029 Add Frontend Import Boundary Checks](tasks/done/T-029.md)
 
-The order-entry product work should continue after these architectural seams are in place.
+Those architectural seams are now in place, so the active backlog can stay focused on product-surface work on top of them.
