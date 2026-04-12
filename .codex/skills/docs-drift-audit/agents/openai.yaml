@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docs Drift Audit"
+  short_description: "Audit and repair repository documentation drift"
+  default_prompt: "Use $docs-drift-audit to audit and clean up documentation drift in this repository."
