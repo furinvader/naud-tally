@@ -82,9 +82,13 @@ State that should survive reloads and belongs to a business capability.
 
 Screen-specific UI state that should stay near the route composition feature.
 
+### Adapter
+
+An infrastructure-facing boundary that translates between app-owned logic and an external mechanism such as browser storage, HTTP, or sync.
+
 ### Repository
 
-The adapter that reads and writes a capability's persisted data.
+One kind of [adapter](#adapter) that reads and writes a capability's persisted data.
 
 ### Outbox
 

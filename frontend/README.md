@@ -39,9 +39,59 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 
 - When one route or screen starts owning several business concepts, keep the route feature as a composition root and split durable capabilities into sibling feature areas instead of growing one giant store.
 - Route composition features should own screen assembly and transient route state.
-- Capability features should own persistent business state, domain rules, and data adapters.
-- When a capability grows beyond a few closely related files, it may use clearer sub-areas or role-specific files such as `*.facade.ts`, `*.repository.ts`, or `*.model.ts`.
+- Capability features should own persistent business state, domain rules, and adapters.
+- When a capability grows beyond a few closely related files, it may use clearer sub-areas or role-specific files such as `*.facade.ts`, `*.repository.ts`, `*.domain.ts`, or `*.models.ts`.
 - Follow [`../docs/architecture.md`](../docs/architecture.md) for the target module map and ownership model before restructuring a larger area.
+
+### Feature-Internal Layering
+
+- Use [`../docs/layering.md`](../docs/layering.md) for the general layer rules.
+- In frontend features, keep folders meaning owned area or subfeature. Do not create `presentation/`, `application/`, `adapters/`, or `domain/` folders as a frontend convention.
+- Treat the feature-root [`index.ts`](src/app/features/catalog/index.ts) pattern as the cross-feature public API, not as an internal import shortcut inside the same feature.
+- In practice, frontend components should talk to local stores or facades, stores may depend on local repositories and pure domain helpers, repositories may depend on pure domain types, and components must not import repositories directly.
+- Keep `domain` code free of Angular, browser storage, HTTP, and dependency-injection concerns.
+
+Typical frontend mapping:
+
+- `*.ts`, `*.html`, and `*.scss` component files: `presentation`
+- `*.store.ts` or `*.facade.ts`: `application`
+- `*.repository.ts`, `*.storage.ts`, `*.client.ts`, or `*.sync.ts`: `adapters`
+- `*.domain.ts`: `domain`
+- `*.models.ts`: pure shared types or value helpers only when the file stays free of framework and IO concerns
+
+Default flat shape inside a frontend feature:
+
+```text
+guest-tabs/
+  index.ts
+  guest-tabs.ts
+  guest-tabs.html
+  guest-tabs.scss
+  guest-tabs.store.ts
+  guest-tabs.repository.ts
+  guest-tabs.domain.ts
+  guest-tabs.models.ts
+```
+
+When a frontend feature grows, split by owned subfeature rather than by layer:
+
+```text
+guest-tabs/
+  guest-identity/
+    guest-identity.store.ts
+    guest-identity.domain.ts
+  drink-counting/
+    drink-counting.domain.ts
+    drink-counting.models.ts
+  index.ts
+```
+
+Current frontend examples:
+
+- route components such as [`src/app/features/order-entry/order-entry.ts`](src/app/features/order-entry/order-entry.ts) are `presentation`
+- feature stores such as [`src/app/features/order-entry/order-entry.store.ts`](src/app/features/order-entry/order-entry.store.ts) are `application`
+- repository files such as [`src/app/features/guest-tabs/guest-tabs.repository.ts`](src/app/features/guest-tabs/guest-tabs.repository.ts) are `adapters`
+- extracted pure rules and business types belong in `*.domain.ts` or pure `*.models.ts` files
 
 ### Public APIs Between Features
 
@@ -65,7 +115,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 
 - Give each feature its own directory.
 - Use one consistent base name for the primary feature files: `<feature-name>.ts`, `<feature-name>.html`, `<feature-name>.scss`, and `<feature-name>.spec.ts`.
-- Add role-specific files only when they clarify intent, such as `<feature-name>.routes.ts`, `<feature-name>.store.ts`, `<feature-name>.service.ts`, or `<feature-name>.model.ts`.
+- Add role-specific files only when they clarify intent, such as `<feature-name>.routes.ts`, `<feature-name>.store.ts`, `<feature-name>.repository.ts`, `<feature-name>.domain.ts`, or `<feature-name>.models.ts`.
 - Keep tests next to the code they cover.
 
 ### Naming Rules
@@ -109,7 +159,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Keep transient screen state near the route composition feature that owns that interaction flow.
 - In the current pilot, [`src/app/features/order-entry/order-entry.store.ts`](src/app/features/order-entry/order-entry.store.ts) owns selection and draft-entry state, while [`src/app/features/rooms/rooms.store.ts`](src/app/features/rooms/rooms.store.ts), [`src/app/features/guest-tabs/guest-tabs.store.ts`](src/app/features/guest-tabs/guest-tabs.store.ts), [`src/app/features/catalog/catalog.store.ts`](src/app/features/catalog/catalog.store.ts), and [`src/app/features/billing-history/billing-history.store.ts`](src/app/features/billing-history/billing-history.store.ts) own durable business data and delegate browser persistence to their adjacent repository files.
 - Do not call browser storage APIs directly from route components or route composition stores.
-- Put serialization, hydration, and storage access in repositories or equivalent data adapters inside the owning feature area.
+- Put serialization, hydration, and storage access in repositories or equivalent adapters inside the owning feature area.
 
 ### Styling and Theme Rules
 
