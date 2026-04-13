@@ -104,7 +104,7 @@ The repo also now has a durable [`rooms`](../../frontend/src/app/features/rooms/
 Validation evidence for this implementation:
 
 - `npm test -- --watch=false` passed from [`frontend/`](../../frontend/)
-- `npm run build` passed from [`frontend/`](../../frontend/), including the import-boundary check
+- `npm run build` passed from [`frontend/`](../../frontend/)
 - `git diff --check` passed from the repository root
 
 ## Context and Orientation
@@ -131,7 +131,7 @@ Finally, update the route-level and store-level tests to cover auto-advance, tap
 
 ## Validation and Acceptance
 
-From [`frontend/`](../../frontend/), run `nvm use`, then run `npm test -- --watch=false` and `npm run build`. The build command also covers the import-boundary check.
+From [`frontend/`](../../frontend/), run `nvm use`, then run `npm run lint`, `npm test -- --watch=false`, and `npm run build`.
 
 From the repository root at [`./`](../../), run `git diff --check` after the edits. Acceptance is met when:
 

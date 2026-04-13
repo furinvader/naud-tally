@@ -17,7 +17,7 @@ The current frontend is still small, but a few pressure points are already visib
 - the default route points at an order-entry composition root in [`../frontend/src/app/features/order-entry/order-entry.ts`](../frontend/src/app/features/order-entry/order-entry.ts), and transient order-entry screen state lives in [`../frontend/src/app/features/order-entry/order-entry.store.ts`](../frontend/src/app/features/order-entry/order-entry.store.ts)
 - durable room, guest-tab, catalog, and `billing-history` state live in [`../frontend/src/app/features/rooms/rooms.store.ts`](../frontend/src/app/features/rooms/rooms.store.ts), [`../frontend/src/app/features/guest-tabs/guest-tabs.store.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.store.ts), [`../frontend/src/app/features/catalog/catalog.store.ts`](../frontend/src/app/features/catalog/catalog.store.ts), and [`../frontend/src/app/features/billing-history/billing-history.store.ts`](../frontend/src/app/features/billing-history/billing-history.store.ts), with adjacent repository adapters in [`../frontend/src/app/features/rooms/rooms.repository.ts`](../frontend/src/app/features/rooms/rooms.repository.ts), [`../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts`](../frontend/src/app/features/guest-tabs/guest-tabs.repository.ts), [`../frontend/src/app/features/catalog/catalog.repository.ts`](../frontend/src/app/features/catalog/catalog.repository.ts), and [`../frontend/src/app/features/billing-history/billing-history.repository.ts`](../frontend/src/app/features/billing-history/billing-history.repository.ts)
 - the order entry and host admin screens compose those capability stores through local view-model helpers instead of a single broad tally store, and the active route no longer treats [`../frontend/src/app/features/drink-tally/`](../frontend/src/app/features/drink-tally/) as its screen contract
-- public feature API entrypoints live at feature roots, and import-boundary enforcement runs through [`../frontend/scripts/check-import-boundaries.mjs`](../frontend/scripts/check-import-boundaries.mjs)
+- public feature API entrypoints live at feature roots, and import-boundary enforcement runs through the frontend ESLint config in [`../frontend/eslint.config.js`](../frontend/eslint.config.js)
 
 That is closer to the architecture we want to scale, and the next priority can now shift back to product-surface work on top of those seams.
 
@@ -147,7 +147,7 @@ These are the intended dependency boundaries:
 
 If one feature needs another feature's behavior, add or refine the other feature's [public API](glossary.md#public-api) instead of importing its internal store or helper file directly.
 
-The repo now enforces the frontend part of that boundary in [`../frontend/scripts/check-import-boundaries.mjs`](../frontend/scripts/check-import-boundaries.mjs). The check allows cross-feature imports only when they resolve through a top-level feature root [`index.ts`](../frontend/src/app/features/catalog/index.ts), keeps app-shell files on feature public APIs, and blocks shared UI from importing feature-owned business code.
+The repo now enforces the frontend part of that boundary in [`../frontend/eslint.config.js`](../frontend/eslint.config.js). The lint rules allow cross-feature imports only when they resolve through a top-level feature root [`index.ts`](../frontend/src/app/features/catalog/index.ts), keep app-shell files on feature public APIs, and block shared UI from importing feature-owned business code.
 
 ## State Ownership
 

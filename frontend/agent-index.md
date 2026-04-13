@@ -32,8 +32,9 @@ Before running `npm` or `ng` commands in a new shell session, run `nvm use` from
 
 Run from [`frontend/`](./):
 
+- `npm run lint`
 - `npm test -- --watch=false`
-- `npm run build` (includes [`scripts/check-import-boundaries.mjs`](scripts/check-import-boundaries.mjs))
+- `npm run build`
 
 ## Constraints
 
