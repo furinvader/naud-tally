@@ -1,11 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { DRINK_CATALOG, DrinkCatalogEntry } from '../catalog';
-import {
-  DrinkCounts,
-  GUEST_TABS_STORAGE_KEY,
-  GuestTabsStore,
-} from './guest-tabs.store';
+import { DrinkCounts } from './guest-tabs.domain';
+import { GUEST_TABS_STORAGE_KEY } from './guest-tabs.repository';
+import { GuestTabsStore } from './guest-tabs.store';
 
 describe('GuestTabsStore', () => {
   beforeEach(() => {

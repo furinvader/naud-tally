@@ -58,6 +58,7 @@ Feature boundaries and layer boundaries are different rules.
 - Internal files inside one feature should import each other directly instead of looping through that same public entrypoint.
 - Public entrypoints should export only the cross-feature surface another feature is allowed to know about.
 - Repositories and other adapters are internal by default and should not be exported from the public entrypoint unless there is a deliberate reason to make them part of the feature contract.
+- If you want layer-aware rules across features, the public entrypoint itself must also be split by responsibility. One mixed public API can protect internal files, but it cannot tell a linter which exports are `domain`-safe versus presentation- or application-oriented.
 
 ## Folders and Naming
 
@@ -107,3 +108,4 @@ Disallowed:
 - When an application file currently owns both orchestration and domain logic, move pure business types and rules into a domain-owned file before tightening import checks.
 - When an adapter currently depends on application-owned types, move those types into `domain` or another pure file owned by the same feature.
 - Start with the feature that has the clearest payoff rather than the biggest feature by file count.
+- When cross-feature consumers need stricter guarantees than "public API only", create narrower public surfaces first instead of expecting a linter to infer layer intent from one mixed entrypoint.

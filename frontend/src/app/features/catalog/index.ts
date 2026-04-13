@@ -1,14 +1,14 @@
 export {
-  CatalogStore,
   DRINK_CATALOG,
-  DRINK_CATALOG_STORAGE_KEY,
   findDrinkById,
   formatEuroPrice,
   getDrinkById,
-} from './catalog.store';
+} from './catalog.domain';
+export { CatalogStore } from './catalog.store';
+export { DRINK_CATALOG_STORAGE_KEY } from './catalog.repository';
 
 export type {
-  AddDrinkResult,
   DrinkCatalogEntry,
   DrinkId,
-} from './catalog.store';
+} from './catalog.domain';
+export type { AddDrinkResult } from './catalog.store';

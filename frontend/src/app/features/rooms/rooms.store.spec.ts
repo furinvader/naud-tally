@@ -1,9 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  ROOMS_STORAGE_KEY,
-  RoomsStore,
-} from './rooms.store';
+import { ROOMS_STORAGE_KEY } from './rooms.repository';
+import { RoomsStore } from './rooms.store';
 
 describe('RoomsStore', () => {
   beforeEach(() => {

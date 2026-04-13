@@ -5,11 +5,6 @@ const tseslint = require('typescript-eslint');
 const angular = require('angular-eslint');
 const boundaries = require('eslint-plugin-boundaries');
 
-const featurePublicApiSelector = {
-  type: 'feature',
-  internalPath: 'index.ts',
-};
-
 const importBoundaryExceptions = [
   // Add a temporary exception only when a migration task requires it.
   // Format:
@@ -19,6 +14,21 @@ const importBoundaryExceptions = [
   // }
   // Every exception should include a nearby comment with the task that will remove it.
 ];
+
+function sameFeatureSelector(type) {
+  return {
+    type,
+    captured: {
+      featureName: '{{from.captured.featureName}}',
+    },
+  };
+}
+
+const otherFeaturePublicApiSelector = {
+  type: 'feature-public-api',
+};
+
+const sameFeaturePublicApiSelector = sameFeatureSelector('feature-public-api');
 
 module.exports = defineConfig([
   {
@@ -60,10 +70,45 @@ module.exports = defineConfig([
       'boundaries/include': ['src/app/**/*.ts'],
       'boundaries/elements': [
         {
-          type: 'feature',
-          pattern: 'features/*',
-          basePattern: 'src/app',
+          type: 'feature-public-api',
+          pattern: 'src/app/features/(*)/index.ts',
           capture: ['featureName'],
+          mode: 'full',
+        },
+        {
+          type: 'feature-test',
+          pattern: '*.spec.ts',
+          basePattern: 'src/app/features/*',
+          baseCapture: ['featureName'],
+          mode: 'file',
+        },
+        {
+          type: 'feature-adapters',
+          pattern: ['*.repository.ts', '*.storage.ts', '*.client.ts', '*.sync.ts'],
+          basePattern: 'src/app/features/*',
+          baseCapture: ['featureName'],
+          mode: 'file',
+        },
+        {
+          type: 'feature-application',
+          pattern: ['*.store.ts', '*.facade.ts'],
+          basePattern: 'src/app/features/*',
+          baseCapture: ['featureName'],
+          mode: 'file',
+        },
+        {
+          type: 'feature-domain',
+          pattern: ['*.domain.ts', '*.models.ts'],
+          basePattern: 'src/app/features/*',
+          baseCapture: ['featureName'],
+          mode: 'file',
+        },
+        {
+          type: 'feature-presentation',
+          pattern: ['*.copy.ts', '*.ts'],
+          basePattern: 'src/app/features/*',
+          baseCapture: ['featureName'],
+          mode: 'file',
         },
         {
           type: 'ui',
@@ -88,6 +133,7 @@ module.exports = defineConfig([
       'boundaries/dependencies': [
         'error',
         {
+          checkInternals: true,
           default: 'disallow',
           rules: [
             ...importBoundaryExceptions,
@@ -98,15 +144,92 @@ module.exports = defineConfig([
                   { type: 'app-shell' },
                   { type: 'ui' },
                   { type: 'core' },
-                  featurePublicApiSelector,
+                  otherFeaturePublicApiSelector,
                 ],
               },
             },
             {
-              from: { type: 'feature' },
+              from: { type: 'feature-public-api' },
               allow: {
-                to: [{ type: 'ui' }, { type: 'core' }, featurePublicApiSelector],
+                to: [
+                  sameFeatureSelector('feature-presentation'),
+                  sameFeatureSelector('feature-application'),
+                  sameFeatureSelector('feature-adapters'),
+                  sameFeatureSelector('feature-domain'),
+                ],
               },
+            },
+            {
+              from: { type: 'feature-test' },
+              allow: {
+                to: [
+                  sameFeatureSelector('feature-presentation'),
+                  sameFeatureSelector('feature-application'),
+                  sameFeatureSelector('feature-adapters'),
+                  sameFeatureSelector('feature-domain'),
+                  { type: 'ui' },
+                  { type: 'core' },
+                  otherFeaturePublicApiSelector,
+                ],
+              },
+            },
+            {
+              from: { type: 'feature-presentation' },
+              allow: {
+                to: [
+                  sameFeatureSelector('feature-presentation'),
+                  sameFeatureSelector('feature-application'),
+                  sameFeatureSelector('feature-domain'),
+                  { type: 'ui' },
+                  { type: 'core' },
+                  otherFeaturePublicApiSelector,
+                ],
+              },
+            },
+            {
+              from: { type: 'feature-application' },
+              allow: {
+                to: [
+                  sameFeatureSelector('feature-application'),
+                  sameFeatureSelector('feature-adapters'),
+                  sameFeatureSelector('feature-domain'),
+                  { type: 'core' },
+                  otherFeaturePublicApiSelector,
+                ],
+              },
+            },
+            {
+              from: { type: 'feature-adapters' },
+              allow: {
+                to: [
+                  sameFeatureSelector('feature-adapters'),
+                  sameFeatureSelector('feature-domain'),
+                  { type: 'core' },
+                  otherFeaturePublicApiSelector,
+                ],
+              },
+            },
+            {
+              from: { type: 'feature-domain' },
+              allow: {
+                to: [sameFeatureSelector('feature-domain'), otherFeaturePublicApiSelector],
+              },
+            },
+            {
+              from: {
+                type: [
+                  'feature-test',
+                  'feature-presentation',
+                  'feature-application',
+                  'feature-adapters',
+                  'feature-domain',
+                ],
+              },
+              disallow: {
+                to: sameFeaturePublicApiSelector,
+              },
+              message:
+                'Import same-feature files directly instead of looping through the feature index.ts public API.',
             },
             {
               from: { type: 'ui' },

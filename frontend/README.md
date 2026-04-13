@@ -9,7 +9,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - The frontend Node version is pinned in [`.nvmrc`](.nvmrc).
 - Before running `npm` or `ng` commands in a new shell session, run `nvm use` from [`frontend/`](./).
 - Reuse the same shell session for multiple frontend commands when possible.
-- Use [`npm run lint`](package.json) for the frontend lint suite, including the import-boundary checks enforced from [`eslint.config.js`](eslint.config.js).
+- Use [`npm run lint`](package.json) for the frontend lint suite, including the import-boundary and feature-layer checks enforced from [`eslint.config.js`](eslint.config.js).
 
 ## Current Frontend Layout
 
@@ -50,6 +50,8 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Treat the feature-root [`index.ts`](src/app/features/catalog/index.ts) pattern as the cross-feature public API, not as an internal import shortcut inside the same feature.
 - In practice, frontend components should talk to local stores or facades, stores may depend on local repositories and pure domain helpers, repositories may depend on pure domain types, and components must not import repositories directly.
 - Keep `domain` code free of Angular, browser storage, HTTP, and dependency-injection concerns.
+- [`eslint.config.js`](eslint.config.js) now enforces this Phase 1 frontend mapping under [`src/app/features/`](src/app/features/): `*.store.ts` and `*.facade.ts` are treated as `application`, `*.repository.ts`, `*.storage.ts`, `*.client.ts`, and `*.sync.ts` as `adapters`, `*.domain.ts` and `*.models.ts` as `domain`, `*.copy.ts` and other feature `*.ts` files as `presentation`, and `*.spec.ts` as tests.
+- Internal feature files must import same-feature code directly instead of looping through that feature's [`index.ts`](src/app/features/catalog/index.ts) entrypoint.
 
 Typical frontend mapping:
 
@@ -100,7 +102,8 @@ Current frontend examples:
 - Import the feature directory path instead of a deep file path when consuming another feature.
 - Do not deep-import another feature's internal store, helper, or implementation file by default.
 - If a reusable cross-feature API is missing, create it in the owning feature instead of bypassing the boundary.
-- [`eslint.config.js`](eslint.config.js) enforces this rule for local validation and CI: app-shell files may import feature roots only, feature-to-feature imports may cross boundaries only through the target feature root, and shared UI may not import feature-owned code.
+- [`eslint.config.js`](eslint.config.js) enforces this rule for local validation and CI: app-shell files may import feature roots only, feature-to-feature imports may cross boundaries only through the target feature root, shared UI may not import feature-owned code, and same-feature files must follow the frontend layer direction above.
+- Cross-feature imports are still checked at the public-API boundary, not by the internal layer of the exported symbol. If a future rule needs `domain`-safe imports across features, split the providing feature into narrower public surfaces first.
 - Temporary exceptions are off by default. If a migration truly needs one, add a single explicit rule entry in [`eslint.config.js`](eslint.config.js) with the task that will remove it.
 
 ### Shared UI

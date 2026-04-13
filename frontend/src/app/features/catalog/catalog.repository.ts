@@ -1,4 +1,9 @@
-import type { DrinkCatalogEntry } from './catalog.store';
+import {
+  DrinkCatalogEntry,
+  createDrinkCatalogId,
+  normalizeDisplayText,
+  normalizePriceCents,
+} from './catalog.domain';
 
 export const DRINK_CATALOG_STORAGE_KEY = 'naud-tally.drink-catalog';
 
@@ -97,14 +102,6 @@ function normalizeId(value: unknown): string | null {
   return normalized ? normalized : null;
 }
 
-function normalizeDisplayText(value: unknown): string {
-  if (typeof value !== 'string') {
-    return '';
-  }
-
-  return value.trim().replace(/\s+/g, ' ');
-}
-
 function normalizeTimestamp(value: unknown, fallback: string): string {
   if (typeof value !== 'string') {
     return fallback;
@@ -121,37 +118,6 @@ function normalizeTimestamp(value: unknown, fallback: string): string {
 
 function normalizeBoolean(value: unknown, fallback: boolean): boolean {
   return typeof value === 'boolean' ? value : fallback;
-}
-
-function normalizePriceCents(value: unknown): number | null {
-  if (typeof value !== 'number' || !Number.isFinite(value)) {
-    return null;
-  }
-
-  return Math.max(0, Math.round(value));
-}
-
-function createDrinkCatalogId(name: string, suffixSeed?: number): string {
-  const slug = normalizeDisplayText(name)
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 24);
-  const baseId = slug || 'drink';
-
-  if (typeof suffixSeed === 'number') {
-    return `${baseId}-${suffixSeed}`;
-  }
-
-  return `${baseId}-${createRecordId('catalog').slice(-8)}`;
-}
-
-function createRecordId(prefix: string): string {
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
-    return `${prefix}-${crypto.randomUUID()}`;
-  }
-
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
 }
 
 function createTimestamp(): string {
