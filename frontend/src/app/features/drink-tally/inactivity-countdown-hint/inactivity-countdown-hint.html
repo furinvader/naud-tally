@@ -4,7 +4,7 @@
   data-testid="close-personal-tab"
   [style.--nt-timeout-progress]="progressPercent()"
   [style.--nt-timeout-ring-offset]="ringOffset()"
-  (click)="close.emit()"
+  (click)="closeHint.emit()"
 >
   <span
     class="inactivity-hint__fill"

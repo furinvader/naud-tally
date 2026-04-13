@@ -22,7 +22,7 @@ export class AddGuestFlowCard {
   readonly submitRoomNumber = output<void>();
   readonly submitGuestIdentity = output<void>();
   readonly back = output<void>();
-  readonly cancel = output<void>();
+  readonly cancelFlow = output<void>();
 
   protected onRoomNumberInput(event: Event): void {
     this.roomNumberInput.emit(this.readInputValue(event));

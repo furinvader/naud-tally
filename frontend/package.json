@@ -2,10 +2,10 @@
   "name": "naud-tally",
   "version": "0.0.0",
   "scripts": {
-    "check:import-boundaries": "node ./scripts/check-import-boundaries.mjs",
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run check:import-boundaries && ng build",
+    "lint": "ng lint",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
@@ -28,9 +28,14 @@
     "@angular/build": "^21.2.5",
     "@angular/cli": "^21.2.5",
     "@angular/compiler-cli": "^21.2.0",
+    "@eslint/js": "^10.0.1",
+    "angular-eslint": "^21.3.1",
+    "eslint": "^10.2.0",
+    "eslint-plugin-boundaries": "^6.0.2",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2",
+    "typescript-eslint": "^8.58.2",
     "vitest": "^4.0.8"
   }
 }

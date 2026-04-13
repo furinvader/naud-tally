@@ -14,5 +14,5 @@ export class InactivityCountdownHint {
   readonly actionLabel = input('Tap to close now');
   readonly progressPercent = input('0%');
   readonly ringOffset = input('0');
-  readonly close = output<void>();
+  readonly closeHint = output<void>();
 }

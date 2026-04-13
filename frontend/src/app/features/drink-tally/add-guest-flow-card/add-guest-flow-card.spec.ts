@@ -15,11 +15,11 @@ describe('AddGuestFlowCard', () => {
     const fixture = TestBed.createComponent(AddGuestFlowCard);
     const roomNumberInput = vi.fn();
     const submitRoomNumber = vi.fn();
-    const cancel = vi.fn();
+    const cancelFlow = vi.fn();
 
     fixture.componentInstance.roomNumberInput.subscribe(roomNumberInput);
     fixture.componentInstance.submitRoomNumber.subscribe(submitRoomNumber);
-    fixture.componentInstance.cancel.subscribe(cancel);
+    fixture.componentInstance.cancelFlow.subscribe(cancelFlow);
     fixture.componentRef.setInput('flow', {
       step: 'roomNumber',
       roomNumber: '',
@@ -58,7 +58,7 @@ describe('AddGuestFlowCard', () => {
     cancelButton?.click();
 
     expect(submitRoomNumber).toHaveBeenCalledTimes(1);
-    expect(cancel).toHaveBeenCalledTimes(1);
+    expect(cancelFlow).toHaveBeenCalledTimes(1);
   });
 
   it('should render the full-name step and emit full-name input, submit, and back actions', async () => {
