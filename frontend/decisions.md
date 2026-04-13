@@ -53,6 +53,16 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Consequence: shared UI under [`src/app/ui/`](src/app/ui/) may not import feature-owned business code
 - Consequence: temporary exceptions require a single explicit allowlist entry in [`scripts/check-import-boundaries.mjs`](scripts/check-import-boundaries.mjs) plus a task reference for cleanup
 
+## Use Logical Layers Inside Frontend Features Without Layer Folders
+
+- Status: accepted
+- Why: the current feature-first structure is easy to navigate, but larger features need a stable way to separate components, orchestration, infrastructure boundaries, and pure business rules without turning subfolders into ambiguous layer buckets
+- Consequence: inside one frontend feature or one real subfeature, use the logical layer names `presentation`, `application`, `adapters`, and `domain`
+- Consequence: keep subfolders meaning owned area or subfeature, and express layer responsibilities through file names and import direction first
+- Consequence: do not create `presentation/`, `application/`, `adapters/`, or `domain/` folders as a frontend convention
+- Consequence: treat a feature-root [`index.ts`](src/app/features/catalog/index.ts) entrypoint as the cross-feature public API rather than as an internal import shortcut
+- Consequence: use [`../docs/layering.md`](../docs/layering.md) as the general rule set for allowed dependency direction, and use [`README.md`](README.md) for concrete frontend file-role suffixes and examples
+
 ## Separate Persistent Business State From Transient Screen State
 
 - Status: accepted
@@ -61,11 +71,11 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Consequence: transient route state such as selected guest, draft inputs, and local flash messages should stay with the route composition feature that owns the screen interaction
 - Consequence: feature stores should avoid accumulating route-only view state just because it is convenient in the short term
 
-## Keep Storage and Remote IO Behind Data Adapters
+## Keep Storage and Remote IO Behind Adapters
 
 - Status: accepted
 - Why: local-first persistence and later remote recovery will stay easier to reason about if storage details are isolated from route composition code and domain rules
-- Consequence: browser persistence should live behind repositories or equivalent data adapters inside the owning feature area
+- Consequence: browser persistence should live behind repositories or equivalent adapters inside the owning feature area
 - Consequence: route features, components, and pure domain-rule files should not call browser storage APIs directly
 - Consequence: remote sync clients should sit behind the same capability boundary instead of being called from route components
 

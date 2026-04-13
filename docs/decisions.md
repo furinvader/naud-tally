@@ -41,6 +41,16 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Consequence: prefer small public APIs between capabilities over direct imports into another feature's internal files
 - Consequence: use [`architecture.md`](architecture.md) as the repository-level map for those boundaries
 
+## Use Logical Layers Inside Features Without Replacing Feature-First Structure
+
+- Status: accepted
+- Why: feature-first ownership keeps the repository navigable, but growing features still need a clear way to separate screen wiring, orchestration, infrastructure boundaries, and pure business rules
+- Consequence: keep top-level structure feature-first, and use subfolders for real subfeatures or clearly owned internal areas instead of default layer folders
+- Consequence: use the logical layer names `presentation`, `application`, `adapters`, and `domain` inside one feature or subfeature
+- Consequence: do not create `presentation/`, `application/`, `adapters/`, or `domain/` folders as a repository convention
+- Consequence: keep the general dependency rules in [`layering.md`](layering.md), and keep concrete naming examples in the nearest area-specific docs
+- Consequence: treat a feature-root `index.ts` as that feature's public API rather than as a shortcut for internal imports
+
 ## Keep a Repo-Native Architecture Map and Glossary
 
 - Status: accepted
