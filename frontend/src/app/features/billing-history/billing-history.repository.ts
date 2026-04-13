@@ -1,4 +1,4 @@
-import type { BilledGuestTab, GuestBillLineItem } from './billing-history.store';
+import type { BilledGuestTab, GuestBillLineItem } from './billing-history.domain';
 
 export const BILLED_GUEST_TABS_STORAGE_KEY = 'naud-tally.billed-guest-tabs';
 
