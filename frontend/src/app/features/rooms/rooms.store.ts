@@ -8,16 +8,10 @@ import {
   withState,
 } from '@ngrx/signals';
 
+import { Room, normalizeDisplayText, sortRooms } from './rooms.domain';
 import { loadRooms, saveRooms } from './rooms.repository';
 
 export { ROOMS_STORAGE_KEY } from './rooms.repository';
-
-export type Room = {
-  id: string;
-  roomNumber: string;
-  createdAt: string;
-  updatedAt: string;
-};
 
 export type AddRoomResult =
   | {
@@ -32,11 +26,6 @@ export type AddRoomResult =
 type RoomsState = {
   rooms: Room[];
 };
-
-const roomNumberCollator = new Intl.Collator(undefined, {
-  numeric: true,
-  sensitivity: 'base',
-});
 
 const initialState: RoomsState = {
   rooms: [],
@@ -110,20 +99,6 @@ export const RoomsStore = signalStore(
     },
   }),
 );
-
-export function sortRooms(rooms: Room[]): Room[] {
-  return [...rooms].sort((left, right) =>
-    roomNumberCollator.compare(left.roomNumber, right.roomNumber),
-  );
-}
-
-function normalizeDisplayText(value: unknown): string {
-  if (typeof value !== 'string') {
-    return '';
-  }
-
-  return value.trim().replace(/\s+/g, ' ');
-}
 
 function createRoomId(): string {
   return createRecordId('room');

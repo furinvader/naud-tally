@@ -52,6 +52,9 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Consequence: app-shell files may import feature code only through a top-level feature [`index.ts`](src/app/features/catalog/index.ts) entrypoint
 - Consequence: cross-feature imports may target another feature only through that feature's root entrypoint, not an internal file
 - Consequence: shared UI under [`src/app/ui/`](src/app/ui/) may not import feature-owned business code
+- Consequence: feature-internal files are also linted with suffix-based layer roles, where `*.store.ts` and `*.facade.ts` are `application`, `*.repository.ts`, `*.storage.ts`, `*.client.ts`, and `*.sync.ts` are `adapters`, `*.domain.ts` and `*.models.ts` are `domain`, `*.copy.ts` and other feature `*.ts` files are `presentation`, and `*.spec.ts` files are tests
+- Consequence: internal files inside one feature must import each other directly instead of routing through that feature's root [`index.ts`](src/app/features/catalog/index.ts) entrypoint
+- Consequence: cross-feature layer-aware linting stops at the public API boundary for now; stricter cross-feature `domain`-safe or `application`-safe imports require narrower exported entrypoints in the providing feature
 - Consequence: temporary exceptions require a single explicit rule entry in [`eslint.config.js`](eslint.config.js) plus a task reference for cleanup
 
 ## Use Logical Layers Inside Frontend Features Without Layer Folders

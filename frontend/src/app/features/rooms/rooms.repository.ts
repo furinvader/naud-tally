@@ -1,4 +1,4 @@
-import type { Room } from './rooms.store';
+import { Room, normalizeDisplayText } from './rooms.domain';
 
 export const ROOMS_STORAGE_KEY = 'naud-tally.rooms';
 
@@ -93,14 +93,6 @@ function normalizeId(value: unknown): string | null {
 
   const normalized = value.trim();
   return normalized ? normalized : null;
-}
-
-function normalizeDisplayText(value: unknown): string {
-  if (typeof value !== 'string') {
-    return '';
-  }
-
-  return value.trim().replace(/\s+/g, ' ');
 }
 
 function normalizeTimestamp(value: unknown, fallback: string): string {

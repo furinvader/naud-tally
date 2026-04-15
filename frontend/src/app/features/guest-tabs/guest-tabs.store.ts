@@ -9,30 +9,21 @@ import {
 } from '@ngrx/signals';
 
 import { DrinkCatalogEntry, DrinkId, findDrinkById } from '../catalog';
+import {
+  DrinkCounts,
+  GuestTab,
+  getDrinkCount,
+  normalizeDisplayText,
+  normalizeDrinkOrder,
+  sortGuestTabs,
+} from './guest-tabs.domain';
 import { loadGuestTabs, saveGuestTabs } from './guest-tabs.repository';
 
 export { GUEST_TABS_STORAGE_KEY } from './guest-tabs.repository';
 
-export type DrinkCounts = Partial<Record<DrinkId, number>> & Record<string, number>;
-
-export type GuestTab = {
-  id: string;
-  roomNumber: string;
-  fullName: string;
-  counts: DrinkCounts;
-  drinkOrder: DrinkId[];
-  createdAt: string;
-  updatedAt: string;
-};
-
 type GuestTabsState = {
   guestTabs: GuestTab[];
 };
-
-const roomNumberCollator = new Intl.Collator(undefined, {
-  numeric: true,
-  sensitivity: 'base',
-});
 
 const initialState: GuestTabsState = {
   guestTabs: [],
@@ -188,39 +179,6 @@ export const GuestTabsStore = signalStore(
   }),
 );
 
-export function sortGuestTabs(guestTabs: GuestTab[]): GuestTab[] {
-  return [...guestTabs].sort((left, right) => {
-    const totalDifference = countDrinks(right.counts) - countDrinks(left.counts);
-
-    if (totalDifference !== 0) {
-      return totalDifference;
-    }
-
-    const roomDifference = roomNumberCollator.compare(left.roomNumber, right.roomNumber);
-
-    if (roomDifference !== 0) {
-      return roomDifference;
-    }
-
-    return left.fullName.localeCompare(right.fullName);
-  });
-}
-
-export function countDrinks(counts: DrinkCounts): number {
-  return Object.values(counts).reduce((total, count) => total + normalizeCountValue(count), 0);
-}
-
-export function roomNumbersMatch(left: unknown, right: unknown): boolean {
-  const normalizedLeft = normalizeRoomNumber(left);
-  const normalizedRight = normalizeRoomNumber(right);
-
-  return normalizedLeft.length > 0 && normalizedLeft === normalizedRight;
-}
-
-export function getDrinkCount(counts: DrinkCounts, drinkId: string): number {
-  return normalizeCountValue(counts[drinkId]);
-}
-
 function setDrinkCount(counts: DrinkCounts, drinkId: string, count: number): DrinkCounts {
   const normalizedCount = normalizeCountValue(count);
   const nextCounts = { ...counts };
@@ -254,56 +212,8 @@ function updateDrinkOrder(
   return normalizedOrder;
 }
 
-function normalizeDrinkOrder(
-  value: unknown,
-  counts: DrinkCounts,
-): DrinkId[] {
-  const normalizedOrder: DrinkId[] = [];
-  const seen = new Set<string>();
-
-  if (Array.isArray(value)) {
-    for (const entry of value) {
-      if (typeof entry !== 'string') {
-        continue;
-      }
-
-      const normalizedEntry = entry.trim();
-
-      if (!normalizedEntry || seen.has(normalizedEntry) || getDrinkCount(counts, normalizedEntry) <= 0) {
-        continue;
-      }
-
-      normalizedOrder.push(normalizedEntry);
-      seen.add(normalizedEntry);
-    }
-  }
-
-  for (const drinkId of Object.keys(counts)) {
-    if (seen.has(drinkId) || getDrinkCount(counts, drinkId) <= 0) {
-      continue;
-    }
-
-    normalizedOrder.push(drinkId);
-    seen.add(drinkId);
-  }
-
-  return normalizedOrder;
-}
-
-function normalizeDisplayText(value: unknown): string {
-  if (typeof value !== 'string') {
-    return '';
-  }
-
-  return value.trim().replace(/\s+/g, ' ');
-}
-
-function normalizeRoomNumber(value: unknown): string {
-  return normalizeDisplayText(value).toLowerCase();
-}
-
 function createIdentityKey(roomNumber: string, fullName: string): string {
-  return `${normalizeRoomNumber(roomNumber)}::${normalizeDisplayText(fullName).toLowerCase()}`;
+  return `${normalizeDisplayText(roomNumber).toLowerCase()}::${normalizeDisplayText(fullName).toLowerCase()}`;
 }
 
 function normalizeCountValue(value: unknown): number {

@@ -1,4 +1,10 @@
-import type { DrinkCounts, GuestTab } from './guest-tabs.store';
+import {
+  DrinkCounts,
+  GuestTab,
+  normalizeCountValue,
+  normalizeDisplayText,
+  normalizeDrinkOrder,
+} from './guest-tabs.domain';
 
 export const GUEST_TABS_STORAGE_KEY = 'naud-tally.guest-tabs';
 
@@ -104,43 +110,6 @@ function normalizeCounts(value: unknown): DrinkCounts {
   return counts;
 }
 
-function normalizeDrinkOrder(value: unknown, counts: DrinkCounts): string[] {
-  const normalizedOrder: string[] = [];
-  const seen = new Set<string>();
-
-  if (Array.isArray(value)) {
-    for (const entry of value) {
-      if (typeof entry !== 'string') {
-        continue;
-      }
-
-      const normalizedEntry = entry.trim();
-
-      if (
-        !normalizedEntry ||
-        seen.has(normalizedEntry) ||
-        normalizeCountValue(counts[normalizedEntry]) <= 0
-      ) {
-        continue;
-      }
-
-      normalizedOrder.push(normalizedEntry);
-      seen.add(normalizedEntry);
-    }
-  }
-
-  for (const drinkId of Object.keys(counts)) {
-    if (seen.has(drinkId) || normalizeCountValue(counts[drinkId]) <= 0) {
-      continue;
-    }
-
-    normalizedOrder.push(drinkId);
-    seen.add(drinkId);
-  }
-
-  return normalizedOrder;
-}
-
 function normalizeId(value: unknown): string | null {
   if (typeof value !== 'string') {
     return null;
@@ -162,22 +131,6 @@ function normalizeTimestamp(value: unknown, fallback: string): string {
   }
 
   return normalized;
-}
-
-function normalizeDisplayText(value: unknown): string {
-  if (typeof value !== 'string') {
-    return '';
-  }
-
-  return value.trim().replace(/\s+/g, ' ');
-}
-
-function normalizeCountValue(value: unknown): number {
-  if (typeof value !== 'number' || !Number.isFinite(value)) {
-    return 0;
-  }
-
-  return Math.max(0, Math.trunc(value));
 }
 
 function createGuestTabId(): string {

@@ -1,10 +1,10 @@
 export {
-  ROOMS_STORAGE_KEY,
-  RoomsStore,
   sortRooms,
-} from './rooms.store';
+} from './rooms.domain';
+export { ROOMS_STORAGE_KEY } from './rooms.repository';
+export { RoomsStore } from './rooms.store';
 
 export type {
-  AddRoomResult,
   Room,
-} from './rooms.store';
+} from './rooms.domain';
+export type { AddRoomResult } from './rooms.store';

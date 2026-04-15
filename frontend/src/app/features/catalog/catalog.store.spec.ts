@@ -1,10 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  CatalogStore,
-  DRINK_CATALOG,
-  DRINK_CATALOG_STORAGE_KEY,
-} from './catalog.store';
+import { DRINK_CATALOG } from './catalog.domain';
+import { DRINK_CATALOG_STORAGE_KEY } from './catalog.repository';
+import { CatalogStore } from './catalog.store';
 
 describe('CatalogStore', () => {
   beforeEach(() => {
