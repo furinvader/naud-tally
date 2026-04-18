@@ -27,25 +27,20 @@ jobs:
           required_files=(
             AGENTS.md
             PLANS.md
-            agent-index.md
             README.md
             LICENSE
             CONTRIBUTING.md
-            docs/agent-index.md
             docs/product.md
             docs/architecture.md
             docs/glossary.md
             docs/agentic-workflow.md
             docs/decisions.md
             docs/tasks.md
-            docs/tasks/agent-index.md
-            docs/tasks/open/agent-index.md
-            docs/tasks/done/agent-index.md
-            docs/workflows/agent-index.md
+            docs/tasks/README.md
             docs/workflows/publish.md
             docs/github-setup.md
+            frontend/AGENTS.md
             frontend/README.md
-            frontend/agent-index.md
             frontend/decisions.md
           )
 
