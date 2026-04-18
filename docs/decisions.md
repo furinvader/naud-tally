@@ -14,10 +14,10 @@ This file records repository-wide decisions that shape the build. Each decision 
 ## Name Scoped Decision Files [`decisions.md`](decisions.md)
 
 - Status: accepted
-- Why: these files hold general project decisions, not agent-only instructions, and the shorter name is easier to scan beside local [`agent-index.md`](../agent-index.md) routing docs
+- Why: these files hold general project decisions, not agent-only instructions, and the shorter name is easier to scan beside area-local [`AGENTS.md`](../frontend/AGENTS.md) or [`README.md`](../frontend/README.md) guidance
 - Consequence: repository-wide decisions live in [`docs/decisions.md`](decisions.md)
 - Consequence: area-specific decisions should live in the nearest scoped [`decisions.md`](../frontend/decisions.md) when a separate file is useful
-- Consequence: keep decision content separate from routing indexes unless the decision set grows enough to justify a dedicated catalog
+- Consequence: keep decision content separate from instruction files and README-style navigation unless the decision set grows enough to justify a dedicated catalog
 
 ## Start With Docs Before Scaffolding
 
@@ -154,11 +154,12 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Consequence: a future overview screen remains deferred until the order-entry screen is solid
 - Consequence: the public guest tally flow is now future consideration only and should not stay part of the active pilot surface
 
-## Route Agents Through [`AGENTS.md`](../AGENTS.md) and [`agent-index.md`](../agent-index.md)
+## Route Agents Through [`AGENTS.md`](../AGENTS.md), [`frontend/AGENTS.md`](../frontend/AGENTS.md), and Source-of-Truth Docs
 
 - Status: accepted
-- Why: chat context is temporary, so the repository needs small, reliable entrypoints that let agents recover the right context quickly
-- Consequence: agents should start with [`AGENTS.md`](../AGENTS.md) and the nearest relevant [`agent-index.md`](../agent-index.md), following links instead of scanning broad docs by default
+- Why: chat context is temporary, so the repository needs small, reliable entrypoints that let agents recover the right context quickly without maintaining a parallel tree of routing-only docs
+- Consequence: agents should start with [`AGENTS.md`](../AGENTS.md), use [`frontend/AGENTS.md`](../frontend/AGENTS.md) for frontend work, and load the smallest relevant source docs instead of scanning broad context by default
+- Consequence: ordinary docs such as [`docs/tasks.md`](tasks.md), [`docs/tasks/README.md`](tasks/README.md), [`frontend/README.md`](../frontend/README.md), and [`docs/design/README.md`](design/README.md) carry the durable navigation layer
 
 ## Load Publish Rules Only at Publish Time
 
@@ -177,7 +178,7 @@ This file records repository-wide decisions that shape the build. Each decision 
 
 - Status: accepted
 - Why: research findings often support more than one task and stay more useful when they are stored as reusable docs instead of being buried inside task history
-- Consequence: research briefs live under [`docs/research/`](research/) with a small routing index at [`docs/research/agent-index.md`](research/agent-index.md)
+- Consequence: research briefs live under [`docs/research/`](research/) in a flat, topic-based layout
 - Consequence: keep the research folder flat for now and use topic-based filenames so multiple tasks can link to the same brief
 - Consequence: research briefs do not need a `Status` section unless a future workflow explicitly requires one
 - Consequence: task files should link to the relevant research brief from `Related docs` instead of embedding `Research Notes` sections

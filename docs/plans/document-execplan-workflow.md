@@ -4,7 +4,7 @@ This ExecPlan is a living document. The sections `Progress`, `Surprises & Discov
 
 Related tasks: none yet. This plan establishes repository workflow rather than product scope.
 
-Related docs: [`AGENTS.md`](../../AGENTS.md), [`agent-index.md`](../../agent-index.md), [`PLANS.md`](../../PLANS.md), [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), [`docs/tasks/agent-index.md`](../tasks/agent-index.md).
+Related docs: [`AGENTS.md`](../../AGENTS.md), [`PLANS.md`](../../PLANS.md), [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), [`docs/tasks/README.md`](../tasks/README.md).
 
 ## Purpose / Big Picture
 
@@ -25,7 +25,7 @@ After this change, the repository will have a clear, reusable way to store long-
   Evidence: Listing the directory showed no existing plan files.
 
 - Observation: The existing task template already had a `Related docs` slot, so plan-to-task linking could be added without changing the task file structure.
-  Evidence: [`docs/tasks/agent-index.md`](../tasks/agent-index.md) already defined `Related docs` as part of the standard task layout.
+  Evidence: [`docs/tasks/README.md`](../tasks/README.md) defines `Related docs` as part of the standard task layout.
 
 - Observation: The repo markdown-link checker treats raw tracked-path mentions in inline code and indented command examples as failures, so even validation examples inside plan docs need link-safe wording.
   Evidence: `python3 scripts/check-markdown-repo-links.py` initially flagged raw mentions of [`PLANS.md`](../../PLANS.md), [`docs/plans/`](./), and command-argument path tokens in this file, then passed after those references were rewritten.
@@ -56,7 +56,7 @@ No product or runtime behavior changed. Future work should only add more plan fi
 
 ## Context and Orientation
 
-Before this change, the repository already had a strong routing pattern built around [`AGENTS.md`](../../AGENTS.md) and local [`agent-index.md`](../../agent-index.md) files, plus human-facing workflow guidance in [`docs/agentic-workflow.md`](../agentic-workflow.md). It did not have a checked-in [`PLANS.md`](../../PLANS.md) file or a defined place to store repository execution plans.
+Before this change, the repository already had a strong routing pattern built around [`AGENTS.md`](../../AGENTS.md) and local routing files, plus human-facing workflow guidance in [`docs/agentic-workflow.md`](../agentic-workflow.md). It did not have a checked-in [`PLANS.md`](../../PLANS.md) file or a defined place to store repository execution plans.
 
 Task files already support `Related docs`, and repository-wide workflow decisions already live in [`docs/decisions.md`](../decisions.md). That meant the smallest coherent change was to add a plan contract and index in [`PLANS.md`](../../PLANS.md), store individual plans under [`docs/plans/`](./), and connect the convention to the existing task and workflow docs.
 
@@ -64,7 +64,7 @@ Task files already support `Related docs`, and repository-wide workflow decision
 
 Add a root [`PLANS.md`](../../PLANS.md) file that explains when to use an ExecPlan in this repository, restates the required structure of a plan, and indexes the checked-in plan files. Use that root file as the routing entrypoint for any later work under [`docs/plans/`](./).
 
-Then update [`AGENTS.md`](../../AGENTS.md), [`agent-index.md`](../../agent-index.md), and [`docs/agent-index.md`](../agent-index.md) so plans fit into the existing lookup order without becoming default reading. Update [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), and [`docs/tasks/agent-index.md`](../tasks/agent-index.md) so the convention is recorded as a repository workflow choice and task briefs know how to link plans.
+Then update [`AGENTS.md`](../../AGENTS.md), the repo workflow docs, and [`docs/tasks/README.md`](../tasks/README.md) so plans fit into the normal lookup order without becoming default reading. Update [`docs/agentic-workflow.md`](../agentic-workflow.md) and [`docs/decisions.md`](../decisions.md) so the convention is recorded as a repository workflow choice and task briefs know how to link plans.
 
 ## Concrete Steps
 
@@ -82,7 +82,7 @@ Acceptance is met when the output shows:
 
 - [`PLANS.md`](../../PLANS.md) defining the ExecPlan rules and indexing the checked-in plans
 - Existing routing or workflow docs linking to the new plan convention
-- [`docs/tasks/agent-index.md`](../tasks/agent-index.md) describing how tasks should link plans through `Related docs`
+- [`docs/tasks/README.md`](../tasks/README.md) describing how tasks should link plans through `Related docs`
 
 ## Idempotence and Recovery
 
@@ -103,6 +103,6 @@ Validation evidence:
 
 ## Interfaces and Dependencies
 
-[`AGENTS.md`](../../AGENTS.md), [`agent-index.md`](../../agent-index.md), and [`docs/agent-index.md`](../agent-index.md) define the normal routing layer. [`PLANS.md`](../../PLANS.md) defines the ExecPlan contract, provides plan-routing guidance, and indexes the stored plans. [`docs/tasks/agent-index.md`](../tasks/agent-index.md) is the task integration point that lets task briefs link plans without changing their structure.
+[`AGENTS.md`](../../AGENTS.md) defines the repo instruction layer. [`PLANS.md`](../../PLANS.md) defines the ExecPlan contract, provides plan-routing guidance, and indexes the stored plans. [`docs/tasks/README.md`](../tasks/README.md) is the task integration point that lets task briefs link plans without changing their structure.
 
 Change note: 2026-04-08 / Codex. Created the initial repo ExecPlan workflow and seeded the first indexed plan so future plan work has a documented starting point.

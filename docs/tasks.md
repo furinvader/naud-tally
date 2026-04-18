@@ -2,9 +2,7 @@
 
 Use this page to check current task status and open the relevant task brief.
 
-Detailed scope, acceptance criteria, and outcomes still live in the per-task files under the status folders in [`docs/tasks/`](tasks/).
-
-If you need agent routing rules before opening task files, start with [`tasks/agent-index.md`](tasks/agent-index.md).
+Detailed scope, acceptance criteria, and outcomes still live in the per-task files under the status folders in [`docs/tasks/`](tasks/). Task brief structure, status guidance, and when to prefer current work over historical task files live in [`docs/tasks/README.md`](tasks/README.md).
 
 ## Current Priority
 
@@ -17,7 +15,6 @@ The near-term architecture and order-entry-surface track are complete, so the re
 - [T-020 Add PWA Installability and Offline Shell Support](tasks/open/T-020.md)
 - [T-021 Choose the Remote Backup and Sync Approach](tasks/open/T-021.md)
 - [T-022 Implement Remote Sync and Recovery](tasks/open/T-022.md)
-- [T-030 Remove agent-index routing and replace it with AGENTS.md plus README guidance](tasks/open/T-030.md)
 - [T-006 Add Host Data-Safety Tools](tasks/open/T-006.md)
 - [T-007 Validate the Host Workflow in a Real Usage Scenario](tasks/open/T-007.md)
 - [T-008 Add i18n Support](tasks/open/T-008.md)
@@ -48,3 +45,4 @@ The near-term architecture and order-entry-surface track are complete, so the re
 - [T-027 Introduce Repository Adapters for Local Persistence](tasks/done/T-027.md)
 - [T-028 Expose Feature Public APIs and Remove Cross-Feature Internal Imports](tasks/done/T-028.md)
 - [T-029 Add Frontend Import Boundary Checks](tasks/done/T-029.md)
+- [T-030 Remove agent-index routing and replace it with AGENTS.md plus README guidance](tasks/done/T-030.md)

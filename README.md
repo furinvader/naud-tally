@@ -9,7 +9,7 @@ This repository began with documentation rather than app scaffolding, and the do
 
 The project is also being prepared to live well as an open-source repository with a clean public history and visible GitHub workflow activity.
 
-The repo now uses [`AGENTS.md`](AGENTS.md) plus small [`agent-index.md`](agent-index.md) files so future agent sessions can recover context from the repository instead of relying on chat history.
+The repo now uses [`AGENTS.md`](AGENTS.md) plus a frontend-local [`frontend/AGENTS.md`](frontend/AGENTS.md), with ordinary docs and READMEs carrying the durable navigation and source-of-truth context.
 
 ## Current Phase
 
@@ -21,7 +21,7 @@ What exists today:
 - pilot product scope
 - decision log
 - task index with per-task briefs
-- agent routing docs
+- repo and frontend agent instructions
 - agentic workflow notes
 - repo-tracked design workflow docs and SVG artifacts under [`docs/design/`](docs/design/)
 - initial stack decision
