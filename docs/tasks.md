@@ -17,6 +17,7 @@ The near-term architecture and order-entry-surface track are complete, so the re
 - [T-020 Add PWA Installability and Offline Shell Support](tasks/open/T-020.md)
 - [T-021 Choose the Remote Backup and Sync Approach](tasks/open/T-021.md)
 - [T-022 Implement Remote Sync and Recovery](tasks/open/T-022.md)
+- [T-030 Remove agent-index routing and replace it with AGENTS.md plus README guidance](tasks/open/T-030.md)
 - [T-006 Add Host Data-Safety Tools](tasks/open/T-006.md)
 - [T-007 Validate the Host Workflow in a Real Usage Scenario](tasks/open/T-007.md)
 - [T-008 Add i18n Support](tasks/open/T-008.md)
