@@ -31,7 +31,8 @@ jobs:
             LICENSE
             CONTRIBUTING.md
             docs/product.md
-            docs/architecture.md
+            ARCHITECTURE.md
+            docs/architecture/layering.md
             docs/glossary.md
             docs/agentic-workflow.md
             docs/decisions.md
@@ -132,7 +133,8 @@ jobs:
           grep -q 'docs/workflows/publish.md' README.md
           grep -q 'frontend/README.md' README.md
           grep -q 'docs/product.md' README.md
-          grep -q 'docs/architecture.md' README.md
+          grep -q 'ARCHITECTURE.md' README.md
+          grep -q 'docs/architecture/layering.md' README.md
           grep -q 'docs/glossary.md' README.md
           grep -q 'docs/agentic-workflow.md' README.md
           grep -q 'docs/decisions.md' README.md

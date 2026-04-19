@@ -4,7 +4,7 @@ This ExecPlan is a living document. The sections `Progress`, `Surprises & Discov
 
 Related tasks: [`docs/tasks/done/T-018.md`](../tasks/done/T-018.md), [`docs/tasks/done/T-014.md`](../tasks/done/T-014.md), [`docs/tasks/done/T-019.md`](../tasks/done/T-019.md).
 
-Related docs: [`docs/product.md`](../product.md), [`docs/ux/host-workflow-ux.md`](../ux/host-workflow-ux.md), [`docs/architecture.md`](../architecture.md), [`frontend/AGENTS.md`](../../frontend/AGENTS.md), [`frontend/README.md`](../../frontend/README.md), [`docs/design/foundations/README.md`](../design/foundations/README.md), [`docs/design/penpot-codex-workflow.md`](../design/penpot-codex-workflow.md).
+Related docs: [`docs/product.md`](../product.md), [`docs/ux/host-workflow-ux.md`](../ux/host-workflow-ux.md), [`ARCHITECTURE.md`](../../ARCHITECTURE.md), [`frontend/AGENTS.md`](../../frontend/AGENTS.md), [`frontend/README.md`](../../frontend/README.md), [`docs/design/foundations/README.md`](../design/foundations/README.md), [`docs/design/penpot-codex-workflow.md`](../design/penpot-codex-workflow.md).
 
 ## Purpose / Big Picture
 

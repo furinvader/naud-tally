@@ -4,7 +4,7 @@ This ExecPlan is a living document. The sections `Progress`, `Surprises & Discov
 
 Related tasks: [`docs/tasks/done/T-030.md`](../tasks/done/T-030.md).
 
-Related docs: [`AGENTS.md`](../../AGENTS.md), [`README.md`](../../README.md), [`PLANS.md`](../../PLANS.md), [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), [`docs/architecture.md`](../architecture.md), [`docs/tasks.md`](../tasks.md), [`docs/tasks/README.md`](../tasks/README.md), [`frontend/AGENTS.md`](../../frontend/AGENTS.md), [`frontend/README.md`](../../frontend/README.md), [`frontend/decisions.md`](../../frontend/decisions.md), [`docs/workflows/publish.md`](../workflows/publish.md), [`docs/design/README.md`](../design/README.md).
+Related docs: [`AGENTS.md`](../../AGENTS.md), [`README.md`](../../README.md), [`PLANS.md`](../../PLANS.md), [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), [`ARCHITECTURE.md`](../../ARCHITECTURE.md), [`docs/architecture/layering.md`](../architecture/layering.md), [`docs/tasks.md`](../tasks.md), [`docs/tasks/README.md`](../tasks/README.md), [`frontend/AGENTS.md`](../../frontend/AGENTS.md), [`frontend/README.md`](../../frontend/README.md), [`frontend/decisions.md`](../../frontend/decisions.md), [`docs/workflows/publish.md`](../workflows/publish.md), [`docs/design/README.md`](../design/README.md).
 
 ## Purpose / Big Picture
 
@@ -91,12 +91,12 @@ Add a new [`frontend/AGENTS.md`](../../frontend/AGENTS.md). Keep it short. It sh
 - running `nvm use` before `npm` or `ng` commands in a fresh shell
 - the default validation commands from [`frontend/README.md`](../../frontend/README.md)
 - the expectation to start from the current task brief when changing behavior
-- when to consult [`../docs/architecture.md`](../architecture.md), [`../docs/layering.md`](../layering.md), and [`decisions.md`](../../frontend/decisions.md)
+- when to consult [`../../ARCHITECTURE.md`](../../ARCHITECTURE.md), [`../architecture/layering.md`](../architecture/layering.md), and [`decisions.md`](../../frontend/decisions.md)
 - when to update [`frontend/README.md`](../../frontend/README.md), [`frontend/decisions.md`](../../frontend/decisions.md), and [`docs/decisions.md`](../decisions.md)
 
 Add a new [`docs/tasks/README.md`](../tasks/README.md) that takes over the useful, human-facing parts of the old task-routing docs: task layout, the `open` and `done` status model, when to open one task file versus the full backlog, and the role of `Related docs`.
 
-Then update the active docs that currently present the routing tree as the current workflow: [`README.md`](../../README.md), [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), [`docs/architecture.md`](../architecture.md), [`docs/tasks.md`](../tasks.md), [`frontend/README.md`](../../frontend/README.md), and [`frontend/decisions.md`](../../frontend/decisions.md). Keep the edits focused on current workflow. Preserve historical narrative where appropriate, but do not leave current guidance pointing at files that are about to be removed.
+Then update the active docs that currently present the routing tree as the current workflow: [`README.md`](../../README.md), [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), [`ARCHITECTURE.md`](../../ARCHITECTURE.md), [`docs/architecture/layering.md`](../architecture/layering.md), [`docs/tasks.md`](../tasks.md), [`frontend/README.md`](../../frontend/README.md), and [`frontend/decisions.md`](../../frontend/decisions.md). Keep the edits focused on current workflow. Preserve historical narrative where appropriate, but do not leave current guidance pointing at files that are about to be removed.
 
 After the new authoritative docs are in place, remove the repo-root routing file plus the routing files under the docs, design, design foundations, research, tasks, open-tasks, done-tasks, workflows, UX, and frontend subtrees.
 

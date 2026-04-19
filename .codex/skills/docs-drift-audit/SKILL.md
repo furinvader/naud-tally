@@ -10,7 +10,7 @@ Audit repo-owned documentation in two modes:
 - Audit mode: find stale, contradictory, missing, superfluous, or glossary-drift issues and report them clearly.
 - Cleanup mode: fix the confirmed issues, then rerun validation so the docs converge on one consistent story.
 
-Start by following the repository's own routing rules. In this repo that usually means reading [`AGENTS.md`](../../../AGENTS.md), [`agent-index.md`](../../../agent-index.md), and the nearest docs indexes before scanning broadly.
+Start by following the repository's own routing rules. In this repo that usually means reading [`AGENTS.md`](../../../AGENTS.md) and the nearest docs indexes before scanning broadly.
 
 ## Quality Lenses
 
@@ -55,7 +55,7 @@ In this repo, the usual order is:
 
 1. [`README.md`](../../../README.md) for the project overview.
 2. [`docs/product.md`](../../../docs/product.md) for product scope.
-3. [`docs/architecture.md`](../../../docs/architecture.md) for module boundaries and ownership.
+3. [`ARCHITECTURE.md`](../../../ARCHITECTURE.md) for module boundaries and ownership.
 4. [`docs/decisions.md`](../../../docs/decisions.md) and local decision docs such as [`frontend/decisions.md`](../../../frontend/decisions.md) for durable decisions.
 5. [`docs/glossary.md`](../../../docs/glossary.md) for stable term definitions.
 6. [`docs/tasks.md`](../../../docs/tasks.md), task indexes, and task briefs for backlog state.

@@ -39,7 +39,7 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Consequence: keep one Angular app under [`../frontend/`](../frontend/) rather than splitting into services or packages prematurely
 - Consequence: organize durable business capabilities into explicit internal modules such as order entry, guest tabs, catalog, billing history, and sync or recovery
 - Consequence: prefer small public APIs between capabilities over direct imports into another feature's internal files
-- Consequence: use [`architecture.md`](architecture.md) as the repository-level map for those boundaries
+- Consequence: use [`ARCHITECTURE.md`](../ARCHITECTURE.md) as the repository-level map for those boundaries
 
 ## Use Logical Layers Inside Features Without Replacing Feature-First Structure
 
@@ -48,14 +48,14 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Consequence: keep top-level structure feature-first, and use subfolders for real subfeatures or clearly owned internal areas instead of default layer folders
 - Consequence: use the logical layer names `presentation`, `application`, `adapters`, and `domain` inside one feature or subfeature
 - Consequence: do not create `presentation/`, `application/`, `adapters/`, or `domain/` folders as a repository convention
-- Consequence: keep the general dependency rules in [`layering.md`](layering.md), and keep concrete naming examples in the nearest area-specific docs
+- Consequence: keep the general dependency rules in [`architecture/layering.md`](architecture/layering.md), and keep concrete naming examples in the nearest area-specific docs
 - Consequence: treat a feature-root `index.ts` as that feature's public API rather than as a shortcut for internal imports
 
 ## Keep a Repo-Native Architecture Map and Glossary
 
 - Status: accepted
 - Why: stable architecture and vocabulary should live in the repository so future prompts do not depend on chat memory or reverse-engineering the current implementation
-- Consequence: keep the current target structure in [`architecture.md`](architecture.md)
+- Consequence: keep the current target structure in [`ARCHITECTURE.md`](../ARCHITECTURE.md)
 - Consequence: keep stable domain and architecture terms in [`glossary.md`](glossary.md)
 - Consequence: update those docs when durable boundaries, ownership rules, or vocabulary change
 

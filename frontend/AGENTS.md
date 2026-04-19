@@ -21,7 +21,7 @@
 
 ## When To Load More Context
 
-- Read [`../docs/architecture.md`](../docs/architecture.md) and [`../docs/layering.md`](../docs/layering.md) when changing feature boundaries, state ownership, persistence shape, or feature-internal layer rules.
+- Read [`../ARCHITECTURE.md`](../ARCHITECTURE.md) and [`../docs/architecture/layering.md`](../docs/architecture/layering.md) when changing feature boundaries, state ownership, persistence shape, or feature-internal layer rules.
 - Read [`decisions.md`](decisions.md) when changing frontend-local architecture, tooling, runtime setup, or default conventions.
 - Read [`README.md#feature-implementation`](README.md#feature-implementation) before creating a new feature or restructuring frontend files.
 

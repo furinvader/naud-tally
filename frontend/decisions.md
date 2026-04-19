@@ -41,7 +41,7 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Consequence: use route-level composition features for major screens such as the current order entry screen, and separate durable capabilities such as guest tabs, catalog, billing history, and sync or recovery into sibling feature areas under [`src/app/features/`](src/app/features/)
 - Consequence: when a feature area grows, expose a small public API or facade rather than letting other features import internal stores or helpers directly
 - Consequence: top-level feature directories publish their cross-feature surface from a root [`index.ts`](src/app/features/catalog/index.ts), and consumers import the feature directory path rather than a deep internal file
-- Consequence: follow the module map in [`../docs/architecture.md`](../docs/architecture.md) when restructuring or adding new large feature areas
+- Consequence: follow the module map in [`../ARCHITECTURE.md`](../ARCHITECTURE.md) when restructuring or adding new large feature areas
 
 ## Enforce Frontend Import Boundaries With ESLint
 
@@ -65,7 +65,7 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 - Consequence: keep subfolders meaning owned area or subfeature, and express layer responsibilities through file names and import direction first
 - Consequence: do not create `presentation/`, `application/`, `adapters/`, or `domain/` folders as a frontend convention
 - Consequence: treat a feature-root [`index.ts`](src/app/features/catalog/index.ts) entrypoint as the cross-feature public API rather than as an internal import shortcut
-- Consequence: use [`../docs/layering.md`](../docs/layering.md) as the general rule set for allowed dependency direction, and use [`README.md`](README.md) for concrete frontend file-role suffixes and examples
+- Consequence: use [`../docs/architecture/layering.md`](../docs/architecture/layering.md) as the general rule set for allowed dependency direction, and use [`README.md`](README.md) for concrete frontend file-role suffixes and examples
 
 ## Separate Persistent Business State From Transient Screen State
 
