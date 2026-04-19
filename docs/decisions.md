@@ -161,6 +161,17 @@ This file records repository-wide decisions that shape the build. Each decision 
 - Consequence: agents should start with [`AGENTS.md`](../AGENTS.md), use [`frontend/AGENTS.md`](../frontend/AGENTS.md) for frontend work, and load the smallest relevant source docs instead of scanning broad context by default
 - Consequence: ordinary docs such as [`docs/tasks.md`](tasks.md), [`docs/tasks/README.md`](tasks/README.md), [`frontend/README.md`](../frontend/README.md), and [`docs/design/README.md`](design/README.md) carry the durable navigation layer
 
+## Use an Explicit Default Subagent Workflow for Research and Planning
+
+- Status: accepted
+- Why: repeated research-and-planning requests are easier to run reliably when the coordinator does not need to infer which supporting steps to use or where repository context ends and external context begins
+- Supporting research: [`research/codex-subagent-workflows.md`](research/codex-subagent-workflows.md)
+- Consequence: the repo-specific planning subagent workflow is manual-only and should run only when explicitly invoked with the phrase `planning subagent workflow`
+- Consequence: the default phases are `research`, `repo_docs_reader`, and `plan`, unless the user explicitly skips a phase
+- Consequence: `research` owns live web and external documentation, while `repo_docs_reader` is limited to repo-tracked docs and local reference files
+- Consequence: `plan` is the only write-capable phase and should only create or update ExecPlans plus directly related planning docs
+- Consequence: the detailed prompt contract and examples live in [`workflows/planning-subagent-workflow.md`](workflows/planning-subagent-workflow.md)
+
 ## Load Publish Rules Only at Publish Time
 
 - Status: accepted

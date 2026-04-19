@@ -7,6 +7,7 @@ Capture what Codex subagent workflows are, why they are useful, what Codex suppo
 ## Related docs
 
 - [Agentic Workflow](../agentic-workflow.md)
+- [Planning Subagent Workflow](../workflows/planning-subagent-workflow.md)
 
 ## Research snapshot
 
@@ -181,22 +182,10 @@ See:
 
 ## Starter workflow for this repo
 
-### Phase 1: Prompt-only delegation
-
-- Keep using the main Codex thread.
-- Ask it to spawn a small number of subagents explicitly.
-- Confirm that the work split is actually helpful before adding more setup.
-
-### Phase 2: Custom agent roles
-
-- Add named worker roles only after the repeated pattern is clear.
-- Make explorers, reviewers, and verifiers read-only first.
-- Treat writer agents as the exception, not the default.
-
-### Phase 3: Verification loop
-
-- Once the workflow is stable, add a dedicated verifier or reviewer step after implementation.
-- Keep the verifier focused on regressions, test gaps, and risky assumptions instead of style-only feedback.
+- The current repo-specific workflow is documented in [Planning Subagent Workflow](../workflows/planning-subagent-workflow.md).
+- The default manual sequence is `research` plus `repo_docs_reader`, then `plan`.
+- `research` owns live web and external docs, `repo_docs_reader` owns repo-tracked docs and local reference files, and `plan` is the only write-capable phase.
+- The workflow stays shallow on purpose, with one coordinator, mostly read-only workers, and a single writer at the end.
 
 ## Example prompts
 

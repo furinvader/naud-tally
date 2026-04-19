@@ -17,6 +17,7 @@
    - [`docs/glossary.md`](docs/glossary.md) for stable domain and architecture vocabulary.
    - [`docs/decisions.md`](docs/decisions.md) for repo-wide workflow or architecture decisions.
    - [`docs/agentic-workflow.md`](docs/agentic-workflow.md) for Codex collaboration guidance.
+   - [`docs/workflows/planning-subagent-workflow.md`](docs/workflows/planning-subagent-workflow.md) when the user explicitly invokes the repo's planning subagent workflow.
    - [`docs/design/README.md`](docs/design/README.md) for design workflow and committed artifacts.
    - the relevant UX brief under [`docs/ux/`](docs/ux/) when a task depends on user-flow detail.
    - the relevant research brief under [`docs/research/`](docs/research/) when a task depends on prior evaluation or comparison work.
@@ -33,6 +34,11 @@
 - Individual plan files live under [`docs/plans/`](docs/plans/).
 - Read [`PLANS.md`](PLANS.md) before opening any plan file under [`docs/plans/`](docs/plans/).
 - Do not open plan files by default. Read them only when the user asks for plan work, when a task file links to a plan, or when extra plan context is needed to execute a task safely.
+
+## Subagent Workflow Rule
+
+- The repo's planning subagent workflow is manual-only. Treat the exact phrase `planning subagent workflow` as the canonical trigger.
+- When invoked, the default phases are `research`, `repo_docs_reader`, and `plan`, unless the user explicitly skips one.
 
 ## Publish-Time Rule
 
