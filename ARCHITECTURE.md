@@ -219,7 +219,7 @@ To keep future work efficient:
 
 - start architecture-changing tasks from [`ARCHITECTURE.md`](ARCHITECTURE.md), [`docs/architecture/layering.md`](docs/architecture/layering.md), [`docs/glossary.md`](docs/glossary.md), and [`frontend/README.md`](frontend/README.md)
 - prefer one capability-focused task at a time
-- add a local `README.md` when a feature area becomes large enough that its public API is not obvious
+- add a local [`README.md`](README.md) when a feature area becomes large enough that its public API is not obvious
 - keep tests close to the feature or capability they protect
 - avoid introducing broad `shared`, `common`, or `utils` folders as default destinations
 
