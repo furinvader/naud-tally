@@ -24,7 +24,7 @@ Keep this index lightweight and routing-focused. Each entry should provide the p
 
 - [`docs/plans/document-execplan-workflow.md`](docs/plans/document-execplan-workflow.md): establishes the repo's ExecPlan documentation and routing convention.
 - [`docs/plans/build-room-first-order-entry-screen.md`](docs/plans/build-room-first-order-entry-screen.md): documents the room-first host order-entry implementation and its supporting product, UX, design, and frontend work.
-- [`docs/plans/simplify-agent-context-routing.md`](docs/plans/simplify-agent-context-routing.md): plans the removal of the [`agent-index.md`](agent-index.md) tree in favor of a smaller [`AGENTS.md`](AGENTS.md) plus [`README.md`](README.md)-based context setup.
+- [`docs/plans/simplify-agent-context-routing.md`](docs/plans/simplify-agent-context-routing.md): documents the removal of the old routing-tree files in favor of a smaller [`AGENTS.md`](AGENTS.md) plus [`README.md`](README.md)-based context setup.
 
 ## Non-Negotiable Requirements
 

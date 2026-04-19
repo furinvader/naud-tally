@@ -6,7 +6,7 @@ Read this file only when a task changes frontend architecture, tooling, runtime 
 
 - Keep frontend-local decisions here.
 - Promote a decision to [`../docs/decisions.md`](../docs/decisions.md) only if it affects multiple top-level areas, the whole repository workflow, or every future agent session.
-- Routine feature implementation can usually skip this file and follow [`agent-index.md`](agent-index.md) plus [`README.md`](README.md).
+- Routine feature implementation can usually skip this file and follow [`AGENTS.md`](AGENTS.md) plus [`README.md`](README.md).
 
 ## Use Angular, Angular Material, and NgRx SignalStore
 

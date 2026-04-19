@@ -16,8 +16,8 @@ This document captures how we want to work with Codex so the lessons from this p
 ## Repo Context Routing
 
 - [`AGENTS.md`](../AGENTS.md) is the repo-level instruction layer for agent behavior.
-- [`agent-index.md`](../agent-index.md) files are the small routing files at the repo root and key subtrees.
-- Start with the repo root index, then read the nearest relevant subtree index before opening other files there.
+- [`frontend/AGENTS.md`](../frontend/AGENTS.md) is the only subtree-specific instruction layer and carries the frontend-local execution rules.
+- Use source-of-truth docs such as [`docs/tasks.md`](tasks.md), [`docs/tasks/README.md`](tasks/README.md), [`frontend/README.md`](../frontend/README.md), and [`docs/design/README.md`](design/README.md) to load only the context the current task actually needs.
 - Load [`docs/workflows/publish.md`](workflows/publish.md) only when branch, commit, or pull request work is happening.
 
 ## Recommended Working Loop
@@ -63,9 +63,10 @@ When Codex completes a task, review these points:
 - [`docs/architecture.md`](architecture.md) records the target module map, dependency boundaries, and state ownership model.
 - [`docs/glossary.md`](glossary.md) keeps domain and architecture vocabulary stable.
 - [`docs/decisions.md`](decisions.md) records repository-wide decisions and tradeoffs.
-- [`docs/research/agent-index.md`](research/agent-index.md) routes to reusable research briefs.
+- reusable research briefs live under [`docs/research/`](research/).
 - [`docs/design/penpot-codex-workflow.md`](design/penpot-codex-workflow.md) explains how Penpot should be used in a Codex-first workflow.
-- local [`decisions.md`](../frontend/decisions.md) files record area-specific decisions next to the relevant [`agent-index.md`](../frontend/agent-index.md).
+- [`docs/tasks/README.md`](tasks/README.md) explains task brief structure, status meanings, and when to open one task versus task history.
+- local [`decisions.md`](../frontend/decisions.md) files record area-specific decisions, while [`../frontend/AGENTS.md`](../frontend/AGENTS.md) carries frontend-local execution rules.
 - [`docs/tasks.md`](tasks.md) tracks current task status and links to the current task briefs.
 - [`../PLANS.md`](../PLANS.md) defines the ExecPlan format and indexes checked-in plans under [`plans/`](plans/).
 - when a markdown doc mentions a repo file or directory, it should use a markdown link to that path

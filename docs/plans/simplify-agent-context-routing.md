@@ -2,13 +2,13 @@
 
 This ExecPlan is a living document. The sections `Progress`, `Surprises & Discoveries`, `Decision Log`, and `Outcomes & Retrospective` must be kept up to date as work proceeds. Maintain this document in accordance with [`PLANS.md`](../../PLANS.md).
 
-Related tasks: [`docs/tasks/open/T-030.md`](../tasks/open/T-030.md).
+Related tasks: [`docs/tasks/done/T-030.md`](../tasks/done/T-030.md).
 
-Related docs: [`AGENTS.md`](../../AGENTS.md), [`agent-index.md`](../../agent-index.md), [`README.md`](../../README.md), [`PLANS.md`](../../PLANS.md), [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), [`docs/architecture.md`](../architecture.md), [`docs/tasks.md`](../tasks.md), [`frontend/README.md`](../../frontend/README.md), [`frontend/decisions.md`](../../frontend/decisions.md), [`docs/workflows/publish.md`](../workflows/publish.md), [`docs/design/README.md`](../design/README.md).
+Related docs: [`AGENTS.md`](../../AGENTS.md), [`README.md`](../../README.md), [`PLANS.md`](../../PLANS.md), [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), [`docs/architecture.md`](../architecture.md), [`docs/tasks.md`](../tasks.md), [`docs/tasks/README.md`](../tasks/README.md), [`frontend/AGENTS.md`](../../frontend/AGENTS.md), [`frontend/README.md`](../../frontend/README.md), [`frontend/decisions.md`](../../frontend/decisions.md), [`docs/workflows/publish.md`](../workflows/publish.md), [`docs/design/README.md`](../design/README.md).
 
 ## Purpose / Big Picture
 
-After this change, the repository should use a smaller and more standard agent-context setup: one repo-level [`AGENTS.md`](../../AGENTS.md), one frontend-local [`AGENTS.md`](../../frontend/AGENTS.md), and ordinary human-facing docs for navigation and source-of-truth content. The current [`agent-index.md`](../../agent-index.md) tree should be removed.
+After this change, the repository should use a smaller and more standard agent-context setup: one repo-level [`AGENTS.md`](../../AGENTS.md), one frontend-local [`frontend/AGENTS.md`](../../frontend/AGENTS.md), and ordinary human-facing docs for navigation and source-of-truth content. The old routing-tree files should be removed.
 
 The goal is not to remove all guidance. The goal is to reduce duplicated routing instructions, move durable behavior rules into the repository instruction layer, and let [`README.md`](../../README.md) plus the existing docs own the knowledge layer. This change should make the workflow easier to maintain while preserving the constraints that matter most for reliable agent behavior. If later usage shows a real quality drop, the follow-up response should be targeted and documented rather than a reflexive return to the old routing tree.
 
@@ -18,13 +18,12 @@ The goal is not to remove all guidance. The goal is to reduce duplicated routing
 - [x] (2026-04-16 04:09Z) Added this ExecPlan and indexed it in [`PLANS.md`](../../PLANS.md) so the later implementation work has a checked-in guide.
 - [x] (2026-04-16 04:09Z) Verified the new plan file and plan-index update read cleanly and that `git diff --check` returned no output.
 - [x] (2026-04-18 13:06Z) Revised the plan from an observation-first migration to a direct removal plan with targeted follow-up mitigation only if later work shows a real regression.
-- [x] (2026-04-18 13:06Z) Added [`docs/tasks/open/T-030.md`](../tasks/open/T-030.md) so the planned routing-doc removal now has a backlog entry linked to this ExecPlan.
-- [ ] Replace the active routing convention in [`AGENTS.md`](../../AGENTS.md) so it points to source-of-truth docs and the planned frontend-local [`AGENTS.md`](../../frontend/AGENTS.md) instead of the routing tree.
-- [ ] Add [`frontend/AGENTS.md`](../../frontend/AGENTS.md) with only the local behavioral rules that materially improve frontend tasks.
-- [ ] Move any still-useful navigation content from the current routing files into the appropriate [`README.md`](../../README.md) or existing source-of-truth docs, especially under [`frontend/`](../../frontend/) and [`docs/tasks/`](../tasks/).
-- [ ] Update active docs, historical docs, and open task briefs so removing the routing files does not leave broken markdown links or stale workflow guidance behind.
-- [ ] Remove the current routing files once the new authoritative docs and retargeted references are in place.
-- [ ] If later usage exposes a real quality drop, add a targeted documented mitigation in the most appropriate source rather than reintroducing the old routing tree by default.
+- [x] (2026-04-18 13:06Z) Added [`docs/tasks/done/T-030.md`](../tasks/done/T-030.md) so the planned routing-doc removal now has a backlog entry linked to this ExecPlan.
+- [x] (2026-04-18 21:47Z) Replaced the active routing convention in [`AGENTS.md`](../../AGENTS.md) so it now points to source-of-truth docs and [`frontend/AGENTS.md`](../../frontend/AGENTS.md) instead of a routing-tree lookup order.
+- [x] (2026-04-18 21:47Z) Added [`frontend/AGENTS.md`](../../frontend/AGENTS.md) and [`docs/tasks/README.md`](../tasks/README.md) so frontend-local execution rules and task-brief guidance survive without the old routing files.
+- [x] (2026-04-18 21:47Z) Updated current workflow docs, open tasks, historical task and plan references, and the surviving plan and task records so the repo no longer contains dead markdown links to removed routing files.
+- [x] (2026-04-18 21:47Z) Removed the routing-tree files and validated the cleanup with [`scripts/check-markdown-repo-links.py`](../../scripts/check-markdown-repo-links.py), targeted repo searches, and `git diff --check`.
+- [x] (2026-04-18 21:47Z) Confirmed the targeted-mitigation path still stands: if later usage exposes a real quality drop, the fix should land in the smallest surviving source doc rather than by restoring the removed routing tree.
 
 ## Surprises & Discoveries
 
@@ -34,12 +33,12 @@ The goal is not to remove all guidance. The goal is to reduce duplicated routing
 - Observation: the current repo contains many references to the routing files, but most of them are historical references in done task files and older plans rather than active routing entrypoints.
   Evidence: a repository search before drafting this plan returned 61 matches, including current docs, open task files, done task files, and historical plan files.
 
-- Observation: the riskiest behavior regression is likely in frontend work, because the current [Frontend Agent Index](../../frontend/agent-index.md) carries real behavioral rules such as running `nvm use`, validation commands, and scope constraints.
-  Evidence: the current frontend index includes runtime-setup and validation sections, while several of the docs-only indexes are almost pure navigation lists.
+- Observation: the riskiest behavior regression was likely in frontend work, because the former frontend routing file carried real behavioral rules such as running `nvm use`, validation commands, and scope constraints.
+  Evidence: the old frontend routing file included runtime-setup and validation sections, while several of the docs-only indexes were almost pure navigation lists.
 
 ## Decision Log
 
-- Decision: remove the [`agent-index.md`](../../agent-index.md) tree in the main implementation pass instead of keeping a temporary deprecation-stub phase.
+- Decision: remove the old routing-tree files in the main implementation pass instead of keeping a temporary deprecation-stub phase.
   Rationale: the prior review concluded that the repo can safely rely on a smaller [`AGENTS.md`](../../AGENTS.md) plus [`README.md`](../../README.md)-based setup, and an extra stub phase would prolong duplicated workflow guidance and cleanup churn.
   Date/Author: 2026-04-18 / Codex
 
@@ -61,13 +60,13 @@ The goal is not to remove all guidance. The goal is to reduce duplicated routing
 
 ## Outcomes & Retrospective
 
-Implementation has not started yet. The expected outcome is a smaller instruction surface, fewer duplicated routing docs, a repo with no remaining routing files, and a cleaner separation between agent behavior rules and human-facing project documentation.
+The repo now uses root [`AGENTS.md`](../../AGENTS.md) plus [`frontend/AGENTS.md`](../../frontend/AGENTS.md) as the instruction layer, while [`docs/tasks/README.md`](../tasks/README.md), [`frontend/README.md`](../../frontend/README.md), and the existing source-of-truth docs carry the human-facing navigation layer. The old routing-tree files are gone, and tracked markdown references now point only at surviving docs.
 
-When this work is complete, update this section with concrete observations about whether task execution changed, whether frontend runtime rules were still followed reliably, and whether any targeted mitigation was needed after the removal.
+No immediate quality regression surfaced during the cleanup. The targeted mitigation path remains the same: if later work reveals missing context, add it to the smallest surviving source doc rather than restoring the removed routing tree by default.
 
 ## Context and Orientation
 
-The current repository uses a root [`AGENTS.md`](../../AGENTS.md) plus a tree of local [`agent-index.md`](../../agent-index.md) files. The root instruction file explicitly requires those indexes in its lookup order, the root [`README.md`](../../README.md) describes that structure, and repository workflow docs such as [`docs/agentic-workflow.md`](../agentic-workflow.md) and [`docs/decisions.md`](../decisions.md) present it as the accepted convention.
+The earlier repository workflow used a root [`AGENTS.md`](../../AGENTS.md) plus a tree of local routing files. The root instruction file explicitly required those indexes in its lookup order, the root [`README.md`](../../README.md) described that structure, and repository workflow docs such as [`docs/agentic-workflow.md`](../agentic-workflow.md) and [`docs/decisions.md`](../decisions.md) presented it as the accepted convention.
 
 At the same time, much of the knowledge that matters for implementation already lives in ordinary docs. [`frontend/README.md`](../../frontend/README.md) already explains the frontend runtime setup and structure. [`docs/tasks.md`](../tasks.md) already lists current work. [`docs/design/README.md`](../design/README.md) already explains the design area. The remaining value in the routing tree is therefore uneven: the frontend index carries meaningful behavioral rules, while several other indexes mainly add an extra hop.
 
@@ -77,7 +76,7 @@ This plan intentionally keeps the change narrow. It does not introduce additiona
 
 First, make the new instruction boundary explicit. Rewrite the root [`AGENTS.md`](../../AGENTS.md) so it no longer requires the routing tree and instead points directly to the source-of-truth docs for product, tasks, plans, publish rules, and frontend work. Add a new [`frontend/AGENTS.md`](../../frontend/AGENTS.md) with the frontend-local behavior that must remain easy for agents to discover, especially runtime setup, default validation commands, and the scope boundaries that protect the pilot architecture.
 
-Second, move any still-useful navigation content out of the active routing files and into ordinary docs where humans would also expect to find it. [`docs/tasks.md`](../tasks.md) should absorb the active task-routing guidance now living in [`docs/tasks/agent-index.md`](../tasks/agent-index.md), most likely via a new [`docs/tasks/README.md`](../tasks/README.md). Existing docs such as [`frontend/README.md`](../../frontend/README.md) and [`docs/design/README.md`](../design/README.md) should absorb any missing orientation details they still need.
+Second, move any still-useful navigation content out of the active routing files and into ordinary docs where humans would also expect to find it. [`docs/tasks.md`](../tasks.md) and [`docs/tasks/README.md`](../tasks/README.md) should absorb the active task-routing guidance. Existing docs such as [`frontend/README.md`](../../frontend/README.md) and [`docs/design/README.md`](../design/README.md) should absorb any missing orientation details they still need.
 
 Third, clean up every tracked markdown reference that would otherwise point at a removed routing file. This includes active docs first and then any historical docs or older plans whose links would become invalid once the files are removed. Historical narrative may remain historical, but broken references should not remain in the tree.
 
@@ -95,25 +94,13 @@ Add a new [`frontend/AGENTS.md`](../../frontend/AGENTS.md). Keep it short. It sh
 - when to consult [`../docs/architecture.md`](../architecture.md), [`../docs/layering.md`](../layering.md), and [`decisions.md`](../../frontend/decisions.md)
 - when to update [`frontend/README.md`](../../frontend/README.md), [`frontend/decisions.md`](../../frontend/decisions.md), and [`docs/decisions.md`](../decisions.md)
 
-Add a new [`docs/tasks/README.md`](../tasks/README.md) that takes over the useful, human-facing parts of [`docs/tasks/agent-index.md`](../tasks/agent-index.md): task layout, the `open` and `done` status model, when to open one task file versus the full backlog, and the role of `Related docs`.
+Add a new [`docs/tasks/README.md`](../tasks/README.md) that takes over the useful, human-facing parts of the old task-routing docs: task layout, the `open` and `done` status model, when to open one task file versus the full backlog, and the role of `Related docs`.
 
 Then update the active docs that currently present the routing tree as the current workflow: [`README.md`](../../README.md), [`docs/agentic-workflow.md`](../agentic-workflow.md), [`docs/decisions.md`](../decisions.md), [`docs/architecture.md`](../architecture.md), [`docs/tasks.md`](../tasks.md), [`frontend/README.md`](../../frontend/README.md), and [`frontend/decisions.md`](../../frontend/decisions.md). Keep the edits focused on current workflow. Preserve historical narrative where appropriate, but do not leave current guidance pointing at files that are about to be removed.
 
-After the new authoritative docs are in place, remove these files:
+After the new authoritative docs are in place, remove the repo-root routing file plus the routing files under the docs, design, design foundations, research, tasks, open-tasks, done-tasks, workflows, UX, and frontend subtrees.
 
-- [`agent-index.md`](../../agent-index.md)
-- [`docs/agent-index.md`](../agent-index.md)
-- [`docs/design/agent-index.md`](../design/agent-index.md)
-- [`docs/design/foundations/agent-index.md`](../design/foundations/agent-index.md)
-- [`docs/research/agent-index.md`](../research/agent-index.md)
-- [`docs/tasks/agent-index.md`](../tasks/agent-index.md)
-- [`docs/tasks/open/agent-index.md`](../tasks/open/agent-index.md)
-- [`docs/tasks/done/agent-index.md`](../tasks/done/agent-index.md)
-- [`docs/workflows/agent-index.md`](../workflows/agent-index.md)
-- [`docs/ux/agent-index.md`](../ux/agent-index.md)
-- [`frontend/agent-index.md`](../../frontend/agent-index.md)
-
-Update the open task briefs that still present [`frontend/agent-index.md`](../../frontend/agent-index.md) as an active related doc, including at least [`docs/tasks/open/T-006.md`](../tasks/open/T-006.md), [`docs/tasks/open/T-008.md`](../tasks/open/T-008.md), [`docs/tasks/open/T-020.md`](../tasks/open/T-020.md), and [`docs/tasks/open/T-022.md`](../tasks/open/T-022.md). Point them at [`frontend/AGENTS.md`](../../frontend/AGENTS.md) or [`frontend/README.md`](../../frontend/README.md), whichever is the more accurate long-lived reference.
+Update the open task briefs that still present the former frontend routing file as an active related doc, including at least [`docs/tasks/open/T-006.md`](../tasks/open/T-006.md), [`docs/tasks/open/T-008.md`](../tasks/open/T-008.md), [`docs/tasks/open/T-020.md`](../tasks/open/T-020.md), and [`docs/tasks/open/T-022.md`](../tasks/open/T-022.md). Point them at [`frontend/AGENTS.md`](../../frontend/AGENTS.md) or [`frontend/README.md`](../../frontend/README.md), whichever is the more accurate long-lived reference.
 
 Search the rest of the tracked markdown tree and retarget or rewrite any remaining references that would otherwise break after the removals. Done task files and older plan files may keep their historical wording, but they must not keep dead links to removed files.
 
@@ -123,9 +110,9 @@ Run repository searches from the root and confirm that the active workflow now p
 
 Useful checks include:
 
-- `rg -n "agent-index\\.md" README.md AGENTS.md docs frontend` from the repository root to find any remaining references that still need deliberate handling
+- `rg -n "\\[[^]]+\\]\\([^)]*agent-index\\.md\\)" README.md AGENTS.md docs frontend` from the repository root to find any remaining markdown links to removed files
 - a search for new references to [`frontend/AGENTS.md`](../../frontend/AGENTS.md) and [`docs/tasks/README.md`](../tasks/README.md)
-- `python3 scripts/check-markdown-repo-links.py` from the repository root, using [scripts/check-markdown-repo-links.py](../../scripts/check-markdown-repo-links.py), to catch stale tracked-path mentions
+- running [`scripts/check-markdown-repo-links.py`](../../scripts/check-markdown-repo-links.py) from the repository root to catch stale tracked-path mentions
 - `git diff --check` after the documentation edits
 
 Acceptance is met when:
@@ -161,4 +148,4 @@ If a follow-up mitigation is ever needed, record it explicitly in the final impl
 
 This plan depends on keeping source-of-truth boundaries clear: product scope still belongs in product and UX docs, architecture still belongs in architecture and decisions docs, and open work still belongs in task briefs. The new instruction files should describe how to work, not duplicate those content sources.
 
-Change note: 2026-04-16 / Codex. Created the initial ExecPlan for simplifying the repository's agent-context routing without adding optional compatibility files. Revised on 2026-04-18 to treat removal of the routing tree as the default implementation path.
+Change note: 2026-04-16 / Codex. Created the initial ExecPlan for simplifying the repository's agent-context routing without adding optional compatibility files. Revised on 2026-04-18 to treat removal of the routing tree as the default implementation path, and updated later that day to record the completed cleanup.
