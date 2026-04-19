@@ -10,10 +10,10 @@
 ## Required Lookup Order
 
 1. Start every task with this file.
-2. For product scope or repo-wide docs under [`docs/`](docs/), open only the smallest relevant source doc:
+2. For product scope, architecture, or repo-wide docs, open only the smallest relevant source doc:
    - [`docs/product.md`](docs/product.md) for product scope and user-facing requirements.
-   - [`docs/architecture.md`](docs/architecture.md) for module boundaries, state ownership, and dependency boundaries.
-   - [`docs/layering.md`](docs/layering.md) for feature-internal layer rules.
+   - [`ARCHITECTURE.md`](ARCHITECTURE.md) for module boundaries, state ownership, and dependency boundaries.
+   - [`docs/architecture/layering.md`](docs/architecture/layering.md) for feature-internal layer rules.
    - [`docs/glossary.md`](docs/glossary.md) for stable domain and architecture vocabulary.
    - [`docs/decisions.md`](docs/decisions.md) for repo-wide workflow or architecture decisions.
    - [`docs/agentic-workflow.md`](docs/agentic-workflow.md) for Codex collaboration guidance.

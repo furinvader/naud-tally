@@ -60,7 +60,8 @@ When Codex completes a task, review these points:
 
 - [`README.md`](../README.md) explains the project at a glance.
 - [`docs/product.md`](product.md) is the source of truth for product scope.
-- [`docs/architecture.md`](architecture.md) records the target module map, dependency boundaries, and state ownership model.
+- [`../ARCHITECTURE.md`](../ARCHITECTURE.md) records the target module map, dependency boundaries, and state ownership model.
+- [`docs/architecture/layering.md`](architecture/layering.md) records the feature-internal layer rules.
 - [`docs/glossary.md`](glossary.md) keeps domain and architecture vocabulary stable.
 - [`docs/decisions.md`](decisions.md) records repository-wide decisions and tradeoffs.
 - reusable research briefs live under [`docs/research/`](research/).

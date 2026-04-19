@@ -21,7 +21,7 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - [`src/app/features/order-entry/order-entry.store.ts`](src/app/features/order-entry/order-entry.store.ts) owns transient order-entry screen state such as the active step, selected room, selected guest, and guest-name draft inputs.
 - Durable room, guest-tab, catalog, and `billing-history` state now live under [`src/app/features/rooms/`](src/app/features/rooms/), [`src/app/features/guest-tabs/`](src/app/features/guest-tabs/), [`src/app/features/catalog/`](src/app/features/catalog/), and [`src/app/features/billing-history/`](src/app/features/billing-history/), with adjacent `*.repository.ts` files owning browser persistence.
 - [`src/app/features/drink-tally/`](src/app/features/drink-tally/) is now historical guest-flow presentation rather than the active route contract.
-- The target architecture for the next iterations is recorded in [`../docs/architecture.md`](../docs/architecture.md).
+- The target architecture for the next iterations is recorded in [`../ARCHITECTURE.md`](../ARCHITECTURE.md).
 - Global styles stay in [`src/styles.scss`](src/styles.scss).
 - New feature work should follow the feature structure below.
 
@@ -41,11 +41,11 @@ It adapts the official [Angular Style Guide](https://angular.dev/style-guide) to
 - Route composition features should own screen assembly and transient route state.
 - Capability features should own persistent business state, domain rules, and adapters.
 - When a capability grows beyond a few closely related files, it may use clearer sub-areas or role-specific files such as `*.facade.ts`, `*.repository.ts`, `*.domain.ts`, or `*.models.ts`.
-- Follow [`../docs/architecture.md`](../docs/architecture.md) for the target module map and ownership model before restructuring a larger area.
+- Follow [`../ARCHITECTURE.md`](../ARCHITECTURE.md) for the target module map and ownership model before restructuring a larger area.
 
 ### Feature-Internal Layering
 
-- Use [`../docs/layering.md`](../docs/layering.md) for the general layer rules.
+- Use [`../docs/architecture/layering.md`](../docs/architecture/layering.md) for the general layer rules.
 - In frontend features, keep folders meaning owned area or subfeature. Do not create `presentation/`, `application/`, `adapters/`, or `domain/` folders as a frontend convention.
 - Treat the feature-root [`index.ts`](src/app/features/catalog/index.ts) pattern as the cross-feature public API, not as an internal import shortcut inside the same feature.
 - In practice, frontend components should talk to local stores or facades, stores may depend on local repositories and pure domain helpers, repositories may depend on pure domain types, and components must not import repositories directly.

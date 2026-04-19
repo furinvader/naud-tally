@@ -2,14 +2,14 @@
 
 This guide defines the logical layer rules inside one feature or one real subfeature.
 
-It complements the feature-first structure in [`architecture.md`](architecture.md) and the area-specific implementation conventions recorded in local docs such as [`../frontend/README.md`](../frontend/README.md). It does not replace feature ownership, route composition, or the cross-feature [public API](glossary.md#public-api) rules owned by each area.
+It complements the feature-first structure in [`../../ARCHITECTURE.md`](../../ARCHITECTURE.md) and the area-specific implementation conventions recorded in local docs such as [`../../frontend/README.md`](../../frontend/README.md). It does not replace feature ownership, route composition, or the cross-feature [public API](../glossary.md#public-api) rules owned by each area.
 
 ## Scope
 
 - Apply these rules inside one top-level feature or one real subfeature.
 - Keep the primary structure feature-first or subfeature-first.
 - Do not create `presentation/`, `application/`, `adapters/`, or `domain/` folders by convention.
-- Treat public entrypoints as the [public API](glossary.md#public-api), not as part of the layer model.
+- Treat public entrypoints as the [public API](../glossary.md#public-api), not as part of the layer model.
 - Keep area-specific shared-module, app-shell, and tooling rules in the nearest local docs for that area.
 
 ## Layer Names
@@ -19,7 +19,7 @@ Use these four layer names when describing feature-internal responsibilities:
 - `presentation`: components, templates, local view models, and screen wiring
 - `application`: stores, facades, use-case orchestration, and workflow coordination
 - `adapters`: repositories, storage adapters, HTTP clients, sync clients, serializers, and other infrastructure-facing boundaries
-- `domain`: business types, [domain rules](glossary.md#domain-rule), invariants, and pure transformations
+- `domain`: business types, [domain rules](../glossary.md#domain-rule), invariants, and pure transformations
 
 ## Dependency Rule
 
