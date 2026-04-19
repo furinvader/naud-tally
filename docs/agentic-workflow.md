@@ -32,6 +32,15 @@ This document captures how we want to work with Codex so the lessons from this p
 
 For Penpot-driven UI work, treat [`docs/design/penpot-codex-workflow.md`](design/penpot-codex-workflow.md) as the operational guide for how the browser file, MCP connection, and repo-native brief fit together.
 
+## Planning Subagent Workflow
+
+- Use the repo's planning subagent workflow only when the user explicitly asks for the `planning subagent workflow`.
+- The default shape is `research` plus `repo_docs_reader` in parallel, followed by `plan`.
+- `research` owns live web and external documentation.
+- `repo_docs_reader` owns repo-tracked docs and local reference files only.
+- `plan` is the only write-capable phase and should stay limited to ExecPlans plus directly related planning docs.
+- The detailed prompt contract, skip syntax, and agent roles live in [`docs/workflows/planning-subagent-workflow.md`](workflows/planning-subagent-workflow.md).
+
 ## Good Task Shape
 
 A strong Codex task usually includes:
@@ -66,6 +75,7 @@ When Codex completes a task, review these points:
 - [`docs/decisions.md`](decisions.md) records repository-wide decisions and tradeoffs.
 - reusable research briefs live under [`docs/research/`](research/).
 - [`docs/design/penpot-codex-workflow.md`](design/penpot-codex-workflow.md) explains how Penpot should be used in a Codex-first workflow.
+- [`docs/workflows/planning-subagent-workflow.md`](workflows/planning-subagent-workflow.md) defines the repo's explicit `research` plus `repo_docs_reader` plus `plan` planning subagent workflow.
 - [`docs/tasks/README.md`](tasks/README.md) explains task brief structure, status meanings, and when to open one task versus task history.
 - local [`decisions.md`](../frontend/decisions.md) files record area-specific decisions, while [`../frontend/AGENTS.md`](../frontend/AGENTS.md) carries frontend-local execution rules.
 - [`docs/tasks.md`](tasks.md) tracks current task status and links to the current task briefs.
