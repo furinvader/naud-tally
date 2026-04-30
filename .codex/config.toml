@@ -1,3 +1,2 @@
-mcp_servers.penpot.url = "http://localhost:4401/mcp"
-mcp_servers.penpot.startup_timeout_sec = 30
-mcp_servers.penpot.tool_timeout_sec = 120
+# Keep the default repo-scoped Codex config lightweight so plain `codex`
+# sessions start cleanly even when optional local tooling is offline.
