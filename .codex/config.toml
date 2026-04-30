@@ -1,2 +1,6 @@
 # Keep the default repo-scoped Codex config lightweight so plain `codex`
 # sessions start cleanly even when optional local tooling is offline.
+
+[agents]
+max_depth = 1
+max_threads = 4

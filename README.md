@@ -59,6 +59,7 @@ What is intentionally not done yet:
 - [Deferred Public Tally and Guest Self-Service UX](docs/ux/guest-tab-ux.md)
 - [Remote Persistence Options](docs/research/remote-persistence-options.md)
 - [Agentic Workflow](docs/agentic-workflow.md)
+- [Planning Subagent Workflow](docs/workflows/planning-subagent-workflow.md)
 - [Repo Decisions](docs/decisions.md)
 - [GitHub Setup](docs/github-setup.md)
 - [Contributing](CONTRIBUTING.md)
