@@ -16,8 +16,8 @@
 ## Repo Entry Points
 
 - Start the Penpot MCP services with [`../../scripts/penpot-mcp.sh`](../../scripts/penpot-mcp.sh).
-- Open Codex from the repo root and let the project-scoped config in [`.codex/config.toml`](../../.codex/config.toml) wire in Penpot automatically.
-- Optional convenience entry point: [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh).
+- Use [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh) when you want Codex to connect to Penpot for that session.
+- Plain `codex` from the repo root now stays Penpot-free by default so everyday sessions do not warn when the local Penpot MCP service is offline.
 - Keep the reusable visual system baseline in [`foundations/README.md`](foundations/README.md).
 - Draft new task-specific briefs from [`screen-brief-template.md`](screen-brief-template.md) and store them beside the matching SVG artifact.
 - Keep committed design artifacts in the matching folder under [`./`](./), with SVG as the only committed export format.
@@ -25,9 +25,9 @@
 ## Project-Scoped Codex Config
 
 - Codex supports project-scoped MCP configuration through [`.codex/config.toml`](../../.codex/config.toml).
-- This repository now uses that standard path directly in [`.codex/config.toml`](../../.codex/config.toml).
+- This repository uses [`.codex/config.toml`](../../.codex/config.toml) only for repo-safe defaults that should apply to every Codex session in this directory.
 - The global Codex config must mark the repo as trusted before Codex loads project-scoped config.
-- [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh) is now only a convenience launcher that opens Codex in the repo root.
+- [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh) is the Penpot-specific launcher and adds the local MCP overrides only for that run.
 
 ## First-Time Setup
 
@@ -36,13 +36,13 @@
 3. In that file, open `Plugins` and load `http://localhost:4400/manifest.json`.
 4. In the plugin UI, click `Connect to MCP server`.
 5. Keep the plugin UI open while Codex is working with Penpot.
-6. Start Codex from the repo root with `codex` or [`./scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh).
+6. Start Codex from the repo root with [`./scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh) so that session includes the local Penpot MCP connection.
 
 ## Per-Session Workflow
 
 1. Open the Penpot file you want Codex to use.
 2. Reconnect the Penpot MCP plugin if needed.
-3. Start Codex in the repo so it loads [`.codex/config.toml`](../../.codex/config.toml).
+3. Start Codex with [`../../scripts/codex-penpot.sh`](../../scripts/codex-penpot.sh) so that session includes the local Penpot MCP connection.
 4. Point Codex at the reusable foundation brief plus the repo-native handoff brief for the specific screen or artifact you want to change.
 5. After a meaningful design change, export a committed SVG artifact into the matching folder under [`./`](./) and save the artifact path plus any implementation notes back into the brief.
 6. Add a Penpot share link only when interactive review, comments, or prototype playback adds value beyond the committed repo artifact.
